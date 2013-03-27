@@ -1,0 +1,165 @@
+function Thumbnails() {
+	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this));
+	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this));
+}
+
+Thumbnails.WIDTH = 120;
+Thumbnails.HEIGHT = 80;
+
+Thumbnails.prototype.stripUrl_ = function(url) {
+	return url.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.replace(/\/$/, '');
+};
+
+Thumbnails.PRELOADED = {
+	'ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0':
+		'thumbnails/wikipedia.png',
+	'vk.com': 'thumbnails/vkontakte.png',
+	'odnoklassniki.ru': 'thumbnails/odnoklassniki.png',
+	'livejournal.ru': 'thumbnails/livejournal.png',
+	'mail.ru': 'thumbnails/mail.ru.png',
+	'youtube.com': 'thumbnails/youtube.png'
+};
+
+Thumbnails.prototype.get = function(url, callback, failCallback) {
+	url = this.stripUrl_(url);
+	var key = 'thumbnail-' + url;
+	var request = {};
+	request[key] = null;
+	chrome.storage.local.get(request, function(res) {
+		var thumbnail = res[key];
+		if (!thumbnail) {
+			thumbnail = {'lastRequested': 0,
+				'lastDownloaded': 0,
+				'image': null};
+			res[key] = thumbnail;
+
+			if (Thumbnails.PRELOADED[url]) {
+				thumbnail.image = Thumbnails.PRELOADED[url];
+				thumbnail.lastDownloaded = 1;
+			} else {
+				failCallback()
+			}
+		}
+
+		thumbnail.lastRequested = Date.now()
+		chrome.storage.local.set(res);
+
+		if (thumbnail.lastDownloaded > 0) {
+			callback(thumbnail.image);
+		} else {
+			failCallback();
+		}
+	}.bind(this));
+};
+
+Thumbnails.CHROME_SCALING = false;
+
+/**
+ * We wait for 500 ms before checking the tab and making the snapshot to
+ * give time to the renderer to show the page.
+ */
+Thumbnails.prototype.delayedCheckVisibleTab_ = function() {
+	setTimeout(this.checkVisibleTab_.bind(this), 500);
+};
+
+Thumbnails.prototype.checkVisibleTab_ = function() {
+	chrome.tabs.query(
+		{active: true, lastFocusedWindow: true},
+	function(tabs) {
+		if (tabs.length !== 1)
+			return;
+		this.checkTab_(tabs[0]);
+	}.bind(this));
+};
+
+Thumbnails.prototype.checkTab_ = function(tab) {
+	if (!tab.active || !tab.url || tab.status !== 'complete' ||
+		tab.url.indexOf('http') !== 0)
+		return;
+
+	var url = this.stripUrl_(tab.url);
+	var request = {};
+	var key = 'thumbnail-' + url;
+	request[key] = null;
+	chrome.storage.local.get(request, function(res) {
+		var thumbnail = res[key];
+		if (!thumbnail ||
+			Date.now() - thumbnail.lastDownloaded < 1000 * 60 * 60 * 24 ||
+			!tab.active ||
+			this.stripUrl_(tab.url) !== url)
+			return;
+
+		chrome.tabs.captureVisibleTab(
+			tab.windowId, {'format': 'png'}, this.onTabCapture_.bind(this, url));
+	}.bind(this));
+};
+
+Thumbnails.prototype.onTabCapture_ = function(url, dataurl) {
+	console.log('Thumbnails.onTabCapture_', url);
+	this.cropAndResize_(dataurl, Thumbnails.WIDTH, Thumbnails.HEIGHT,
+		this.set.bind(this, url));
+};
+
+Thumbnails.prototype.cropAndResize_ = function(
+	imageUrl, width, height, callback) {
+	var image = new Image();
+	image.onload = function() {
+		var w, h;
+		var canvas = document.createElement('canvas');
+		var ctx = canvas.getContext('2d');
+
+		if (Thumbnails.CHROME_SCALING) {
+			if (image.width * Thumbnails.HEIGHT > image.height * Thumbnails.WIDTH) {
+				h = Thumbnails.HEIGHT;
+				w = Math.round(h * image.width / image.height);
+			} else {
+				w = Thumbnails.WIDTH;
+				h = Math.round(w * image.height / image.width);
+			}
+
+			image.width = w;
+			image.height = h;
+
+			canvas.width = Thumbnails.WIDTH;
+			canvas.height = Thumbnails.HEIGHT;
+			var ctx = canvas.getContext('2d');
+			ctx.drawImage(image, 0, 0, Thumbnails.WIDTH, Thumbnails.HEIGHT);
+		} else {
+			if (image.width * Thumbnails.HEIGHT > image.height * Thumbnails.WIDTH) {
+				h = image.height;
+				w = Math.round(h * Thumbnails.WIDTH / Thumbnails.HEIGHT);
+			} else {
+				w = image.width;
+				h = Math.round(w * Thumbnails.HEIGHT / Thumbnails.WIDTH);
+			}
+
+			canvas.width = w;
+			canvas.height = h;
+			ctx.drawImage(image, 0, 0, w, h);
+			canvas = util.scaleCanvas(canvas, Thumbnails.WIDTH, Thumbnails.HEIGHT);
+		}
+
+		callback(canvas.toDataURL());
+	}.bind(this);
+	image.src = imageUrl;
+};
+
+Thumbnails.prototype.set = function(url, image) {
+	var key = 'thumbnail-' + url;
+	var request = {};
+	request[key] = null;
+	chrome.storage.local.get(request, function(res) {
+		var thumbnail = res[key];
+		if (!thumbnail) {
+			console.error('Can\'t find thumbnail that should be present in storage.');
+			return;
+		}
+		thumbnail.lastDownloaded = Date.now();
+		thumbnail.image = image;
+		chrome.storage.local.set(res);
+	}.bind(this));
+};
+
+var thumbnails = new Thumbnails();

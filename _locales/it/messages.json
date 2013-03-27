@@ -1,0 +1,54 @@
+{
+	"extDesc": {
+		"message": "New new-tab-page. A community project. The (russian) original has been created by Google.",
+		"description": "Extension description."
+	},
+	"extName": {
+		"message": "New new-tab-page",
+		"description": "Extension name."
+	},
+	"title": {
+		"message": "New Tab",
+		"description": "Page title."
+	},
+	"removedWebsite": {
+		"message": "Removed website from most visited.",
+		"description": ""
+	},
+	"search": {
+		"message": "Search",
+		"description": ""
+	},
+	"undo": {
+		"message": "Undo",
+		"description": ""
+	},
+	"restoreAll": {
+		"message": "Restore all",
+		"description": ""
+	},
+	"recentlyClosed": {
+		"message": "Recently Closed",
+		"description": ""
+	},
+	"google": {
+		"message": "http://www.google.com/",
+		"description": ""
+	},
+	"weatherSearchURL": {
+		"message": "http://www.google.com/search?q=Weather",
+		"description": ""
+	},
+	"weather": {
+		"message": "Weather",
+		"description": ""
+	},
+	"useGeoLocation": {
+		"message": "Use current location.",
+		"description": ""
+	},
+	"apps": {
+		"message": "Apps",
+		"description": ""
+	}
+}

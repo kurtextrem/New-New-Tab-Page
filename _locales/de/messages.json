@@ -1,0 +1,54 @@
+{
+	"extDesc": {
+		"description": "Extension description.",
+		"message": "Neue Neuer-Tab-Seite. Ein Community Projekt. Das (russische) Original stammt von Google."
+	},
+	"extName": {
+		"description": "Extension name.",
+		"message": "Neue Neuer-Tab-Seite"
+	},
+	"title": {
+		"message": "Neuer Tab",
+		"description": "Page title."
+	},
+	"removedWebsite": {
+		"message": "Removed website from most visited.",
+		"description": ""
+	},
+	"search": {
+		"message": "Suchen",
+		"description": ""
+	},
+	"undo": {
+		"message": "Rückgängig",
+		"description": ""
+	},
+	"restoreAll": {
+		"message": "Alle wiederherstellen",
+		"description": ""
+	},
+	"recentlyClosed": {
+		"message": "Kürzlich geschlossen",
+		"description": ""
+	},
+	"google": {
+		"message": "http://www.google.com/",
+		"description": ""
+	},
+	"weatherSearchURL": {
+		"message": "http://www.google.de/search?q=Wetter",
+		"description": ""
+	},
+	"weather": {
+		"message": "Wetter",
+		"description": ""
+	},
+	"useGeoLocation": {
+		"message": "Aktuellen Standort benutzen.",
+		"description": ""
+	},
+	"apps": {
+		"message": "Apps",
+		"description": ""
+	}
+}

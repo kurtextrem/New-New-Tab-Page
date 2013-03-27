@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title i18n-content="title"></title>
+		<meta charset="utf-8">
+		<meta name="google" value="notranslate">
+		<link href="css/main.css" rel="stylesheet">
+	</head>
+	<body>
+		<a id="logo-link" i18n-values="href:google"><img id="logo" src="images/logo3w.png"></a>
+		<div id="search-container">
+			<input id="search-input" type="search" autocomplete="off" class="empty" i18n-values="value:search" x-webkit-speech>
+			<div id="search-suggestions"></div>
+		</div>
+		<div id="most-visited-container"></div>
+		<div id="block-most-visited-confirmation" class="hidden">
+			<span i18n-content="removedWebsite"></span>&nbsp;&nbsp;
+			<a id="undo-block-most-visited" href="#" i18n-content="undo"></a>&nbsp;&nbsp;
+			<a id="unblock-all-most-visited" href="#" i18n-content="restoreAll"></a>&nbsp;&nbsp;
+			<span class="close-button"></span>
+		</div>
+		<div id="content-boxes-container">
+			<div class="content-boxes-column">
+
+				<div class="content-box" id="box-recent">
+					<h2 i18n-content="recentlyClosed"></h2>
+					<div id="recent-recent">
+						<a i18n-values="href:weatherSearchURL">
+							<img id="weather-current-icon">
+						</a>
+					</div>
+				</div>
+
+				<div class="content-box" id="box-news"></div>
+			</div>
+			<div class="content-boxes-column">
+				<div class="content-box" id="box-weather">
+					<h2 i18n-content="weather">r</h2>
+					<div id="weather-date"></div>
+					<div id="weather-current">
+						<a i18n-values="href:weatherSearchURL">
+							<img id="weather-current-icon">
+						</a>
+						<div id="weather-current-temperature">
+							<div id="weather-temperature"></div>
+
+						</div>
+						<div id="weather-current-box">
+							<div id="weather-condition"></div>
+							<div id="weather-wind"></div>
+							<div id="weather-humidity"></div>
+						</div>
+					</div>
+					<div id="weather-forecast-box"></div>
+					<div id="weather-geolocation-permission" class="hidden">
+						<a href="#" i18n-content="useGeoLocation"></a>
+					</div>
+				</div>
+				<div class="content-box" id="box-icons">
+					<h2 i18n-content="apps"></h2>
+					<div id="apps-list"></div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="lib/jquery.min.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/page.js"></script>
+	</body>
+</html>
