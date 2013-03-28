@@ -676,7 +676,7 @@ AppsUI.prototype.onAppsListReceived_ = function(a) {
 	}
 };
 AppsUI.prototype.createAppButton_ = function(a, b, c) {
-	c = $('<a href="" class="closable-button"><img src="' + c + '"><div class="icon-title">' + b + '</div><div class="close-button" title="Remove"></div></a>');
+	c = $('<a href="" class="closable-button"><img src="' + c + '"><div class="icon-title">' + b + '</div><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></a>');
 	c.click(function() {
 		this.analytics_.track("app", "");
 		chrome.management.launchApp(a);
@@ -734,7 +734,7 @@ MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d) {
 	var f = $('<a class="most-visited-box most-visited-domain-' + a.replace(/\./g, "-") + '"></a>');
 	f.attr("title", c);
 	f.attr("href", c);
-	c = $('<div class="most-visited-thumbnail closable-button"><div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="Remove"></div></div>');
+	c = $('<div class="most-visited-thumbnail closable-button"><div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>');
 	c.find(".most-visited-domain").text(a);
 	c.find(".close-button").click(function() {
 		d();
@@ -795,7 +795,7 @@ NewsUI.prototype.show = function() {
 };
 
 NewsUI.prototype.addHeading = function() {
-	var a = $('<div class="news-item" id="news-heading"><h2>News</h2></div>');
+	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
 	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
 	$("#box-news").append(a)
 };
@@ -806,7 +806,7 @@ NewsUI.prototype.add = function(a, b, c) {
 	$("#box-news").append(a)
 };
 NewsUI.prototype.addMoreLink = function() {
-	var a = $('<div class="news-item" id="news-more"><a href="http://news.google.com">More news</a></div>');
+	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('newsURL') + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#box-news").append(a)
 };
@@ -823,9 +823,9 @@ function SearchBox() {
 	this.input_.bind("blur", this.onBlur_.bind(this));
 	this.val_ = ""
 }
-SearchBox.GOOGLE_SEARCH_URL = "https://google.com/search?q=%s";
+SearchBox.GOOGLE_SEARCH_URL = chrome.i18n.getMessage;
 SearchBox.prototype.navigateToGoogle_ = function(a) {
-	a = SearchBox.GOOGLE_SEARCH_URL.replace("%s", encodeURIComponent(a));
+	a = SearchBox.GOOGLE_SEARCH_URL('searchURL', encodeURIComponent(a));
 	location.replace(a)
 };
 SearchBox.prototype.onSpeechChange_ = function() {
@@ -918,7 +918,7 @@ function WeatherUI(a) {
 	this.analytics_ = a;
 	this.box_ = $("#box-weather");
 	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
-	this.link_ = "http://www.google.com/search?q=%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0";
+	this.link_ = chrome.i18n.getMessage('searchURL', chrome.i18n.getMessage('weather'));
 	this.box_.find("a").attr("href", this.link_)
 }
 WeatherUI.prototype.reset = function() {
@@ -932,7 +932,7 @@ WeatherUI.prototype.show = function() {
 };
 WeatherUI.prototype.setAddress = function(a) {
 	this.box_.find("h2").text(a);
-	this.link_ = "http://www.google.com/search?q=" + encodeURIComponent("weather " + a);
+	this.link_ = chrome.i18n.getMessage('searchURL', encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + a));
 	this.box_.find("a").attr("href", this.link_)
 };
 WeatherUI.prototype.setDate = function(a) {

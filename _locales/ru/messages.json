@@ -19,6 +19,10 @@
 		"message": "Search",
 		"description": ""
 	},
+	"remove": {
+		"message": "Remove",
+		"description": ""
+	},
 	"undo": {
 		"message": "Undo",
 		"description": ""
@@ -35,9 +39,19 @@
 		"message": "http://www.google.com/",
 		"description": ""
 	},
-	"weatherSearchURL": {
-		"message": "http://www.google.com/search?q=Weather",
+	"newsURL": {
+		"message": "http://news.google.com/",
 		"description": ""
+	},
+	"searchURL": {
+		"message": "http://www.google.com/search?q=$STRING$",
+		"description": "",
+		"placeholders": {
+			"string": {
+				"content": "$1",
+				"example": "Weather"
+			}
+		}
 	},
 	"weather": {
 		"message": "Weather",
@@ -49,6 +63,14 @@
 	},
 	"apps": {
 		"message": "Apps",
+		"description": ""
+	},
+	"news": {
+		"message": "News",
+		"description": ""
+	},
+	"moreNews": {
+		"message": "More News",
 		"description": ""
 	}
 }

@@ -12,11 +12,15 @@
 		"description": "Page title."
 	},
 	"removedWebsite": {
-		"message": "Removed website from most visited.",
+		"message": "Website von den Meistbesuchten Websiten entfernt.",
 		"description": ""
 	},
 	"search": {
 		"message": "Suchen",
+		"description": ""
+	},
+	"remove": {
+		"message": "Entfernen",
 		"description": ""
 	},
 	"undo": {
@@ -32,12 +36,22 @@
 		"description": ""
 	},
 	"google": {
-		"message": "http://www.google.com/",
+		"message": "http://www.google.de/",
 		"description": ""
 	},
-	"weatherSearchURL": {
-		"message": "http://www.google.de/search?q=Wetter",
+	"newsURL": {
+		"message": "http://news.google.de/",
 		"description": ""
+	},
+	"searchURL": {
+		"message": "http://www.google.de/search?q=$STRING$",
+		"description": "",
+		"placeholders": {
+			"string": {
+				"content": "$1",
+				"example": "Weather"
+			}
+		}
 	},
 	"weather": {
 		"message": "Wetter",
@@ -49,6 +63,14 @@
 	},
 	"apps": {
 		"message": "Apps",
+		"description": ""
+	},
+	"news": {
+		"message": "News",
+		"description": ""
+	},
+	"moreNews": {
+		"message": "Mehr News",
 		"description": ""
 	}
 }

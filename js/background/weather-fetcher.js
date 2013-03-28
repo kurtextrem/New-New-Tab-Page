@@ -42,8 +42,7 @@ WeatherFetcher.ICON_MAPPER_ = {
 	smoke: 'fog',
 	snow: 'snow',
 	storm: 'partly_cloudy',
-	thunderstorm: 'tstorms',
-	rain: 'rain'
+	thunderstorm: 'tstorms'
 };
 
 WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
@@ -55,7 +54,7 @@ WeatherFetcher.prototype.startWeatherRetrieval = function() {
 	this.retryTimeout_ = null;
 
 	chrome.storage.local.get(
-		{'location-permission': false, 'weather': null},
+		{'location-permission': false, weather: null},
 	function(val) {
 		if (val['location-permission'] === this.locationPermission_ &&
 			val.weather &&
@@ -162,11 +161,11 @@ WeatherFetcher.prototype.requestWeather_ = function() {
 	var latitude = Math.round(this.latitude_ * 1E6);
 	var longitude = Math.round(this.longitude_ * 1E6);
 	params = {
-		'hl': 'en',
-		'weather': ',,' + this.country_ + ',' + latitude + ',' + longitude,
-		'expflags': 'Dispatchers__force_signed_weather_api:false',
-		'oauth_signature': 'en',
-		'referrer': 'igoogle'
+		hl: chrome.i18n.getMessage('@@ui_locale'),
+		weather: ',,' + this.country_ + ',' + latitude + ',' + longitude,
+		expflags: 'Dispatchers__force_signed_weather_api:false',
+		oauth_signature: chrome.i18n.getMessage('@@ui_locale'),
+		referrer: 'igoogle'
 	};
 	console.log('Request weather for:', this.country_, latitude, longitude);
 	var request = $.get(

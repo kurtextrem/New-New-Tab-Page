@@ -12,7 +12,7 @@ NewsFetcher.prototype.init = function() {
 NewsFetcher.prototype.startRetrieval = function() {
 	console.log('Requesting news from RSS.');
 	var request = $.get(
-		'https://news.google.com/news/feeds?hl='+chrome.i18n.getMessage('ui_locale')+'&output=rss',
+		'https://news.google.com/news/feeds?hl='+chrome.i18n.getMessage('@@ui_locale')+'&output=rss',
 		this.storeFromRss_.bind(this),
 		'xml');
 	request.fail(this.onError_.bind(this, request));
