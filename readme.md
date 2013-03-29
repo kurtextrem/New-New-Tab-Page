@@ -19,8 +19,7 @@ Installation
 Open the chrome extensions site.
 Enable developer mode.
 Click the left button ("Load unpacked extension").
-Select the folder.
-```
+Select the folder.```
 
 Translation
 --------------
