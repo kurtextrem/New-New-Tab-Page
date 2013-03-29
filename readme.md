@@ -15,11 +15,11 @@ Version
 Installation
 --------------
 
-```Download this repository (into a folder).
-Open the chrome extensions site.
-Enable developer mode.
-Click the left button ("Load unpacked extension").
-Select the folder.```
+1. Download this repository (into a folder).
+2. Open the chrome extensions site.
+3. Enable developer mode.
+4. Click the left button ("Load unpacked extension").
+5. Select the folder.
 
 Translation
 --------------
