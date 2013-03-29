@@ -10,7 +10,7 @@ Thanks to [François Beaufort](https://plus.google.com/u/0/100132233764003563318
 Version
 -
 
-2.0
+0.3.0
 
 Installation
 --------------
