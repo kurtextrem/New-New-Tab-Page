@@ -42,7 +42,8 @@ WeatherFetcher.ICON_MAPPER_ = {
 	smoke: 'fog',
 	snow: 'snow',
 	storm: 'partly_cloudy',
-	thunderstorm: 'tstorms'
+	thunderstorm: 'tstorms',
+	sunny: 'sunny'
 };
 
 WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
@@ -115,9 +116,9 @@ WeatherFetcher.prototype.retry_ = function(jqxhr) {
 
 WeatherFetcher.prototype.requestLocationName_ = function() {
 	var params = {
-		'language': 'en',
-		'latlng': '' + this.latitude_ + ',' + this.longitude_,
-		'sensor': 'false'
+		language: chrome.i18n.getMessage('@@ui_locale'),
+		latlng: '' + this.latitude_ + ',' + this.longitude_,
+		sensor: 'false'
 	};
 
 	console.log('Request location name for:', this.latitude_, this.longitude_);
@@ -200,11 +201,12 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(xmlDoc, status,
 	}
 
 	this.weatherRetryDelay_ = 1000;
-	weather = {'forecast': [], 'date': Date.now()};
+	weather = {forecast: [], date: Date.now()};
 
 	weather.icon = this.iGoogleIconToOnebox_(
 		currentNode.find('icon').attr('data'), 60);
-	weather.temperature = currentNode.find('temp_f').attr('data') + '°F';
+	var unit = chrome.i18n.getMessage('temperatureUnit')
+	weather.temperature = currentNode.find('temp_' + unit.toLowerCase()).attr('data') + '°' + unit;
 	weather.condition = currentNode.find('condition').attr('data');
 	weather.wind = currentNode.find('wind_condition').attr('data');
 	weather.humidity = currentNode.find('humidity').attr('data');
@@ -223,7 +225,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(xmlDoc, status,
 	}
 
 	chrome.storage.local.set(
-		{'weather': weather},
+		{weather: weather},
 	util.sendEventToAllWindows.bind(null, 'weather-loaded'));
 };
 

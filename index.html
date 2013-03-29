@@ -4,6 +4,7 @@
 		<title i18n-content="title"></title>
 		<meta charset="utf-8">
 		<meta name="google" value="notranslate">
+		<link rel="icon" href="icons/google.ico">
 		<link href="css/main.css" rel="stylesheet">
 	</head>
 	<body>
@@ -21,29 +22,49 @@
 		</div>
 		<div id="content-boxes-container">
 			<div class="content-boxes-column">
-
+				<div class="content-box" id="box-icons">
+					<!--<h2 i18n-content="apps"></h2>-->
+					<div id="promoted-services">
+						<a i18n-values="href:serviceURL('translate')">
+							<img src="images/translate-64.png">
+							<div class="icon-title" i18n-content='translate'></div>
+						</a>
+						<a href="http://www.youtube.com/">
+							<img src="images/youtube.png">
+							<div class="icon-title">YouTube</div>
+						</a>
+						<a href="http://plus.google.com/">
+							<img src="images/gplus-64.png">
+							<div class="icon-title">Google+</div>
+						</a>
+						<a i18n-values="href:serviceURL('maps')">
+							<img src="images/maps-resized.png">
+							<div class="icon-title" i18n-content='maps'></div>
+						</a>
+					</div>
+					<div id="apps-list"></div>
+				</div>
+			</div>
+			<div class="content-boxes-column">
 				<div class="content-box" id="box-recent">
 					<h2 i18n-content="recentlyClosed"></h2>
 					<div id="recent-recent">
-						<a i18n-values="href:searchURL">
+						<a i18n-values="href:searchURL(weather)">
 							<img id="weather-current-icon">
 						</a>
 					</div>
 				</div>
 
-				<div class="content-box" id="box-news"></div>
-			</div>
-			<div class="content-boxes-column">
 				<div class="content-box" id="box-weather">
 					<h2 i18n-content="weather"></h2>
 					<div id="weather-date"></div>
 					<div id="weather-current">
-						<a i18n-values="href:searchURL">
+						<a i18n-values="href:searchURL(weather)">
 							<img id="weather-current-icon">
 						</a>
 						<div id="weather-current-temperature">
 							<div id="weather-temperature"></div>
-
+							<div id="celsius" i18n-content='temperatureUnit'></div>
 						</div>
 						<div id="weather-current-box">
 							<div id="weather-condition"></div>
@@ -56,13 +77,12 @@
 						<a href="#" i18n-content="useGeoLocation"></a>
 					</div>
 				</div>
-				<div class="content-box" id="box-icons">
-					<h2 i18n-content="apps"></h2>
-					<div id="apps-list"></div>
-				</div>
+			</div>
+			<div class="content-boxes-column">
+				<div class="content-box" id="box-news"></div>
 			</div>
 		</div>
-		
+
 		<script src="lib/jquery.min.js"></script>
 		<script src="js/all.js"></script>
 		<script src="js/page.js"></script>

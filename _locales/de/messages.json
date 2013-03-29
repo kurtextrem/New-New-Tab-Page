@@ -1,11 +1,20 @@
 {
 	"extDesc": {
-		"description": "Extension description.",
-		"message": "Neue Neuer-Tab-Seite. Ein Community Projekt. Das (russische) Original stammt von Google."
+		"message": "Neue Neuer-Tab-Seite. Ein Community Projekt. Das (russische) Original stammt von Google.",
+		"description": "Extension description."
+
 	},
 	"extName": {
-		"description": "Extension name.",
-		"message": "Neue Neuer-Tab-Seite"
+		"message": "Neue Neuer-Tab-Seite",
+		"description": "Extension name."
+	},
+	"translate": {
+		"message": "Übersetzer",
+		"description": ""
+	},
+	"maps": {
+		"message": "Maps",
+		"description": ""
 	},
 	"title": {
 		"message": "Neuer Tab",
@@ -39,9 +48,15 @@
 		"message": "http://www.google.de/",
 		"description": ""
 	},
-	"newsURL": {
-		"message": "http://news.google.de/",
-		"description": ""
+	"serviceURL": {
+		"message": "http://$SERVICE$.google.de/",
+		"description": "",
+		"placeholders": {
+			"service": {
+				"content": "$1",
+				"example": "news"
+			}
+		}
 	},
 	"searchURL": {
 		"message": "http://www.google.de/search?q=$STRING$",
@@ -71,6 +86,10 @@
 	},
 	"moreNews": {
 		"message": "Mehr News",
+		"description": ""
+	},
+	"temperatureUnit": {
+		"message": "C",
 		"description": ""
 	}
 }

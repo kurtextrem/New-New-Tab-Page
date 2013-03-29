@@ -134,10 +134,10 @@ var dominantColors = {
 	}
 };
 
-function NTPRussia() {
+function NTP() {
 	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ = null
 }
-NTPRussia.prototype.init = function() {
+NTP.prototype.init = function() {
 	this.analytics_ = new Analytics;
 	this.search_ = new SearchBox;
 	this.mostVisited_ = new MostVisited(this.analytics_);
@@ -150,8 +150,8 @@ NTPRussia.prototype.init = function() {
 	this.news_.show();
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 };
-var ntpRussia = new NTPRussia;
-$(document).ready(ntpRussia.init.bind(ntpRussia));
+var ntp = new NTP;
+$(document).ready(ntp.init.bind(ntp));
 
 function MostVisited(a) {
 	this.ui_ = new MostVisitedUI(a, this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
@@ -162,7 +162,7 @@ function MostVisited(a) {
 	}.bind(this))
 }
 MostVisited.BUTTON_TYPE = "thumbnail";
-MostVisited.DATA_SOURCE = "history";
+MostVisited.DATA_SOURCE = "topSites"; // history
 MostVisited.prototype.show = function() {
 	if ("topSites" === MostVisited.DATA_SOURCE)
 		chrome.topSites.get(this.onTopSitesReceived_.bind(this));
@@ -259,7 +259,7 @@ MostVisited.prototype.getFavicon_ = function(a, b) {
 };
 MostVisited.prototype.filterAndShow_ = function(a, b) {
 	this.ui_.reset();
-	for (var c = 0, d = 0; c < a.length && 6 > d; c++) {
+	for (var c = 0, d = 0; c < a.length && 7 > d; c++) {
 		var f = a[c].url,
 			e = a[c].title,
 			g = util.domainFromURL(f);
@@ -335,7 +335,7 @@ News.prototype.showCachedNews_ = function(a) {
 		});
 	else {
 		this.ui_.reset();
-		this.ui_.addHeading();
+		//this.ui_.addHeading();
 		this.ui_.show();
 		for (var b = 0; b < Math.min(6, a.length); b++)
 			this.ui_.add(a[b].title, a[b].url, a[b].date);
@@ -635,7 +635,7 @@ Weather.prototype.getDateString_ = function(a) {
 	} catch (c) {
 		b = v8Intl
 	}
-	return b.DateTimeFormat(["en-en"], {
+	return b.DateTimeFormat([chrome.i18n.getMessage('@@ui_locale')], {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
@@ -794,11 +794,11 @@ NewsUI.prototype.show = function() {
 	$("#box-news").show()
 };
 
-NewsUI.prototype.addHeading = function() {
-	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
-	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
-	$("#box-news").append(a)
-};
+//NewsUI.prototype.addHeading = function() {
+//	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
+//	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
+//	$("#box-news").append(a)
+//};
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
 	a = $('<div class="news-item"><div class="news-time">' + c + '</div><a href="' + b + '">' + a + "</a></div>");
@@ -806,7 +806,7 @@ NewsUI.prototype.add = function(a, b, c) {
 	$("#box-news").append(a)
 };
 NewsUI.prototype.addMoreLink = function() {
-	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('newsURL') + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
+	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', 'news') + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#box-news").append(a)
 };
@@ -925,7 +925,7 @@ WeatherUI.prototype.reset = function() {
 	this.box_.find("#weather-forecast-box *").remove()
 };
 WeatherUI.prototype.hide = function() {
-	this.box_.hide()
+	//this.box_.hide()
 };
 WeatherUI.prototype.show = function() {
 	this.box_.show()
@@ -942,7 +942,7 @@ WeatherUI.prototype.setIcon = function(a) {
 	this.box_.find("#weather-current-icon").attr("src", a)
 };
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
-	a = a.replace("\u00b0C", "");
+	a = a.replace("\u00b0" + chrome.i18n.getMessage('temperatureUnit'), "");
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
 	this.box_.find("#weather-wind").text(c);

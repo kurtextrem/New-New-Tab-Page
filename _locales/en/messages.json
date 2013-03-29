@@ -7,6 +7,14 @@
 		"message": "New new-tab-page",
 		"description": "Extension name."
 	},
+	"translate": {
+		"message": "Translate",
+		"description": ""
+	},
+	"maps": {
+		"message": "Maps",
+		"description": ""
+	},
 	"title": {
 		"message": "New Tab",
 		"description": "Page title."
@@ -39,9 +47,15 @@
 		"message": "http://www.google.com/",
 		"description": ""
 	},
-	"newsURL": {
-		"message": "http://news.google.com/",
-		"description": ""
+	"serviceURL": {
+		"message": "http://$SERVICE$.google.de/",
+		"description": "",
+		"placeholders": {
+			"service": {
+				"content": "$1",
+				"example": "news"
+			}
+		}
 	},
 	"searchURL": {
 		"message": "http://www.google.com/search?q=$STRING$",
@@ -71,6 +85,10 @@
 	},
 	"moreNews": {
 		"message": "More News",
+		"description": ""
+	},
+	"temperatureUnit": {
+		"message": "F",
 		"description": ""
 	}
 }

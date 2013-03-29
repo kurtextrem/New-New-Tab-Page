@@ -3,8 +3,8 @@ function Thumbnails() {
 	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this));
 }
 
-Thumbnails.WIDTH = 120;
-Thumbnails.HEIGHT = 80;
+Thumbnails.WIDTH = 214; // 120
+Thumbnails.HEIGHT = 134; // 80
 
 Thumbnails.prototype.stripUrl_ = function(url) {
 	return url.replace(/^https?:\/\//, '')
@@ -30,9 +30,9 @@ Thumbnails.prototype.get = function(url, callback, failCallback) {
 	chrome.storage.local.get(request, function(res) {
 		var thumbnail = res[key];
 		if (!thumbnail) {
-			thumbnail = {'lastRequested': 0,
-				'lastDownloaded': 0,
-				'image': null};
+			thumbnail = {lastRequested: 0,
+				lastDownloaded: 0,
+				image: null};
 			res[key] = thumbnail;
 
 			if (Thumbnails.PRELOADED[url]) {
@@ -92,7 +92,7 @@ Thumbnails.prototype.checkTab_ = function(tab) {
 			return;
 
 		chrome.tabs.captureVisibleTab(
-			tab.windowId, {'format': 'png'}, this.onTabCapture_.bind(this, url));
+			tab.windowId, {format: 'png'}, this.onTabCapture_.bind(this, url));
 	}.bind(this));
 };
 

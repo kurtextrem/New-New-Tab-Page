@@ -40,7 +40,14 @@ var i18nTemplate = (function() {
 		 * @param {LoadTimeData} dictionary The dictionary of strings to draw from.
 		 */
 		'i18n-content': function(element, key, dictionary) {
-			element.textContent = dictionary.getMessage(key);
+			var split = key.split(/\(/);
+			var key = split[0]
+			var propArg = split[1]
+			if (typeof(propArg) != "undefined") {
+				var translation = dictionary.getMessage(propArg.replace(')', ''))
+				propArg = translation == '' ? propArg.replace(')', '').replace(/'/g, '') : translation
+			}
+			element.textContent = dictionary.getMessage(key, propArg);
 		},
 		/**
 		 * This handler adds options to a <select> element.
@@ -82,9 +89,15 @@ var i18nTemplate = (function() {
 					throw new Error('malformed i18n-values: ' + attributeAndKeys);
 
 				var propName = attributeAndKeyPair[1];
-				var propExpr = attributeAndKeyPair[2];
+				var split = attributeAndKeyPair[2].split(/\(/);
+				var propExpr = split[0]
+				var propArg = split[1]
+				if (typeof(propArg) != "undefined") {
+					var translation = dictionary.getMessage(propArg.replace(')', ''))
+					propArg = translation == '' ? propArg.replace(')', '').replace(/'/g, '') : translation
+				}
 
-				var value = dictionary.getMessage(propExpr);
+				var value = dictionary.getMessage(propExpr, propArg);
 
 				// Allow a property of the form '.foo.bar' to assign a value into
 				// element.foo.bar.
