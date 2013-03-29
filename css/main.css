@@ -1,6 +1,6 @@
 body {
 	font-family: sans-serif;
-	background: url('../images/context_header_bg_daylight.jpg') repeat-x top center;
+	background: url('../images/backgrounds/context_header_bg_daylight.jpg') repeat-x top center;
 }
 
 a, a:visited {
@@ -481,6 +481,10 @@ input[type="search"]::-webkit-search-cancel-button {
 /* Recent */
 #box-recent {
 	/*display: none;*/
+}
+
+#recent-recent {
+	padding-top: 4px;
 }
 
 
