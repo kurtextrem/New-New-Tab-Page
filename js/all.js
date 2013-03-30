@@ -925,7 +925,7 @@ WeatherUI.prototype.reset = function() {
 	this.box_.find("#weather-forecast-box *").remove()
 };
 WeatherUI.prototype.hide = function() {
-	//this.box_.hide()
+	this.box_.hide()
 };
 WeatherUI.prototype.show = function() {
 	this.box_.show()
@@ -939,7 +939,10 @@ WeatherUI.prototype.setDate = function(a) {
 	this.box_.find("#weather-date").text(a)
 };
 WeatherUI.prototype.setIcon = function(a) {
-	this.box_.find("#weather-current-icon").attr("src", a)
+	this.box_.find("#weather-current-icon").error(function() {
+		console.log('Unknown weather state: ' + a)
+		$(this).attr("src", "images/weather/unknown.png")
+	}).attr("src", a)
 };
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	a = a.replace("\u00b0" + chrome.i18n.getMessage('temperatureUnit'), "");

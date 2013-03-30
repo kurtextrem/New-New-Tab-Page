@@ -23,28 +23,28 @@ WeatherFetcher.prototype.init = function() {
 	this.startWeatherRetrieval();
 };
 
-WeatherFetcher.ICON_MAPPER_ = {
-	chance_of_rain: 'light_rain',
-	chance_of_snow: 'snow',
-	chance_of_storm: 'tstorms',
-	cloudy: 'cloudy',
-	flurries: 'light_snow',
-	fog: 'fog',
-	haze: 'fog',
-	hazy: 'fog',
-	icy: 'sleet',
-	mist: 'cloudy',
-	mostly_cloudy: 'partly_cloudy',
-	mostly_sunny: 'partly_cloudy',
-	partly_cloudy: 'partly_cloudy',
-	partlysunny: 'partly_cloudy',
-	rain: 'rain',
-	smoke: 'fog',
-	snow: 'snow',
-	storm: 'partly_cloudy',
-	thunderstorm: 'tstorms',
-	sunny: 'sunny'
-};
+//WeatherFetcher.ICON_MAPPER_ = {
+//	chance_of_rain: 'light_rain',
+//	chance_of_snow: 'snow',
+//	chance_of_storm: 'tstorms',
+//	cloudy: 'cloudy',
+//	flurries: 'light_snow',
+//	fog: 'fog',
+//	haze: 'fog',
+//	hazy: 'fog',
+//	icy: 'sleet',
+//	mist: 'cloudy',
+//	mostly_cloudy: 'partly_cloudy',
+//	mostly_sunny: 'partly_cloudy',
+//	partly_cloudy: 'partly_cloudy',
+//	partlysunny: 'partly_cloudy',
+//	rain: 'rain',
+//	smoke: 'fog',
+//	snow: 'snow',
+//	storm: 'partly_cloudy',
+//	thunderstorm: 'tstorms',
+//	sunny: 'sunny'
+//};
 
 WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
 
@@ -180,10 +180,12 @@ WeatherFetcher.prototype.requestWeather_ = function() {
 };
 
 WeatherFetcher.prototype.iGoogleIconToOnebox_ = function(url, size) {
-	url = url.replace('/ig/images/weather/', '').replace('.gif', '');
-	if (!WeatherFetcher.ICON_MAPPER_[url])
-		console.log('Unkown weather condition:', url);
-	url = 'images/weather/' + (WeatherFetcher.ICON_MAPPER_[url] || url) + '.png';
+	var hours = (new Date).getHours(),
+		night = hours > 19 || hours < 6 ? '/night/' : ''
+	url = url.replace('/ig/images/weather/', '').replace('.gif', '').replace(/_/g, ' ');
+//	if (!WeatherFetcher.ICON_MAPPER_[url])
+//		console.log('Unkown weather condition:', url);
+	url = 'images/weather/' + night + (url) + '.png';
 	return url;
 };
 

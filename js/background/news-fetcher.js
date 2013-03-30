@@ -1,6 +1,7 @@
 function NewsFetcher() {
 	this.retryDelay_ = 1000;
 	this.interval_ = null;
+	this.personalizePermission_ = null;
 }
 
 NewsFetcher.prototype.init = function() {
