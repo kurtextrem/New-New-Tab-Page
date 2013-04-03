@@ -1,7 +1,7 @@
-New "New Tab" Page
+New tab page reimagined
 =========
 
-This is the new "new tab" page. It was created by Google, but only in russian.
+This is a new "new tab" page. It was created by Google, but only in russian.
 
 I originally made this repository in order to get a far-reaching language support. Now I also want to finish the work from Google and / or design it more comfortable.
 
