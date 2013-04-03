@@ -1,7 +1,6 @@
 function NewsFetcher() {
 	this.retryDelay_ = 1000;
 	this.interval_ = null;
-	this.personalizePermission_ = null;
 }
 
 NewsFetcher.prototype.init = function() {
@@ -13,7 +12,7 @@ NewsFetcher.prototype.init = function() {
 NewsFetcher.prototype.startRetrieval = function() {
 	console.log('Requesting news from RSS.');
 	var request = $.get(
-		'https://news.google.com/news/feeds?pz=1&hl='+chrome.i18n.getMessage('@@ui_locale')+'&output=rss',
+	chrome.i18n.getMessage('serviceURL', ['s', 'news']) + 'news/feeds?pz=1&hl=' + chrome.i18n.getMessage('@@ui_locale') + '&output=rss',
 		this.storeFromRss_.bind(this),
 		'xml');
 	request.fail(this.onError_.bind(this, request));
@@ -43,7 +42,7 @@ NewsFetcher.prototype.storeFromRss_ = function(xmlDoc) {
 	}
 
 	chrome.storage.local.set(
-		{'news': news},
+		{news: news},
 	util.sendEventToAllWindows.bind(null, 'news-loaded'));
 };
 

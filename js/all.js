@@ -346,7 +346,7 @@ News.prototype.showCachedNews_ = function(a) {
 function SuggestRequest(a) {
 	this.query_ = a
 }
-SuggestRequest.URL = "https://www.google.com/complete/search";
+SuggestRequest.URL = chrome.i18n.getMessage('google', 's') + "complete/search";
 SuggestRequest.prototype.sendRequest = function(a) {
 	this.callback_ = a;
 	$.get(SuggestRequest.URL, {
@@ -635,7 +635,7 @@ Weather.prototype.getDateString_ = function(a) {
 	} catch (c) {
 		b = v8Intl
 	}
-	return b.DateTimeFormat([chrome.i18n.getMessage('@@ui_locale')], {
+	return b.DateTimeFormat(chrome.i18n.getMessage('@@ui_locale').replace('_', '-'), {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
@@ -657,7 +657,7 @@ AppsUI.prototype.analyticsForPromo_ = function() {
 		a[b].onclick = this.analytics_.trackLink.bind(this.analytics_, a[b], "promoted-services")
 };
 AppsUI.prototype.onAppsListReceived_ = function(a) {
-	var b = $('<a href="https://chrome.google.com/webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">Chrome Web Store</div></a>');
+	var b = $('<a href="' + chrome.i18n.getMessage('serviceURL', ['s', 'chrome']) + 'webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">Chrome Web Store</div></a>');
 	this.analytics_.wrapLink(b[0], "webstore");
 	$("#apps-list").append(b);
 	for (b = 0; b < a.length; b++) {
@@ -806,7 +806,7 @@ NewsUI.prototype.add = function(a, b, c) {
 	$("#box-news").append(a)
 };
 NewsUI.prototype.addMoreLink = function() {
-	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', 'news') + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
+	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#box-news").append(a)
 };
@@ -825,7 +825,7 @@ function SearchBox() {
 }
 SearchBox.GOOGLE_SEARCH_URL = chrome.i18n.getMessage;
 SearchBox.prototype.navigateToGoogle_ = function(a) {
-	a = SearchBox.GOOGLE_SEARCH_URL('searchURL', encodeURIComponent(a));
+	a = SearchBox.GOOGLE_SEARCH_URL('searchURL', ['s', encodeURIComponent(a)]);
 	location.replace(a)
 };
 SearchBox.prototype.onSpeechChange_ = function() {
@@ -918,7 +918,7 @@ function WeatherUI(a) {
 	this.analytics_ = a;
 	this.box_ = $("#box-weather");
 	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
-	this.link_ = chrome.i18n.getMessage('searchURL', chrome.i18n.getMessage('weather'));
+	this.link_ = chrome.i18n.getMessage('searchURL', ['', chrome.i18n.getMessage('weather')]);
 	this.box_.find("a").attr("href", this.link_)
 }
 WeatherUI.prototype.reset = function() {
@@ -932,7 +932,7 @@ WeatherUI.prototype.show = function() {
 };
 WeatherUI.prototype.setAddress = function(a) {
 	this.box_.find("h2").text(a);
-	this.link_ = chrome.i18n.getMessage('searchURL', encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + a));
+	this.link_ = chrome.i18n.getMessage('searchURL', ['', encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + a)]);
 	this.box_.find("a").attr("href", this.link_)
 };
 WeatherUI.prototype.setDate = function(a) {

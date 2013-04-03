@@ -1,11 +1,11 @@
 {
 	"extDesc": {
-		"message": "Neue Neuer-Tab-Seite. Ein Community Projekt. Das (russische) Original stammt von Google.",
+		"message": "Neue 'Neuer Tab'-Seite. Ein Community Projekt. Das (russische) Original stammt von Google.",
 		"description": "Extension description."
 
 	},
 	"extName": {
-		"message": "Neue Neuer-Tab-Seite",
+		"message": "'Neuer Tab'-Seite neu erfunden",
 		"description": "Extension name."
 	},
 	"translate": {
@@ -45,26 +45,40 @@
 		"description": ""
 	},
 	"google": {
-		"message": "http://www.google.de/",
-		"description": ""
+		"message": "http$SECURE$://www.google.de/",
+		"description": "",
+		"placeholders": {
+			"secure": {
+				"content": "$1",
+				"example": "s"
+			}
+		}
 	},
 	"serviceURL": {
-		"message": "http://$SERVICE$.google.de/",
+		"message": "http$SECURE$://$SERVICE$.google.de/",
 		"description": "",
 		"placeholders": {
 			"service": {
-				"content": "$1",
+				"content": "$2",
 				"example": "news"
+			},
+			"secure": {
+				"content": "$1",
+				"example": "s"
 			}
 		}
 	},
 	"searchURL": {
-		"message": "http://www.google.de/search?q=$STRING$",
+		"message": "http$SECURE$://www.google.de/search?q=$STRING$",
 		"description": "",
 		"placeholders": {
 			"string": {
-				"content": "$1",
+				"content": "$2",
 				"example": "Weather"
+			},
+			"secure": {
+				"content": "$1",
+				"example": "s"
 			}
 		}
 	},

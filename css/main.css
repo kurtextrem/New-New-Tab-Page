@@ -360,6 +360,10 @@ input[type="search"]::-webkit-search-cancel-button {
 	text-transform: uppercase;
 }
 
+#weather-condition {
+	text-transform: uppercase;
+}
+
 .weather-forecast img {
 	width: 35px;
 	height: 35px;
