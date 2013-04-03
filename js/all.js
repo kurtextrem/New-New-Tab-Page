@@ -657,7 +657,7 @@ AppsUI.prototype.analyticsForPromo_ = function() {
 		a[b].onclick = this.analytics_.trackLink.bind(this.analytics_, a[b], "promoted-services")
 };
 AppsUI.prototype.onAppsListReceived_ = function(a) {
-	var b = $('<a href="' + chrome.i18n.getMessage('serviceURL', ['s', 'chrome']) + 'webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">Chrome Web Store</div></a>');
+	var b = $('<a href="https://chrome.google.com/webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">Chrome Web Store</div></a>');
 	this.analytics_.wrapLink(b[0], "webstore");
 	$("#apps-list").append(b);
 	for (b = 0; b < a.length; b++) {

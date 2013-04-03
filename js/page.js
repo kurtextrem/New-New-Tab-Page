@@ -44,8 +44,9 @@ var i18nTemplate = (function() {
 			var key = split[0]
 			var propArg = split[1]
 			if (typeof(propArg) != "undefined") {
-				var translation = dictionary.getMessage(propArg.replace(')', ''))
-				propArg = translation == '' ? propArg.replace(')', '').replace(/'/g, '') : translation
+				propArg = propArg.replace(')', '')
+				var translation = dictionary.getMessage(propArg)
+				propArg = translation == '' ? propArg = propArg.replace(/'/g, '').split(',') : propArg = translation
 			}
 			element.textContent = dictionary.getMessage(key, propArg);
 		},
@@ -93,8 +94,9 @@ var i18nTemplate = (function() {
 				var propExpr = split[0]
 				var propArg = split[1]
 				if (typeof(propArg) != "undefined") {
-					var translation = dictionary.getMessage(propArg.replace(')', ''))
-					propArg = translation == '' ? propArg.replace(')', '').replace(/'/g, '') : translation
+					propArg = propArg.replace(')', '')
+					var translation = dictionary.getMessage(propArg)
+					propArg = translation == '' ? propArg = propArg.replace(/'/g, '').split(',') : propArg = translation
 				}
 
 				var value = dictionary.getMessage(propExpr, propArg);
