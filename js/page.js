@@ -46,7 +46,13 @@ var i18nTemplate = (function() {
 			if (typeof(propArg) != "undefined") {
 				propArg = propArg.replace(')', '')
 				var translation = dictionary.getMessage(propArg)
-				propArg = translation == '' ? propArg = propArg.replace(/'/g, '').split(',') : propArg = translation
+				propArg = translation == '' ? propArg = propArg.split(',') : propArg = translation
+				if (typeof(propArg) == 'object') {
+					propArg.some(function(elm, i) {
+						var transl = dictionary.getMessage(elm)
+						this[i] = transl == '' ? elm.replace(/'/g, '') : transl
+					}, propArg)
+				}
 			}
 			element.textContent = dictionary.getMessage(key, propArg);
 		},
@@ -96,7 +102,13 @@ var i18nTemplate = (function() {
 				if (typeof(propArg) != "undefined") {
 					propArg = propArg.replace(')', '')
 					var translation = dictionary.getMessage(propArg)
-					propArg = translation == '' ? propArg = propArg.replace(/'/g, '').split(',') : propArg = translation
+					propArg = translation == '' ? propArg = propArg.split(',') : propArg = translation
+					if (typeof(propArg) == 'object') {
+						propArg.some(function(elm, i) {
+							var transl = dictionary.getMessage(elm)
+							this[i] = transl == '' ? elm.replace(/'/g, '') : transl
+						}, propArg)
+					}
 				}
 
 				var value = dictionary.getMessage(propExpr, propArg);
