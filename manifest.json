@@ -5,6 +5,11 @@
 
 	"description": "__MSG_extDesc__",
 	"default_locale": "en",
+	"icons": {
+		"128": "images/partly sunny.png",
+		"16": "images/partly sunny.png",
+		"48": "images/partly sunny.png"
+	},
 	"background": {
 		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/favicons.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "lib/jquery.min.js"]
 	},
