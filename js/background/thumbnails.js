@@ -13,7 +13,7 @@ Thumbnails.prototype.stripUrl_ = function(url) {
 };
 
 Thumbnails.PRELOADED = {
-	'ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0':
+	'wikipedia.org':
 		'thumbnails/wikipedia.png',
 	'vk.com': 'thumbnails/vkontakte.png',
 	'odnoklassniki.ru': 'thumbnails/odnoklassniki.png',
@@ -97,7 +97,7 @@ Thumbnails.prototype.checkTab_ = function(tab) {
 };
 
 Thumbnails.prototype.onTabCapture_ = function(url, dataurl) {
-	console.log('Thumbnails.onTabCapture_', url);
+	//console.log('Thumbnails.onTabCapture_', url);
 	this.cropAndResize_(dataurl, Thumbnails.WIDTH, Thumbnails.HEIGHT,
 		this.set.bind(this, url));
 };
@@ -153,7 +153,7 @@ Thumbnails.prototype.set = function(url, image) {
 	chrome.storage.local.get(request, function(res) {
 		var thumbnail = res[key];
 		if (!thumbnail) {
-			console.error('Can\'t find thumbnail that should be present in storage.');
+			//console.error('Can\'t find thumbnail that should be present in storage.');
 			return;
 		}
 		thumbnail.lastDownloaded = Date.now();

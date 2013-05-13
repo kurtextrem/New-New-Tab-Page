@@ -10,7 +10,7 @@ NewsFetcher.prototype.init = function() {
 };
 
 NewsFetcher.prototype.startRetrieval = function() {
-	console.log('Requesting news from RSS.');
+	//console.log('Requesting news from RSS.');
 	var request = $.get(
 	chrome.i18n.getMessage('serviceURL', ['s', 'news']) + 'news/feeds?pz=1&hl=' + chrome.i18n.getMessage('@@ui_locale') + '&output=rss',
 		this.storeFromRss_.bind(this),
@@ -19,8 +19,8 @@ NewsFetcher.prototype.startRetrieval = function() {
 };
 
 NewsFetcher.prototype.onError_ = function(jqxhr) {
-	console.error('Failed news request. readyState:', jqxhr.readyState,
-		'status:', jqxhr.status);
+	/*console.error('Failed news request. readyState:', jqxhr.readyState,
+		'status:', jqxhr.status);*/
 	setTimeout(this.startRetrieval.bind(this), this.retryDelay_);
 	this.retryDelay_ = util.updateRetryDelay(this.retryDelay_);
 };

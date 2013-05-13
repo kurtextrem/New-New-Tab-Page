@@ -16,10 +16,10 @@ function AnalyticsSender() {
 }
 
 AnalyticsSender.prototype.checkBookmarksExtension_ = function() {
-	chrome.management.get('kcaffnbidpkidalidcbejnhkeklodplg', function(ext) {
+	/*chrome.management.get('kcaffnbidpkidalidcbejnhkeklodplg', function(ext) {
 		if (ext)
 			this.bookmarksExtensionInstalled_ = true;
-	}.bind(this));
+	}.bind(this));*/
 };
 
 AnalyticsSender.prototype.onload_ = function() {

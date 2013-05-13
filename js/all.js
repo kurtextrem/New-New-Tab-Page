@@ -135,7 +135,7 @@ var dominantColors = {
 };
 
 function NTP() {
-	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ = null
+	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = null
 }
 NTP.prototype.init = function() {
 	this.analytics_ = new Analytics;
@@ -148,6 +148,8 @@ NTP.prototype.init = function() {
 	this.weather_.show();
 	this.news_ = new News(this.analytics_);
 	this.news_.show();
+	this.recentlyClosed_ = new recentlyClosed()
+	this.recentlyClosed_.show()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 };
 var ntp = new NTP;
@@ -162,7 +164,7 @@ function MostVisited(a) {
 	}.bind(this))
 }
 MostVisited.BUTTON_TYPE = "thumbnail";
-MostVisited.DATA_SOURCE = "topSites"; // history
+MostVisited.DATA_SOURCE = "topSites"; // history / topSites
 MostVisited.prototype.show = function() {
 	if ("topSites" === MostVisited.DATA_SOURCE)
 		chrome.topSites.get(this.onTopSitesReceived_.bind(this));
@@ -192,9 +194,9 @@ MostVisited.DEFAULT_SITES = [{
 		domain: "odnoklassniki.ru",
 		title: "\u041e\u0434\u043d\u043e\u043a\u043b\u0430\u0441\u0441\u043d\u0438\u043a\u0438"
 	}, {
-		domain: "ru.wikipedia.org",
-		url: "http://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0",
-		title: "\u0412\u0438\u043a\u0438\u043f\u0435\u0434\u0438\u044f"
+		domain: "wikipedia.org",
+		url: "http://wikipedia.org/",
+		title: "Wikipedia"
 	}, {
 		domain: "livejournal.ru",
 		url: "http://www.livejournal.ru/",
@@ -306,8 +308,8 @@ MostVisited.prototype.undoDomainBlock_ = function() {
 		a["most-visited-blocked-" + this.lastBlockedDomain_] = !1;
 		chrome.storage.local.set(a, this.show.bind(this));
 		this.lastBlockedDomain_ = null
-	} else
-		console.error("Undo shown while no domain was blocked.")
+	}// else
+	//	console.error("Undo shown while no domain was blocked.")
 };
 MostVisited.prototype.unblockAllDomains_ = function() {
 	this.lastBlockedDomain_ = null;
@@ -330,9 +332,10 @@ News.prototype.show = function() {
 News.prototype.showCachedNews_ = function(a) {
 	a = a.news;
 	if (!a || 0 === a.length || 36E5 < Date.now() - a.date)
-		console.log("No news or old news, retrying."), this.ui_.hide(), chrome.runtime.getBackgroundPage(function(a) {
+		this.ui_.hide(), chrome.runtime.getBackgroundPage(function(a) {
 			a.newsFetcher.init()
 		});
+		//console.log("No news or old news, retrying.")
 	else {
 		this.ui_.reset();
 		//this.ui_.addHeading();
@@ -369,7 +372,7 @@ var util = {
 		return -1 != navigator.appVersion.indexOf("Linux") ? "linux" : -1 != navigator.appVersion.indexOf("CrOS") ? "cros" : -1 != navigator.appVersion.indexOf("Mac OS X") ? "mac" : "other"
 	},
 	showError: function(a) {
-		console.error("Error:", a)
+		//console.error("Error:", a)
 	},
 	makeURL: function(a, b) {
 		var c = [],
@@ -484,9 +487,10 @@ var util = {
 			Math.sin(a) * Math.sin(a / util.LANCZOS_SIZE) / (a * a)
 	},
 	doScaleX_: function(a, b) {
-		if (a.height !== b.height)
-			console.error("The height does not match in one-dimension scale.");
-		else
+		//if (a.height !== b.height)
+			//console.error("The height does not match in one-dimension scale.");
+		//else
+		if (a.height === b.height)
 			for (var c = (b.width - 1) / (a.width - 1), d = 0, f = 0; f < b.height; f++)
 				for (var e = 0; e < b.width; e++) {
 					var g = e / c;
@@ -593,7 +597,7 @@ Weather.prototype.show = function() {
 	}, this.showValues_.bind(this))
 };
 Weather.prototype.requestNewWeather_ = function() {
-	console.log("requestNewWeather_");
+	//console.log("requestNewWeather_");
 	chrome.runtime.getBackgroundPage(function(a) {
 		a.weatherFetcher.init()
 	}.bind(this))
@@ -715,7 +719,7 @@ MostVisitedUI.prototype.reset = function() {
 	}.bind(this));
 	$("#block-most-visited-confirmation .close-button").unbind();
 	$("#block-most-visited-confirmation .close-button").click(function() {
-		console.log("close");
+		//console.log("close");
 		this.analytics_.track("most-visited-confirmation", "close");
 		this.hideUndoBar_(this)
 	}.bind(this))
@@ -794,11 +798,11 @@ NewsUI.prototype.show = function() {
 	$("#box-news").show()
 };
 
-//NewsUI.prototype.addHeading = function() {
-//	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
-//	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
-//	$("#box-news").append(a)
-//};
+NewsUI.prototype.addHeading = function() {
+	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
+	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
+	$("#box-news").append(a)
+};
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
 	a = $('<div class="news-item"><div class="news-time">' + c + '</div><a href="' + b + '">' + a + "</a></div>");
@@ -940,7 +944,7 @@ WeatherUI.prototype.setDate = function(a) {
 };
 WeatherUI.prototype.setIcon = function(a) {
 	this.box_.find("#weather-current-icon").error(function() {
-		console.log('Unknown weather state: ' + a)
+		//console.log('Unknown weather state: ' + a)
 		$(this).attr("src", "images/weather/unknown.png")
 	}).attr("src", a)
 };
@@ -967,3 +971,43 @@ WeatherUI.prototype.showPermissionConfirmation = function(a) {
 		return !1
 	}.bind(this))
 };
+
+function recentlyClosed() {
+	this.ui_ = new recentlyClosedUI()
+}
+
+recentlyClosed.prototype.requestRecentlyClosed = function() {
+	chrome.runtime.getBackgroundPage(function(a) {
+		a.recentlyClosed.get(function(a){
+			this.ui_.setRecentlyClosed(a)
+		}.bind(this))
+	}.bind(this))
+}
+
+recentlyClosed.prototype.show = function() {
+	this.requestRecentlyClosed()
+}
+
+function recentlyClosedUI() {
+	this.box_ = $("#box-recent");
+}
+
+recentlyClosedUI.prototype.setRecentlyClosed = function(a) {
+	if (typeof(a[0]) != "undefined")
+		this.box_.find('#recent-recent > a').attr('href', a[0].url).attr('title', a[0].title).find("img").css('background-image', 'url('+a[0].faviconUrl+')').show()
+	if (typeof(a[1]) != "undefined")
+		this.box_.find('#recent-2nd > a').attr('href', a[1].url).attr('title', a[1].title).find("img").css('background-image', 'url('+a[1].faviconUrl+')').show()
+	if (typeof(a[2]) != "undefined")
+		this.box_.find('#recent-3rd > a').attr('href', a[2].url).attr('title', a[2].title).find("img").css('background-image', 'url('+a[2].faviconUrl+')').show()
+	if (typeof(a[3]) != "undefined")
+		this.box_.find('#recent-4th > a').attr('href', a[3].url).attr('title', a[3].title).find("img").css('background-image', 'url('+a[3].faviconUrl+')').show()
+	if (typeof(a[4]) != "undefined")
+		this.box_.find('#recent-5th > a').attr('href', a[4].url).attr('title', a[4].title).find("img").css('background-image', 'url('+a[4].faviconUrl+')').show()
+}
+
+recentlyClosedUI.prototype.hide = function() {
+	this.box_.hide()
+}
+recentlyClosedUI.prototype.show = function() {
+	this.box_.show()
+}
