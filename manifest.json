@@ -6,9 +6,9 @@
 	"description": "__MSG_extDesc__",
 	"default_locale": "en",
 	"icons": {
-		"128": "images/weather/partly sunny.png",
-		"16": "images/weather/partly sunny.png",
-		"48": "images/weather/partly sunny.png"
+		"128": "images/large_newtab.png",
+		"16": "images/large_newtab.png",
+		"48": "images/large_newtab.png"
 	},
 	"background": {
 		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/favicons.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "lib/jquery.min.js"]

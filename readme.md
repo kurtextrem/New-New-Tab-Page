@@ -12,7 +12,7 @@ Thanks to http://forum.xda-developers.com/showpost.php?p=37322378&postcount=98 f
 Version
 -
 
-0.3.0
+0.4.0
 
 Installation
 --------------

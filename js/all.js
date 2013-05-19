@@ -989,20 +989,16 @@ recentlyClosed.prototype.show = function() {
 }
 
 function recentlyClosedUI() {
-	this.box_ = $("#box-recent");
+	this.box_ = $("#box-recent")
+	this.img_ = $('<img>')
 }
 
 recentlyClosedUI.prototype.setRecentlyClosed = function(a) {
-	if (typeof(a[0]) != "undefined")
-		this.box_.find('#recent-recent > a').attr('href', a[0].url).attr('title', a[0].title).find("img").css('background-image', 'url('+a[0].faviconUrl+')').show()
-	if (typeof(a[1]) != "undefined")
-		this.box_.find('#recent-2nd > a').attr('href', a[1].url).attr('title', a[1].title).find("img").css('background-image', 'url('+a[1].faviconUrl+')').show()
-	if (typeof(a[2]) != "undefined")
-		this.box_.find('#recent-3rd > a').attr('href', a[2].url).attr('title', a[2].title).find("img").css('background-image', 'url('+a[2].faviconUrl+')').show()
-	if (typeof(a[3]) != "undefined")
-		this.box_.find('#recent-4th > a').attr('href', a[3].url).attr('title', a[3].title).find("img").css('background-image', 'url('+a[3].faviconUrl+')').show()
-	if (typeof(a[4]) != "undefined")
-		this.box_.find('#recent-5th > a').attr('href', a[4].url).attr('title', a[4].title).find("img").css('background-image', 'url('+a[4].faviconUrl+')').show()
+	var length = a.length
+	for (var i = 0; i < length; i++) {
+		if (typeof(a[i]) != 'undefined')
+			this.imgLoad(a[i].faviconUrl, this.box_.find('div:nth-of-type('+(i+1)+'n) > a').attr('href', a[i].url).attr('title', a[i].title).find('img'))
+	}
 }
 
 recentlyClosedUI.prototype.hide = function() {
@@ -1010,4 +1006,12 @@ recentlyClosedUI.prototype.hide = function() {
 }
 recentlyClosedUI.prototype.show = function() {
 	this.box_.show()
+}
+
+recentlyClosedUI.prototype.imgLoad = function(url, imgObj) {
+	this.img_.attr('src', url).load(function() {
+			imgObj.css('background-image', 'url('+url+')').show()
+	}).error(function(){
+			imgObj.css('background-image', 'url(images/empty.png)').show()
+	})
 }

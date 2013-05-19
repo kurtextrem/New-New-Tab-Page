@@ -15,7 +15,7 @@ function WeatherFetcher() {
 WeatherFetcher.DELAY = 3600 * 1000;
 
 WeatherFetcher.prototype.init = function() {
-	console.log('init');
+	//console.log('init');
 	if (this.interval_)
 		clearInterval(this.interval_);
 	this.interval_ = setInterval(this.startWeatherRetrieval.bind(this), WeatherFetcher.DELAY);
@@ -47,7 +47,7 @@ WeatherFetcher.prototype.init = function() {
 WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
 
 WeatherFetcher.prototype.startWeatherRetrieval = function() {
-	console.log('startWeatherRetrieval');
+	//console.log('startWeatherRetrieval');
 	if (this.retryTimeout_)
 		clearTimeout(this.retryTimeout_);
 	this.retryTimeout_ = null;
@@ -77,7 +77,7 @@ WeatherFetcher.prototype.startWeatherRetrieval = function() {
 };
 
 WeatherFetcher.prototype.requestLocation_ = function() {
-	console.log('requestLocation_');
+	//console.log('requestLocation_');
 	navigator.geolocation.getCurrentPosition(
 		this.handleGeolocationResponse_.bind(this), function() {
 		console.error('Geolocation failed.');
@@ -92,7 +92,7 @@ WeatherFetcher.prototype.handleGeolocationResponse_ = function(position) {
 		return;
 	}
 
-	console.log('Geolocation:', position);
+	//console.log('Geolocation:', position);
 	this.latitude_ = position.coords.latitude;
 	this.longitude_ = position.coords.longitude;
 	this.country_ = null;
@@ -100,7 +100,7 @@ WeatherFetcher.prototype.handleGeolocationResponse_ = function(position) {
 };
 
 WeatherFetcher.prototype.retry_ = function(jqxhr) {
-	console.error('Retrying weather request. Delay:', this.retryDelay_ / 1000, 's.');
+	//console.error('Retrying weather request. Delay:', this.retryDelay_ / 1000, 's.');
 	this.retryTimeout_ = setTimeout(
 		function() {
 			this.retryTimeout_ = null;
@@ -116,18 +116,18 @@ WeatherFetcher.prototype.requestLocationName_ = function() {
 		sensor: 'false'
 	};
 
-	console.log('Request location name for:', this.latitude_, this.longitude_);
+	//console.log('Request location name for:', this.latitude_, this.longitude_);
 
 	var request = $.getJSON(
 		util.makeURL('https://maps.googleapis.com/maps/api/geocode/json', params), this.handleLocationResponse_.bind(this));
 	request.error(function() {
-		console.error('Reverse geocoding request failed.');
+	//	console.error('Reverse geocoding request failed.');
 		this.retry_();
 	}.bind(this));
 };
 
 WeatherFetcher.prototype.handleLocationResponse_ = function(data) {
-	console.log('Location:', data);
+	//console.log('Location:', data);
 	this.locationRetryDelay_ = 1000;
 
 	var byType = {}
@@ -161,11 +161,11 @@ WeatherFetcher.prototype.requestWeather_ = function() {
 		oauth_signature: chrome.i18n.getMessage('@@ui_locale'),
 		referrer: 'igoogle'
 	};
-	console.log('Request weather for:', this.country_, latitude, longitude);
+	//console.log('Request weather for:', this.country_, latitude, longitude);
 	var request = $.get(
 		util.makeURL('https://www.google.com/ig/api', params), this.handleWeatherResponse_.bind(this), 'xml');
 	request.error(function() {
-		console.error('Weather request failed.');
+	//	console.error('Weather request failed.');
 		this.retry_();
 	}.bind(this));
 };
@@ -181,13 +181,13 @@ WeatherFetcher.prototype.iGoogleIconToOnebox_ = function(url, size, nightOverrid
 };
 
 WeatherFetcher.prototype.handleWeatherResponse_ = function(xmlDoc, status, jqxhr) {
-	console.log('Weather response:', xmlDoc)
+	//console.log('Weather response:', xmlDoc)
 	var doc = $(xmlDoc);
 	var currentNode = doc.find('current_conditions');
 	if (currentNode.length < 1) {
-		console.error('Wrong weather response.');
-		console.error('Status:', status);
-		console.error('Full response:', jqxhr.responseText);
+	//	console.error('Wrong weather response.');
+	//	console.error('Status:', status);
+	//	console.error('Full response:', jqxhr.responseText);
 		this.retry_();
 		return;
 	}

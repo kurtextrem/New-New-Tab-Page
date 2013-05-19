@@ -9,7 +9,7 @@ function RecentlyClosed() {
 }
 
 RecentlyClosed.ITEMS = 4
-RecentlyClosed.prototype.last = 5 // RecentlyClosed.ITEMS + 1
+RecentlyClosed.prototype.last = RecentlyClosed.ITEMS + 1
 RecentlyClosed.prototype.map= {}
 
 RecentlyClosed.prototype.retrieveInfo = function(id) {

@@ -30,7 +30,7 @@ NewsFetcher.prototype.storeFromRss_ = function(xmlDoc) {
 
 	var rss = $(xmlDoc);
 	var items = rss.find('item');
-	console.log('Got ' + items.length + ' news at', new Date());
+	//console.log('Got ' + items.length + ' news at', new Date());
 	var news = [];
 	news.date = Date.now();
 	for (var i = 0; i < items.length; i++) {

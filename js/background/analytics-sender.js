@@ -4,7 +4,7 @@ _gaq.push(['_trackPageview']);
 
 function AnalyticsSender() {
 	this.loaded_ = false;
-	this.bookmarksExtensionInstalled_ = false;
+	//this.bookmarksExtensionInstalled_ = false;
 	var ga = document.createElement('script');
 	ga.type = 'text/javascript';
 	ga.onload = this.onload_.bind(this);
@@ -12,7 +12,7 @@ function AnalyticsSender() {
 	var s = document.getElementsByTagName('script')[0];
 	s.parentNode.insertBefore(ga, s);
 
-	this.checkBookmarksExtension_();
+	//this.checkBookmarksExtension_();
 }
 
 AnalyticsSender.prototype.checkBookmarksExtension_ = function() {
@@ -27,17 +27,17 @@ AnalyticsSender.prototype.onload_ = function() {
 };
 
 AnalyticsSender.prototype.trackPageLoad = function() {
-	console.log('trackPageLoad');
+	//console.log('trackPageLoad');
 	var url = '/index.html';
-	if (this.bookmarksExtensionInstalled_)
-		url += '+bookmarks';
+	//if (this.bookmarksExtensionInstalled_)
+	//	url += '+bookmarks';
 	_gaq.push(['_trackPageview', url]);
 };
 
 AnalyticsSender.prototype.track = function(category, label) {
-	if (this.bookmarksExtensionInstalled_)
-		category += '+bookmarks';
-	console.log('track', category, label);
+	//if (this.bookmarksExtensionInstalled_)
+	//	category += '+bookmarks';
+	//console.log('track', category, label);
 	_gaq.push(['_trackEvent', category, 'click', label]);
 };
 
