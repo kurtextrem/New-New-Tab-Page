@@ -9,33 +9,39 @@ function RecentlyClosed() {
 }
 
 RecentlyClosed.ITEMS = 4
-RecentlyClosed.prototype.last = RecentlyClosed.ITEMS + 1
 RecentlyClosed.prototype.map= {}
 
 RecentlyClosed.prototype.retrieveInfo = function(id) {
 	var tab = this.map[id]
-	if (typeof (tab) != "undefined")
+	if (typeof (tab) != 'undefined')
 		this.store(tab.url, tab.title, tab.favIconUrl)
 }
 RecentlyClosed.prototype.store = function(url, title, faviconUrl) {
 	var key = 'recentlyClosed'
 	chrome.storage.local.get(key, function(res) {
-		this.last--
-		if (this.last < 0)
-			this.last = RecentlyClosed.ITEMS
 		//if (!item) {
 			//console.error('Can\'t find tab that should be present in storage.');
 		//	return
 		//}
-		if (typeof(res['recentlyClosed']) == "undefined")
-			res['recentlyClosed'] = {}
-		res['recentlyClosed'][this.last] = {
+		if (typeof(res['recentlyClosed']) == 'undefined')
+			res['recentlyClosed'] = []
+		res['recentlyClosed'] = this.moveForward(res['recentlyClosed'])
+		res['recentlyClosed'][0] = {
 			url: url,
 			title: title,
 			faviconUrl: faviconUrl
 		}
 		chrome.storage.local.set(res)
 	}.bind(this))
+}
+
+RecentlyClosed.prototype.moveForward = function(array) {
+	var newArray = []
+	array.forEach(function(elem, i){
+		if (i > RecentlyClosed.ITEMS-1) return
+		newArray[i+1] = elem
+	})
+	return newArray
 }
 
 RecentlyClosed.prototype.get = function(callback) {

@@ -860,7 +860,7 @@ SearchBox.prototype.onFocus_ = function() {
 	this.input_.hasClass("empty") && (this.input_.val(""), this.input_.removeClass("empty"))
 };
 SearchBox.prototype.onBlur_ = function() {
-	"" === this.input_.val() && (this.input_.addClass("empty"), this.input_.val("Search"))
+	"" === this.input_.val() && (this.input_.addClass("empty"), this.input_.val(chrome.i18n.getMessage('search')))
 };
 
 function SuggestBox() {
@@ -989,15 +989,16 @@ recentlyClosed.prototype.show = function() {
 }
 
 function recentlyClosedUI() {
-	this.box_ = $("#box-recent")
-	this.img_ = $('<img>')
+	this.box_ = $('#box-recent')
 }
 
 recentlyClosedUI.prototype.setRecentlyClosed = function(a) {
-	var length = a.length
+	var length = Object.keys(a).length,
+	elem
 	for (var i = 0; i < length; i++) {
-		if (typeof(a[i]) != 'undefined')
-			this.imgLoad(a[i].faviconUrl, this.box_.find('div:nth-of-type('+(i+1)+'n) > a').attr('href', a[i].url).attr('title', a[i].title).find('img'))
+		elem = a[i]
+		if (typeof(elem) != 'undefined')
+			this.imgLoad(elem.faviconUrl, this.box_.find('div:nth-of-type('+(i+1)+') > a').attr('href', elem.url).attr('title', elem.title+ ' － '+elem.url).find('img'))
 	}
 }
 
@@ -1009,9 +1010,11 @@ recentlyClosedUI.prototype.show = function() {
 }
 
 recentlyClosedUI.prototype.imgLoad = function(url, imgObj) {
-	this.img_.attr('src', url).load(function() {
+	if (url == '')
+		url = 'undefined'
+	$('<img>').attr('src', url).load(function() {
 			imgObj.css('background-image', 'url('+url+')').show()
 	}).error(function(){
-			imgObj.css('background-image', 'url(images/empty.png)').show()
+			imgObj.css('background-image', 'url(images/weather/unknown.png)').css('background-size', '50%').show()
 	})
 }
