@@ -10,19 +10,26 @@
 	<body>
 		<a id="logo-link" i18n-values="href:google"><img id="logo" src="images/logo3w.png"></a>
 		<div id="search-container">
-			<input id="search-input" type="search" autocomplete="off" class="empty" i18n-values="value:search" x-webkit-speech>
+			<input id="search-input" type="search" autocomplete="off" i18n-values="placeholder:search" x-webkit-speech>
 			<div id="search-suggestions"></div>
 		</div>
 		<div id="most-visited-container"></div>
-		<div id="block-most-visited-confirmation" class="hidden">
-			<span i18n-content="removedWebsite"></span>&nbsp;&nbsp;
-			<a id="undo-block-most-visited" href="#" i18n-content="undo"></a>&nbsp;&nbsp;
-			<a id="unblock-all-most-visited" href="#" i18n-content="restoreAll"></a>&nbsp;&nbsp;
-			<span class="close-button"></span>
+		<div id="block-most-visited-confirmation" class="msgContainer hidden">
+			<div class="msgInner">
+				<div class="msgText">
+					<span i18n-content="removedWebsite"></span>&nbsp;&nbsp;
+					<a id="undo-block-most-visited" href="#" i18n-content="undo"></a>&nbsp;&nbsp;
+					<a id="unblock-all-most-visited" href="#" i18n-content="restoreAll"></a>&nbsp;&nbsp;
+					<span class="close-button"></span>
+				</div>
+			</div>
 		</div>
 		<div id="content-boxes-container">
 			<div class="content-boxes-column">
 				<div class="content-box" id="box-icons">
+					<div class="infoButtonMain">
+						<span class="infoButton">i</span>
+					</div>
 					<!--<h2 i18n-content="apps"></h2>-->
 					<div id="promoted-services">
 						<a i18n-values="href:serviceURL('','translate')">
@@ -43,6 +50,11 @@
 						</a>
 					</div>
 					<div id="apps-list"></div>
+					<div class="extendedInfoMain">
+						<div class="extendedInfo hide">
+							<p class="infoText"  i18n-content="promotedServices"></p>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="content-boxes-column">
@@ -77,6 +89,9 @@
 				</div>
 
 				<div class="content-box" id="box-weather">
+					<div class="infoButtonMain">
+						<span class="infoButton">i</span>
+					</div>
 					<h2 i18n-content="weather"></h2>
 					<div id="weather-date"></div>
 					<div id="weather-current">
@@ -85,7 +100,6 @@
 						</a>
 						<div id="weather-current-temperature">
 							<div id="weather-temperature"></div>
-							<div id="celsius" i18n-content='temperatureUnit'></div>
 						</div>
 						<div id="weather-current-box">
 							<div id="weather-condition"></div>
@@ -96,6 +110,14 @@
 					<div id="weather-forecast-box"></div>
 					<div id="weather-geolocation-permission" class="hidden">
 						<a i18n-content="useGeoLocation"></a>
+					</div>
+					<div class="extendedInfoMain">
+						<div class="extendedInfo hide">
+							<p class="infoText" i18n-content="locationBased"></p>
+							<!--<div class="extendedInfo-footer">
+								<p>Wettereinheiten</p>
+							</div>-->
+						</div>
 					</div>
 				</div>
 			</div>

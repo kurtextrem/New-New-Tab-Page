@@ -104,5 +104,13 @@
 	"temperatureUnit": {
 		"message": "F",
 		"description": ""
+	},
+	"promotedServices": {
+		"message": "The first four Apps are promoted from Google",
+		"description": ""
+	},
+	"locationBased": {
+		"message": "Weather based on your location",
+		"description": ""
 	}
 }

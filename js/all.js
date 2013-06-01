@@ -135,7 +135,7 @@ var dominantColors = {
 };
 
 function NTP() {
-	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = null
+	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = this.infoMenu_ = null
 }
 NTP.prototype.init = function() {
 	this.analytics_ = new Analytics;
@@ -150,6 +150,8 @@ NTP.prototype.init = function() {
 	this.news_.show();
 	this.recentlyClosed_ = new recentlyClosed()
 	this.recentlyClosed_.show()
+	this.infoMenu_ = new infoMenu()
+	this.infoMenu_.click()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 };
 var ntp = new NTP;
@@ -823,8 +825,8 @@ function SearchBox() {
 	this.input_.bind("search", this.onSearch_.bind(this));
 	this.input_.bind("webkitspeechchange", this.onSpeechChange_.bind(this));
 	this.input_.bind("input", this.onChange_.bind(this));
-	this.input_.bind("focus", this.onFocus_.bind(this));
-	this.input_.bind("blur", this.onBlur_.bind(this));
+	//this.input_.bind("focus", this.onFocus_.bind(this));
+	//this.input_.bind("blur", this.onBlur_.bind(this));
 	this.val_ = ""
 }
 SearchBox.GOOGLE_SEARCH_URL = chrome.i18n.getMessage;
@@ -1016,5 +1018,14 @@ recentlyClosedUI.prototype.imgLoad = function(url, imgObj) {
 			imgObj.css('background-image', 'url('+url+')').show()
 	}).error(function(){
 			imgObj.css('background-image', 'url(images/weather/unknown.png)').css('background-size', '50%').show()
+	})
+}
+function infoMenu() {
+
+}
+
+infoMenu.prototype.click = function() {
+	$('.infoButton').click(function(){
+		$(this).toggleClass('active').parents('.content-box').find('.extendedInfo').slideToggle()
 	})
 }

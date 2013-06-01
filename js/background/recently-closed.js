@@ -1,6 +1,6 @@
 function RecentlyClosed() {
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-		if (changeInfo.status == "complete")
+		if (changeInfo.status == 'complete')
 			this.map[tab.id] = tab
 	}.bind(this))
 	chrome.tabs.onRemoved.addListener(function(id){
@@ -13,7 +13,7 @@ RecentlyClosed.prototype.map= {}
 
 RecentlyClosed.prototype.retrieveInfo = function(id) {
 	var tab = this.map[id]
-	if (typeof (tab) != 'undefined')
+	if (typeof(tab) != 'undefined')
 		this.store(tab.url, tab.title, tab.favIconUrl)
 }
 RecentlyClosed.prototype.store = function(url, title, faviconUrl) {

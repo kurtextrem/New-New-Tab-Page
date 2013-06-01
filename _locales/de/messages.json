@@ -105,5 +105,13 @@
 	"temperatureUnit": {
 		"message": "C",
 		"description": ""
+	},
+	"promotedServices": {
+		"message": "Die ersten 4 Apps werden Google beworben",
+		"description": ""
+	},
+	"locationBased": {
+		"message": "Karte basiert auf Ihrem aktuellen Standort",
+		"description": ""
 	}
 }
