@@ -151,7 +151,7 @@ NTP.prototype.init = function() {
 	this.recentlyClosed_ = new recentlyClosed()
 	this.recentlyClosed_.show()
 	this.infoMenu_ = new infoMenu()
-	this.infoMenu_.click()
+	this.infoMenu_.regEvents()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 };
 var ntp = new NTP;
@@ -591,7 +591,7 @@ function Weather(a) {
 	}.bind(this))
 }
 Weather.prototype.show = function() {
-	this.ui_.reset();
+	this.ui_.reset()
 	chrome.storage.local.get({
 		"location-permission": !1,
 		"location-name": null,
@@ -925,6 +925,13 @@ function WeatherUI(a) {
 	this.box_ = $("#box-weather");
 	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
 	this.link_ = chrome.i18n.getMessage('searchURL', ['', chrome.i18n.getMessage('weather')]);
+	this.coolWeather = false
+	chrome.storage.local.get('use-cool-weather', function(val){
+			if (typeof(val['use-cool-weather']) != 'undefined' && val['use-cool-weather']) {
+				this.coolWeather = true
+				$('#coolWeather').find('input[type=checkbox]').attr('checked', true)
+			}
+	}.bind(this))
 	this.box_.find("a").attr("href", this.link_)
 }
 WeatherUI.prototype.reset = function() {
@@ -945,6 +952,8 @@ WeatherUI.prototype.setDate = function(a) {
 	this.box_.find("#weather-date").text(a)
 };
 WeatherUI.prototype.setIcon = function(a) {
+	if (this.coolWeather && a.search('night') == -1)
+		a = a.replace('weather', 'cool weather')
 	this.box_.find("#weather-current-icon").error(function() {
 		//console.log('Unknown weather state: ' + a)
 		$(this).attr("src", "images/weather/unknown.png")
@@ -958,6 +967,8 @@ WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-humidity").text(d)
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
+	if (this.coolWeather && b.search('night') == -1)
+		b = b.replace('weather', 'cool weather')
 	a = $('<div class="weather-forecast"><div>' + a + '</div><a href=""><img src="' + b + '" title="' + f + '"></a><div><span class="temperature-high">' + c + '</span> <span class="temperature-low">' + d + "</span> </div></div");
 	a.find("a").attr("href", this.link_);
 	this.analytics_.wrapLink(a.find("a")[0], "weather-forecast");
@@ -976,6 +987,7 @@ WeatherUI.prototype.showPermissionConfirmation = function(a) {
 
 function recentlyClosed() {
 	this.ui_ = new recentlyClosedUI()
+	$(document).bind('tab-closed', this.show.bind(this))
 }
 
 recentlyClosed.prototype.requestRecentlyClosed = function() {
@@ -1015,17 +1027,37 @@ recentlyClosedUI.prototype.imgLoad = function(url, imgObj) {
 	if (url == '')
 		url = 'undefined'
 	$('<img>').attr('src', url).load(function() {
-			imgObj.css('background-image', 'url('+url+')').show()
+			imgObj.css('background-image', 'url('+url+')').css('background-size', 'auto').css('background-color', 'white').show()
 	}).error(function(){
-			imgObj.css('background-image', 'url(images/weather/unknown.png)').css('background-size', '50%').show()
+			imgObj.css('background-image', 'url(images/weather/unknown.png)').css('background-size', '50%').css('background-color', 'rgba(177, 91, 91, 0.3)').show()
 	})
 }
 function infoMenu() {
 
 }
 
+infoMenu.prototype.regEvents = function() {
+	this.click()
+	this.footerToggle()
+}
 infoMenu.prototype.click = function() {
 	$('.infoButton').click(function(){
 		$(this).toggleClass('active').parents('.content-box').find('.extendedInfo').slideToggle()
+	})
+}
+infoMenu.prototype.footerToggle = function() {
+	$('#coolWeather').click(function(){
+		window.setTimeout(function(){
+			var checked = $(this).find('input[type=checkbox]').is(':checked')
+			chrome.storage.local.set({'use-cool-weather': checked},
+				function(){
+					ntp.weather_.ui_.coolWeather = checked
+					chrome.runtime.getBackgroundPage(function(a) {
+						a.weatherFetcher.startWeatherRetrieval(true)
+					})
+				}
+			)
+		}.bind(this), 50)
+
 	})
 }

@@ -113,5 +113,17 @@
 	"locationBased": {
 		"message": "Karte basiert auf Ihrem aktuellen Standort",
 		"description": ""
+	},
+	"coolWeather": {
+		"message": "Cooles Wetter",
+		"description": ""
+	},
+	"on": {
+		"message": "An",
+		"description": ""
+	},
+	"off": {
+		"message": "Aus",
+		"description": ""
 	}
 }

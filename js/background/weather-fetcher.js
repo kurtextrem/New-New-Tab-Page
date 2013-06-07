@@ -46,7 +46,7 @@ WeatherFetcher.prototype.init = function() {
 //};
 WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
 
-WeatherFetcher.prototype.startWeatherRetrieval = function() {
+WeatherFetcher.prototype.startWeatherRetrieval = function(force) {
 	//console.log('startWeatherRetrieval');
 	if (this.retryTimeout_)
 		clearTimeout(this.retryTimeout_);
@@ -56,7 +56,7 @@ WeatherFetcher.prototype.startWeatherRetrieval = function() {
 		'location-permission': false,
 		weather: null
 	}, function(val) {
-		if (val['location-permission'] === this.locationPermission_ && val.weather && Date.now() - val.weather.date < WeatherFetcher.DELAY)
+		if (val['location-permission'] === this.locationPermission_ && val.weather && Date.now() - val.weather.date < WeatherFetcher.DELAY && !force)
 			return;
 		this.locationPermission_ = val['location-permission'];
 

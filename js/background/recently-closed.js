@@ -31,7 +31,7 @@ RecentlyClosed.prototype.store = function(url, title, faviconUrl) {
 			title: title,
 			faviconUrl: faviconUrl
 		}
-		chrome.storage.local.set(res)
+		chrome.storage.local.set(res, util.sendEventToAllWindows.bind(null, 'tab-closed'))
 	}.bind(this))
 }
 

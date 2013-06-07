@@ -112,5 +112,17 @@
 	"locationBased": {
 		"message": "Weather based on your location",
 		"description": ""
+	},
+	"coolWeather": {
+		"message": "Cool weather",
+		"description": ""
+	},
+	"on": {
+		"message": "On",
+		"description": ""
+	},
+	"off": {
+		"message": "Off",
+		"description": ""
 	}
 }
