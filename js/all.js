@@ -929,7 +929,7 @@ function WeatherUI(a) {
 	chrome.storage.local.get('use-cool-weather', function(val){
 			if (typeof(val['use-cool-weather']) != 'undefined' && val['use-cool-weather']) {
 				this.coolWeather = true
-				$('#coolWeather').find('input[type=checkbox]').attr('checked', true)
+				$('#coolWeather').find('input[type=checkbox]').prop('checked', true)
 			}
 	}.bind(this))
 	this.box_.find("a").attr("href", this.link_)
