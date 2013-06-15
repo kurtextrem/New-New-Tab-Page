@@ -102,10 +102,6 @@
 		"message": "Mehr News",
 		"description": ""
 	},
-	"temperatureUnit": {
-		"message": "C",
-		"description": ""
-	},
 	"promotedServices": {
 		"message": "Die ersten 4 Apps werden Google beworben",
 		"description": ""
@@ -124,6 +120,14 @@
 	},
 	"off": {
 		"message": "Aus",
+		"description": ""
+	},
+	"celsius": {
+		"message": "Celsius",
+		"description": ""
+	},
+	"temperatureUnit": {
+		"message": "C",
 		"description": ""
 	}
 }

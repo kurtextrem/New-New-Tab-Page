@@ -926,11 +926,15 @@ function WeatherUI(a) {
 	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
 	this.link_ = chrome.i18n.getMessage('searchURL', ['', chrome.i18n.getMessage('weather')]);
 	this.coolWeather = false
-	chrome.storage.local.get('use-cool-weather', function(val){
-			if (typeof(val['use-cool-weather']) != 'undefined' && val['use-cool-weather']) {
+	chrome.storage.local.get({'use-cool-weather': false}, function(val){
+			if (val['use-cool-weather']) {
 				this.coolWeather = true
 				$('#coolWeather').find('input[type=checkbox]').prop('checked', true)
 			}
+	}.bind(this))
+	chrome.storage.local.get({'weather-unit': chrome.i18n.getMessage('temperatureUnit')}, function(val){
+			var unit = val['weather-unit'] == 'C'
+			$('#unitSlider').find('input[type=checkbox]').prop('checked', unit)
 	}.bind(this))
 	this.box_.find("a").attr("href", this.link_)
 }
@@ -960,7 +964,6 @@ WeatherUI.prototype.setIcon = function(a) {
 	}).attr("src", a)
 };
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
-	a = a.replace("\u00b0" + chrome.i18n.getMessage('temperatureUnit'), "");
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
 	this.box_.find("#weather-wind").text(c);
@@ -975,10 +978,13 @@ WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	this.box_.find("#weather-forecast-box").append(a)
 };
 WeatherUI.prototype.showPermissionConfirmation = function(a) {
-	var b = this.box_.find("#weather-geolocation-permission");
+	var b = this.box_.find("#weather-geolocation-permission"),
+	c = this.box_.find('.infoText')
 	b.removeClass("hidden");
+	c.hide()
 	b.find("a").click(function() {
 		b.addClass("hidden");
+		c.slideDown()
 		this.analytics_.track("geolocation-permission", "");
 		a();
 		return !1
@@ -1052,6 +1058,19 @@ infoMenu.prototype.footerToggle = function() {
 			chrome.storage.local.set({'use-cool-weather': checked},
 				function(){
 					ntp.weather_.ui_.coolWeather = checked
+					chrome.runtime.getBackgroundPage(function(a) {
+						a.weatherFetcher.startWeatherRetrieval(true)
+					})
+				}
+			)
+		}.bind(this), 50)
+
+	})
+	$('#unitSlider').click(function(){
+		window.setTimeout(function(){
+			var checked = $(this).find('input[type=checkbox]').is(':checked')?'C':'F'
+			chrome.storage.local.set({'weather-unit': checked},
+				function(){
 					chrome.runtime.getBackgroundPage(function(a) {
 						a.weatherFetcher.startWeatherRetrieval(true)
 					})

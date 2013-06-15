@@ -8,6 +8,7 @@ function WeatherFetcher() {
 	this.interval_ = null;
 	this.latitude_ = null;
 	this.longitude_ = null;
+	this.unit = chrome.i18n.getMessage('temperatureUnit')
 	chrome.idle.onStateChanged.addListener(this.init.bind(this));
 }
 ;
@@ -54,8 +55,10 @@ WeatherFetcher.prototype.startWeatherRetrieval = function(force) {
 
 	chrome.storage.local.get({
 		'location-permission': false,
-		weather: null
+		weather: null,
+		'weather-unit': chrome.i18n.getMessage('temperatureUnit')
 	}, function(val) {
+		this.unit = val['weather-unit']
 		if (val['location-permission'] === this.locationPermission_ && val.weather && Date.now() - val.weather.date < WeatherFetcher.DELAY && !force)
 			return;
 		this.locationPermission_ = val['location-permission'];
@@ -80,7 +83,7 @@ WeatherFetcher.prototype.requestLocation_ = function() {
 	//console.log('requestLocation_');
 	navigator.geolocation.getCurrentPosition(
 		this.handleGeolocationResponse_.bind(this), function() {
-		console.error('Geolocation failed.');
+		//console.error('Geolocation failed.');
 		this.retry_();
 	}.bind(this));
 };
@@ -200,8 +203,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(xmlDoc, status, jqxhr
 
 	weather.icon = this.iGoogleIconToOnebox_(
 		currentNode.find('icon').attr('data'), 60);
-	var unit = chrome.i18n.getMessage('temperatureUnit')
-	weather.temperature = currentNode.find('temp_' + unit.toLowerCase()).attr('data') + '°' + unit;
+	weather.temperature = currentNode.find('temp_' + this.unit.toLowerCase()).attr('data')
 	weather.condition = currentNode.find('condition').attr('data');
 	weather.wind = currentNode.find('wind_condition').attr('data');
 	weather.humidity = currentNode.find('humidity').attr('data');

@@ -100,9 +100,5 @@
 	"moreNews": {
 		"message": "More News",
 		"description": ""
-	},
-	"temperatureUnit": {
-		"message": "C",
-		"description": ""
 	}
 }

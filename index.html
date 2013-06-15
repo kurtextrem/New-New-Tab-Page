@@ -116,10 +116,19 @@
 							<p class="infoText" i18n-content="locationBased"></p>
 							<div class="extendedInfo-footer">
 								<div class="extendedInfo-footer__text">
-									<span i18n-content="coolWeather"></span>
-									<div class="slideThree" id="coolWeather">
-										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
-										<label for="coolWeatherCb"></label>
+									<div class="sliderContainer">
+										<span i18n-content="coolWeather"></span>
+										<div class="slideThree" id="coolWeather">
+											<input type="checkbox" value="None" id="coolWeatherCb" name="check">
+											<label for="coolWeatherCb"></label>
+										</div>
+									</div>
+									<div class="sliderContainer">
+										<span i18n-content="celsius"></span>
+										<div class="slideThree" id="unitSlider">
+											<input type="checkbox" value="None" id="unitSliderCb" checked name="check">
+											<label for="unitSliderCb"></label>
+										</div>
 									</div>
 								</div>
 
@@ -134,6 +143,7 @@
 		</div>
 
 		<script src="lib/jquery.min.js"></script>
+		<script src="lib/jquery.statusbar.min.js"></script>
 		<script src="js/all.js"></script>
 		<script src="js/page.js"></script>
 	</body>
