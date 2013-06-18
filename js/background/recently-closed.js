@@ -13,23 +13,22 @@ RecentlyClosed.prototype.map= {}
 
 RecentlyClosed.prototype.retrieveInfo = function(id) {
 	var tab = this.map[id]
-	if (typeof(tab) != 'undefined')
-		this.store(tab.url, tab.title, tab.favIconUrl)
+	if (typeof tab != 'undefined')
+		this.store(tab.url, tab.title)
 }
-RecentlyClosed.prototype.store = function(url, title, faviconUrl) {
+RecentlyClosed.prototype.store = function(url, title) {
 	var key = 'recentlyClosed'
 	chrome.storage.local.get(key, function(res) {
 		//if (!item) {
 			//console.error('Can\'t find tab that should be present in storage.');
 		//	return
 		//}
-		if (typeof(res['recentlyClosed']) == 'undefined')
+		if (typeof res['recentlyClosed'] == 'undefined' || !$.isArray(res['recentlyClosed']))
 			res['recentlyClosed'] = []
 		res['recentlyClosed'] = this.moveForward(res['recentlyClosed'])
 		res['recentlyClosed'][0] = {
 			url: url,
-			title: title,
-			faviconUrl: faviconUrl
+			title: title
 		}
 		chrome.storage.local.set(res, util.sendEventToAllWindows.bind(null, 'tab-closed'))
 	}.bind(this))

@@ -1017,8 +1017,8 @@ recentlyClosedUI.prototype.setRecentlyClosed = function(a) {
 	elem
 	for (var i = 0; i < length; i++) {
 		elem = a[i]
-		if (typeof(elem) != 'undefined')
-			this.imgLoad(elem.faviconUrl, this.box_.find('div:nth-of-type('+(i+1)+') > a').attr('href', elem.url).attr('title', elem.title+ ' － '+elem.url).find('img'))
+		if (typeof elem != 'undefined')
+			this.box_.find('div:nth-of-type('+(i+1)+') > a').attr('href', elem.url).attr('title', elem.title+ ' － '+elem.url).find('img').css('background-image', 'url(chrome://favicon/'+elem.url+')').show()
 	}
 }
 
@@ -1029,15 +1029,6 @@ recentlyClosedUI.prototype.show = function() {
 	this.box_.show()
 }
 
-recentlyClosedUI.prototype.imgLoad = function(url, imgObj) {
-	if (url == '')
-		url = 'undefined'
-	$('<img>').attr('src', url).load(function() {
-			imgObj.css('background-image', 'url('+url+')').css('background-size', 'auto').css('background-color', 'white').show()
-	}).error(function(){
-			imgObj.css('background-image', 'url(images/weather/unknown.png)').css('background-size', '50%').css('background-color', 'rgba(177, 91, 91, 0.3)').show()
-	})
-}
 function infoMenu() {
 
 }
