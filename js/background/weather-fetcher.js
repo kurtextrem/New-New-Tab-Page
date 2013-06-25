@@ -4,7 +4,7 @@
 function WeatherFetcher() {
 	this.retryDelay_ = 1000;
 	this.retryTimeout_ = null;
-	this.locationPermission_ = null;
+	this.locationPermission_ = true; // null
 	this.interval_ = null;
 	this.latitude_ = null;
 	this.longitude_ = null;
@@ -54,7 +54,7 @@ WeatherFetcher.prototype.startWeatherRetrieval = function(force) {
 	this.retryTimeout_ = null;
 
 	chrome.storage.local.get({
-		'location-permission': false,
+		'location-permission': true, // false
 		weather: null,
 		'weather-unit': chrome.i18n.getMessage('temperatureUnit')
 	}, function(val) {
@@ -140,7 +140,7 @@ WeatherFetcher.prototype.handleLocationResponse_ = function(data) {
 	}
 	;
 
-	var location = (byType['locality'] && byType['locality'].short_name) || (byType['administrative_area_level_2'] && byType['administrative_area_level_2'].short_name);
+	var location = (byType['locality'] && byType['locality'].long_name) || (byType['administrative_area_level_2'] && byType['administrative_area_level_2'].short_name);
 
 	if (byType['country']) {
 		this.country_ = byType['country'].long_name;

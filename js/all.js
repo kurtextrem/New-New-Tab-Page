@@ -153,6 +153,15 @@ NTP.prototype.init = function() {
 	this.infoMenu_ = new infoMenu()
 	this.infoMenu_.regEvents()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
+	var hour = (new Date).getHours();
+	if (hour>5 && hour<8)
+		$('body').addClass('bg-dawn')
+	else if (hour>8 && hour<19)
+		$('body').addClass('bg-daylight')
+	else if (hour>19 && hour<21)
+		$('body').addClass('bg-dusk')
+	else
+		$('body').addClass('bg-twilight')
 };
 var ntp = new NTP;
 $(document).ready(ntp.init.bind(ntp));
@@ -169,7 +178,9 @@ MostVisited.BUTTON_TYPE = "thumbnail";
 MostVisited.DATA_SOURCE = "topSites"; // history / topSites
 MostVisited.prototype.show = function() {
 	if ("topSites" === MostVisited.DATA_SOURCE)
-		chrome.topSites.get(this.onTopSitesReceived_.bind(this));
+		window.setTimeout(function() {
+			chrome.topSites.get(this.onTopSitesReceived_.bind(this))
+		}.bind(this), 30) // fixes no thumbs on startup
 	else {
 		var a = Date.now() - 2592E6;
 		chrome.history.search({
@@ -182,7 +193,7 @@ MostVisited.prototype.show = function() {
 MostVisited.prototype.onTopSitesReceived_ = function(a) {
 	for (var b = {}, c = 0; c < a.length; c++) {
 		var d = util.domainFromURL(a[c].url);
-		d && (b["most-visited-blocked-" + d] = !1)
+		d && (b['most-visited-blocked-' + d] = !1)
 	}
 	chrome.storage.local.get(b, this.filterAndShow_.bind(this, a))
 };
@@ -593,7 +604,7 @@ function Weather(a) {
 Weather.prototype.show = function() {
 	this.ui_.reset()
 	chrome.storage.local.get({
-		"location-permission": !1,
+		"location-permission": true,
 		"location-name": null,
 		weather: null
 	}, this.showValues_.bind(this))
@@ -622,18 +633,18 @@ Weather.prototype.showValues_ = function(a) {
 			this.ui_.addForecast(d.day, d.icon,
 				d.high, d.low, d.condition)
 		}
-		a["location-permission"] || this.ui_.showPermissionConfirmation(this.permitGeolocation_.bind(this))
+		//a["location-permission"] || this.ui_.showPermissionConfirmation(this.permitGeolocation_.bind(this))
 	}
 };
-Weather.prototype.permitGeolocation_ = function() {
+/*Weather.prototype.permitGeolocation_ = function() {
 	chrome.storage.local.set({
-		"location-permission": !0
+		"location-permission": true
 	}, function() {
 		chrome.runtime.getBackgroundPage(function(a) {
 			a.weatherFetcher.startWeatherRetrieval()
 		})
 	})
-};
+};*/
 Weather.prototype.getDateString_ = function(a) {
 	var b;
 	try {
@@ -948,12 +959,13 @@ WeatherUI.prototype.show = function() {
 	this.box_.show()
 };
 WeatherUI.prototype.setAddress = function(a) {
-	this.box_.find("h2").text(a);
-	this.link_ = chrome.i18n.getMessage('searchURL', ['', encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + a)]);
-	this.box_.find("a").attr("href", this.link_)
+	this.link_ = chrome.i18n.getMessage('searchURL', ['', encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + a)])
+	this.box_.find("h2 > a").text(a).attr('href', this.link_)
+	//this.box_.find("a").attr("href", this.link_)
 };
 WeatherUI.prototype.setDate = function(a) {
-	this.box_.find("#weather-date").text(a)
+	//this.box_.find("#weather-date").text(a)
+	this.box_.find('h2 > a').attr('title', a)
 };
 WeatherUI.prototype.setIcon = function(a) {
 	if (this.coolWeather && a.search('night') == -1)
@@ -966,8 +978,11 @@ WeatherUI.prototype.setIcon = function(a) {
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
-	this.box_.find("#weather-wind").text(c);
-	this.box_.find("#weather-humidity").text(d)
+	var wind = c.replace(/\w+: /, ''),
+	wind2 =  wind.match(/(\d+) (.+)/)
+	humidity = d.match(/(\w+): (\d+%)/)
+	this.box_.find("#weather-wind").text(wind2[1]).append('<sup>'+wind2[2]+'</sup>').attr('title', wind)
+	this.box_.find("#weather-humidity").text(humidity[1]).attr('title', humidity[2])
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	if (this.coolWeather && b.search('night') == -1)
@@ -976,19 +991,6 @@ WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	a.find("a").attr("href", this.link_);
 	this.analytics_.wrapLink(a.find("a")[0], "weather-forecast");
 	this.box_.find("#weather-forecast-box").append(a)
-};
-WeatherUI.prototype.showPermissionConfirmation = function(a) {
-	var b = this.box_.find("#weather-geolocation-permission"),
-	c = this.box_.find('.infoText')
-	b.removeClass("hidden");
-	c.hide()
-	b.find("a").click(function() {
-		b.addClass("hidden");
-		c.slideDown()
-		this.analytics_.track("geolocation-permission", "");
-		a();
-		return !1
-	}.bind(this))
 };
 
 function recentlyClosed() {

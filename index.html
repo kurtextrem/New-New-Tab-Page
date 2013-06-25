@@ -27,10 +27,7 @@
 		<div id="content-boxes-container">
 			<div class="content-boxes-column">
 				<div class="content-box" id="box-icons">
-					<div class="infoButtonMain">
-						<span class="infoButton">i</span>
-					</div>
-					<!--<h2 i18n-content="apps"></h2>-->
+					<div class="infoButtonMain"><div class="infoButton"></div></div>
 					<div id="promoted-services">
 						<a i18n-values="href:serviceURL('','translate')">
 							<img src="images/translate-64.png">
@@ -60,7 +57,6 @@
 			<div class="content-boxes-column">
 				<div class="content-box" id="box-recent">
 					<h2 i18n-content="recentlyClosed"></h2>
-					<!-- @todo: dynamic creation -->
 					<div id="recent-recent">
 						<a href="#">
 							<img class="recentClosed-icon hide">
@@ -89,11 +85,8 @@
 				</div>
 
 				<div class="content-box" id="box-weather">
-					<div class="infoButtonMain">
-						<span class="infoButton">i</span>
-					</div>
-					<h2 i18n-content="weather"></h2>
-					<div id="weather-date"></div>
+					<div class="infoButtonMain"><div class="infoButton"></div></div>
+					<h2><a i18n-content="weather"></a></h2>
 					<div id="weather-current">
 						<a>
 							<img id="weather-current-icon">
@@ -108,9 +101,6 @@
 						</div>
 					</div>
 					<div id="weather-forecast-box"></div>
-					<div id="weather-geolocation-permission" class="hidden">
-						<a i18n-content="useGeoLocation"></a>
-					</div>
 					<div class="extendedInfoMain">
 						<div class="extendedInfo hide">
 							<p class="infoText" i18n-content="locationBased"></p>
@@ -143,7 +133,6 @@
 		</div>
 
 		<script src="lib/jquery.min.js"></script>
-		<script src="lib/jquery.statusbar.min.js"></script>
 		<script src="js/all.js"></script>
 		<script src="js/page.js"></script>
 	</body>

@@ -126,7 +126,7 @@
 		"description": ""
 	},
 	"temperatureUnit": {
-		"message": "C",
+		"message": "F",
 		"description": ""
 	}
 }
