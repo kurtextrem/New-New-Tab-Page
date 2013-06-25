@@ -980,9 +980,9 @@ WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-condition").text(b);
 	var wind = c.replace(/\w+: /, ''),
 	wind2 =  wind.match(/(\d+) (.+)/)
-	humidity = d.match(/(\w+): (\d+%)/)
+	humidity = d.match(/(\w+): (\d+)/)
 	this.box_.find("#weather-wind").text(wind2[1]).append('<sup>'+wind2[2]+'</sup>').attr('title', wind)
-	this.box_.find("#weather-humidity").text(humidity[1]).attr('title', humidity[2])
+	this.box_.find("#weather-humidity").text(humidity[2]+'%').attr('title', humidity[1])
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	if (this.coolWeather && b.search('night') == -1)
