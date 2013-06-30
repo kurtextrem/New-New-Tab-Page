@@ -107,7 +107,7 @@
 		"description": ""
 	},
 	"locationBased": {
-		"message": "Karte basiert auf Ihrem aktuellen Standort",
+		"message": "Basiert auf Ihrem aktuellen Standort",
 		"description": ""
 	},
 	"coolWeather": {

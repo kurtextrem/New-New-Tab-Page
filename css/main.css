@@ -1,5 +1,5 @@
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', Arial, sans-serif;
 	background-color: rgba(207, 207, 207, 0.77) !important;
 }
 
@@ -324,7 +324,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .content-box h2 {
-	font-size: 20px;
+	font-size: 19px;
 	font-weight: normal;
 	margin: 20px;
 	margin-right: 16px;
@@ -493,7 +493,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 #box-icons a {
 	color: #AAA;
-	font-size: 12px;
+	font-size: 13px;
 	display: inline-block;
 	height: 92px;
 	overflow: hidden;
@@ -534,6 +534,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 #news-more a {
 	color: #888;
+	margin-left: 16px;
 }
 
 #news-more a:hover {
@@ -542,20 +543,41 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .news-time {
-	display: none;
-	font-size: 10px;
+	/*display: none;*/
+	font-size: 13px;
 	width: 20px;
 	margin: 0;
 	padding: 0;
+	display: -webkit-flex;
+	-webkit-align-items: center;
+	word-wrap: break-word;
+	margin-left: -2px;
+	cursor: default;
 }
 
 .news-item a {
 	color: #444;
-	font-size: 16px;
+	font-size: 16.5px;
+	line-height: 1.2;
 }
 
 .news-item a:hover {
 	text-decoration: underline;
+}
+
+.news-publisher {
+	color: #888;
+	font-size: 12px;
+	display: -webkit-flex;
+	-webkit-align-items: center;
+	cursor: default;
+	opacity: 0.1;
+	-webkit-transition: opacity 2s ease;
+	display: block;
+}
+
+.news-item a:hover > .news-publisher {
+	opacity: 1;
 }
 
 /* Recent */
@@ -565,7 +587,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 #box-recent > div {
 	padding-top: 4px;
-	padding-right: 4px;
+	padding-right: 5px;
 	border-radius: 3px;
 }
 

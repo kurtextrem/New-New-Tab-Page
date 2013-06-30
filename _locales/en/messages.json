@@ -106,7 +106,7 @@
 		"description": ""
 	},
 	"locationBased": {
-		"message": "Weather based on your location",
+		"message": "Based on your location",
 		"description": ""
 	},
 	"coolWeather": {

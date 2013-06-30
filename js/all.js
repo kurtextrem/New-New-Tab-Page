@@ -180,7 +180,7 @@ MostVisited.prototype.show = function() {
 	if ("topSites" === MostVisited.DATA_SOURCE)
 		window.setTimeout(function() {
 			chrome.topSites.get(this.onTopSitesReceived_.bind(this))
-		}.bind(this), 30) // fixes no thumbs on startup
+		}.bind(this), 40) // fixes no thumbs on startup
 	else {
 		var a = Date.now() - 2592E6;
 		chrome.history.search({
@@ -798,11 +798,11 @@ function NewsUI(a) {
 	this.formatter_ = b.DateTimeFormat([], {
 		hour: "numeric",
 		minute: "2-digit",
-		hour12: !1
+		hour12: false
 	})
 }
 NewsUI.prototype.reset = function() {
-	$("#box-news *").remove()
+	$("#news-container *").remove()
 };
 NewsUI.prototype.hide = function() {
 	$("#box-news").hide()
@@ -818,14 +818,15 @@ NewsUI.prototype.addHeading = function() {
 };
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
-	a = $('<div class="news-item"><div class="news-time">' + c + '</div><a href="' + b + '">' + a + "</a></div>");
+	a = a.match(/(.+)( - .+)/)
+	a = $('<div class="news-item"><div class="news-time">' + c.replace(':', '') + '</div><a href="' + b + '">' + a[1] + "<span class='news-publisher'>"+a[2]+"</span></a></div>");
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news");
-	$("#box-news").append(a)
+	$("#news-container").append(a)
 };
 NewsUI.prototype.addMoreLink = function() {
 	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
-	$("#box-news").append(a)
+	$("#news-container").append(a)
 };
 
 
@@ -978,10 +979,9 @@ WeatherUI.prototype.setIcon = function(a) {
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
-	var wind = c.replace(/\w+: /, ''),
-	wind2 =  wind.match(/(\d+) (.+)/)
+	var wind = c.match(/.+ (\d+) (.+)/)
 	humidity = d.match(/(\w+): (\d+)/)
-	this.box_.find("#weather-wind").text(wind2[1]).append('<sup>'+wind2[2]+'</sup>').attr('title', wind)
+	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', wind[0])
 	this.box_.find("#weather-humidity").text(humidity[2]+'%').attr('title', humidity[1])
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
