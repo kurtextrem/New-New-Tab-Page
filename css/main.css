@@ -559,6 +559,7 @@ input[type="search"]::-webkit-search-cancel-button {
 	color: #444;
 	font-size: 16.5px;
 	line-height: 1.2;
+	display: block;
 }
 
 .news-item a:hover {
@@ -568,16 +569,17 @@ input[type="search"]::-webkit-search-cancel-button {
 .news-publisher {
 	color: #888;
 	font-size: 12px;
-	display: -webkit-flex;
-	-webkit-align-items: center;
 	cursor: default;
-	opacity: 0.1;
-	-webkit-transition: opacity 2s ease;
+	/*opacity: 0;*/
+	opacity: 1;
+	-webkit-transition: opacity 900ms;
+	/*position: relative;*/
+	text-decoration: none !important;
 	display: block;
 }
 
 .news-item a:hover > .news-publisher {
-	opacity: 1;
+	/*opacity: 1;*/
 }
 
 /* Recent */

@@ -818,7 +818,7 @@ NewsUI.prototype.addHeading = function() {
 };
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
-	a = a.match(/(.+)( - .+)/)
+	a = a.match(/(.+) -( .+)/)
 	a = $('<div class="news-item"><div class="news-time">' + c.replace(':', '') + '</div><a href="' + b + '">' + a[1] + "<span class='news-publisher'>"+a[2]+"</span></a></div>");
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news");
 	$("#news-container").append(a)
