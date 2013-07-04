@@ -1,10 +1,10 @@
 {
 	"extDesc": {
-		"message": "New 'new tab'-page. A community project. The (russian) original has been created by Google.",
+		"message": "Nuovo 'Nuovo Tab' Page. Weather, News, Search, recently closed tabs and apps in one place.",
 		"description": "Extension description."
 	},
 	"extName": {
-		"message": "New tab page reimagined",
+		"message": "Nuovo Tab Page reImagined",
 		"description": "Extension name."
 	},
 	"translate": {
@@ -16,7 +16,7 @@
 		"description": ""
 	},
 	"title": {
-		"message": "New Tab",
+		"message": "Nuovo Tab",
 		"description": "Page title."
 	},
 	"removedWebsite": {
@@ -24,7 +24,7 @@
 		"description": ""
 	},
 	"search": {
-		"message": "Search",
+		"message": "Cerca",
 		"description": ""
 	},
 	"remove": {
@@ -82,11 +82,7 @@
 		}
 	},
 	"weather": {
-		"message": "Weather",
-		"description": ""
-	},
-	"useGeoLocation": {
-		"message": "Use current location.",
+		"message": "Del tempo",
 		"description": ""
 	},
 	"apps": {

@@ -21,6 +21,7 @@ Analytics.prototype.wrapLinkNoHref = function(a, b) {
 		return !0
 	}.bind(this))
 };
+document.getElementsByTagName("body")[0].classList.remove("hidden");
 var dominantColors = {
 	get: function(a, b, c) {
 		var d = new Image;
@@ -163,6 +164,7 @@ NTP.prototype.init = function() {
 	else
 		$('body').addClass('bg-twilight')
 };
+
 var ntp = new NTP;
 $(document).ready(ntp.init.bind(ntp));
 
@@ -180,7 +182,7 @@ MostVisited.prototype.show = function() {
 	if ("topSites" === MostVisited.DATA_SOURCE)
 		window.setTimeout(function() {
 			chrome.topSites.get(this.onTopSitesReceived_.bind(this))
-		}.bind(this), 40) // fixes no thumbs on startup
+		}.bind(this), 60) // fixes no thumbs on startup
 	else {
 		var a = Date.now() - 2592E6;
 		chrome.history.search({
@@ -198,25 +200,12 @@ MostVisited.prototype.onTopSitesReceived_ = function(a) {
 	chrome.storage.local.get(b, this.filterAndShow_.bind(this, a))
 };
 MostVisited.DEFAULT_SITES = [{
-		domain: "vk.com",
-		title: "\u0412\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u0435"
-	}, {
 		domain: "youtube.com",
 		title: "YouTube"
-	}, {
-		domain: "odnoklassniki.ru",
-		title: "\u041e\u0434\u043d\u043e\u043a\u043b\u0430\u0441\u0441\u043d\u0438\u043a\u0438"
-	}, {
+	},  {
 		domain: "wikipedia.org",
 		url: "http://wikipedia.org/",
 		title: "Wikipedia"
-	}, {
-		domain: "livejournal.ru",
-		url: "http://www.livejournal.ru/",
-		title: "\u0416\u0438\u0432\u043e\u0439 \u0436\u0443\u0440\u043d\u0430\u043b"
-	}, {
-		domain: "mail.ru",
-		title: "Mail.Ru"
 	}
 ];
 MostVisited.prototype.onHistorySearchComplete_ = function(a) {
@@ -362,20 +351,23 @@ News.prototype.showCachedNews_ = function(a) {
 function SuggestRequest(a) {
 	this.query_ = a
 }
-SuggestRequest.URL = chrome.i18n.getMessage('google', 's') + "complete/search";
+SuggestRequest.URL = 'https://www.google.com/complete/search' //chrome.i18n.getMessage('google', 's') + "complete/search"
 SuggestRequest.prototype.sendRequest = function(a) {
 	this.callback_ = a;
 	$.get(SuggestRequest.URL, {
 		client: "ntp-russia",
 		q: this.query_,
-		json: "t"
+		hjson: "t"
 	}, this.onResponse_.bind(this), "json")
 };
 SuggestRequest.prototype.cancel = function() {
 	this.callback_ = null
 };
 SuggestRequest.prototype.onResponse_ = function(a) {
-	this.callback_ && this.callback_(a[1])
+	if (this.callback_) {
+		for (var b = [], c = 0; c < a[1].length; c++) b.push(a[1][c][0]);
+			this.callback_(b)
+	}
 };
 var util = {
 	getVersion: function() {
@@ -667,7 +659,7 @@ function AppsUI(a) {
 }
 AppsUI.prototype.show = function() {
 	this.analyticsForPromo_();
-	"cros" === util.getOS() ? $("#apps-list").hide() : ($("#apps-list a").remove(), chrome.management.getAll(this.onAppsListReceived_.bind(this)))
+	"cros" === (-1 != navigator.appVersion.indexOf("Linux") ? "linux" : -1 != navigator.appVersion.indexOf("CrOS") ? "cros" : -1 != navigator.appVersion.indexOf("Mac OS X") ? "mac" : "other") ? $("#apps-list").hide() : ($("#apps-list a").remove(), chrome.management.getAll(this.onAppsListReceived_.bind(this)))
 };
 AppsUI.prototype.analyticsForPromo_ = function() {
 	for (var a = $("#promoted-services a"), b = 0; b < a.length; b++)
@@ -859,7 +851,13 @@ SearchBox.prototype.onSearch_ = function() {
 };
 SearchBox.prototype.onChange_ = function() {
 	var a = this.input_.val();
-	a != this.val_ && (this.val_ = a, this.pendingSuggest_ && this.pendingSuggest_.cancel(), this.pendingSuggest_ = new SuggestRequest(a), this.pendingSuggest_.sendRequest(this.onSuggestReceived_.bind(this)))
+	if(a != this.val_ && $.trim(a) != '') {
+		this.val_ = a
+		if (this.pendingSuggest_)
+			this.pendingSuggest_.cancel()
+		this.pendingSuggest_ = new SuggestRequest(a)
+		this.pendingSuggest_.sendRequest(this.onSuggestReceived_.bind(this))
+	}
 };
 SearchBox.prototype.onSuggestReceived_ = function(a) {
 	this.suggestBox_.reset();
@@ -868,13 +866,8 @@ SearchBox.prototype.onSuggestReceived_ = function(a) {
 	0 < a.length && this.suggestBox_.show(this.onSuggestionClick_.bind(this))
 };
 SearchBox.prototype.onSuggestionClick_ = function(a) {
+	a = a.replace(/<b>(.*)<\/b>/g, "$1")
 	this.navigateToGoogle_(a)
-};
-SearchBox.prototype.onFocus_ = function() {
-	this.input_.hasClass("empty") && (this.input_.val(""), this.input_.removeClass("empty"))
-};
-SearchBox.prototype.onBlur_ = function() {
-	"" === this.input_.val() && (this.input_.addClass("empty"), this.input_.val(chrome.i18n.getMessage('search')))
 };
 
 function SuggestBox() {
@@ -893,7 +886,7 @@ SuggestBox.prototype.reset = function() {
 };
 SuggestBox.prototype.add = function(a) {
 	var b = $('<div class="suggestion-line"></div>');
-	b.text(a);
+	b.html(a)
 	b.click(this.onClick_.bind(this, a));
 	b.mousedown(this.onMousedown_.bind(this));
 	b.mouseover(this.hideLead_.bind(this));

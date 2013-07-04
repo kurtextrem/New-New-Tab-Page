@@ -85,10 +85,6 @@
 		"message": "Weather",
 		"description": ""
 	},
-	"useGeoLocation": {
-		"message": "Use current location.",
-		"description": ""
-	},
 	"apps": {
 		"message": "Apps",
 		"description": ""
