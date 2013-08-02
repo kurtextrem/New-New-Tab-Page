@@ -1,0 +1,128 @@
+{
+  "extDesc": {
+		"message": "Nieuwe 'Nieuwe tab' Pagina. Weer, Nieuws, Zoeken, recent gesloten tabs en applicaties op een plaats",
+		"description": "Extension description."
+	},
+	"extName": {
+		"message": "Nieuwe Tabpagina reImagined",
+		"description": "Extension name."
+	},
+	"translate": {
+		"message": "Vertalen",
+		"description": ""
+	},
+	"maps": {
+		"message": "Maps",
+		"description": ""
+	},
+	"title": {
+		"message": "Nieuwe tab",
+		"description": "Page title."
+	},
+	"removedWebsite": {
+		"message": "Website verwijderd uit meest bezocht.",
+		"description": ""
+	},
+	"search": {
+		"message": "Zoeken",
+		"description": ""
+	},
+	"remove": {
+		"message": "Verwijderen",
+		"description": ""
+	},
+	"undo": {
+		"message": "Ongedaan maken",
+		"description": ""
+	},
+	"restoreAll": {
+		"message": "Alles herstellen",
+		"description": ""
+	},
+	"recentlyClosed": {
+		"message": "Recent gesloten",
+		"description": ""
+	},
+	"google": {
+		"message": "http$SECURE$://www.google.nl/",
+		"description": "",
+		"placeholders": {
+			"secure": {
+				"content": "$1",
+				"example": "s"
+			}
+		}
+	},
+	"serviceURL": {
+		"message": "http$SECURE$://$SERVICE$.google.nl/",
+		"description": "",
+		"placeholders": {
+			"service": {
+				"content": "$2",
+				"example": "news"
+			},
+			"secure": {
+				"content": "$1",
+				"example": "s"
+			}
+		}
+	},
+	"searchURL": {
+		"message": "http$SECURE$://www.google.nl/search?q=$STRING$",
+		"description": "",
+		"placeholders": {
+			"string": {
+				"content": "$2",
+				"example": "Weather"
+			},
+			"secure": {
+				"content": "$1",
+				"example": "s"
+			}
+		}
+	},
+	"weather": {
+		"message": "Weer",
+		"description": ""
+	},
+	"apps": {
+		"message": "Applicaties",
+		"description": ""
+	},
+	"news": {
+		"message": "Nieuws",
+		"description": ""
+	},
+	"moreNews": {
+		"message": "Meer nieuws",
+		"description": ""
+	},
+	"promotedServices": {
+		"message": "De eerste 4 worden door Google gepromoot",
+		"description": ""
+	},
+	"locationBased": {
+		"message": "Gebaseerd op je locatie",
+		"description": ""
+	},
+	"coolWeather": {
+		"message": "Cool weer",
+		"description": ""
+	},
+	"on": {
+		"message": "Aan",
+		"description": ""
+	},
+	"off": {
+		"message": "Uit",
+		"description": ""
+	},
+	"celsius": {
+		"message": "Celsius",
+		"description": ""
+	},
+	"temperatureUnit": {
+		"message": "F",
+		"description": ""
+	}
+}
