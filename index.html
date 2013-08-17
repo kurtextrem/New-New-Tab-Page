@@ -1,148 +1,140 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title i18n-content="title"></title>
-		<meta charset="utf-8">
-		<meta name="google" value="notranslate">
-		<link rel="icon" href="icons/google.ico">
-		<link href="css/main.css" rel="stylesheet">
-	</head>
-	<body>
-		<a id="logo-link" i18n-values="href:google"><img id="logo" src="images/logo3w.png"></a>
-		<div id="search-container">
-			<input id="search-input" type="search" autocomplete="off" i18n-values="placeholder:search" x-webkit-speech>
-			<div id="search-suggestions"></div>
-		</div>
-		<div id="most-visited-container"></div>
-		<div id="block-most-visited-confirmation" class="msgContainer hidden">
-			<div class="msgInner">
-				<div class="msgText">
-					<span i18n-content="removedWebsite"></span>&nbsp;&nbsp;
-					<a id="undo-block-most-visited" href="#" i18n-content="undo"></a>&nbsp;&nbsp;
-					<a id="unblock-all-most-visited" href="#" i18n-content="restoreAll"></a>&nbsp;&nbsp;
-					<span class="close-button"></span>
+<head>
+	<title i18n-content="title"></title>
+	<meta charset="utf-8">
+	<meta name="google" value="notranslate">
+	<link rel="icon" href="icons/google.ico">
+	<link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+	<a id="logo-link" i18n-values="href:google">
+		<img id="logo" src="images/logo3w.png"></a>
+	<div id="search-container">
+		<input id="search-input" type="search" autocomplete="off" i18n-values="placeholder:search" x-webkit-speech>
+		<div id="search-suggestions"></div>
+	</div>
+	<div id="most-visited-container"></div>
+	<div id="content-boxes-container">
+		<div class="content-boxes-column">
+			<div class="content-box" id="box-icons">
+				<div class="infoButtonMain">
+					<div class="infoButton"></div>
+				</div>
+				<div id="promoted-services">
+					<a i18n-values="href:serviceURL('','translate')">
+						<img src="images/translate-64.png">
+						<div class="icon-title" i18n-content='translate'></div>
+					</a>
+					<a href="http://www.youtube.com/">
+						<img src="images/youtube.png">
+						<div class="icon-title">YouTube</div>
+					</a>
+					<a href="http://plus.google.com/">
+						<img src="images/gplus-64.png">
+						<div class="icon-title">Google+</div>
+					</a>
+					<a i18n-values="href:serviceURL('','maps')">
+						<img src="images/maps-resized.png">
+						<div class="icon-title" i18n-content='maps'></div>
+					</a>
+				</div>
+				<div id="apps-list"></div>
+				<div class="extendedInfoMain">
+					<div class="extendedInfo hide">
+						<p class="infoText"  i18n-content="promotedServices"></p>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div id="content-boxes-container">
-			<div class="content-boxes-column">
-				<div class="content-box" id="box-icons">
-					<div class="infoButtonMain"><div class="infoButton"></div></div>
-					<div id="promoted-services">
-						<a i18n-values="href:serviceURL('','translate')">
-							<img src="images/translate-64.png">
-							<div class="icon-title" i18n-content='translate'></div>
-						</a>
-						<a href="http://www.youtube.com/">
-							<img src="images/youtube.png">
-							<div class="icon-title">YouTube</div>
-						</a>
-						<a href="http://plus.google.com/">
-							<img src="images/gplus-64.png">
-							<div class="icon-title">Google+</div>
-						</a>
-						<a i18n-values="href:serviceURL('','maps')">
-							<img src="images/maps-resized.png">
-							<div class="icon-title" i18n-content='maps'></div>
-						</a>
-					</div>
-					<div id="apps-list"></div>
-					<div class="extendedInfoMain">
-						<div class="extendedInfo hide">
-							<p class="infoText"  i18n-content="promotedServices"></p>
-						</div>
-					</div>
+		<div class="content-boxes-column">
+			<div class="content-box" id="box-recent">
+				<h2 i18n-content="recentlyClosed"></h2>
+				<div id="recent-recent">
+					<a href="#">
+						<img class="recentClosed-icon hide"></a>
+				</div>
+				<div id="recent-2nd">
+					<a href="#">
+						<img class="recentClosed-icon hide"></a>
+				</div>
+				<div id="recent-3rd">
+					<a href="#">
+						<img class="recentClosed-icon hide"></a>
+				</div>
+				<div id="recent-4th">
+					<a href="#">
+						<img class="recentClosed-icon hide"></a>
+				</div>
+				<div id="recent-5th">
+					<a href="#">
+						<img class="recentClosed-icon hide"></a>
 				</div>
 			</div>
-			<div class="content-boxes-column">
-				<div class="content-box" id="box-recent">
-					<h2 i18n-content="recentlyClosed"></h2>
-					<div id="recent-recent">
-						<a href="#">
-							<img class="recentClosed-icon hide">
-						</a>
-					</div>
-					<div id="recent-2nd">
-						<a href="#">
-							<img class="recentClosed-icon hide">
-						</a>
-					</div>
-					<div id="recent-3rd">
-						<a href="#">
-							<img class="recentClosed-icon hide">
-						</a>
-					</div>
-					<div id="recent-4th">
-						<a href="#">
-							<img class="recentClosed-icon hide">
-						</a>
-					</div>
-					<div id="recent-5th">
-						<a href="#">
-							<img class="recentClosed-icon hide">
-						</a>
-					</div>
-				</div>
 
-				<div class="content-box" id="box-weather">
-					<div class="infoButtonMain"><div class="infoButton"></div></div>
-					<h2><a i18n-content="weather"></a></h2>
-					<div id="weather-current">
-						<a>
-							<img id="weather-current-icon">
-						</a>
-						<div id="weather-current-temperature">
-							<div id="weather-temperature"></div>
-						</div>
-						<div id="weather-current-box">
-							<div id="weather-condition"></div>
-							<div id="weather-wind"></div>
-							<div id="weather-humidity"></div>
-						</div>
+			<div class="content-box" id="box-weather">
+				<div class="infoButtonMain">
+					<div class="infoButton"></div>
+				</div>
+				<h2>
+					<a i18n-content="weather"></a>
+				</h2>
+				<div id="weather-current">
+					<a>
+						<img id="weather-current-icon"></a>
+					<div id="weather-current-temperature">
+						<div id="weather-temperature"></div>
 					</div>
-					<div id="weather-forecast-box"></div>
-					<div class="extendedInfoMain">
-						<div class="extendedInfo hide">
-							<p class="infoText" i18n-content="locationBased"></p>
-							<div class="extendedInfo-footer">
-								<div class="extendedInfo-footer__text">
-									<div class="sliderContainer">
-										<span i18n-content="coolWeather"></span>
-										<div class="slideThree" id="coolWeather">
-											<input type="checkbox" value="None" id="coolWeatherCb" name="check">
-											<label for="coolWeatherCb"></label>
-										</div>
-									</div>
-									<div class="sliderContainer">
-										<span i18n-content="celsius"></span>
-										<div class="slideThree" id="unitSlider">
-											<input type="checkbox" value="None" id="unitSliderCb" checked name="check">
-											<label for="unitSliderCb"></label>
-										</div>
+					<div id="weather-current-box">
+						<div id="weather-condition"></div>
+						<div id="weather-wind"></div>
+						<div id="weather-humidity"></div>
+					</div>
+				</div>
+				<div id="weather-forecast-box"></div>
+				<div class="extendedInfoMain">
+					<div class="extendedInfo hide">
+						<p class="infoText" i18n-content="locationBased"></p>
+						<div class="extendedInfo-footer">
+							<div class="extendedInfo-footer__text">
+								<div class="sliderContainer">
+									<span i18n-content="coolWeather"></span>
+									<div class="slideThree" id="coolWeather">
+										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
+										<label for="coolWeatherCb"></label>
 									</div>
 								</div>
-
+								<div class="sliderContainer">
+									<span i18n-content="celsius"></span>
+									<div class="slideThree" id="unitSlider">
+										<input type="checkbox" value="None" id="unitSliderCb" checked name="check">
+										<label for="unitSliderCb"></label>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="content-boxes-column">
-				<div class="content-box" id="box-news">
-					<div class="infoButtonMain"><div class="infoButton"></div></div>
-					<div id="news-container">
-					</div>
-					<div class="extendedInfoMain">
-						<div class="extendedInfo hide">
-							<p class="infoText" i18n-content="locationBased"></p>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="content-boxes-column">
+			<div class="content-box" id="box-news">
+				<div class="infoButtonMain">
+					<div class="infoButton"></div>
+				</div>
+				<div id="news-container"></div>
+				<div class="extendedInfoMain">
+					<div class="extendedInfo hide">
+						<p class="infoText" i18n-content="locationBased"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<script src="lib/jquery.min.js"></script>
-		<script src="js/all.js"></script>
-		<script src="js/page.js"></script>
-	</body>
+	<script src="lib/jquery.min.js"></script>
+	<script src="js/all.js"></script>
+	<script src="js/page.js"></script>
+</body>
 </html>

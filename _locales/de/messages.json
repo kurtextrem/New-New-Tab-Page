@@ -129,5 +129,9 @@
 	"temperatureUnit": {
 		"message": "C",
 		"description": ""
+	},
+	"chromeWebStore": {
+		"message": "Chrome Web Store",
+		"description": ""
 	}
 }

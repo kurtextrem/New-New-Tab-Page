@@ -124,5 +124,9 @@
 	"temperatureUnit": {
 		"message": "F",
 		"description": ""
+	},
+	"chromeWebStore": {
+		"message": "Chrome Web Store",
+		"description": ""
 	}
 }

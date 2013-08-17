@@ -6,13 +6,13 @@ This is a new "new tab" page. It was created by Google, but only in russian.
 I originally made this repository in order to get a far-reaching language support. Now I also want to finish the work from Google and / or design it more comfortable.
 
 Thanks to [François Beaufort](https://plus.google.com/u/0/100132233764003563318/posts/Weq1zNnoTmF).
+
 Thanks to http://mycolorscreen.com/2012/08/10/google-now-live-2/ for the weather icons.
-Thanks to http://forum.xda-developers.com/showpost.php?p=37322378&postcount=98 for the wallpapers.
 
 Version
 -
 
-[0.4.8](https://chrome.google.com/webstore/detail/new-tab-page-reimagined/neonhjemlhmbajdlgmdfihfplekppkkm)
+[Chrome Web Store](https://chrome.google.com/webstore/detail/new-tab-page-reimagined/neonhjemlhmbajdlgmdfihfplekppkkm)
 
 Installation
 --------------

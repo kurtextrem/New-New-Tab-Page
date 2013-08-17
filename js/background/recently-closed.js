@@ -23,10 +23,10 @@ RecentlyClosed.prototype.store = function(url, title) {
 			//console.error('Can\'t find tab that should be present in storage.');
 		//	return
 		//}
-		if (typeof res['recentlyClosed'] == 'undefined' || !$.isArray(res['recentlyClosed']))
-			res['recentlyClosed'] = []
-		res['recentlyClosed'] = this.moveForward(res['recentlyClosed'])
-		res['recentlyClosed'][0] = {
+		if (typeof res.recentlyClosed == 'undefined' || !$.isArray(res.recentlyClosed))
+			res.recentlyClosed = []
+		res.recentlyClosed = this.moveForward(res.recentlyClosed)
+		res.recentlyClosed[0] = {
 			url: url,
 			title: title
 		}
@@ -46,9 +46,9 @@ RecentlyClosed.prototype.moveForward = function(array) {
 RecentlyClosed.prototype.get = function(callback) {
 	var key = 'recentlyClosed'
 	chrome.storage.local.get(key, function(res) {
-		if (typeof(res['recentlyClosed']) == 'undefined')
+		if (typeof(res.recentlyClosed) == 'undefined')
 			return
-		callback(res['recentlyClosed'])
+		callback(res.recentlyClosed)
 	}.bind(this));
 }
 

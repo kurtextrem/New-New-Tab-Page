@@ -625,18 +625,8 @@ Weather.prototype.showValues_ = function(a) {
 			this.ui_.addForecast(d.day, d.icon,
 				d.high, d.low, d.condition)
 		}
-		//a["location-permission"] || this.ui_.showPermissionConfirmation(this.permitGeolocation_.bind(this))
 	}
 };
-/*Weather.prototype.permitGeolocation_ = function() {
-	chrome.storage.local.set({
-		"location-permission": true
-	}, function() {
-		chrome.runtime.getBackgroundPage(function(a) {
-			a.weatherFetcher.startWeatherRetrieval()
-		})
-	})
-};*/
 Weather.prototype.getDateString_ = function(a) {
 	var b;
 	try {
@@ -666,7 +656,7 @@ AppsUI.prototype.analyticsForPromo_ = function() {
 		a[b].onclick = this.analytics_.trackLink.bind(this.analytics_, a[b], "promoted-services")
 };
 AppsUI.prototype.onAppsListReceived_ = function(a) {
-	var b = $('<a href="https://chrome.google.com/webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">Chrome Web Store</div></a>');
+	var b = $('<a href="https://chrome.google.com/webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">'+chrome.i18n.getMessage('chromeWebStore')+'</div></a>');
 	this.analytics_.wrapLink(b[0], "webstore");
 	$("#apps-list").append(b);
 	for (b = 0; b < a.length; b++) {
@@ -707,27 +697,7 @@ function MostVisitedUI(a, b, c) {
 	this.unblockAllCallback_ = c
 }
 MostVisitedUI.prototype.reset = function() {
-	$(".most-visited-box").remove();
-	$("#undo-block-most-visited").unbind();
-	$("#undo-block-most-visited").click(function() {
-		this.analytics_.track("most-visited-confirmation", "undo");
-		this.undoCallback_();
-		this.hideUndoBar_();
-		return !1
-	}.bind(this));
-	$("#unblock-all-most-visited").unbind();
-	$("#unblock-all-most-visited").click(function() {
-		this.analytics_.track("most-visited-confirmation", "undo-all");
-		this.unblockAllCallback_();
-		this.hideUndoBar_();
-		return !1
-	}.bind(this));
-	$("#block-most-visited-confirmation .close-button").unbind();
-	$("#block-most-visited-confirmation .close-button").click(function() {
-		//console.log("close");
-		this.analytics_.track("most-visited-confirmation", "close");
-		this.hideUndoBar_(this)
-	}.bind(this))
+	$(".most-visited-box").remove()
 };
 MostVisitedUI.prototype.addIconButton = function(a, b, c) {
 	a = $('<a class="most-visited-box"><div class="most-visited-big-icon"></div></a>');
@@ -772,11 +742,35 @@ MostVisitedUI.prototype.setColors = function(a, b, c, d) {
 	a.css("background-color", c);
 	a.css("border-color", d)
 };
-MostVisitedUI.prototype.hideUndoBar_ = function() {
-	$("#block-most-visited-confirmation").addClass("hidden")
-};
 MostVisitedUI.prototype.showUndoBar_ = function() {
-	$("#block-most-visited-confirmation").removeClass("hidden")
+	var obj = {},
+	undo = chrome.i18n.getMessage('undo'),
+	restoreAll = chrome.i18n.getMessage('restoreAll')
+	obj[undo] = '#'
+	obj[restoreAll] = '#'
+	$('body').statusbar(chrome.i18n.getMessage('removedWebsite'), obj, {delay: 0, timerIn: 'slow', timerOut: 'slow'}, function(status, $a, e) {
+		if (status == 'link') {
+			var text = $a.text()
+			if (text == undo) {
+				this.analytics_.track("most-visited-confirmation", "undo")
+				this.undoCallback_()
+			}
+			if (text == restoreAll) {
+				this.analytics_.track("most-visited-confirmation", "undo-all")
+				this.unblockAllCallback_()
+			}
+			$a.parent().next('.close-button').click()
+			e.preventDefault()
+		}
+		if (status == 'closed') {
+			//console.log("close")
+			this.analytics_.track("most-visited-confirmation", "close")
+		}
+		if (status == 'added') {
+			$a.css('top', '165px')
+		}
+
+	}.bind(this))
 };
 
 function NewsUI(a) {
