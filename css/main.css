@@ -67,14 +67,6 @@ a, a:visited {
 	-webkit-transition: box-shadow 500ms ease;
 }
 
-/*#search-input.empty {
-	color: #BBB;
-}*/
-
-input[type="search"]::-webkit-search-cancel-button {
-	/*-webkit-appearance: none;*/
-}
-
 #search-input:hover {
 	border: 1px solid #999;
 	opacity: 1;
@@ -226,6 +218,8 @@ input[type="search"]::-webkit-search-cancel-button {
 	position: absolute;
 	top: 0;
 	right: 0;
+	-webkit-transition: opacity 500ms ease-in-out;
+	opacity: 0;
 }
 
 .closable-button:hover .close-button {
@@ -236,6 +230,14 @@ input[type="search"]::-webkit-search-cancel-button {
 .closable-button .close-button:hover {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAqklEQVR4XqWRMQ6DMAxF/1Fyilyj2SmIBUG5QcTCyJA5Z8jGhlBPgRi4TmoDraVmKFJlWYrlp/g5QfwRlwEVNWVa4WzfH9jK6kCkEkBjwxOhLghheMWMELUAqqwQ4OCbnE4LJnhr5IYdqQt4DJQjhe9u4vBBmnxHHNzRFkDGjHDo0VuTAqy2vAG4NkvXXDHxbGsIGlj3e835VFNtdugma/Jk0eXq0lP//5svi4PtO01oFfYAAAAASUVORK5CYII=);
 	z-index: 8;
+}
+
+.closable-button:hover .close-button {
+	-webkit-transition-delay: 500ms;
+	opacity: 1;
+}
+.closable-button .close-button:hover {
+	-webkit-transition: none;
 }
 
 /*! jQuery Statusbar  v0.3 */
@@ -281,6 +283,7 @@ input[type="search"]::-webkit-search-cancel-button {
 	font-weight: normal;
 	margin: 20px;
 	margin-right: 16px;
+	cursor: default;
 }
 
 /* Weather */
@@ -595,6 +598,12 @@ input[type="search"]::-webkit-search-cancel-button {
 .infoText {
 	font-style: italic;
 	font-size: 14px;
+	cursor: default;
+}
+
+.infoText a {
+	font-family: inherit;
+	border-bottom: 1px dotted grey;
 }
 
 .extendedInfo {
