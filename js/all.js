@@ -745,10 +745,10 @@ MostVisitedUI.prototype.setColors = function(a, b, c, d) {
 };
 MostVisitedUI.prototype.showUndoBar_ = function() {
 	var obj = {},
-	undo = chrome.i18n.getMessage('undo'),
-	restoreAll = chrome.i18n.getMessage('restoreAll')
-	obj[undo] = '#'
-	obj[restoreAll] = '#'
+		undo = chrome.i18n.getMessage('undo'),
+		restoreAll = chrome.i18n.getMessage('restoreAll')
+		obj[undo] = '#'
+		obj[restoreAll] = '#'
 	$('body').statusbar(chrome.i18n.getMessage('removedWebsite'), obj, {delay: 0, timerIn: 'slow', timerOut: 'slow'}, function(status, $a, e) {
 		if (status == 'link') {
 			var text = $a.text()

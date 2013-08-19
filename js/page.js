@@ -40,21 +40,22 @@ var i18nTemplate = (function() {
 		 * @param {LoadTimeData} dictionary The dictionary of strings to draw from.
 		 */
 		'i18n-content': function(element, key, dictionary) {
-			var split = key.split(/\(/);
-			var key = split[0]
-			var propArg = split[1]
-			if (typeof(propArg) != "undefined") {
+			var split = key.split(/\(/),
+				key = split[0],
+				propArg = split[1]
+			if (typeof propArg !== 'undefined') {
 				propArg = propArg.replace(')', '')
 				var translation = dictionary.getMessage(propArg)
-				propArg = translation == '' ? propArg = propArg.split(',') : propArg = translation
-				if (typeof(propArg) == 'object') {
+				propArg = translation == '' ? propArg.split(',') : translation
+				if (typeof propArg === 'object') {
 					propArg.some(function(elm, i) {
 						var transl = dictionary.getMessage(elm)
 						this[i] = transl == '' ? elm.replace(/'/g, '') : transl
 					}, propArg)
 				}
 			}
-			element.textContent = dictionary.getMessage(key, propArg);
+			var content = dictionary.getMessage(key, propArg) || key
+			element.textContent =content;
 		},
 		/**
 		 * This handler adds options to a <select> element.
@@ -164,4 +165,4 @@ var i18nTemplate = (function() {
 i18nTemplate.process(document, chrome.i18n);
 
 /*! jQuery Statusbar  v0.3 */
-!function(a){a.fn.statusbar=function(b,c,d,e){if(a.isFunction(d)){if(e)return;e=d,d=c,c=void 0}if("object"==typeof b){if(e||d)return;e=url,d=b,b=void 0,c=void 0}if(d)d.text=b,d.urls=c,d.callback=e;else var d={text:b,urls:c,callback:e};var f={text:"",normalText:"",urls:{},delay:1e4,position:"top",center:!0,html:!1,timerIn:"fast",timerOut:"fast",closeButton:!0,callback:function(){}};a.extend(f,d);var g=a('<div class="msg__container">'),h=a('<div class="msg__inner">'),i=a('<div class="msg__text">');switch(f.html?i.html(f.text):i.text(f.text),"object"==typeof f.urls&&a.each(f.urls,function(b,c){var d=a("<a>");f.html?d.html(b):d.text(b);var e=c;a.isArray(c)&&(e=c[0]),d.attr("href",e),c[1]&&d.attr("target","_blank"),i.append(d),d.click(function(a){f.callback("link",d,a)})}),f.center&&g.addClass("msg__center"),f.position){case"top":f.position="msg__top";break;case"bottom":f.position="msg__bottom";break;case"left":f.position="msg__left";break;case"right":f.position="msg__right";break;default:f.position="msg__top"}if(g.addClass(f.position),i.append("<span>"+f.normalText+"</span>"),h.append(i),g.append(h),g.hide(),f.closeButton){g.addClass("msg__closeable");var j=a('<span class="msg__close-button">');h.append(j),j.click(function(a){g.fadeOut(f.timerOut),f.callback("closed",g,a)})}return this.prepend(g),g.fadeIn(f.timerIn),f.delay&&window.setTimeout(function(){g.fadeOut(f.timerOut),f.callback("closed",g)},f.delay),f.callback("added",g)}}(jQuery)
+!function(a){a.fn.statusbar=function(b,c,d,e){if(a.isFunction(d)){if(e)return;e=d,d=c,c=void 0}if("object"==typeof b){if(e||d)return;e=url,d=b,b=void 0,c=void 0}if(d)d.text=b,d.urls=c,d.callback=e;else var d={text:b,urls:c,callback:e};var f={text:"",normalText:"",urls:{},delay:1e4,position:"top",center:!0,html:!1,timerIn:"fast",timerOut:"fast",closeButton:!0,callback:function(){}};a.extend(f,d);var g=a('<div class="msg__container">'),h=a('<div class="msg__inner">'),i=a('<div class="msg__text">');switch(f.html?i.html(f.text):i.text(f.text),"object"==typeof f.urls&&a.each(f.urls,function(b,c){var d=a("<a>");f.html?d.html(b):d.text(b);var e=c;a.isArray(c)&&(e=c[0]),d.attr("href",e),c[1]&&d.attr("target","_blank"),i.append(d),d.click(function(a){f.callback("link",d,a)})}),f.center&&g.addClass("msg__center"),f.position){case"top":f.position="msg__top";break;case"bottom":f.position="msg__bottom";break;case"left":f.position="msg__left";break;case"right":f.position="msg__right";break;default:f.position="msg__top"}if(g.addClass(f.position),i.append("<span>"+f.normalText+"</span>"),h.append(i),g.append(h),g.hide(),f.closeButton){g.addClass("msg__closeable");var j=a('<span class="close-button">');h.append(j),j.click(function(a){g.fadeOut(f.timerOut),f.callback("closed",g,a)})}return this.prepend(g),g.fadeIn(f.timerIn),f.delay&&window.setTimeout(function(){g.fadeOut(f.timerOut),f.callback("closed",g)},f.delay),f.callback("added",g)}}(jQuery)
