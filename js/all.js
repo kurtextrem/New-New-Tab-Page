@@ -154,7 +154,7 @@ NTP.prototype.init = function() {
 	this.infoMenu_ = new infoMenu()
 	this.infoMenu_.regEvents()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
-	var hour = (new Date).getHours();
+	var hour = (new Date).getHours()
 	if (hour>5 && hour<8)
 		$('body').addClass('bg-dawn')
 	else if (hour>8 && hour<19)

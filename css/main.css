@@ -62,9 +62,9 @@ a, a:visited {
 	right: 0;
 	left: 0;
 	opacity: 0.8;
-	box-shadow: rgba(0,0,0,0.5) 0 0 16px 0;
-	-webkit-transition: opacity 500ms ease;
-	-webkit-transition: box-shadow 500ms ease;
+	box-shadow: rgba(0,0,0, .5) 0 0 16px 0;
+	-webkit-transition-duration: 500ms;
+	-webkit-transition-property: opacity, box-shadow;
 }
 
 #search-input:hover {
