@@ -649,7 +649,8 @@ function AppsUI(a) {
 }
 AppsUI.prototype.show = function() {
 	this.analyticsForPromo_();
-	"cros" === (-1 != navigator.appVersion.indexOf("Linux") ? "linux" : -1 != navigator.appVersion.indexOf("CrOS") ? "cros" : -1 != navigator.appVersion.indexOf("Mac OS X") ? "mac" : "other") ? $("#apps-list").hide() : ($("#apps-list a").remove(), chrome.management.getAll(this.onAppsListReceived_.bind(this)))
+	$("#apps-list a").remove()
+	chrome.management.getAll(this.onAppsListReceived_.bind(this))
 };
 AppsUI.prototype.analyticsForPromo_ = function() {
 	for (var a = $("#promoted-services a"), b = 0; b < a.length; b++)
