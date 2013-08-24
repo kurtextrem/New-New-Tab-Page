@@ -484,9 +484,6 @@ a, a:visited {
 	border-bottom: 1px solid #EEE;
 	display: -webkit-box;
 	padding: 20px;
-}
-
-.news-item:first-of-type {
 	margin-right: 30px;
 }
 
