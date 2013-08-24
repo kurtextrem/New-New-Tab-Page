@@ -163,10 +163,15 @@ NTP.prototype.init = function() {
 		$('body').addClass('bg-dusk')
 	else
 		$('body').addClass('bg-twilight')
-};
+	window.setTimeout(function(){
+		if (document.getElementById('most-visited-container').children[0].nodeName === 'DIV' || document.getElementById('most-visited-container').children.length < 2) {
+			location.reload()
+		}
+	}, 1000)
+}
 
-var ntp = new NTP;
-$(document).ready(ntp.init.bind(ntp));
+var ntp = new NTP
+$(document).ready(ntp.init.bind(ntp))
 
 function MostVisited(a) {
 	this.ui_ = new MostVisitedUI(a, this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
@@ -179,11 +184,9 @@ function MostVisited(a) {
 MostVisited.BUTTON_TYPE = "thumbnail";
 MostVisited.DATA_SOURCE = "topSites"; // history / topSites
 MostVisited.prototype.show = function() {
-	if ("topSites" === MostVisited.DATA_SOURCE)
-		window.setTimeout(function() {
-			chrome.topSites.get(this.onTopSitesReceived_.bind(this))
-		}.bind(this), 60) // fixes no thumbs on startup
-	else {
+	if ("topSites" === MostVisited.DATA_SOURCE) {
+		chrome.topSites.get(this.onTopSitesReceived_.bind(this))
+	} else {
 		var a = Date.now() - 2592E6;
 		chrome.history.search({
 			text: "",
@@ -698,7 +701,8 @@ function MostVisitedUI(a, b, c) {
 	this.unblockAllCallback_ = c
 }
 MostVisitedUI.prototype.reset = function() {
-	$(".most-visited-box").remove()
+	$('#most-visited-container').html('')
+	//$(".most-visited-box").remove()
 };
 MostVisitedUI.prototype.addIconButton = function(a, b, c) {
 	a = $('<a class="most-visited-box"><div class="most-visited-big-icon"></div></a>');
