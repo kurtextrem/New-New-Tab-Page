@@ -873,9 +873,11 @@ a, a:visited {
 	#promoted-services a {
 		padding: 0;
 	}
+	#promoted-services a:first-of-type {
+		padding-left: 4px;
+	}
 	#content-boxes-container {
-		max-width: 1113px;
-		left: -80px;
+		max-width: 955px;
 	}
 	.most-visited-box, .most-visited-thumbnail {
 		width: 158px;
@@ -887,10 +889,16 @@ a, a:visited {
 	#box-recent {
 		overflow: hidden;
 	}
+	#box-recent > div {
+		padding-right: 11px;
+	}
 	.content-boxes-column:first-of-type {
 		max-width: 320px;
 	}
 	.content-boxes-column:last-of-type {
 		max-width: 400px;
+	}
+	.content-boxes-column {
+		width: 55%;
 	}
 }
