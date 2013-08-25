@@ -9,11 +9,11 @@
 	},
 	"translate": {
 		"message": "Translate",
-		"description": ""
+		"description": "Google Translate in the apps list (first four)"
 	},
 	"maps": {
 		"message": "Maps",
-		"description": ""
+		"description": "Google Maps in the apps list (first four)"
 	},
 	"title": {
 		"message": "New Tab",
@@ -21,31 +21,31 @@
 	},
 	"removedWebsite": {
 		"message": "Removed website from most visited.",
-		"description": ""
+		"description": "Appears when the 'X' on a thumbnail had been clicked"
 	},
 	"search": {
 		"message": "Search",
-		"description": ""
+		"description": "The placeholder text in the search box"
 	},
 	"remove": {
 		"message": "Remove",
-		"description": ""
+		"description": "The title for the 'X' on the most visited thumbnails (shown on hover)"
 	},
 	"undo": {
 		"message": "Undo",
-		"description": ""
+		"description": "Located in the message after a 'X' had been clicked"
 	},
 	"restoreAll": {
 		"message": "Restore all",
-		"description": ""
+		"description": "Located in the message after a 'X' had been clicked"
 	},
 	"recentlyClosed": {
 		"message": "Recently Closed",
-		"description": ""
+		"description": "The title for the recently closed box"
 	},
 	"google": {
 		"message": "http$SECURE$://www.google.com/",
-		"description": "",
+		"description": "Google URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"secure": {
 				"content": "$1",
@@ -55,7 +55,7 @@
 	},
 	"serviceURL": {
 		"message": "http$SECURE$://$SERVICE$.google.com/",
-		"description": "",
+		"description": "Google Service URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"service": {
 				"content": "$2",
@@ -69,7 +69,7 @@
 	},
 	"searchURL": {
 		"message": "http$SECURE$://www.google.com/search?q=$STRING$",
-		"description": "",
+		"description": "Google Search URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"string": {
 				"content": "$2",
@@ -83,19 +83,19 @@
 	},
 	"weather": {
 		"message": "Weather",
-		"description": ""
+		"description": "The title for the weather box (hidden)"
 	},
 	"apps": {
 		"message": "Apps",
-		"description": ""
+		"description": "The title for the apps box (hidden)"
 	},
 	"news": {
 		"message": "News",
-		"description": ""
+		"description": "The title for the news box (hidden)"
 	},
 	"moreNews": {
 		"message": "More News",
-		"description": ""
+		"description": " Located at the bottom of the news box"
 	},
 	"promotedServices": {
 		"message": "The first four Apps are promoted from Google (More on chrome://apps)",
@@ -103,19 +103,19 @@
 	},
 	"locationBased": {
 		"message": "Based on your location",
-		"description": ""
+		"description": "In the info box of the weather box"
 	},
 	"coolWeather": {
 		"message": "Cool weather",
-		"description": ""
+		"description": "In the info box of the weather box"
 	},
 	"on": {
 		"message": "On",
-		"description": ""
+		"description": "Used in the slider in info boxes"
 	},
 	"off": {
 		"message": "Off",
-		"description": ""
+		"description": "Used in the slider in info boxes"
 	},
 	"celsius": {
 		"message": "Celsius",
@@ -123,10 +123,14 @@
 	},
 	"temperatureUnit": {
 		"message": "F",
-		"description": ""
+		"description": "The temperature unit for this language (only insert C for Celsius or F for Fahrenheit)"
 	},
 	"chromeWebStore": {
 		"message": "Chrome Web Store",
-		"description": ""
+		"description": "Title for the Chrome Web Store in the apps list (first spot)"
+	},
+	"reloadPlease": {
+		"message": "Reload the page please.",
+		"description": "Only visible on first startup"
 	}
 }

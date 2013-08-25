@@ -133,5 +133,9 @@
 	"chromeWebStore": {
 		"message": "Chrome Web Store",
 		"description": ""
+	},
+	"reloadPlease": {
+		"message": "Bitte lade die Seite neu.",
+		"description": ""
 	}
 }
