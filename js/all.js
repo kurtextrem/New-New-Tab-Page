@@ -136,7 +136,7 @@ var dominantColors = {
 };
 
 function NTP() {
-	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = this.infoMenu_ = null
+	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = this.infoMenu_ =  this.newPopup_ = null
 }
 NTP.prototype.init = function() {
 	this.analytics_ = new Analytics;
@@ -152,7 +152,7 @@ NTP.prototype.init = function() {
 	this.recentlyClosed_ = new recentlyClosed()
 	this.recentlyClosed_.show()
 	this.infoMenu_ = new infoMenu()
-	this.infoMenu_.regEvents()
+	this.newPopup_ = new newPopup()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 	var hour = (new Date).getHours()
 	if (hour>5 && hour<8)
@@ -163,11 +163,12 @@ NTP.prototype.init = function() {
 		$('body').addClass('bg-dusk')
 	else
 		$('body').addClass('bg-twilight')
-	window.setTimeout(function(){
+	window.setTimeout(function(){ // should fix the "no thumbs on startup"
 		if (document.getElementById('most-visited-container').children[0].nodeName === 'DIV' || document.getElementById('most-visited-container').children.length < 2) {
 			location.reload()
 		}
 	}, 1000)
+	$('#box-icons').css('max-height', ($('#box-news').height())
 }
 
 var ntp = new NTP
@@ -1024,7 +1025,7 @@ recentlyClosedUI.prototype.show = function() {
 }
 
 function infoMenu() {
-
+	this.regEvents()
 }
 
 infoMenu.prototype.regEvents = function() {
@@ -1064,4 +1065,16 @@ infoMenu.prototype.footerToggle = function() {
 		}.bind(this), 50)
 
 	})
+}
+
+function newPopup() {
+	this.start()
+}
+
+newPopup.prototype.start = function() {
+	chrome.storage.local.get('newPopupV'+chrome.app.getDetails().version, this.received.bind(this))
+}
+
+newPopup.prototype.received = function(string) {
+
 }

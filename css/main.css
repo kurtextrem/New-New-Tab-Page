@@ -445,6 +445,10 @@ a, a:visited {
 	padding-left: 11px !important;
 }
 
+#box-icons {
+	overflow: auto;
+}
+
 #box-icons a {
 	color: #AAA;
 	font-size: 13px;
