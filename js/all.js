@@ -1,3 +1,4 @@
+'use strict'
 function Analytics() {
 	this.sender_ = null;
 	chrome.runtime.getBackgroundPage(function(a) {
@@ -168,7 +169,6 @@ NTP.prototype.init = function() {
 			location.reload()
 		}
 	}, 1000)
-	$('#box-icons').css('max-height', ($('#box-news').height())
 }
 
 var ntp = new NTP
@@ -819,6 +819,7 @@ NewsUI.prototype.addMoreLink = function() {
 	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#news-container").append(a)
+	$('#box-icons').css('max-height', $('#box-news').height())
 };
 
 
@@ -1069,12 +1070,30 @@ infoMenu.prototype.footerToggle = function() {
 
 function newPopup() {
 	this.start()
+	this.regEvents()
+	this.string = 'newPopupV1'
 }
 
 newPopup.prototype.start = function() {
-	chrome.storage.local.get('newPopupV'+chrome.app.getDetails().version, this.received.bind(this))
+	chrome.storage.local.get(this.string, this.received.bind(this))
 }
 
-newPopup.prototype.received = function(string) {
+newPopup.prototype.received = function(obj) {
+	if(!obj[this.string]) {
+		var $promo = $('#new-promo')
+		$promo.fadeIn('slow', function(){
+			$promo.addClass('shake')
+			window.setTimeout(function(){
+				$promo.removeClass('shake')
+			}, 800)
+		})
+	}
+}
 
+newPopup.prototype.regEvents = function() {
+	var obj = {}
+	obj[this.string] = true
+	$('#new-promo-close-button').click(function(){
+		chrome.storage.local.set(obj)
+	})
 }

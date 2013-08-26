@@ -712,6 +712,20 @@ a, a:visited {
 	z-index: 999;
 }
 
+@-webkit-keyframes shake {
+	0%, 100% {-webkit-transform: translateX(0);}
+	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
+}
+.shake {
+	display:inline-block;
+	-webkit-animation-name: shake;
+	-webkit-animation-duration: 0.8s;
+	-webkit-transform-origin:50% 50%;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+
 .new-promo-headline {
 	font-size: 18px;
 	margin: 0;
@@ -753,6 +767,11 @@ a, a:visited {
 	width: 90px;
 	bottom: 15px;
 	cursor: pointer;
+}
+
+.new-promo-learn-more:hover {
+	border-color: #2f5bb7;
+	background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
 }
 
 #new-promo > img {
