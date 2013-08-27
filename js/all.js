@@ -719,7 +719,7 @@ MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d) {
 	var f = $('<a class="most-visited-box most-visited-domain-' + a.replace(/\./g, "-") + '"></a>');
 	f.attr("title", c);
 	f.attr("href", c);
-	c = $('<div class="most-visited-thumbnail closable-button"><div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>');
+	c = $('<div class="most-visited-thumbnail closable-button"><div class="favorite-button" title="' + chrome.i18n.getMessage('favorite') + '"></div><div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>');
 	c.find(".most-visited-domain").text(a);
 	c.find(".close-button").click(function() {
 		d();
@@ -1069,17 +1069,20 @@ infoMenu.prototype.footerToggle = function() {
 }
 
 function newPopup() {
+	this.obj = {}
+	this.obj[newPopup.STRING] = false
 	this.start()
 	this.regEvents()
-	this.string = 'newPopupV1'
 }
 
+newPopup.STRING = 'newPopupV1'
+
 newPopup.prototype.start = function() {
-	chrome.storage.local.get(this.string, this.received.bind(this))
+	chrome.storage.local.get(this.obj, this.received.bind(this))
 }
 
 newPopup.prototype.received = function(obj) {
-	if(!obj[this.string]) {
+	if(!obj[newPopup.STRING]) {
 		var $promo = $('#new-promo')
 		$promo.fadeIn('slow', function(){
 			$promo.addClass('shake')
@@ -1091,9 +1094,9 @@ newPopup.prototype.received = function(obj) {
 }
 
 newPopup.prototype.regEvents = function() {
-	var obj = {}
-	obj[this.string] = true
-	$('#new-promo-close-button').click(function(){
-		chrome.storage.local.set(obj)
-	})
+	this.obj[newPopup.STRING] = true
+	$('#new-promo-close-button, #new-promo-learn-more').click(function(){
+		chrome.storage.local.set(this.obj)
+		$('#new-promo').fadeOut('slow')
+	}.bind(this))
 }

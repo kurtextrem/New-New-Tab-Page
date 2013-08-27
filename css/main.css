@@ -208,7 +208,7 @@ a, a:visited {
 	color: #000;
 }
 
-.close-button, .msg__inner>.msg__close-button {
+.close-button, .msg__inner>.msg__close-button, .favorite-button, .favorited-button {
 	background: no-repeat;
 	background-color: transparent;
 	cursor: pointer;
@@ -220,23 +220,36 @@ a, a:visited {
 	right: 0;
 	-webkit-transition: opacity 500ms ease-in-out;
 	opacity: 0;
+	z-index: 8;
+}
+
+.favorited-button {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAARElEQVR42mNgwAS2QLwCB7ZgIAKMGjBqwDA0YCkQLyPXgHlArAXEOkA8n1QDpgGxLJKYEhDPJNYATSCWxCIOMlANXRAAYqk+3fyP2dgAAAAASUVORK5CYII=);
+	opacity: 1;
+}
+
+.favorite-button:hover .close-button, .favorite-button {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAQklEQVR42mNgwAQaQJyHA6swEAFGDRg1YBgakAPEueQakAHE0kAsC2WTZEAyEAsjiYkBcQqxBoBsFcAiDjJQEl0QANocKSEzKfCGAAAAAElFTkSuQmCC);
+	left: 0;
+}
+
+.favorite-button:hover {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAARElEQVR42mNgwAS2QLwCB7ZgIAKMGjBqwDA0YCkQLyPXgHlArAXEOkA8n1QDpgGxLJKYEhDPJNYATSCWxCIOMlANXRAAYqk+3fyP2dgAAAAASUVORK5CYII=);
 }
 
 .closable-button:hover .close-button, .close-button {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAiElEQVR42r2RsQrDMAxEBRdl8SDcX8lQPGg1GBI6lvz/h7QyRRXV0qUULwfvwZ1tenw5PxToRPWMC52eA9+WDnlh3HFQ/xBQl86NFYJqeGflkiogrOvVlIFhqURFVho3x1moGAa3deMs+LS30CAhBN5nNxeT5hbJ1zwmji2k+aF6NENIPf/hs54f0sZFUVAMigAAAABJRU5ErkJggg==);
-	z-index: 8;
 }
 
 .closable-button .close-button:hover, .close-button:hover {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAqklEQVR4XqWRMQ6DMAxF/1Fyilyj2SmIBUG5QcTCyJA5Z8jGhlBPgRi4TmoDraVmKFJlWYrlp/g5QfwRlwEVNWVa4WzfH9jK6kCkEkBjwxOhLghheMWMELUAqqwQ4OCbnE4LJnhr5IYdqQt4DJQjhe9u4vBBmnxHHNzRFkDGjHDo0VuTAqy2vAG4NkvXXDHxbGsIGlj3e835VFNtdugma/Jk0eXq0lP//5svi4PtO01oFfYAAAAASUVORK5CYII=);
-	z-index: 8;
 }
 
-.closable-button:hover .close-button {
+.closable-button:hover .close-button, .closable-button:hover .favorite-button {
 	-webkit-transition-delay: 500ms;
 	opacity: 1;
 }
-.closable-button .close-button:hover {
+.closable-button .close-button:hover, .closable-button .favorite-button:hover {
 	-webkit-transition: none;
 }
 
