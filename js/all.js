@@ -201,6 +201,7 @@ MostVisited.prototype.onTopSitesReceived_ = function(a) {
 		var d = util.domainFromURL(a[c].url);
 		d && (b['most-visited-blocked-' + d] = !1)
 	}
+	b['favorites'] = {}
 	chrome.storage.local.get(b, this.filterAndShow_.bind(this, a))
 };
 MostVisited.DEFAULT_SITES = [{
@@ -268,6 +269,13 @@ MostVisited.prototype.getFavicon_ = function(a, b) {
 MostVisited.prototype.filterAndShow_ = function(a, b) {
 	this.ui_.reset()
 	for (var c = 0, d = 0; c < a.length && 7 > d; c++) {
+		$.each(b['favorites'], function(i, e) {
+			if (e.index === c) {
+				a[c].url = e.url
+				a[c].title = e.title
+				a[c].index = true
+			}
+		})
 		var f = a[c].url,
 			e = a[c].title,
 			g = util.domainFromURL(f)
@@ -276,7 +284,7 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 		if(!b["most-visited-blocked-" + g]) {
 			d++
 			if ("thumbnail" === MostVisited.BUTTON_TYPE) {
-				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), !!a[c].index)
+				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
 				g = this.getFavicon_(f, a[c].count)
 				this.ui_.showFavicon(e, g)
 				this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
@@ -284,7 +292,7 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 				e = this.ui_.addIconButton(g, e, f, this.addDomainToBlacklist_.bind(this, g))
 				this.favicons_.getScaled(f, 64, this.ui_.showFavicon.bind(this.ui_, e))
 			} else if ("chrome-thumb" === MostVisited.BUTTON_TYPE) {
-				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g))
+				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
 				this.ui_.showFavicon(e, this.getFavicon_(f, a[c].count))
 				g = new Image
 				g.onload = function(a, b) {
@@ -295,9 +303,6 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 			}
 		}
 	}
-	chrome.storage.local.get({favorites: {}}, function(favorites) {
-		favorites = favorites['favorites']
-	})
 }
 MostVisited.prototype.addDomainToBlacklist_ = function(a) {
 	this.lastBlockedDomain_ = a;
@@ -765,8 +770,8 @@ MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d, favorited) {
 				})
 				obj[url] = {
 					index: index,
-					url: url
-					title: $this.parent().next().text(),
+					url: url,
+					title: $this.parent().next().text()
 				}
 				$this.addClass('favorited-button')
 			}

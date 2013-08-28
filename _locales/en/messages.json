@@ -132,5 +132,13 @@
 	"reloadPlease": {
 		"message": "Reload the page please.",
 		"description": "Only visible on first startup"
+	},
+	"favorite": {
+		"message": "Attach",
+		"description": "Title of the favorite icon"
+	},
+	"removeFavorite": {
+		"message": "Detach",
+		"description": "Title of the favorite icon"
 	}
 }

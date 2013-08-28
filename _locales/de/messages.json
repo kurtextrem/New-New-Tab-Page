@@ -137,5 +137,13 @@
 	"reloadPlease": {
 		"message": "Bitte lade die Seite neu.",
 		"description": ""
+	},
+	"favorite": {
+		"message": "Anheften",
+		"description": "Title of the favorite icon"
+	},
+	"removeFavorite": {
+		"message": "Loslösen",
+		"description": "Title of the favorite icon"
 	}
 }
