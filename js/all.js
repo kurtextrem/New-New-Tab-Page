@@ -266,18 +266,39 @@ MostVisited.prototype.getFavicon_ = function(a, b) {
 	return "chrome://favicon/" + a
 };
 MostVisited.prototype.filterAndShow_ = function(a, b) {
-	this.ui_.reset();
+	this.ui_.reset()
 	for (var c = 0, d = 0; c < a.length && 7 > d; c++) {
 		var f = a[c].url,
 			e = a[c].title,
-			g = util.domainFromURL(f);
-		e || (e = g);
-		b["most-visited-blocked-" + g] || (d++, "thumbnail" === MostVisited.BUTTON_TYPE ? (e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g)), g = this.getFavicon_(f, a[c].count), this.ui_.showFavicon(e, g), this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))) : "icon" === MostVisited.BUTTON_TYPE ?
-			(e = this.ui_.addIconButton(g, e, f, this.addDomainToBlacklist_.bind(this, g)), this.favicons_.getScaled(f, 64, this.ui_.showFavicon.bind(this.ui_, e))) : "chrome-thumb" === MostVisited.BUTTON_TYPE && (e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g)), this.ui_.showFavicon(e, this.getFavicon_(f, a[c].count)), g = new Image, g.onload = function(a, b) {
-			this.ui_.showThumbnail(a, "chrome://thumb/" + b)
-		}.bind(this, e, f), g.onerror = this.onThumbnailNotFound_.bind(this, e, f), g.src = "chrome://thumb/" + f))
+			g = util.domainFromURL(f)
+		if(!e)
+			e = g
+		if(!b["most-visited-blocked-" + g]) {
+			d++
+			if ("thumbnail" === MostVisited.BUTTON_TYPE) {
+				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), !!a[c].index)
+				g = this.getFavicon_(f, a[c].count)
+				this.ui_.showFavicon(e, g)
+				this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
+			} else if ("icon" === MostVisited.BUTTON_TYPE) {
+				e = this.ui_.addIconButton(g, e, f, this.addDomainToBlacklist_.bind(this, g))
+				this.favicons_.getScaled(f, 64, this.ui_.showFavicon.bind(this.ui_, e))
+			} else if ("chrome-thumb" === MostVisited.BUTTON_TYPE) {
+				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g))
+				this.ui_.showFavicon(e, this.getFavicon_(f, a[c].count))
+				g = new Image
+				g.onload = function(a, b) {
+					this.ui_.showThumbnail(a, "chrome://thumb/" + b)
+				}.bind(this, e, f)
+				g.onerror = this.onThumbnailNotFound_.bind(this, e, f)
+				g.src = "chrome://thumb/" + f
+			}
+		}
 	}
-};
+	chrome.storage.local.get({favorites: {}}, function(favorites) {
+		favorites = favorites['favorites']
+	})
+}
 MostVisited.prototype.addDomainToBlacklist_ = function(a) {
 	this.lastBlockedDomain_ = a;
 	var b = {};
@@ -715,23 +736,49 @@ MostVisitedUI.prototype.addIconButton = function(a, b, c) {
 	$("#most-visited-container").append(a);
 	return a
 };
-MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d) {
-	var f = $('<a class="most-visited-box most-visited-domain-' + a.replace(/\./g, "-") + '"></a>');
-	f.attr("title", c);
-	f.attr("href", c);
-	c = $('<div class="most-visited-thumbnail closable-button"><div class="favorite-button" title="' + chrome.i18n.getMessage('favorite') + '"></div><div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>');
-	c.find(".most-visited-domain").text(a);
-	c.find(".close-button").click(function() {
+MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d, favorited) {
+	var f = $('<a class="most-visited-box most-visited-domain-' + a.replace(/\./g, "-") + '"></a>'),
+		favorite = '<div class="favorite-button" title="' + chrome.i18n.getMessage('favorite') + '"></div>',
+		url = c
+	if (favorited)
+		favorite = '<div class="favorite-button favorited-button" title="' + chrome.i18n.getMessage('removeFavorite') + '"></div>'
+	f.attr('title', c).attr('href', c)
+	c = $('<div class="most-visited-thumbnail closable-button">'+favorite+'<div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>')
+	c.find('.most-visited-domain').text(a)
+	c.find('.close-button').click(function() {
 		d();
 		this.showUndoBar_();
 		return !1
-	}.bind(this));
-	a = $('<div class="most-visited-title"></div>');
-	a.text(b);
-	f.append(c);
-	f.append(a);
-	this.analytics_.wrapLinkNoHref(f[0], "most-visited");
-	$("#most-visited-container").append(f);
+	}.bind(this))
+	c.find('.favorite-button').click(function() {
+		var $this = $(this)
+		chrome.storage.local.get({favorites: {}}, function(favorites){
+			var obj = favorites['favorites']
+			if ($this.hasClass('favorited-button')) {
+				delete obj[url]
+				$this.removeClass('favorited-button')
+			} else {
+				var index = 0
+				$.each($('#most-visited-container').children(), function(i, e){
+					if (e === $this.parents('.most-visited-box')[0])
+						index = i
+				})
+				obj[url] = {
+					index: index,
+					url: url
+					title: $this.parent().next().text(),
+				}
+				$this.addClass('favorited-button')
+			}
+			chrome.storage.local.set({favorites: obj})
+		})
+		return false
+	})
+	a = $('<div class="most-visited-title"></div>')
+	a.text(b)
+	f.append(c).append(a)
+	this.analytics_.wrapLinkNoHref(f[0], "most-visited")
+	$("#most-visited-container").append(f)
 	return f
 };
 MostVisitedUI.prototype.showFavicon = function(a, b) {
