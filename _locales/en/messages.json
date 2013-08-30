@@ -140,5 +140,17 @@
 	"removeFavorite": {
 		"message": "Detach",
 		"description": "Title of the favorite icon"
+	},
+	"pinYourFavorites": {
+		"message": "Pin your favorite sites!",
+		"description": "Title of the whats new popup v1"
+	},
+	"pinYourFavoritesText": {
+		"message": "You now can pin your favorite sites, so they won't disappear again (if they did).",
+		"description": "Detailed text of the whats new popup v1"
+	},
+	"ok": {
+		"message": "ok",
+		"description": "Used with buttons"
 	}
 }

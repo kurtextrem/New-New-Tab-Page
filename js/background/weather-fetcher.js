@@ -83,7 +83,7 @@ WeatherFetcher.prototype.requestLocation_ = function() {
 	//console.log('requestLocation_');
 	navigator.geolocation.getCurrentPosition(
 		this.handleGeolocationResponse_.bind(this), function() {
-		//console.error('Geolocation failed.');
+		console.error('Geolocation failed.');
 		this.retry_();
 	}.bind(this));
 };
@@ -103,7 +103,7 @@ WeatherFetcher.prototype.handleGeolocationResponse_ = function(position) {
 };
 
 WeatherFetcher.prototype.retry_ = function(jqxhr) {
-	//console.error('Retrying weather request. Delay:', this.retryDelay_ / 1000, 's.');
+	console.error('Retrying weather request. Delay:', this.retryDelay_ / 1000, 's.');
 	this.retryTimeout_ = setTimeout(
 		function() {
 			this.retryTimeout_ = null;
@@ -168,7 +168,7 @@ WeatherFetcher.prototype.requestWeather_ = function() {
 	var request = $.get(
 		util.makeURL('https://www.google.com/ig/api', params), this.handleWeatherResponse_.bind(this), 'xml');
 	request.error(function() {
-	//	console.error('Weather request failed.');
+		console.error('Weather request failed.');
 		this.retry_();
 	}.bind(this));
 };

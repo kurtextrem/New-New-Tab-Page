@@ -145,5 +145,17 @@
 	"removeFavorite": {
 		"message": "Loslösen",
 		"description": "Title of the favorite icon"
+	},
+	"pinYourFavorites": {
+		"message": "Hefte deine Lieblingsseiten an!",
+		"description": "Title of the whats new popup v1"
+	},
+	"pinYourFavoritesText": {
+		"message": "Du kannst jetzt deine Lieblingsseiten anheften, damit sie nicht mehr verschwinden (wenn sie das taten).",
+		"description": "Detailed text of the whats new popup v1"
+	},
+	"ok": {
+		"message": "ok",
+		"description": "Used with buttons"
 	}
 }

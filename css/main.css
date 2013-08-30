@@ -289,6 +289,8 @@ a, a:visited {
 	min-height: 40px;
 	background-color: white;
 	border-radius: 2px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .content-box h2 {
@@ -451,15 +453,12 @@ a, a:visited {
 	border-top: 1px solid #DDD;
 	width: 100%;
 	padding-bottom: 10px;
+	overflow: auto;
 	/*width: 352px;*/
 }
 
 #apps-list > a:not(:first-of-type) {
 	padding-left: 11px !important;
-}
-
-#box-icons {
-	overflow: auto;
 }
 
 #box-icons a {
@@ -621,7 +620,7 @@ a, a:visited {
 
 .extendedInfo {
 	position: relative;
-	padding: 1px 10px 2px 20px;
+	padding: 1px 20px 2px 20px;
 	background-color: rgba(0,0,0, .8);
 }
 
@@ -638,6 +637,7 @@ a, a:visited {
 	top: 20px;
 	left: -20px;
 	width: 102%;
+	padding-right: 10px;
 }
 
 .sliderContainer {
@@ -760,7 +760,7 @@ a, a:visited {
 	padding-top: 11px;
 	font-size: 16px;
 	word-wrap: break-word;
-	width: 60%;
+	width: 55%;
 }
 
 .new-promo-learn-more {
@@ -780,6 +780,7 @@ a, a:visited {
 	width: 90px;
 	bottom: 15px;
 	cursor: pointer;
+	text-transform: uppercase;
 }
 
 .new-promo-learn-more:hover {

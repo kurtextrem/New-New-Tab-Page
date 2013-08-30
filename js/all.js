@@ -268,14 +268,20 @@ MostVisited.prototype.getFavicon_ = function(a, b) {
 };
 MostVisited.prototype.filterAndShow_ = function(a, b) {
 	this.ui_.reset()
-	for (var c = 0, d = 0; c < a.length && 7 > d; c++) {
+	for (var c = 0, d = 0, realD = 0; c < a.length && 7 > d; c++, realD++) {
 		$.each(b['favorites'], function(i, e) {
-			if (e.index === c) {
+			if (e.index === realD) {
 				a[c].url = e.url
 				a[c].title = e.title
 				a[c].index = true
 			}
 		})
+		if (typeof b['favorites'][a[c].url] !== 'undefined' && b['favorites'][a[c].url].index !== realD) {
+			realD--
+			continue
+		} else if (typeof b['favorites'][a[c].url] !== 'undefined' && b['favorites'][a[c].url].index === realD) {
+			a[c].index = true
+		}
 		var f = a[c].url,
 			e = a[c].title,
 			g = util.domainFromURL(f)
@@ -301,6 +307,8 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 				g.onerror = this.onThumbnailNotFound_.bind(this, e, f)
 				g.src = "chrome://thumb/" + f
 			}
+		} else {
+			realD--
 		}
 	}
 }
@@ -744,11 +752,14 @@ MostVisitedUI.prototype.addIconButton = function(a, b, c) {
 MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d, favorited) {
 	var f = $('<a class="most-visited-box most-visited-domain-' + a.replace(/\./g, "-") + '"></a>'),
 		favorite = '<div class="favorite-button" title="' + chrome.i18n.getMessage('favorite') + '"></div>',
+		close = '<div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div>',
 		url = c
-	if (favorited)
+	if (favorited) {
 		favorite = '<div class="favorite-button favorited-button" title="' + chrome.i18n.getMessage('removeFavorite') + '"></div>'
+		close = ''
+	}
 	f.attr('title', c).attr('href', c)
-	c = $('<div class="most-visited-thumbnail closable-button">'+favorite+'<div class="most-visited-domain"></div><img class="most-visited-icon"><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></div>')
+	c = $('<div class="most-visited-thumbnail closable-button">'+favorite+'<div class="most-visited-domain"></div><img class="most-visited-icon">'+close+'</div>')
 	c.find('.most-visited-domain').text(a)
 	c.find('.close-button').click(function() {
 		d();
@@ -871,7 +882,7 @@ NewsUI.prototype.addMoreLink = function() {
 	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
 	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#news-container").append(a)
-	$('#box-icons').css('max-height', $('#box-news').height())
+	$('#apps-list').css('max-height', $('#box-news').height()-$('#promoted-services').height()-11)
 };
 
 
@@ -1018,14 +1029,14 @@ WeatherUI.prototype.setIcon = function(a) {
 	if (this.coolWeather && a.search('night') == -1)
 		a = a.replace('weather', 'cool weather')
 	this.box_.find("#weather-current-icon").error(function() {
-		//console.log('Unknown weather state: ' + a)
+		console.log('Unknown weather state: ' + a)
 		$(this).attr("src", "images/weather/unknown.png")
 	}).attr("src", a)
 };
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
-	var wind = c.match(/.+ (\d+) (.+)/)
+	var wind = c.match(/.+ (\d+) (.+)/),
 	humidity = d.match(/(\w+): (\d+)/)
 	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', wind[0])
 	this.box_.find("#weather-humidity").text(humidity[2]+'%').attr('title', humidity[1])
