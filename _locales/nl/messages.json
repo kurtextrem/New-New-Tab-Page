@@ -9,11 +9,11 @@
 	},
 	"translate": {
 		"message": "Vertalen",
-		"description": ""
+		"description": "Google Translate in the apps list (first four)"
 	},
 	"maps": {
 		"message": "Maps",
-		"description": ""
+		"description": "Google Maps in the apps list (first four)"
 	},
 	"title": {
 		"message": "Nieuwe tab",
@@ -21,31 +21,31 @@
 	},
 	"removedWebsite": {
 		"message": "Website verwijderd uit meest bezocht.",
-		"description": ""
+		"description": "Appears when the 'X' on a thumbnail had been clicked"
 	},
 	"search": {
 		"message": "Zoeken",
-		"description": ""
+		"description": "The placeholder text in the search box"
 	},
 	"remove": {
 		"message": "Verwijderen",
-		"description": ""
+		"description": "The title for the 'X' on the most visited thumbnails (shown on hover)"
 	},
 	"undo": {
 		"message": "Ongedaan maken",
-		"description": ""
+		"description": "Located in the message after a 'X' had been clicked"
 	},
 	"restoreAll": {
 		"message": "Alles herstellen",
-		"description": ""
+		"description": "Located in the message after a 'X' had been clicked"
 	},
 	"recentlyClosed": {
 		"message": "Recent gesloten",
-		"description": ""
+		"description": "The title for the recently closed box"
 	},
 	"google": {
 		"message": "http$SECURE$://www.google.nl/",
-		"description": "",
+		"description": "Google URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"secure": {
 				"content": "$1",
@@ -55,7 +55,7 @@
 	},
 	"serviceURL": {
 		"message": "http$SECURE$://$SERVICE$.google.nl/",
-		"description": "",
+		"description": "Google Service URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"service": {
 				"content": "$2",
@@ -69,7 +69,7 @@
 	},
 	"searchURL": {
 		"message": "http$SECURE$://www.google.nl/search?q=$STRING$",
-		"description": "",
+		"description": "Google Search URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"string": {
 				"content": "$2",
@@ -83,39 +83,39 @@
 	},
 	"weather": {
 		"message": "Weer",
-		"description": ""
+		"description": "The title for the weather box (hidden)"
 	},
 	"apps": {
 		"message": "Applicaties",
-		"description": ""
+		"description": "The title for the apps box (hidden)"
 	},
 	"news": {
 		"message": "Nieuws",
-		"description": ""
+		"description": "The title for the news box (hidden)"
 	},
 	"moreNews": {
 		"message": "Meer nieuws",
-		"description": ""
+		"description": "Located at the bottom of the news box"
 	},
 	"promotedServices": {
-		"message": "De eerste 4 worden door Google gepromoot",
+		"message": "De eerste 4 worden door Google gepromoot (Meer op chrome://apps)",
 		"description": ""
 	},
 	"locationBased": {
 		"message": "Gebaseerd op je locatie",
-		"description": ""
+		"description": "In the info box of the weather box"
 	},
 	"coolWeather": {
 		"message": "Cool weer",
-		"description": ""
+		"description": "In the info box of the weather box"
 	},
 	"on": {
 		"message": "Aan",
-		"description": ""
+		"description": "Used in the slider in info boxes"
 	},
 	"off": {
 		"message": "Uit",
-		"description": ""
+		"description": "Used in the slider in info boxes"
 	},
 	"celsius": {
 		"message": "Celsius",
@@ -123,6 +123,34 @@
 	},
 	"temperatureUnit": {
 		"message": "F",
-		"description": ""
+		"description": "The temperature unit for this language (only insert C for Celsius or F for Fahrenheit)"
+	},
+	"chromeWebStore": {
+		"message": "Chrome Web Store",
+		"description": "Title for the Chrome Web Store in the apps list (first spot)"
+	},
+	"reloadPlease": {
+		"message": "Herlaad de pagina aub.",
+		"description": "Only visible on first startup"
+	},
+	"favorite": {
+		"message": "Vastzetten",
+		"description": "Title of the favorite icon"
+	},
+	"removeFavorite": {
+		"message": "Losmaken",
+		"description": "Title of the favorite icon"
+	},
+	"pinYourFavorites": {
+		"message": "Pin je favoriete sites!",
+		"description": "Title of the whats new popup v1"
+	},
+	"pinYourFavoritesText": {
+		"message": "Je kunt nu je favoriete sites vastzetten zodat ze niet meer verdwijnen (als ze dat deden).",
+		"description": "Detailed text of the whats new popup v1"
+	},
+	"ok": {
+		"message": "oke",
+		"description": "Used with buttons"
 	}
 }
