@@ -272,14 +272,13 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 		if (typeof b['favorites'][a[c].url] !== 'undefined' && b['favorites'][a[c].url].index !== realD) {
 			realD--
 			continue
-		} else if (typeof b['favorites'][a[c].url] !== 'undefined' && b['favorites'][a[c].url].index === realD) {
-			a[c].index = true
 		}
 		$.each(b['favorites'], function(i, e) {
-			if ((c < 14 && e.index === realD) || (c > 13 && e.index+13 === c)) {
+			if (!e.added && ((c < 14 && e.index === realD) || (c > 13 && e.index+13 === c))) {
 				a[c].url = e.url
 				a[c].title = e.title
 				a[c].index = true
+				b['favorites'][e.url].added = true
 			}
 		})
 		var f = a[c].url,
