@@ -165,10 +165,11 @@ NTP.prototype.init = function() {
 	else
 		$('body').addClass('bg-twilight')
 	window.setTimeout(function(){ // should fix the "no thumbs on startup"
-		if (document.getElementById('most-visited-container').children[0].nodeName === 'DIV' || document.getElementById('most-visited-container').children.length < 2) {
+		var elem = $('#most-visited-container')[0]
+		if (elem.children[0].nodeName === 'DIV' || elem.children.length < 2) {
 			location.reload()
 		}
-	}, 1000)
+	}, 2000)
 }
 
 var ntp = new NTP
