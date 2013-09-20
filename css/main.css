@@ -33,6 +33,7 @@ a, a:visited {
 	border: none;
 	display: block;
 	margin: 60px auto 20px auto;
+	height: 101px;
 }
 
 /* Search box */

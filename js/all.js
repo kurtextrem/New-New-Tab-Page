@@ -708,7 +708,7 @@ AppsUI.prototype.onAppsListReceived_ = function(a) {
 				if (d && 64 === d.size)
 					break
 			}
-			c = this.createAppButton_(c.id, c.name, d.url);
+			c = this.createAppButton_(c.id, c.shortName || c.name, d.url);
 			$("#apps-list").append(c)
 		}
 	}
