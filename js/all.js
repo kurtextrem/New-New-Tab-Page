@@ -177,9 +177,8 @@ $(document).ready(ntp.init.bind(ntp))
 
 function MostVisited(a) {
 	this.ui_ = new MostVisitedUI(a, this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
-	this.thumbnails_ = this.lastBlockedDomain_ = this.favicons_ = null;
+	this.thumbnails_ = this.lastBlockedDomain_ = null;
 	chrome.runtime.getBackgroundPage(function(a) {
-		this.favicons_ = a.favicons;
 		this.thumbnails_ = a.thumbnails
 	}.bind(this))
 }
@@ -294,9 +293,6 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 				g = this.getFavicon_(f, a[c].count)
 				this.ui_.showFavicon(e, g)
 				this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
-			} else if ("icon" === MostVisited.BUTTON_TYPE) {
-				e = this.ui_.addIconButton(g, e, f, this.addDomainToBlacklist_.bind(this, g))
-				this.favicons_.getScaled(f, 64, this.ui_.showFavicon.bind(this.ui_, e))
 			} else if ("chrome-thumb" === MostVisited.BUTTON_TYPE) {
 				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
 				this.ui_.showFavicon(e, this.getFavicon_(f, a[c].count))

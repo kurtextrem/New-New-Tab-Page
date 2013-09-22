@@ -12,7 +12,7 @@
 	},
 	"author": "Jacob Groß (kurtextrem)",
 	"background": {
-		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/favicons.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "lib/jquery.min.js"]
+		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "lib/jquery.min.js"]
 	},
 	"chrome_url_overrides": {
 		"newtab": "index.html"
