@@ -1,6 +1,6 @@
 {
 	"name": "__MSG_extName__",
-	"version": "0.6.0",
+	"version": "0.6.5",
 	"manifest_version": 2,
 
 	"description": "__MSG_extDesc__",
@@ -12,7 +12,8 @@
 	},
 	"author": "Jacob Groß (kurtextrem)",
 	"background": {
-		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "lib/jquery.min.js"]
+		"scripts": ["js/util.js", "js/background/analytics-sender.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "lib/jquery.min.js"],
+		"persistent": false
 	},
 	"chrome_url_overrides": {
 		"newtab": "index.html"
