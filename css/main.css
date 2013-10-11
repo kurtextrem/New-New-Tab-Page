@@ -353,8 +353,9 @@ a, a:visited {
 #weather-temperature {
 	color: #444;
 	display: -webkit-box;
-	font-size: 50px;
+	font-size: 75px;
 	padding-left: 10px;
+	line-height: 1;
 }
 
 #weather-temperature::after {
@@ -369,7 +370,7 @@ a, a:visited {
 }
 
 .weather-forecast:not(:last-of-type) {
-	border-right: 1px solid rgb(213, 213, 213);
+	border-right: 1px solid rgba(213, 213, 213, 0.5);
 	padding-right: 50px;
 	margin-right: -51px;
 }
@@ -380,6 +381,10 @@ a, a:visited {
 	text-align: center;
 	text-transform: uppercase;
 	font-weight: bold;
+}
+
+.weather-forecast:first-of-type {
+	padding-bottom: 5px;
 }
 
 #weather-condition {
@@ -393,6 +398,7 @@ a, a:visited {
 
 .temperature-high {
 	color: #666;
+	display: block;
 }
 
 .temperature-low {
