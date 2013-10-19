@@ -7,6 +7,10 @@
 		"message": "New Tab Page reImagined",
 		"description": "Extension name."
 	},
+	"extShortName": {
+		"message": "NTP reImagined",
+		"description": "Extension short name."
+	},
 	"translate": {
 		"message": "Translate",
 		"description": "Google Translate in the apps list (first four)"

@@ -7,6 +7,10 @@
 		"message": "Nuovo Tab Page reImagined",
 		"description": "Extension name."
 	},
+	"extShortName": {
+		"message": "NTP reImagined",
+		"description": "Extension short name."
+	},
 	"translate": {
 		"message": "Translate",
 		"description": ""

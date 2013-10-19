@@ -8,6 +8,10 @@
 		"message": "Neuer Tab neuGedacht",
 		"description": "Extension name."
 	},
+	"extShortName": {
+		"message": "NT neuGedacht",
+		"description": "Extension short name."
+	},
 	"translate": {
 		"message": "Übersetzer",
 		"description": ""
