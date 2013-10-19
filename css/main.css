@@ -154,7 +154,7 @@ a, a:visited {
 	background-color: white;
 	/*background-size: 120px 80px;*/
 	border: 1px solid #C0C0C0;
-	border-radius: 3px;
+	/*border-radius: 3px;*/
 	-webkit-box-orient: vertical;
 	-webkit-box-pack: center;
 	color: #888;
@@ -356,6 +356,7 @@ a, a:visited {
 	font-size: 75px;
 	padding-left: 10px;
 	line-height: 1;
+	font-family: 'Roboto Condensed', 'Roboto', serif;
 }
 
 #weather-temperature::after {
