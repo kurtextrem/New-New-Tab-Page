@@ -169,7 +169,7 @@ NTP.prototype.init = function() {
 		if (elem.children[0].nodeName === 'DIV' || elem.children.length < 2) {
 			location.reload()
 		}
-	}, 1500)
+	}, 1250)
 }
 
 var ntp = new NTP
