@@ -1,6 +1,6 @@
 body {
 	font-family: 'Roboto', Arial, sans-serif;
-	background-color: rgba(226, 226, 226, 1) !important; /* 207, 1 / 0.77 */
+	background-color: #e5e5e5 !important; /* 207, 1 / 0.77 */
 	-webkit-user-select: none;
 }
 
@@ -58,6 +58,7 @@ a, a:visited {
 	z-index: 1000;
 	border-radius: 3px;
 	width: 100%;
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
 
 	position: absolute;
 	top: 0;
@@ -285,13 +286,13 @@ a, a:visited {
 .content-box {
 	/*box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;*/
 	/*box-shadow: rgba(180, 180, 180, 1) 0 2px, rgba(0, 0, 0, 0.0470588) 0 0 0 1px, rgba(0, 0, 0, 0.2) 0 1px 4px 0;*/
-	box-shadow: rgba(136,136,136, 0.2) 0 2px 0 0;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
 	display: -webkit-box;
 	color: #888;
 	margin: 10px;
 	min-height: 40px;
 	background-color: white;
-	border-radius: 2px;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -372,7 +373,7 @@ a, a:visited {
 }
 
 .weather-forecast:not(:last-of-type) {
-	border-right: 1px solid rgba(213, 213, 213, 0.5);
+	border-left: 1px solid #e5e5e5;
 	padding-right: 50px;
 	margin-right: -51px;
 }
@@ -404,7 +405,7 @@ a, a:visited {
 }
 
 .temperature-low {
-	color: #AAA;
+	color: #a5a5a5;
 }
 
 #weather-geolocation-permission {
@@ -431,12 +432,19 @@ a, a:visited {
 
 #weather-wind::before {
 	content: url('../images/wind.png');
+	margin-right: 5px;
+}
+
+#weather-wind > sup {
+	vertical-align: 4px;
+	margin-left: 0.125rem;
 }
 
 /* by http://www.wpzoom.com */
 #weather-humidity::before {
 	content: url('../images/wet.png');
 	top: 5px;
+	margin-right: 5px;
 }
 
 /* Service & apps icons */

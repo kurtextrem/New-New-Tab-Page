@@ -156,20 +156,20 @@ NTP.prototype.init = function() {
 	this.newPopup_ = new newPopup()
 	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 	var hour = (new Date).getHours()
-	if (hour>5 && hour<8)
+	if (hour>=5 && hour<8)
 		$('body').addClass('bg-dawn')
-	else if (hour>8 && hour<19)
+	else if (hour>=8 && hour<19)
 		$('body').addClass('bg-daylight')
-	else if (hour>19 && hour<21)
+	else if (hour>=19 && hour<21)
 		$('body').addClass('bg-dusk')
 	else
 		$('body').addClass('bg-twilight')
 	window.setTimeout(function(){ // should fix the "no thumbs on startup"
-		var elem = $('#most-visited-container')[0]
+		var elem = document.getElementById('most-visited-container')
 		if (elem.children[0].nodeName === 'DIV' || elem.children.length < 2) {
 			location.reload()
 		}
-	}, 1000)
+	}, 750)
 }
 
 var ntp = new NTP
