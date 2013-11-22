@@ -408,22 +408,6 @@ a, a:visited {
 	color: #a5a5a5;
 }
 
-#weather-geolocation-permission {
-	display: -webkit-box;
-	overflow: hidden;
-	padding-top: 16px;
-	-webkit-transition: height 200ms;
-}
-
-#weather-geolocation-permission.hidden {
-	height: 0;
-}
-
-#weather-geolocation-permission a:hover {
-	color: #000;
-	text-decoration: none;
-}
-
 #weather-wind::before, #weather-humidity::before {
 	position: relative;
 	top: 3px;
