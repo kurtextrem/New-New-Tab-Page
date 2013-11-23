@@ -163,66 +163,87 @@
 		"description": "Used with buttons"
 	},
 	"cloudy": {
-		"message": "Bewölkt"
+		"message": "Bewölkt",
+		"description": "Weather name"
 	},
 	"fog": {
-		"message": "Nebel"
+		"message": "Nebel",
+		"description": "Weather name"
 	},
 	"freezing": {
-		"message": "Hagel"
+		"message": "Hagel",
+		"description": "Weather name"
 	},
 	"heavyrain": {
-		"message": "Starker Regen"
+		"message": "Starker Regen",
+		"description": "Weather name"
 	},
 	"heavysnow": {
-		"message": "Starker Schnee"
+		"message": "Starker Schnee",
+		"description": "Weather name"
 	},
 	"hot": {
-		"message": "Heiß"
+		"message": "Heiß",
+		"description": "Weather name"
 	},
 	"lightrain": {
-		"message": "Leichter Regen"
+		"message": "Leichter Regen",
+		"description": "Weather name"
 	},
 	"lightsnow": {
-		"message": "Leichter Schnee"
+		"message": "Leichter Schnee",
+		"description": "Weather name"
 	},
 	"partlycloudy": {
-		"message": "Teilweiße Bewölkt"
+		"message": "Teilweiße Bewölkt",
+		"description": "Weather name"
 	},
 	"rain": {
-		"message": "Regen"
+		"message": "Regen",
+		"description": "Weather name"
 	},
 	"snow": {
-		"message": "Schnee"
+		"message": "Schnee",
+		"description": "Weather name"
 	},
 	"sunny": {
-		"message": "Sonnig"
+		"message": "Sonnig",
+		"description": "Weather name"
 	},
 	"unknown": {
-		"message": "Unbekannt"
+		"message": "Unbekannt",
+		"description": "Weather name"
 	},
 	"tstorms": {
-		"message": "Unwetter"
+		"message": "Unwetter",
+		"description": "Weather name"
 	},
 	"windy": {
-		"message": "Windig"
+		"message": "Windig",
+		"description": "Weather name"
 	},
 	"wind": {
-		"message": "Wind"
+		"message": "Wind",
+		"description": "Weather name"
 	},
 	"humidity": {
-		"message": "Luftfeuchtigkeit"
+		"message": "Luftfeuchtigkeit",
+		"description": "Weather name"
 	},
 	"windless": {
-		"message": "Windstill"
+		"message": "Windstill",
+		"description": "Weather name"
 	},
 	"mixed": {
-		"message": "Gemischt"
+		"message": "Gemischt",
+		"description": "Weather name"
 	},
 	"speedUnit": {
-		"message": "km/h"
+		"message": "km/h",
+		"description": "The unit used for speed messurements"
 	},
 	"speedUnit2": {
-		"message": "mph"
+		"message": "mph",
+		"description": "The unit  which isn't used used for speed messurements"
 	}
 }

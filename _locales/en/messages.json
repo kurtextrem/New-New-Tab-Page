@@ -156,5 +156,89 @@
 	"ok": {
 		"message": "ok",
 		"description": "Used with buttons"
+	},
+	"cloudy": {
+		"message": "Cloudy",
+		"description": "Weather name"
+	},
+	"fog": {
+		"message": "Fog",
+		"description": "Weather name"
+	},
+	"freezing": {
+		"message": "Hailstorm",
+		"description": "Weather name"
+	},
+	"heavyrain": {
+		"message": "Heavy rain",
+		"description": "Weather name"
+	},
+	"heavysnow": {
+		"message": "Heavy snow",
+		"description": "Weather name"
+	},
+	"hot": {
+		"message": "Hot",
+		"description": "Weather name"
+	},
+	"lightrain": {
+		"message": "Light rain",
+		"description": "Weather name"
+	},
+	"lightsnow": {
+		"message": "Light snow",
+		"description": "Weather name"
+	},
+	"partlycloudy": {
+		"message": "Partly cloudy",
+		"description": "Weather name"
+	},
+	"rain": {
+		"message": "Rain",
+		"description": "Weather name"
+	},
+	"snow": {
+		"message": "Snow",
+		"description": "Weather name"
+	},
+	"sunny": {
+		"message": "Sunny",
+		"description": "Weather name"
+	},
+	"unknown": {
+		"message": "Unknown",
+		"description": "Weather name"
+	},
+	"tstorms": {
+		"message": "Thunderstorm",
+		"description": "Weather name"
+	},
+	"windy": {
+		"message": "Windy",
+		"description": "Weather name"
+	},
+	"wind": {
+		"message": "Wind",
+		"description": "Weather name"
+	},
+	"humidity": {
+		"message": "Humidity",
+		"description": "Weather name"
+	},
+	"windless": {
+		"message": "Windless",
+		"description": "Weather name"
+	},
+	"mixed": {
+		"message": "Mixed",
+		"description": "Weather name"
+	},
+	"speedUnit": {
+		"message": "mph",
+		"description": "The unit used for speed messurements"
+	},
+	"speedUnit2": {
+		"message": "km/h",
+		"description": "The unit  which isn't used used for speed messurements"
 	}
 }
