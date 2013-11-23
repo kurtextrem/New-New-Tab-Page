@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 function Analytics() {
 	this.sender_ = null;
 	chrome.runtime.getBackgroundPage(function(a) {
