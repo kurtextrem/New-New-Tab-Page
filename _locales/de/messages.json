@@ -161,5 +161,68 @@
 	"ok": {
 		"message": "ok",
 		"description": "Used with buttons"
+	},
+	"cloudy": {
+		"message": "Bewölkt"
+	},
+	"fog": {
+		"message": "Nebel"
+	},
+	"freezing": {
+		"message": "Hagel"
+	},
+	"heavyrain": {
+		"message": "Starker Regen"
+	},
+	"heavysnow": {
+		"message": "Starker Schnee"
+	},
+	"hot": {
+		"message": "Heiß"
+	},
+	"lightrain": {
+		"message": "Leichter Regen"
+	},
+	"lightsnow": {
+		"message": "Leichter Schnee"
+	},
+	"partlycloudy": {
+		"message": "Teilweiße Bewölkt"
+	},
+	"rain": {
+		"message": "Regen"
+	},
+	"snow": {
+		"message": "Schnee"
+	},
+	"sunny": {
+		"message": "Sonnig"
+	},
+	"unknown": {
+		"message": "Unbekannt"
+	},
+	"tstorms": {
+		"message": "Unwetter"
+	},
+	"windy": {
+		"message": "Windig"
+	},
+	"wind": {
+		"message": "Wind"
+	},
+	"humidity": {
+		"message": "Luftfeuchtigkeit"
+	},
+	"windless": {
+		"message": "Windstill"
+	},
+	"mixed": {
+		"message": "Gemischt"
+	},
+	"speedUnit": {
+		"message": "km/h"
+	},
+	"speedUnit2": {
+		"message": "mph"
 	}
 }

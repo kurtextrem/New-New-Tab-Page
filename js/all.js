@@ -1035,9 +1035,9 @@ WeatherUI.prototype.setIcon = function(a) {
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
-	var wind = c.match(/.+ (\d+) (.+)/)
-	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', 'Wind: '+c)
-	this.box_.find("#weather-humidity").text(d).attr('title', 'Luftfeuchtigkeit: '+d)
+	var wind = c.match(/(\d+) (.+)/)
+	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', chrome.i18n.getMessage('wind')+': '+c)
+	this.box_.find("#weather-humidity").text(d).attr('title', chrome.i18n.getMessage('humidity')+': '+d)
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	if (this.coolWeather && b.search('night') == -1)

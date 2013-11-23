@@ -30,7 +30,7 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
 
  WeatherFetcher.DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
 
- WeatherFetcher.FORECAST_LENGTH = 4
+ WeatherFetcher.FORECAST_LENGTH = 5
 
 WeatherFetcher.prototype.init = function() {
 	//console.log('init');
@@ -166,8 +166,6 @@ WeatherFetcher.prototype.requestWeather_ = function() {
 WeatherFetcher.prototype.iGoogleIconToOnebox_ = function(url, size, nightOverride) {
 	var hours = (new Date).getHours(),
 		night = hours > 19 || hours < 6 ? 'night/' : ''
-	if (!WeatherFetcher.MAP[url])
-		console.log('Unkown weather condition:', url)
 	url = 'images/weather/' + (nightOverride ? '' : night) + (WeatherFetcher.MAP[url])
 	return url
 };
@@ -198,20 +196,27 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 	weather.icon = this.iGoogleIconToOnebox_(currentNode.condition, 60)
 	weather.temperature = this.convert_(currentNode.temp_f)
 	//weather.condition = currentNode.condition_text
-	weather.condition = WeatherFetcher.MAP[currentNode.condition].replace('_', '').replace('.png', '')
-	var wind_d, wind_speed = Math.round(0.44704 * currentNode.wind_speed_mph)
+	weather.condition = chrome.i18n.getMessage(WeatherFetcher.MAP[currentNode.condition].replace('_', '').replace('.png', ''))
+	var wind_d,
+	wind_speed = currentNode.wind_speed_mph
+	if (this.unit.toLowerCase() === 'c')
+		wind_speed = 0.44704 * wind_speed
 	wind_d = currentNode.wind_direction
 	if (wind_speed === 0)
-		wind_d = 'Windstill'
+		wind_d = chrome.i18n.getMessage('windless')
 	else if (0 > wind_d || 360 < wind_d)
-	                	wind_d = ''
+	                	wind_d = chrome.i18n.getMessage('mixed')
 	else {
 		for (var f, l = 0; l < WeatherFetcher.TEXT.length; l++)
 			if (wind_d <= WeatherFetcher.TEXT[l].a) {
 				f = WeatherFetcher.TEXT[l].text
 	                                               		break
 	                                       	}
-	                              	wind_d = f + ', ' + wind_speed * 3.6 + ' km/h'
+	                              	wind_d = f + ', ' + (wind_speed * 3.6).toLocaleString() + ' '
+	                              if (this.unit.toLowerCase() === 'c')
+	                              		wind_d += chrome.i18n.getMessage('speedUnit')
+	                              	else
+	                              		wind_d += chrome.i18n.getMessage('speedUnit2')
 	}
 	weather.wind = wind_d
 	weather.humidity = currentNode.humidity
@@ -230,7 +235,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 			forecast.high = this.convert_(forecastNode.high_temp_f)
 			forecast.icon = this.iGoogleIconToOnebox_(forecastNode.condition, 35, true)
 			//forecast.condition = forecastNode.condition_text
-			weather.condition = WeatherFetcher.MAP[currentNode.condition].replace('_', '').replace('.png', '')
+			forecast.condition = chrome.i18n.getMessage(WeatherFetcher.MAP[forecastNode.condition].replace('_', '').replace('.png', ''))
 			weather.forecast.push(forecast)
 		}
 	}

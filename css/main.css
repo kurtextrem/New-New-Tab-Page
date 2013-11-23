@@ -373,12 +373,12 @@ a, a:visited {
 }
 
 .weather-forecast:not(:last-of-type) {
-	border-left: 1px solid #e5e5e5;
+	border-right: 1px solid #e5e5e5;
 	padding-right: 50px;
 	margin-right: -51px;
 }
 
-.weather-forecast > div:first-of-type {
+.weather-forecast > div:first-of-type::after {
 	content: '.';
 }
 
