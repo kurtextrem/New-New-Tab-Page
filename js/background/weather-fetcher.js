@@ -15,7 +15,7 @@ function WeatherFetcher() {
 
 WeatherFetcher.DELAY = 3600 * 1000;
 // {a: 22.5,text: "\u0421"}, {a: 67.5,text: "\u0421\u0412"}, {a: 112.5,text: "\u0412"}, {a: 157.5,text: "\u042e\u0412"}, {a: 202.5,text: "\u042e"}, {a: 247.5,text: "\u042e\u0417"}, {a: 292.5,text: "\u0417"}, {a: 337.5,text: "\u0421\u0417"}, {a: 360,text: "\u0421"}
-WeatherFetcher.TEXT = [{a: 22.5,text: "mit1"}, {a: 67.5,text: "NÖ"}, {a: 112.5,text: "in"}, {a: 157.5,text: "SÖ1"}, {a: 202.5,text: "SÖ2"}, {a: 247.5,text: "?3"}, {a: 292.5,text: "mit2"}, {a: 337.5,text: "NW"}, {a: 360,text: "mit1"}]
+WeatherFetcher.TEXT = [{a: 22.5,text: "mit1"}, {a: 67.5,text: chrome.i18n.getMessage('NE')}, {a: 112.5,text: "in"}, {a: 157.5,text: "SÖ1"}, {a: 202.5,text: "SÖ2"}, {a: 247.5,text: "?3"}, {a: 292.5,text: "mit2"}, {a: 337.5,text: chrome.i18n.getMessage('NW')}, {a: 360,text: "mit1"}]
 WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "light_snow.png",4: "freezing.png",5: "light_rain.png",6: "light_rain.png",7: "light_snow.png",8: "light_snow.png",9: "tstorms.png",10: "sunny.png",11: "cloudy.png",12: "light_rain.png",13: "cloudy.png",14: "cloudy.png",
         15: "light_rain.png",16: "light_snow.png",17: "tstorms.png",18: "light_rain.png",19: "cloudy.png",20: "light_rain.png",21: "light_rain.png",22: "light_rain.png",23: "light_rain.png",24: "light_rain.png",25: "light_snow.png",26: "light_snow.png",27: "light_snow.png",28: "light_rain.png",29: "cloudy.png",30: "cloudy.png",31: "light_rain.png",32: "light_rain.png",33: "light_rain.png",34: "light_rain.png",35: "light_snow.png",36: "light_snow.png",37: "light_snow.png",38: "light_rain.png",39: "light_rain.png",40: "light_rain.png",
         41: "light_rain.png",42: "light_rain.png",43: "sunny.png",44: "light_snow.png",45: "sunny.png",46: "light_rain.png",47: "cloudy.png",48: "light_rain.png",49: "light_snow.png",50: "cloudy.png",51: "light_rain.png",52: "light_snow.png",53: "cloudy.png",54: "light_rain.png",55: "cloudy.png",56: "light_rain.png",57: "light_rain.png",58: "light_rain.png",59: "light_rain.png",60: "cloudy.png",61: "light_snow.png",62: "light_snow.png",63: "light_rain.png",64: "light_rain.png",65: "light_rain.png",66: "light_snow.png",67: "light_snow.png",
@@ -28,7 +28,7 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
         250: "tstorms.png",251: "tstorms.png",252: "tstorms.png",253: "fog.png",254: "fog.png",255: "fog.png",256: "snow.png",257: "fog.png",258: "light_rain.png",259: "fog.png",260: "freezing.png",261: "fog.png",262: "partly_cloudy.png",263: "fog.png",264: "freezing.png",265: "freezing.png",267: "cloudy.png",268: "fog.png",269: "light_rain.png",270: "light_snow.png",271: "heavy_rain.png",272: "light_rain.png",273: "snow.png",274: "heavy_rain.png",275: "fog.png",277: "snow.png",278: "light_rain.png",279: "heavy_rain.png",281: "tstorms.png",
         282: "heavy_rain.png",283: "tstorms.png",284: "tstorms.png",285: "tstorms.png",286: "fog.png",287: "fog.png",288: "rain.png",289: "light_snow.png",290: "light_snow.png",291: "windy.png",292: "tstorms.png",293: "light_rain.png",294: "light_snow.png",295: "tstorms.png"}
 
- WeatherFetcher.DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+ WeatherFetcher.DAYS = [chrome.i18n.getMessage('sun'), chrome.i18n.getMessage('mon'), chrome.i18n.getMessage('tue'), chrome.i18n.getMessage('wed'), chrome.i18n.getMessage('thu'), chrome.i18n.getMessage('fri'), chrome.i18n.getMessage('sat')]
 
  WeatherFetcher.FORECAST_LENGTH = 5
 

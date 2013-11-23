@@ -245,5 +245,41 @@
 	"speedUnit2": {
 		"message": "mph",
 		"description": "The unit  which isn't used used for speed messurements"
+	},
+	"mon": {
+		"message": "Mo",
+		"description": "Shortcut for Monday"
+	},
+	"tue": {
+		"message": "Di",
+		"description": "Shortcut for Tuesday"
+	},
+	"wed": {
+		"message": "Mi",
+		"description": "Shortcut for Wednesday"
+	},
+	"thu": {
+		"message": "Do",
+		"description": "Shortcut for Thursday"
+	},
+	"sat": {
+		"message": "Sa",
+		"description": "Shortcut for Saturday"
+	},
+	"sun": {
+		"message": "So",
+		"description": "Shortcut for Sunday"
+	},
+	"NE": {
+		"message": "NÖ",
+		"description": "Shortcut for north east (wind direction)"
+	},
+	"SE": {
+		"message": "SÖ",
+		"description": "Shortcut for south east (wind direction)"
+	},
+	"NW": {
+		"message": "NW",
+		"description": "Shortcut for north west (wind direction)"
 	}
 }

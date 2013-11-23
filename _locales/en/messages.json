@@ -240,5 +240,41 @@
 	"speedUnit2": {
 		"message": "km/h",
 		"description": "The unit  which isn't used used for speed messurements"
+	},
+	"mon": {
+		"message": "Mon",
+		"description": "Shortcut for Monday"
+	},
+	"tue": {
+		"message": "Tue",
+		"description": "Shortcut for Tuesday"
+	},
+	"wed": {
+		"message": "Wed",
+		"description": "Shortcut for Wednesday"
+	},
+	"thu": {
+		"message": "Thu",
+		"description": "Shortcut for Thursday"
+	},
+	"sat": {
+		"message": "Sat",
+		"description": "Shortcut for Saturday"
+	},
+	"sun": {
+		"message": "Sun",
+		"description": "Shortcut for Sunday"
+	},
+	"NE": {
+		"message": "NE",
+		"description": "Shortcut for north east (wind direction)"
+	},
+	"SE": {
+		"message": "SE",
+		"description": "Shortcut for south east (wind direction)"
+	},
+	"NW": {
+		"message": "NW",
+		"description": "Shortcut for north west (wind direction)"
 	}
 }
