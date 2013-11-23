@@ -262,6 +262,10 @@
 		"message": "Do",
 		"description": "Shortcut for Thursday"
 	},
+	"fri": {
+		"message": "Fr",
+		"description": "Shortcut for Friday"
+	},
 	"sat": {
 		"message": "Sa",
 		"description": "Shortcut for Saturday"
