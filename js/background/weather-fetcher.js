@@ -28,7 +28,9 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
         250: "tstorms.png",251: "tstorms.png",252: "tstorms.png",253: "fog.png",254: "fog.png",255: "fog.png",256: "snow.png",257: "fog.png",258: "light_rain.png",259: "fog.png",260: "freezing.png",261: "fog.png",262: "partly_cloudy.png",263: "fog.png",264: "freezing.png",265: "freezing.png",267: "cloudy.png",268: "fog.png",269: "light_rain.png",270: "light_snow.png",271: "heavy_rain.png",272: "light_rain.png",273: "snow.png",274: "heavy_rain.png",275: "fog.png",277: "snow.png",278: "light_rain.png",279: "heavy_rain.png",281: "tstorms.png",
         282: "heavy_rain.png",283: "tstorms.png",284: "tstorms.png",285: "tstorms.png",286: "fog.png",287: "fog.png",288: "rain.png",289: "light_snow.png",290: "light_snow.png",291: "windy.png",292: "tstorms.png",293: "light_rain.png",294: "light_snow.png",295: "tstorms.png"}
 
- WeatherFetcher.DAYS = "Sonntag Montag Dienstag Mittwoch Donnerstag Freitag Samstag".split(" ")
+ WeatherFetcher.DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+
+ WeatherFetcher.FORECAST_LENGTH = 4
 
 WeatherFetcher.prototype.init = function() {
 	//console.log('init');
@@ -166,8 +168,8 @@ WeatherFetcher.prototype.iGoogleIconToOnebox_ = function(url, size, nightOverrid
 		night = hours > 19 || hours < 6 ? 'night/' : ''
 	if (!WeatherFetcher.MAP[url])
 		console.log('Unkown weather condition:', url)
-	url = 'images/weather/' + (nightOverride ? '' : night) + (WeatherFetcher.MAP[url]) + '.png';
-	return url;
+	url = 'images/weather/' + (nightOverride ? '' : night) + (WeatherFetcher.MAP[url])
+	return url
 };
 
 WeatherFetcher.prototype.convert_ = function(f) {
@@ -195,35 +197,40 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 
 	weather.icon = this.iGoogleIconToOnebox_(currentNode.condition, 60)
 	weather.temperature = this.convert_(currentNode.temp_f)
-	weather.condition = currentNode.condition_text
+	//weather.condition = currentNode.condition_text
+	weather.condition = WeatherFetcher.MAP[currentNode.condition].replace('_', '').replace('.png', '')
 	var wind_d, wind_speed = Math.round(0.44704 * currentNode.wind_speed_mph)
 	wind_d = currentNode.wind_direction
 	if (wind_speed === 0)
-		d = 'Windstill'
+		wind_d = 'Windstill'
 	else if (0 > wind_d || 360 < wind_d)
-	                	d = ''
+	                	wind_d = ''
 	else {
-		for (var f, l = 0; l < WeatherFetcher.DAYS.length; l++)
-			if (wind_d <= WeatherFetcher.DAYS[l].a) {
-				f = r[l].text
+		for (var f, l = 0; l < WeatherFetcher.TEXT.length; l++)
+			if (wind_d <= WeatherFetcher.TEXT[l].a) {
+				f = WeatherFetcher.TEXT[l].text
 	                                               		break
 	                                       	}
-	                              	d = 'Wind: ' + f + ', ' + wind_speed + ' m/s'
+	                              	wind_d = f + ', ' + wind_speed * 3.6 + ' km/h'
 	}
 	weather.wind = wind_d
-	weather.humidity = 'Luftfeuchtigkeit: '+currentNode.humidity+'%'
+	weather.humidity = currentNode.humidity
 
 	currentNode = new Date
-	for (var i = 0; i < json.forecast.length; i++) {
+	var length = json.forecast.length
+	if (length > WeatherFetcher.FORECAST_LENGTH)
+		length = WeatherFetcher.FORECAST_LENGTH
+	for (var i = 0; i < length; i++) {
 		var forecast = {},
 		forecastNode = json.forecast[i],
 		l = new Date(forecastNode.date)
 		if (l.getUTCDate() !== currentNode.getDate()) {
 			forecast.day = WeatherFetcher.DAYS[l.getDay()]
-			forecast.low = this.convert_(forecastNode.low_temp_f) + '°'
-			forecast.high = this.convert_(forecastNode.high_temp_f) + '°'
+			forecast.low = this.convert_(forecastNode.low_temp_f)
+			forecast.high = this.convert_(forecastNode.high_temp_f)
 			forecast.icon = this.iGoogleIconToOnebox_(forecastNode.condition, 35, true)
-			forecast.condition = forecastNode.condition_text
+			//forecast.condition = forecastNode.condition_text
+			weather.condition = WeatherFetcher.MAP[currentNode.condition].replace('_', '').replace('.png', '')
 			weather.forecast.push(forecast)
 		}
 	}

@@ -1022,20 +1022,22 @@ WeatherUI.prototype.setDate = function(a) {
 	this.box_.find('h2 > a').attr('title', a)
 };
 WeatherUI.prototype.setIcon = function(a) {
-	if (this.coolWeather && a.search('night') == -1)
-		a = a.replace('weather', 'cool weather')
+	var weatherS = 'weather'
+	if (this.coolWeather && a.search('night') == -1) {
+		weatherS = 'cool weather'
+		a = a.replace('weather', weatherS)
+	}
 	this.box_.find("#weather-current-icon").error(function() {
 		console.log('Unknown weather state: ' + a)
-		$(this).attr("src", "images/weather/unknown.png")
+		$(this).attr("src", "images/"+weatherS+"/unknown.png")
 	}).attr("src", a)
 };
 WeatherUI.prototype.setCurrentConditions = function(a, b, c, d) {
 	this.box_.find("#weather-temperature").text(a);
 	this.box_.find("#weather-condition").text(b);
-	var wind = c.match(/.+ (\d+) (.+)/),
-	humidity = d.match(/(\w+): (\d+)/)
-	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', wind[0])
-	this.box_.find("#weather-humidity").text(humidity[2]+'%').attr('title', humidity[1])
+	var wind = c.match(/.+ (\d+) (.+)/)
+	this.box_.find("#weather-wind").text(wind[1]).append('<sup>'+wind[2]+'</sup>').attr('title', 'Wind: '+c)
+	this.box_.find("#weather-humidity").text(d).attr('title', 'Luftfeuchtigkeit: '+d)
 };
 WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 	if (this.coolWeather && b.search('night') == -1)

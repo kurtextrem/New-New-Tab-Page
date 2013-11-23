@@ -361,7 +361,7 @@ a, a:visited {
 	line-height: 1;
 }
 
-#weather-temperature::after {
+#weather-temperature::after, .temperature-high::after, .temperature-low::after {
 	content: "\00b0";
 }
 
@@ -376,6 +376,10 @@ a, a:visited {
 	border-left: 1px solid #e5e5e5;
 	padding-right: 50px;
 	margin-right: -51px;
+}
+
+.weather-forecast > div:first-of-type {
+	content: '.';
 }
 
 .weather-forecast div {
@@ -429,6 +433,10 @@ a, a:visited {
 	content: url('../images/wet.png');
 	top: 5px;
 	margin-right: 5px;
+}
+
+#weather-humidity::after {
+	content: '%';
 }
 
 /* Service & apps icons */
