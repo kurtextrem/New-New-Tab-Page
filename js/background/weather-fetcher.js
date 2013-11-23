@@ -38,9 +38,7 @@ WeatherFetcher.prototype.init = function() {
 		clearInterval(this.interval_);
 	this.interval_ = setInterval(this.startWeatherRetrieval.bind(this), WeatherFetcher.DELAY);
 	this.startWeatherRetrieval();
-};
-
-WeatherFetcher.API_KEY = 'AIzaSyAC8pwotGqB0k21uB5NbKqT7QK0rSHDBc4';
+}
 
 WeatherFetcher.prototype.startWeatherRetrieval = function(force) {
 	//console.log('startWeatherRetrieval');

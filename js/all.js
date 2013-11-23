@@ -648,7 +648,7 @@ Weather.prototype.showValues_ = function(a) {
 		this.ui_.show();
 		var b = a.weather,
 			c = a["location-name"];
-		Date.now() - b.date > this.delay_ && this.requestNewWeather_();
+		36E5 < Date.now() - b.request_date && this.requestNewWeather_();
 		this.ui_.reset();
 		this.ui_.setAddress(c);
 		this.ui_.setDate(this.getDateString_(b.date));
