@@ -200,7 +200,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 	var wind_d,
 	wind_speed = currentNode.wind_speed_mph
 	if (this.unit.toLowerCase() === 'c')
-		wind_speed = 0.44704 * wind_speed
+		wind_speed = Math.round(0.44704 * wind_speed)
 	wind_d = currentNode.wind_direction
 	if (wind_speed === 0)
 		wind_d = chrome.i18n.getMessage('windless')
