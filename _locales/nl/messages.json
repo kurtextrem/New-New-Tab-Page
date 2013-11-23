@@ -1,5 +1,5 @@
 {
-  	"extDesc": {
+	"extDesc": {
 		"message": "Nieuwe 'Nieuwe tab' Pagina. Weer, Nieuws, Zoeken, recent gesloten tabs en applicaties op een plaats",
 		"description": "Extension description."
 	},
@@ -156,5 +156,129 @@
 	"ok": {
 		"message": "oke",
 		"description": "Used with buttons"
+	},
+	"cloudy": {
+		"message": "Bewolkt",
+		"description": "Weather name"
+	},
+	"fog": {
+		"message": "Mist",
+		"description": "Weather name"
+	},
+	"freezing": {
+		"message": "Hagelstorm",
+		"description": "Weather name"
+	},
+	"heavyrain": {
+		"message": "Hevige regenbuien",
+		"description": "Weather name"
+	},
+	"heavysnow": {
+		"message": "Hevige sneeuw",
+		"description": "Weather name"
+	},
+	"hot": {
+		"message": "Heet",
+		"description": "Weather name"
+	},
+	"lightrain": {
+		"message": "Lichte regenbuien",
+		"description": "Weather name"
+	},
+	"lightsnow": {
+		"message": "Lichte sneeuwbuien",
+		"description": "Weather name"
+	},
+	"partlycloudy": {
+		"message": "Lichte bewolking",
+		"description": "Weather name"
+	},
+	"rain": {
+		"message": "Regen",
+		"description": "Weather name"
+	},
+	"snow": {
+		"message": "Sneeuw",
+		"description": "Weather name"
+	},
+	"sunny": {
+		"message": "Zonnig",
+		"description": "Weather name"
+	},
+	"unknown": {
+		"message": "Onbekend",
+		"description": "Weather name"
+	},
+	"tstorms": {
+		"message": "Onweersbuien",
+		"description": "Weather name"
+	},
+	"windy": {
+		"message": "Wind",
+		"description": "Weather name"
+	},
+	"wind": {
+		"message": "Wind",
+		"description": "Weather name"
+	},
+	"humidity": {
+		"message": "Vochtigheid",
+		"description": "Weather name"
+	},
+	"windless": {
+		"message": "Windstil",
+		"description": "Weather name"
+	},
+	"mixed": {
+		"message": "Gemengd",
+		"description": "Weather name"
+	},
+	"speedUnit": {
+		"message": "mph",
+		"description": "The unit used for speed messurements"
+	},
+	"speedUnit2": {
+		"message": "km/h",
+		"description": "The unit which isn't used used for speed messurements"
+	},
+	"mon": {
+		"message": "Maa",
+		"description": "Shortcut for Monday"
+	},
+	"tue": {
+		"message": "Din",
+		"description": "Shortcut for Tuesday"
+	},
+	"wed": {
+		"message": "Woe",
+		"description": "Shortcut for Wednesday"
+	},
+	"thu": {
+		"message": "Don",
+		"description": "Shortcut for Thursday"
+	},
+	"fri": {
+		"message": "Vri",
+		"description": "Shortcut for Friday"
+	},
+	"sat": {
+		"message": "Zat",
+		"description": "Shortcut for Saturday"
+	},
+	"sun": {
+		"message": "Zon",
+		"description": "Shortcut for Sunday"
+	},
+	"NE": {
+		"message": "NO",
+		"description": "Shortcut for north east (wind direction)"
+	},
+	"SE": {
+		"message": "ZO",
+		"description": "Shortcut for south east (wind direction)"
+	},
+	"NW": {
+		"message": "NW",
+		"description": "Shortcut for north west (wind direction)"
 	}
 }
