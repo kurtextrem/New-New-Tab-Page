@@ -195,7 +195,7 @@
 		"description": "Weather name"
 	},
 	"partlycloudy": {
-		"message": "Teilweiße Bewölkt",
+		"message": "Teilweiße bewölkt",
 		"description": "Weather name"
 	},
 	"rain": {
