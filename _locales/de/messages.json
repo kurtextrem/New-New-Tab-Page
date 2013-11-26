@@ -171,7 +171,7 @@
 		"description": "Weather name"
 	},
 	"freezing": {
-		"message": "Hagel",
+		"message": "Eisig",
 		"description": "Weather name"
 	},
 	"heavyrain": {

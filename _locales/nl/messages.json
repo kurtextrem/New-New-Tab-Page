@@ -166,7 +166,7 @@
 		"description": "Weather name"
 	},
 	"freezing": {
-		"message": "Hagelstorm",
+		"message": "Ijzig",
 		"description": "Weather name"
 	},
 	"heavyrain": {
