@@ -632,6 +632,7 @@ Weather.prototype.show = function() {
 	chrome.storage.local.get({
 		"location-permission": true,
 		"location-name": null,
+		forecast_length: 4,
 		weather: null
 	}, this.showValues_.bind(this))
 };
@@ -647,14 +648,17 @@ Weather.prototype.showValues_ = function(a) {
 	else {
 		this.ui_.show();
 		var b = a.weather,
-			c = a["location-name"];
+			c = a["location-name"],
+			length = a.forecast_length
 		36E5 < Date.now() - b.request_date && this.requestNewWeather_();
 		this.ui_.reset();
 		this.ui_.setAddress(c);
 		this.ui_.setDate(this.getDateString_(b.date));
 		this.ui_.setIcon(b.icon);
 		this.ui_.setCurrentConditions(b.temperature, b.condition, b.wind, b.humidity);
-		for (c = 0; c < b.forecast.length; c++) {
+		if (b.forecast.length < a.forecast_length)
+			length = b.forecast.length
+		for (c = 0; c < length; c++) {
 			var d = b.forecast[c];
 			this.ui_.addForecast(d.day, d.icon,
 				d.high, d.low, d.condition)
@@ -991,15 +995,20 @@ function WeatherUI(a) {
 	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
 	this.link_ = chrome.i18n.getMessage('searchURL', ['', chrome.i18n.getMessage('weather')]);
 	this.coolWeather = false
-	chrome.storage.local.get({'use-cool-weather': false}, function(val){
+	chrome.storage.local.get({
+		'use-cool-weather': false,
+		'weather-unit': chrome.i18n.getMessage('temperatureUnit'),
+		forecast_length: 4
+	}, function(val){
 			if (val['use-cool-weather']) {
 				this.coolWeather = true
 				$('#coolWeather').find('input[type=checkbox]').prop('checked', true)
 			}
-	}.bind(this))
-	chrome.storage.local.get({'weather-unit': chrome.i18n.getMessage('temperatureUnit')}, function(val){
 			var unit = val['weather-unit'] == 'C'
 			$('#unitSlider').find('input[type=checkbox]').prop('checked', unit)
+			$('#forecastSlider').find('input').val(val.forecast_length)
+			if (val.forecast_length != 4)
+				window.setTimeout(function(){ $('.weather-forecast').css('border-right', 'none') }, 200)
 	}.bind(this))
 	this.box_.find("a").attr("href", this.link_)
 }
@@ -1129,6 +1138,18 @@ infoMenu.prototype.footerToggle = function() {
 		}.bind(this), 50)
 
 	})
+	$('#forecastSlider').change(function(){
+		var $input = $(this).find('input'),
+			length = $input.val()
+		chrome.storage.local.set({forecast_length: length},
+			function(){
+
+				ntp.weather_.show()
+				if (length != 4)
+					window.setTimeout(function(){ $('.weather-forecast').css('border-right', 'none') }, 100)
+			}
+		)
+	})
 }
 
 function newPopup() {
@@ -1138,7 +1159,7 @@ function newPopup() {
 	this.regEvents()
 }
 
-newPopup.STRING = 'newPopupV1'
+newPopup.STRING = 'newPopupV11'
 
 newPopup.prototype.start = function() {
 	chrome.storage.local.get(this.obj, this.received.bind(this))

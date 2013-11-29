@@ -1,3 +1,4 @@
+"use strict"
 function RecentlyClosed() {
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 		if (changeInfo.status == 'complete')

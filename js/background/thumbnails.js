@@ -1,3 +1,4 @@
+"use strict"
 function Thumbnails() {
 	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this));
 	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this));

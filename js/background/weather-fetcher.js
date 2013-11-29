@@ -1,3 +1,4 @@
+"use strict"
 /**
  * @constructor
  */
@@ -11,7 +12,6 @@ function WeatherFetcher() {
 	this.unit = chrome.i18n.getMessage('temperatureUnit')
 	chrome.idle.onStateChanged.addListener(this.init.bind(this));
 }
-;
 
 WeatherFetcher.DELAY = 3600 * 1000;
 // {a: 22.5,text: "\u0421"}, {a: 67.5,text: "\u0421\u0412"}, {a: 112.5,text: "\u0412"}, {a: 157.5,text: "\u042e\u0412"}, {a: 202.5,text: "\u042e"}, {a: 247.5,text: "\u042e\u0417"}, {a: 292.5,text: "\u0417"}, {a: 337.5,text: "\u0421\u0417"}, {a: 360,text: "\u0421"}
@@ -29,8 +29,6 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
         282: "heavy_rain.png",283: "tstorms.png",284: "tstorms.png",285: "tstorms.png",286: "fog.png",287: "fog.png",288: "rain.png",289: "light_snow.png",290: "light_snow.png",291: "windy.png",292: "tstorms.png",293: "light_rain.png",294: "light_snow.png",295: "tstorms.png"}
 
  WeatherFetcher.DAYS = [chrome.i18n.getMessage('sun'), chrome.i18n.getMessage('mon'), chrome.i18n.getMessage('tue'), chrome.i18n.getMessage('wed'), chrome.i18n.getMessage('thu'), chrome.i18n.getMessage('fri'), chrome.i18n.getMessage('sat')]
-
- WeatherFetcher.FORECAST_LENGTH = 5
 
 WeatherFetcher.prototype.init = function() {
 	//console.log('init');
@@ -148,7 +146,7 @@ WeatherFetcher.prototype.handleLocationResponse_ = function(data) {
 };
 
 WeatherFetcher.prototype.requestWeather_ = function() {
-	params = {
+	var params = {
 		lat: this.latitude_,
 		long: this.longitude_
 	}
@@ -186,7 +184,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 	}
 
 	this.weatherRetryDelay_ = 1000
-	weather = {
+	var weather = {
 		forecast: [],
 		date: Date.parse(json.update_time)
 	}
@@ -220,10 +218,7 @@ WeatherFetcher.prototype.handleWeatherResponse_ = function(json, status, jqxhr) 
 	weather.humidity = currentNode.humidity
 
 	currentNode = new Date
-	var length = json.forecast.length
-	if (length > WeatherFetcher.FORECAST_LENGTH)
-		length = WeatherFetcher.FORECAST_LENGTH
-	for (var i = 0; i < length; i++) {
+	for (var i = 0; i < json.forecast.length; i++) {
 		var forecast = {},
 		forecastNode = json.forecast[i],
 		l = new Date(forecastNode.date)

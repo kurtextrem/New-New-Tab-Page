@@ -1,3 +1,4 @@
+"use strict"
 var util = {};
 
 util.getVersion = function() {
@@ -329,9 +330,10 @@ util.rgbToCss = function(rgb) {
 /**
  * @param {string} event
  */
-util.sendEventToAllWindows = function(event) {
-	var windows = chrome.extension.getViews();
+util.sendEventToAllWindows = function(ev) {
+	var windows = chrome.extension.getViews()//, doc
 	for (var i = 0; i < windows.length; i++) {
-		doc = windows[i].jQuery.event.trigger(event);
+		// doc =
+		windows[i].jQuery.event.trigger(ev)
 	}
 };
