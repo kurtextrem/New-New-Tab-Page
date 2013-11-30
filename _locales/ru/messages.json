@@ -129,17 +129,37 @@
 		"message": "\u0432\u0441",
 		"description": "Shortcut for Sunday"
 	},
+	"N": {
+		"message": "\u0421",
+		"description": "Shortcut for north (wind direction)"
+	},
 	"NE": {
 		"message": "\u0421\u0412",
 		"description": "Shortcut for north east (wind direction)"
 	},
-	"SE": {
-		"message": "SÖ",
-		"description": "Shortcut for south east (wind direction)"
-	},
 	"NW": {
 		"message": "\u0421\u0417",
 		"description": "Shortcut for north west (wind direction)"
+	},
+	"S": {
+		"message": "\u042e",
+		"description": "Shortcut for south (wind direction)"
+	},
+	"SE": {
+		"message": "\u042e\u0412",
+		"description": "Shortcut for south east (wind direction)"
+	},
+	"SW": {
+		"message": "\u042e\u0417",
+		"description": "Shortcut for south west (wind direction)"
+	},
+	"W": {
+		"message": "\u0417",
+		"description": "Shortcut for west (wind direction)"
+	},
+	"E": {
+		"message": "\u0412",
+		"description": "Shortcut for east (wind direction)"
 	},
 	"windless": {
 		"message": "\u0431\u0435\u0437\u0432\u0435\u0442\u0440\u0435\u043d\u043d\u043e",

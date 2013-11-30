@@ -269,16 +269,40 @@
 		"message": "Sun",
 		"description": "Shortcut for Sunday"
 	},
+	"N": {
+		"message": "N",
+		"description": "Shortcut for north (wind direction)"
+	},
 	"NE": {
 		"message": "NE",
 		"description": "Shortcut for north east (wind direction)"
+	},
+	"NW": {
+		"message": "NW",
+		"description": "Shortcut for north west (wind direction)"
+	},
+	"S": {
+		"message": "S",
+		"description": "Shortcut for south (wind direction)"
 	},
 	"SE": {
 		"message": "SE",
 		"description": "Shortcut for south east (wind direction)"
 	},
-	"NW": {
-		"message": "NW",
-		"description": "Shortcut for north west (wind direction)"
+	"SW": {
+		"message": "SW",
+		"description": "Shortcut for south west (wind direction)"
+	},
+	"W": {
+		"message": "W",
+		"description": "Shortcut for west (wind direction)"
+	},
+	"E": {
+		"message": "E",
+		"description": "Shortcut for east (wind direction)"
+	},
+	"moreForeCasts": {
+		"message": "Starting today, you can easily change how many days you want to see as a forecast.",
+		"description": "Detailed text of the whats new popup v1.1"
 	}
 }
