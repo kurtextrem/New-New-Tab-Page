@@ -309,5 +309,9 @@
 	"moreForeCasts": {
 		"message": "Ab heute kannst du ganz einfach einstellen, wie viele Tage du in der Wetter Vorschau sehen willst.",
 		"description": "Detailed text of the whats new popup v1.1"
+	},
+	"forecastAmount": {
+		"message": "Anzahl der Tage",
+		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
 	}
 }
