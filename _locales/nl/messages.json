@@ -304,5 +304,9 @@
 	"moreForeCasts": {
 		"message": "Vanaf vandaag kun je gemakkelijk wijzigen hoeveel dagen je in het vooruitzicht wil zien.",
 		"description": "Detailed text of the whats new popup v1.1"
+	},
+	"forecastAmount": {
+		"message": "Dagen in vooruitzicht",
+		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
 	}
 }
