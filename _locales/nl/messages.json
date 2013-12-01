@@ -234,11 +234,11 @@
 		"description": "Weather name"
 	},
 	"speedUnit": {
-		"message": "mph",
+		"message": "km/h",
 		"description": "The unit used for speed messurements"
 	},
 	"speedUnit2": {
-		"message": "km/h",
+		"message": "mph",
 		"description": "The unit which isn't used used for speed messurements"
 	},
 	"mon": {
