@@ -304,5 +304,9 @@
 	"moreForeCasts": {
 		"message": "Starting today, you can easily change how many days you want to see as a forecast.",
 		"description": "Detailed text of the whats new popup v1.1"
+	},
+        "forecastAmount": {
+                "message": "Amount of days in forecast",
+                "description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
 	}
 }
