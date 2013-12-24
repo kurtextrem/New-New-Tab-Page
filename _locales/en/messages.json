@@ -308,5 +308,13 @@
 	"forecastAmount": {
 		"message": "Amount of days",
 		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+	},
+	"merryChristmas": {
+		"message": "Merry Christmas!",
+		"description": ""
+	},
+	"merryChristmasText": {
+		"message": "Your New Tab Page wishes you Merry Christmas and a Happy New Year.",
+		"description": ""
 	}
 }

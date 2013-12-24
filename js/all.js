@@ -1159,7 +1159,7 @@ function newPopup() {
 	this.regEvents()
 }
 
-newPopup.STRING = 'newPopupV11'
+newPopup.STRING = 'newPopupV111'
 
 newPopup.prototype.start = function() {
 	chrome.storage.local.get(this.obj, this.received.bind(this))

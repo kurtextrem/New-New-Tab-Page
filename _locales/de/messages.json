@@ -313,5 +313,13 @@
 	"forecastAmount": {
 		"message": "Anzahl der Tage",
 		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+	},
+	"merryChristmas": {
+		"message": "Fröhliche Weihnachten!",
+		"description": ""
+	},
+	"merryChristmasText": {
+		"message": "Deine Neue Tab Seite wünscht dir fröhliche Weihnachten und ein gutes neuer Jahr.",
+		"description": ""
 	}
 }
