@@ -308,5 +308,12 @@
 	"forecastAmount": {
 		"message": "Dagen in vooruitzicht",
 		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
-	}
-}
+	},
+"merryChristmas": {
+"message": "Vrolijk Kerstfeest!",
+"description": ""
+},
+"merryChristmasText": {
+"message": "Je Nieuwe Tab Pagina wenst je een vrolijk kerstfeest en een gelukkig nieuwjaar.",
+"description": ""
+}}
