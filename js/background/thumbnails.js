@@ -1,4 +1,3 @@
-"use strict"
 function Thumbnails() {
 	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this));
 	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this));
@@ -11,16 +10,6 @@ Thumbnails.prototype.stripUrl_ = function(url) {
 	return url.replace(/^https?:\/\//, '')
 		.replace(/^www\./, '')
 		.replace(/\/$/, '');
-};
-
-Thumbnails.PRELOADED = {
-	'wikipedia.org':
-		'thumbnails/wikipedia.png',
-	'vk.com': 'thumbnails/vkontakte.png',
-	'odnoklassniki.ru': 'thumbnails/odnoklassniki.png',
-	'livejournal.ru': 'thumbnails/livejournal.png',
-	'mail.ru': 'thumbnails/mail.ru.png',
-	'youtube.com': 'thumbnails/youtube.png'
 };
 
 Thumbnails.prototype.get = function(url, callback, failCallback) {
@@ -36,12 +25,7 @@ Thumbnails.prototype.get = function(url, callback, failCallback) {
 				image: null};
 			res[key] = thumbnail;
 
-			if (Thumbnails.PRELOADED[url]) {
-				thumbnail.image = Thumbnails.PRELOADED[url];
-				thumbnail.lastDownloaded = 1;
-			} else {
-				failCallback()
-			}
+			failCallback()
 		}
 
 		thumbnail.lastRequested = Date.now()

@@ -1,160 +1,22 @@
-"use strict"
-function Analytics() {
-	this.sender_ = null;
-	chrome.runtime.getBackgroundPage(function(a) {
-		this.sender_ = a.analyticsSender;
-		this.sender_.trackPageLoad()
-	}.bind(this))
-}
-Analytics.prototype.track = function(a, b) {
-	this.sender_ && this.sender_.track(a, b)
-};
-Analytics.prototype.trackLink = function(a, b) {
-	this.track(b, a.href);
-	return !0
-};
-Analytics.prototype.wrapLink = function(a, b) {
-	a.addEventListener("click", this.trackLink.bind(this, a, b))
-};
-Analytics.prototype.wrapLinkNoHref = function(a, b) {
-	a.addEventListener("click", function() {
-		this.track(b, "");
-		return !0
-	}.bind(this))
-};
-document.getElementsByTagName("body")[0].classList.remove("hidden");
-var dominantColors = {
-	get: function(a, b, c) {
-		var d = new Image;
-		d.onload = function() {
-			var a = document.createElement("canvas");
-			a.width = d.width;
-			a.height = d.height;
-			var e = a.getContext("2d");
-			e.drawImage(d, 0, 0);
-			for (var a = e.getImageData(0, 0, a.width, a.height), e = [], g = 0; g < a.data.length; g += 4)
-				e.push(dominantColors.alphaCompose([a.data[g], a.data[g + 1], a.data[g + 2], a.data[g + 3]]));
-			a = dominantColors.getClusterCenters_(e, b);
-			c(a)
-		};
-		d.src = a
-	},
-	alphaCompose: function(a) {
-		for (var b = [], c = a[3] / 255, d = 0; 3 > d; d++)
-			b.push(Math.round(a[d] * c + 255 *
-				(1 - c)));
-		return b
-	},
-	NTRIES: 10,
-	getClusterCenters_: function(a, b) {
-		var c, d;
-		a = a.sort();
-		var f = [a[0]],
-			e = [1];
-		for (c = 1; c < a.length; c++)
-			a[c - 1] < a[c] ? (f.push(a[c]), e.push(1)) : e[e.length - 1] += 1;
-		var g = f.length;
-		if (g <= b) {
-			d = [];
-			for (c = 0; c < g; c++)
-				d.push(c);
-			d = d.sort(function(a, b) {
-				return e[b] - e[a]
-			});
-			d = [];
-			for (c = 0; c < g; c++)
-				d.push(f[c]);
-			return d
-		}
-		g = dominantColors.getClusterCentersForCountedPoints_(f, e, b);
-		d = [];
-		for (c = 0; c < g.length; c++)
-			d.push(f[g[c]]);
-		return d
-	},
-	randomSubset: function(a, b) {
-		if (b >= a)
-			throw "Required random subset of size >= size of the set.";
-		for (var c = [], d = 0; d < b; d++) {
-			for (; ; ) {
-				for (var f = Math.floor(a * Math.random()), e = 0; e < c.length && f !== c[e]; e++)
-					;
-				if (e === c.length)
-					break
-			}
-			c.push(f)
-		}
-		return c
-	},
-	dist_: function(a, b) {
-		for (var c = 0, d = 0; d < a.length; d++)
-			c += Math.abs(a[d] - b[d]);
-		return c
-	},
-	findClustersByCenters_: function(a, b) {
-		for (var c = [], d = 0; d < b.length; d++)
-			c.push([]);
-		for (d = 0; d < a.length; d++) {
-			for (var f = 0, e = dominantColors.dist_(a[d], a[b[0]]), g = 1; g < b.length; g++) {
-				var h = dominantColors.dist_(a[d], a[b[g]]);
-				h < e && (e = h, f = g)
-			}
-			c[f].push(d)
-		}
-		return c
-	},
-	findClusterCenter_: function(a,
-		b, c) {
-		for (var d = null, f = 1E10, e = 0; e < c.length; e++) {
-			for (var g = a[c[e]], h = 0, j = 0; j < c.length; j++)
-				h += b[c[j]] * dominantColors.dist_(g, a[c[j]]);
-			h < f && (f = h, d = c[e])
-		}
-		return d
-	},
-	getClusterCentersForCountedPoints_: function(a, b, c) {
-		for (var d, f = a.length, e, g, h = 0; h < dominantColors.NTRIES; h++) {
-			e = dominantColors.randomSubset(f, c).sort();
-			for (var j = 0; 10 > j; j++) {
-				g = dominantColors.findClustersByCenters_(a, e);
-				e = [];
-				for (d = 0; d < c; d++)
-					e.push(dominantColors.findClusterCenter_(a, b, g[d]))
-			}
-		}
-		g = dominantColors.findClustersByCenters_(a, e);
-		a = [];
-		for (d = 0; d < c; d++)
-			a.push(d);
-		a.sort(function(a, b) {
-			return g[b].length - g[a].length
-		});
-		b = [];
-		for (d = 0; d < c; d++)
-			b.push(e[a[d]]);
-		return b
-	}
-};
+document.getElementsByTagName("body")[0].classList.remove("hidden")
 
 function NTP() {
 	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = this.infoMenu_ =  this.newPopup_ = null
 }
 NTP.prototype.init = function() {
-	this.analytics_ = new Analytics;
 	this.search_ = new SearchBox;
-	this.mostVisited_ = new MostVisited(this.analytics_);
+	this.mostVisited_ = new MostVisited();
 	this.mostVisited_.show();
-	this.apps_ = new AppsUI(this.analytics_);
+	this.apps_ = new AppsUI();
 	this.apps_.show();
-	this.weather_ = new Weather(this.analytics_);
+	this.weather_ = new Weather();
 	this.weather_.show();
-	this.news_ = new News(this.analytics_);
+	this.news_ = new News();
 	this.news_.show();
 	this.recentlyClosed_ = new recentlyClosed()
 	this.recentlyClosed_.show()
 	this.infoMenu_ = new infoMenu()
 	this.newPopup_ = new newPopup()
-	$("#logo-link").click(this.analytics_.trackLink.bind(this.analytics_, $("#logo-link")[0], "logo"))
 	var hour = (new Date).getHours()
 	if (hour>=5 && hour<8)
 		$('body').addClass('bg-dawn')
@@ -175,8 +37,8 @@ NTP.prototype.init = function() {
 var ntp = new NTP
 $(document).ready(ntp.init.bind(ntp))
 
-function MostVisited(a) {
-	this.ui_ = new MostVisitedUI(a, this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
+function MostVisited() {
+	this.ui_ = new MostVisitedUI(this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
 	this.thumbnails_ = this.lastBlockedDomain_ = null;
 	chrome.runtime.getBackgroundPage(function(a) {
 		this.thumbnails_ = a.thumbnails
@@ -204,35 +66,9 @@ MostVisited.prototype.onTopSitesReceived_ = function(a) {
 	b['favorites'] = {}
 	chrome.storage.local.get(b, this.filterAndShow_.bind(this, a))
 };
-MostVisited.DEFAULT_SITES = [{
-		domain: "youtube.com",
-		title: "YouTube"
-	},  {
-		domain: "wikipedia.org",
-		url: "http://wikipedia.org/",
-		title: "Wikipedia"
-	}
-];
 MostVisited.prototype.onHistorySearchComplete_ = function(a) {
 	var b, c = {}, d = [],
 		f = {};
-	for (b = 0; b < MostVisited.DEFAULT_SITES.length; b++) {
-		var e = MostVisited.DEFAULT_SITES[b],
-			g = e.url || "http://" + e.domain + "/",
-			g = {
-			domain: e.domain,
-			pages: [{
-					url: g,
-					title: e.title,
-					visitCount: 2
-				}
-			],
-			count: 2
-		};
-		c[e.domain] = g;
-		d.push(g);
-		f["most-visited-blocked-" + h] = !1
-	}
 	for (b = 0; b < a.length; b++) {
 		var e = a[b],
 			h = util.domainFromURL(e.url);
@@ -259,11 +95,6 @@ MostVisited.prototype.onHistorySearchComplete_ = function(a) {
 	chrome.storage.local.get(f, this.filterAndShow_.bind(this, a))
 };
 MostVisited.prototype.getFavicon_ = function(a, b) {
-	var c = util.domainFromURL(a);
-	if (5 > b)
-		for (var d = 0; d < MostVisited.DEFAULT_SITES.length; d++)
-			if (MostVisited.DEFAULT_SITES[d].domain === c)
-				return "icons/" + c + ".ico";
 	return "chrome://favicon/" + a
 };
 MostVisited.prototype.filterAndShow_ = function(a, b) {
@@ -318,7 +149,7 @@ MostVisited.prototype.onThumbnailFound_ = function(a, b) {
 	b && this.ui_.showThumbnail(a, b)
 };
 MostVisited.prototype.onThumbnailNotFound_ = function(a, b, c) {
-	dominantColors.get(c, 2, function(b) {
+	util.dominantColors.get(c, 2, function(b) {
 		if (!(2 > b.length)) {
 			var c = util.rgbToHsl(b[0]),
 				e = util.rgbToHsl(b[1]);
@@ -356,8 +187,8 @@ MostVisited.prototype.unblockAllDomains_ = function() {
 	}.bind(this))
 };
 
-function News(a) {
-	this.ui_ = new NewsUI(a);
+function News() {
+	this.ui_ = new NewsUI();
 	$(document).bind("news-loaded", this.show.bind(this))
 }
 News.prototype.show = function() {
@@ -403,223 +234,8 @@ SuggestRequest.prototype.onResponse_ = function(a) {
 			this.callback_(b)
 	}
 };
-var util = {
-	getVersion: function() {
-		return parseInt(navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10)
-	},
-	getOS: function() {
-		return -1 != navigator.appVersion.indexOf("Linux") ? "linux" : -1 != navigator.appVersion.indexOf("CrOS") ? "cros" : -1 != navigator.appVersion.indexOf("Mac OS X") ? "mac" : "other"
-	},
-	showError: function(a) {
-		//console.error("Error:", a)
-	},
-	makeURL: function(a, b) {
-		var c = [],
-			d;
-		for (d in b)
-			c.push(d + "=" + encodeURIComponent(b[d]));
-		return 0 < c.length ? a + "?" + c.join("&") : a
-	},
-	domainFromURL: function(a) {
-		var b = a.match(/^(\w+)\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-		if (!b)
-			return null;
-		a = b[1];
-		b = b[2];
-		return "http" !== a && "https" !== a ? null : 0 === b.indexOf("www.") ? b.substring(4) : b
-	},
-	protocolAndDomainFromURL: function(a) {
-		return (a = a.match(/^(\w+\:\/\/[^\/?#]+)(?:[\/?#]|$)/i)) && a[1]
-	},
-	updateRetryDelay: function(a) {
-		return 36E5 > a ? 1.5 * a : 36E5
-	},
-	scaleImage: function(a, b, c) {
-		var d = new Image;
-		d.onload = function() {
-			var a = document.createElement("canvas");
-			a.width = d.width;
-			a.height = d.height;
-			a.getContext("2d").drawImage(d, 0, 0);
-			var e = Math.round(b * d.height / d.width);
-			util.scaleCanvas(a, b, e);
-			c(a.toDataURL())
-		};
-		d.src = a
-	},
-	blurCanvas: function(a, b) {
-		var c = document.createElement("canvas");
-		c.width = a.width;
-		c.height = a.height;
-		var d = c.getContext("2d");
-		b = Math.round(b);
-		var f = b / 6,
-			e = 1 / (f * Math.sqrt(2 * Math.PI)),
-			g = 0;
-		d.globalCompositeOperation = "lighter";
-		for (var h = -b; h < b + 1; h++)
-			g += e * Math.exp(-(h * h) / (2 * f * f)), d.globalAlpha = e * Math.exp(-(h * h) / (2 * f * f)), d.drawImage(a, h, 0);
-		a = c;
-		c = document.createElement("canvas");
-		c.width = a.width;
-		c.height = a.height;
-		d = c.getContext("2d");
-		d.globalCompositeOperation = "lighter";
-		for (g = - b; g < b + 1; g++)
-			d.globalAlpha =
-				e * Math.exp(-(g * g) / (2 * f * f)), d.drawImage(a, 0, g);
-		return c
-	},
-	scaleCanvas: function(a, b, c) {
-		a = util.blurCanvas(a, 1 * a.width / b);
-		for (var d = a.getContext("2d"), f = d.getImageData(0, 0, a.width, a.height), e = 3; e < f.data.length; e += 4)
-			f.data[e] = 255;
-		e = {
-			height: f.height,
-			width: b,
-			data: Array(4 * f.height * b)
-		};
-		util.doScaleX_(f, e);
-		e = util.transpose_(e);
-		f = {
-			height: e.height,
-			width: c,
-			data: Array(4 * e.height * c)
-		};
-		util.doScaleX_(e, f);
-		f = util.transpose_(f);
-		a.width = b;
-		a.height = c;
-		d = a.getContext("2d");
-		b = d.getImageData(0, 0, b, c);
-		for (e = 0; e < b.data.length; e++)
-			c =
-				f.data[e], b.data[e] = 0 > c ? 0 : 255 < c ? 255 : Math.round(c);
-		d.putImageData(b, 0, 0);
-		return a
-	},
-	transpose_: function(a) {
-		for (var b = {
-			width: a.height,
-			height: a.width,
-			data: Array(a.data.length)
-		}, c = 0; c < a.width; c++)
-			for (var d = 0; d < a.height; d++) {
-				var f = 4 * (d * a.width + c),
-					e = 4 * (c * a.height + d);
-				b.data[e] = a.data[f];
-				b.data[e + 1] = a.data[f + 1];
-				b.data[e + 2] = a.data[f + 2];
-				b.data[e + 3] = a.data[f + 3]
-			}
-		return b
-	},
-	LANCZOS_SIZE: 3,
-	lanczosKernel_: function(a) {
-		0 > a && (a = -a);
-		if (1E-10 > a)
-			return 1;
-		if (a >= util.LANCZOS_SIZE)
-			return 0;
-		a *= Math.PI;
-		return util.LANCZOS_SIZE *
-			Math.sin(a) * Math.sin(a / util.LANCZOS_SIZE) / (a * a)
-	},
-	doScaleX_: function(a, b) {
-		//if (a.height !== b.height)
-			//console.error("The height does not match in one-dimension scale.");
-		//else
-		if (a.height === b.height)
-			for (var c = (b.width - 1) / (a.width - 1), d = 0, f = 0; f < b.height; f++)
-				for (var e = 0; e < b.width; e++) {
-					var g = e / c;
-					b.data[d] = 0;
-					b.data[d + 1] = 0;
-					b.data[d + 2] = 0;
-					for (var h = b.data[d + 3] = 0, j = Math.ceil(g - util.LANCZOS_SIZE); j < g + util.LANCZOS_SIZE; j += 1)
-						if (0 <= j && j < a.width) {
-							var l = 4 * (f * a.width + j),
-								k = util.lanczosKernel_(j - g),
-								h = h + k;
-							b.data[d] += k * a.data[l];
-							b.data[d + 1] += k * a.data[l +
-								1];
-							b.data[d + 2] += k * a.data[l + 2];
-							b.data[d + 3] += k * a.data[l + 3]
-						}
-					b.data[d] /= h;
-					b.data[d + 1] /= h;
-					b.data[d + 2] /= h;
-					b.data[d + 3] /= h;
-					d += 4
-				}
-	},
-	rgbToHsl: function(a) {
-		var b = a[0],
-			c = a[1];
-		a = a[2];
-		b /= 255;
-		c /= 255;
-		a /= 255;
-		var d = Math.max(b, c, a),
-			f = Math.min(b, c, a),
-			e = (d + f) / 2,
-			g;
-		if (d === f)
-			g = f = 0;
-		else {
-			var h = d - f,
-				f = 0.5 < e ? h / (2 - d - f) : h / (d + f);
-			switch (d) {
-				case b:
-					g = (c - a) / h + (c < a ? 6 : 0);
-					break;
-				case c:
-					g = (a - b) / h + 2;
-					break;
-				case a:
-					g = (b - c) / h + 4
-			}
-			g /= 6
-		}
-		return [g, f, e]
-	},
-	hslToRgb: function(a) {
-		function b(a, b, c) {
-			0 > c && (c += 1);
-			1 < c && (c -= 1);
-			return c < 1 / 6 ? a + 6 * (b - a) * c : 0.5 > c ? b : c <
-				2 / 3 ? a + 6 * (b - a) * (2 / 3 - c) : a
-		}
-		var c = a[0],
-			d = a[1];
-		a = a[2];
-		if (0 === d)
-			d = a = c = a;
-		else {
-			var f = 0.5 > a ? a * (1 + d) : a + d - a * d,
-				e = 2 * a - f,
-				d = b(e, f, c + 1 / 3);
-			a = b(e, f, c);
-			c = b(e, f, c - 1 / 3)
-		}
-		return [255 * d, 255 * a, 255 * c]
-	},
-	rgbToCss: function(a) {
-		for (var b = "#", c = 0; 3 > c; c++) {
-			var d = Math.round(a[c]).toString(16);
-			1 === d.length && (d = "0" + d);
-			b += d
-		}
-		return b
-	},
-	sendEventToAllWindows: function(a) {
-		for (var b = chrome.extension.getViews(), c = 0; c < b.length; c++)
-			doc = b[c].jQuery.event.trigger(a)
-	}
-};
 
-function Weather(a) {
+function Weather() {
 	this.ui_ = new WeatherUI(a);
 	this.delay_ = null;
 	$(document).bind("weather-loaded", this.show.bind(this));
@@ -682,21 +298,14 @@ Weather.prototype.getDateString_ = function(a) {
 	}).format(a)
 };
 
-function AppsUI(a) {
-	this.analytics_ = a
+function AppsUI() {
 }
 AppsUI.prototype.show = function() {
-	this.analyticsForPromo_();
 	$("#apps-list a").remove()
 	chrome.management.getAll(this.onAppsListReceived_.bind(this))
 };
-AppsUI.prototype.analyticsForPromo_ = function() {
-	for (var a = $("#promoted-services a"), b = 0; b < a.length; b++)
-		a[b].onclick = this.analytics_.trackLink.bind(this.analytics_, a[b], "promoted-services")
-};
 AppsUI.prototype.onAppsListReceived_ = function(a) {
 	var b = $('<a href="https://chrome.google.com/webstore"><img src="chrome://extension-icon/ahfgeienlihckogmohjhadlkjgocpleb/64/1"><div class="icon-title">'+chrome.i18n.getMessage('chromeWebStore')+'</div></a>');
-	this.analytics_.wrapLink(b[0], "webstore");
 	$("#apps-list").append(b);
 	for (b = 0; b < a.length; b++) {
 		var c = a[b];
@@ -716,12 +325,10 @@ AppsUI.prototype.onAppsListReceived_ = function(a) {
 AppsUI.prototype.createAppButton_ = function(a, b, c) {
 	c = $('<a href="" class="closable-button"><img src="' + c + '"><div class="icon-title">' + b + '</div><div class="close-button" title="' + chrome.i18n.getMessage('remove') + '"></div></a>');
 	c.click(function() {
-		this.analytics_.track("app", "");
 		chrome.management.launchApp(a);
 		return !1
 	}.bind(this));
 	c.find(".close-button").click(function() {
-		this.analytics_.track("app-uninstall", b);
 		chrome.management.uninstall(a, {
 			showConfirmDialog: !0
 		}, this.show.bind(this));
@@ -730,10 +337,9 @@ AppsUI.prototype.createAppButton_ = function(a, b, c) {
 	return c
 };
 
-function MostVisitedUI(a, b, c) {
-	this.analytics_ = a;
-	this.undoCallback_ = b;
-	this.unblockAllCallback_ = c
+function MostVisitedUI(a, b) {
+	this.undoCallback_ = a;
+	this.unblockAllCallback_ = b
 }
 MostVisitedUI.prototype.reset = function() {
 	$('#most-visited-container').html('')
@@ -793,7 +399,6 @@ MostVisitedUI.prototype.addThumbnailButton = function(a, b, c, d, favorited) {
 	a = $('<div class="most-visited-title"></div>')
 	a.text(b)
 	f.append(c).append(a)
-	this.analytics_.wrapLinkNoHref(f[0], "most-visited")
 	$("#most-visited-container").append(f)
 	return f
 };
@@ -821,11 +426,9 @@ MostVisitedUI.prototype.showUndoBar_ = function() {
 		if (status == 'link') {
 			var text = $a.text()
 			if (text == undo) {
-				this.analytics_.track("most-visited-confirmation", "undo")
 				this.undoCallback_()
 			}
 			if (text == restoreAll) {
-				this.analytics_.track("most-visited-confirmation", "undo-all")
 				this.unblockAllCallback_()
 			}
 			$a.parent().next('.close-button').click()
@@ -833,7 +436,6 @@ MostVisitedUI.prototype.showUndoBar_ = function() {
 		}
 		if (status == 'closed') {
 			//console.log("close")
-			this.analytics_.track("most-visited-confirmation", "close")
 		}
 		if (status == 'added') {
 			$a.css('top', '165px')
@@ -842,9 +444,8 @@ MostVisitedUI.prototype.showUndoBar_ = function() {
 	}.bind(this))
 };
 
-function NewsUI(a) {
-	this.analytics_ = a;
-	var b;
+function NewsUI() {
+	var b
 	try {
 		b = Intl
 	} catch (c) {
@@ -868,19 +469,16 @@ NewsUI.prototype.show = function() {
 
 NewsUI.prototype.addHeading = function() {
 	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
-	this.analytics_.wrapLinkNoHref(a.find("h2")[0], "news-heading");
 	$("#box-news").append(a)
 };
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
 	a = a.match(/(.+) -( .+)/)
 	a = $('<div class="news-item"><div class="news-time">' + c.replace(':', '') + '</div><a href="' + b + '">' + a[1] + "<span class='news-publisher'>"+a[2]+"</span></a></div>");
-	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news");
 	$("#news-container").append(a)
 };
 NewsUI.prototype.addMoreLink = function() {
 	var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
-	this.analytics_.wrapLinkNoHref(a.find("a")[0], "news-more");
 	$("#news-container").append(a)
 	$('#apps-list').css('max-height', $('#box-news').height()-$('#promoted-services').height()-11)
 };
@@ -989,10 +587,8 @@ SuggestBox.prototype.onBlur_ = function() {
 	this.dontHide_ || this.hide()
 };
 
-function WeatherUI(a) {
-	this.analytics_ = a;
+function WeatherUI() {
 	this.box_ = $("#box-weather");
-	this.analytics_.wrapLink(this.box_.find("a")[0], "weather");
 	this.link_ = chrome.i18n.getMessage('searchURL', ['', chrome.i18n.getMessage('weather')]);
 	this.coolWeather = false
 	chrome.storage.local.get({
@@ -1055,7 +651,6 @@ WeatherUI.prototype.addForecast = function(a, b, c, d, f) {
 		b = b.replace('weather', 'cool weather')
 	a = $('<div class="weather-forecast"><div>' + a + '</div><a href=""><img src="' + b + '" title="' + f + '"></a><div><span class="temperature-high">' + c + '</span> <span class="temperature-low">' + d + "</span> </div></div");
 	a.find("a").attr("href", this.link_);
-	this.analytics_.wrapLink(a.find("a")[0], "weather-forecast");
 	this.box_.find("#weather-forecast-box").append(a)
 };
 

@@ -1,4 +1,3 @@
-"use strict"
 function NewsFetcher() {
 	this.retryDelay_ = 1000;
 	this.interval_ = null;
