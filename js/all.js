@@ -1,10 +1,11 @@
-document.getElementsByTagName("body")[0].classList.remove("hidden")
+'use strict';
+document.getElementsByTagName('body')[0].classList.remove('hidden')
 
 function NTP() {
 	this.news_ = this.weather_ = this.apps_ = this.mostVisited_ = this.search_ =  this.recentlyClosed_ = this.infoMenu_ =  this.newPopup_ = null
 }
 NTP.prototype.init = function() {
-	this.search_ = new SearchBox;
+	this.search_ = new SearchBox();
 	this.mostVisited_ = new MostVisited();
 	this.mostVisited_.show();
 	this.apps_ = new AppsUI();
@@ -17,7 +18,7 @@ NTP.prototype.init = function() {
 	this.recentlyClosed_.show()
 	this.infoMenu_ = new infoMenu()
 	this.newPopup_ = new newPopup()
-	var hour = (new Date).getHours()
+	var hour = (new Date()).getHours()
 	if (hour>=5 && hour<8)
 		$('body').addClass('bg-dawn')
 	else if (hour>=8 && hour<19)
@@ -34,7 +35,7 @@ NTP.prototype.init = function() {
 	}, 500)
 }
 
-var ntp = new NTP
+var ntp = new NTP()
 $(document).ready(ntp.init.bind(ntp))
 
 function MostVisited() {
@@ -44,15 +45,15 @@ function MostVisited() {
 		this.thumbnails_ = a.thumbnails
 	}.bind(this))
 }
-MostVisited.BUTTON_TYPE = "thumbnail";
-MostVisited.DATA_SOURCE = "topSites"; // history / topSites
+MostVisited.BUTTON_TYPE = 'thumbnail'
+MostVisited.DATA_SOURCE = 'topSites' // history / topSites
 MostVisited.prototype.show = function() {
-	if ("topSites" === MostVisited.DATA_SOURCE) {
+	if ('topSites' === MostVisited.DATA_SOURCE) {
 		chrome.topSites.get(this.onTopSitesReceived_.bind(this))
 	} else {
 		var a = Date.now() - 2592E6;
 		chrome.history.search({
-			text: "",
+			text: '',
 			startTime: a,
 			maxResults: 1E3
 		}, this.onHistorySearchComplete_.bind(this))
@@ -63,20 +64,19 @@ MostVisited.prototype.onTopSitesReceived_ = function(a) {
 		var d = util.domainFromURL(a[c].url);
 		d && (b['most-visited-blocked-' + d] = !1)
 	}
-	b['favorites'] = {}
+	b.favorites = {}
 	chrome.storage.local.get(b, this.filterAndShow_.bind(this, a))
 };
 MostVisited.prototype.onHistorySearchComplete_ = function(a) {
-	var b, c = {}, d = [],
-		f = {};
+	var b, c = {}, d = [], e, f = {}, h;
 	for (b = 0; b < a.length; b++) {
-		var e = a[b],
-			h = util.domainFromURL(e.url);
+		e = a[b]
+		h = util.domainFromURL(e.url);
 		h && (c[h] || (g = {
 			domain: h,
 			pages: [],
 			count: 0
-		}, c[h] = g, d.push(g), f["most-visited-blocked-" + h] = !1), h = c[h], h.pages.push(e), h.count +=
+		}, c[h] = g, d.push(g), f['most-visited-blocked-' + h] = !1), h = c[h], h.pages.push(e), h.count +=
 			e.visitCount)
 	}
 	d.sort(function(a, b) {
@@ -84,7 +84,7 @@ MostVisited.prototype.onHistorySearchComplete_ = function(a) {
 	});
 	a = [];
 	for (b = 0; b < d.length; b++) {
-		for (var h = d[b], c = 0, e = g = null, j = 0; j < h.pages.length; j++)
+		for (h = d[b], c = 0, e = g = null, j = 0; j < h.pages.length; j++)
 			h.pages[j].visitCount > c && (c = h.pages[j].visitCount, g = h.pages[j].url, e = h.pages[j].title);
 		a.push({
 			url: g,
@@ -94,22 +94,22 @@ MostVisited.prototype.onHistorySearchComplete_ = function(a) {
 	}
 	chrome.storage.local.get(f, this.filterAndShow_.bind(this, a))
 };
-MostVisited.prototype.getFavicon_ = function(a, b) {
-	return "chrome://favicon/" + a
+MostVisited.prototype.getFavicon_ = function(a) {
+	return 'chrome://favicon/' + a
 };
 MostVisited.prototype.filterAndShow_ = function(a, b) {
 	this.ui_.reset()
 	for (var c = 0, d = 0, realD = 0; c < a.length && 7 > d; c++, realD++) {
-		if (typeof b['favorites'][a[c].url] !== 'undefined' && b['favorites'][a[c].url].index !== realD) {
+		if (typeof b.favorites[a[c].url] !== 'undefined' && b.favorites[a[c].url].index !== realD) {
 			realD--
 			continue
 		}
-		$.each(b['favorites'], function(i, e) {
+		$.each(b.favorites, function(i, e) {
 			if (!e.added && ((c < 14 && e.index === realD) || (c > 13 && e.index+13 === c))) {
 				a[c].url = e.url
 				a[c].title = e.title
 				a[c].index = true
-				b['favorites'][e.url].added = true
+				b.favorites[e.url].added = true
 			}
 		})
 		var f = a[c].url,
@@ -117,22 +117,22 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 			g = util.domainFromURL(f)
 		if(!e)
 			e = g
-		if(!b["most-visited-blocked-" + g]) {
+		if(!b['most-visited-blocked-' + g]) {
 			d++
-			if ("thumbnail" === MostVisited.BUTTON_TYPE) {
+			if ('thumbnail' === MostVisited.BUTTON_TYPE) {
 				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
-				g = this.getFavicon_(f, a[c].count)
+				g = this.getFavicon_(f)
 				this.ui_.showFavicon(e, g)
 				this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
-			} else if ("chrome-thumb" === MostVisited.BUTTON_TYPE) {
+			} else if ('chrome-thumb' === MostVisited.BUTTON_TYPE) {
 				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
-				this.ui_.showFavicon(e, this.getFavicon_(f, a[c].count))
-				g = new Image
+				this.ui_.showFavicon(e, this.getFavicon_(f))
+				g = new Image()
 				g.onload = function(a, b) {
-					this.ui_.showThumbnail(a, "chrome://thumb/" + b)
+					this.ui_.showThumbnail(a, 'chrome://thumb/' + b)
 				}.bind(this, e, f)
 				g.onerror = this.onThumbnailNotFound_.bind(this, e, f)
-				g.src = "chrome://thumb/" + f
+				g.src = 'chrome://thumb/' + f
 			}
 		} else {
 			realD--
@@ -142,7 +142,7 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 MostVisited.prototype.addDomainToBlacklist_ = function(a) {
 	this.lastBlockedDomain_ = a;
 	var b = {};
-	b["most-visited-blocked-" + a] = !0;
+	b['most-visited-blocked-' + a] = !0;
 	chrome.storage.local.set(b, this.show.bind(this))
 };
 MostVisited.prototype.onThumbnailFound_ = function(a, b) {
@@ -452,24 +452,24 @@ function NewsUI() {
 		b = v8Intl
 	}
 	this.formatter_ = b.DateTimeFormat([], {
-		hour: "numeric",
-		minute: "2-digit",
+		hour: 'numeric',
+		minute: '2-digit',
 		hour12: false
 	})
 }
 NewsUI.prototype.reset = function() {
-	$("#news-container *").remove()
+	$('#news-container *').remove()
 };
 NewsUI.prototype.hide = function() {
-	$("#box-news").hide()
+	$('#box-news').hide()
 };
 NewsUI.prototype.show = function() {
-	$("#box-news").show()
+	$('#box-news').show()
 };
 
 NewsUI.prototype.addHeading = function() {
 	var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
-	$("#box-news").append(a)
+	$('#box-news').append(a)
 };
 NewsUI.prototype.add = function(a, b, c) {
 	c = this.formatter_.format(c);
