@@ -29,7 +29,7 @@ NTP.prototype.init = function() {
 		$('body').addClass('bg-twilight')
 	window.setTimeout(function(){
 		var elem = document.getElementById('most-visited-container')
-		if (elem.children.length < 2 || elem.children[0].nodeName === 'DIV') {
+		if (elem.children.length < 2) { //  || elem.children[0].nodeName === 'DIV'
 			location.reload()
 		}
 	}, 500)
