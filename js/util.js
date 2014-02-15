@@ -327,7 +327,7 @@ util.rgbToCss = function(rgb) {
 	return css;
 };
 
-util.dominantColors.prototype = {
+util.dominantColors = {
 	get: function(a, b, c) {
 		var d = new Image;
 		d.onload = function() {
