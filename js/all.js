@@ -236,9 +236,9 @@ SuggestRequest.prototype.onResponse_ = function(a) {
 };
 
 function Weather() {
-	this.ui_ = new WeatherUI(a);
-	this.delay_ = null;
-	$(document).bind("weather-loaded", this.show.bind(this));
+	this.ui_ = new WeatherUI()
+	this.delay_ = null
+	$(document).bind("weather-loaded", this.show.bind(this))
 	chrome.runtime.getBackgroundPage(function(a) {
 		this.delay_ = a.WeatherFetcher.DELAY
 	}.bind(this))

@@ -94,9 +94,9 @@ util.blurCanvas = function(canvas, size) {
 	var blurredCanvas = document.createElement('canvas');
 	blurredCanvas.width = canvas.width;
 	blurredCanvas.height = canvas.height;
-	var ctx = blurredCanvas.getContext('2d');
-	var size = Math.round(size);
-	var sigma = size / 6;
+	var ctx = blurredCanvas.getContext('2d'),
+	sigma = size / 6;
+	size = Math.round(size);
 
 	var c = 1 / (sigma * Math.sqrt(2 * Math.PI));
 	var sum = 0;
@@ -154,7 +154,7 @@ util.scaleCanvas = function(canvas, newWidth, newHeight) {
 	canvas.height = newHeight;
 	ctx = canvas.getContext('2d');
 	var dest = ctx.getImageData(0, 0, newWidth, newHeight);
-	for (var i = 0; i < dest.data.length; i++) {
+	for (i = 0; i < dest.data.length; i++) {
 		var v = dest2.data[i];
 		if (v < 0) {
 			dest.data[i] = 0;
@@ -329,18 +329,18 @@ util.rgbToCss = function(rgb) {
 
 util.dominantColors = {
 	get: function(a, b, c) {
-		var d = new Image;
+		var d = new Image()
 		d.onload = function() {
-			var a = document.createElement("canvas");
-			a.width = d.width;
-			a.height = d.height;
-			var e = a.getContext("2d");
-			e.drawImage(d, 0, 0);
+			var a = document.createElement('canvas')
+			a.width = d.width
+			a.height = d.height
+			var e = a.getContext('2d')
+			e.drawImage(d, 0, 0)
 			for (var a = e.getImageData(0, 0, a.width, a.height), e = [], g = 0; g < a.data.length; g += 4)
-				e.push(dominantColors.alphaCompose([a.data[g], a.data[g + 1], a.data[g + 2], a.data[g + 3]]));
-			a = dominantColors.getClusterCenters_(e, b);
+				e.push(this.alphaCompose([a.data[g], a.data[g + 1], a.data[g + 2], a.data[g + 3]]))
+			a = this.getClusterCenters_(e, b)
 			c(a)
-		};
+		}.bind(this)
 		d.src = a
 	},
 	alphaCompose: function(a) {
@@ -370,7 +370,7 @@ util.dominantColors = {
 				d.push(f[c]);
 			return d
 		}
-		g = dominantColors.getClusterCentersForCountedPoints_(f, e, b);
+		g = this.getClusterCentersForCountedPoints_(f, e, b);
 		d = [];
 		for (c = 0; c < g.length; c++)
 			d.push(f[g[c]]);
@@ -378,7 +378,7 @@ util.dominantColors = {
 	},
 	randomSubset: function(a, b) {
 		if (b >= a)
-			throw "Required random subset of size >= size of the set.";
+			throw 'Required random subset of size >= size of the set.';
 		for (var c = [], d = 0; d < b; d++) {
 			for (; ; ) {
 				for (var f = Math.floor(a * Math.random()), e = 0; e < c.length && f !== c[e]; e++)
@@ -399,8 +399,8 @@ util.dominantColors = {
 		for (var c = [], d = 0; d < b.length; d++)
 			c.push([]);
 		for (d = 0; d < a.length; d++) {
-			for (var f = 0, e = dominantColors.dist_(a[d], a[b[0]]), g = 1; g < b.length; g++) {
-				var h = dominantColors.dist_(a[d], a[b[g]]);
+			for (var f = 0, e = this.dist_(a[d], a[b[0]]), g = 1; g < b.length; g++) {
+				var h = this.dist_(a[d], a[b[g]]);
 				h < e && (e = h, f = g)
 			}
 			c[f].push(d)
@@ -410,22 +410,22 @@ util.dominantColors = {
 	findClusterCenter_: function(a, b, c) {
 		for (var d = null, f = 1E10, e = 0; e < c.length; e++) {
 			for (var g = a[c[e]], h = 0, j = 0; j < c.length; j++)
-				h += b[c[j]] * dominantColors.dist_(g, a[c[j]]);
+				h += b[c[j]] * this.dist_(g, a[c[j]]);
 			h < f && (f = h, d = c[e])
 		}
 		return d
 	},
 	getClusterCentersForCountedPoints_: function(a, b, c) {
-		for (var d, f = a.length, e, g, h = 0; h < dominantColors.NTRIES; h++) {
-			e = dominantColors.randomSubset(f, c).sort();
+		for (var d, f = a.length, e, g, h = 0; h < this.NTRIES; h++) {
+			e = this.randomSubset(f, c).sort();
 			for (var j = 0; 10 > j; j++) {
-				g = dominantColors.findClustersByCenters_(a, e);
+				g = this.findClustersByCenters_(a, e);
 				e = [];
 				for (d = 0; d < c; d++)
-					e.push(dominantColors.findClusterCenter_(a, b, g[d]))
+					e.push(this.findClusterCenter_(a, b, g[d]))
 			}
 		}
-		g = dominantColors.findClustersByCenters_(a, e);
+		g = this.findClustersByCenters_(a, e);
 		a = [];
 		for (d = 0; d < c; d++)
 			a.push(d);
@@ -448,4 +448,4 @@ util.sendEventToAllWindows = function(ev) {
 		// doc =
 		windows[i].jQuery.event.trigger(ev)
 	}
-};
+}
