@@ -36,7 +36,7 @@ NTP.prototype.init = function() {
 }
 
 var ntp = new NTP()
-$(document).ready(ntp.init.bind(ntp))
+$.fn.ready(ntp.init.bind(ntp))
 
 function MostVisited() {
 	this.ui_ = new MostVisitedUI(this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
