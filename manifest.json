@@ -1,7 +1,7 @@
 {
 	"name": "__MSG_extName__",
 	"short_name": "__MSG_extShortName__",
-	"version": "0.6.6.3",
+	"version": "0.6.6.4",
 	"manifest_version": 2,
 
 	"description": "__MSG_extDesc__",
@@ -13,13 +13,14 @@
 	},
 	"author": "Jacob Groß (kurtextrem)",
 	"background": {
-		"scripts": ["js/jquery.min.js", "js/util.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js"]
+		"scripts": ["js/jquery.min.js", "js/util.js", "js/background/news-fetcher.js", "js/background/thumbnails.js", "js/background/weather-fetcher.js", "js/background/recently-closed.js", "js/background/main.js"],
+		"persistent": false
 	},
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
 	"minimum_chrome_version": "23.0",
 
-	"permissions": ["geolocation", "history", "idle", "management", "storage", "tabs", "topSites", "chrome://favicon/", "http://*/", "https://*/"]
+	"permissions": ["geolocation", "history", "idle", "management", "storage", "tabs", "topSites", "chrome://favicon/", "http://*/", "https://*/", "alarms"]
 
 }

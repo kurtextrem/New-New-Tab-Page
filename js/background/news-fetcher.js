@@ -1,13 +1,15 @@
 'use strict';
 function NewsFetcher() {
-	this.retryDelay_ = 1000;
-	this.interval_ = null;
+	this.retryDelay_ = 1000
 }
 
 NewsFetcher.prototype.init = function() {
-	clearInterval(this.interval_);
-	this.interval_ = setInterval(this.startRetrieval.bind(this), 900 * 1000);
-	this.startRetrieval();
+	chrome.alarms.create('newsFetcher', {delayInMinutes: 15, periodInMinutes: 15})
+	chrome.alarms.onAlarm.addListener(function(alarm) {
+		if (alarm.name === 'newsFetcher')
+			this.startRetrieval()
+	}.bind(this))
+	this.startRetrieval()
 };
 
 NewsFetcher.prototype.startRetrieval = function() {
@@ -47,5 +49,4 @@ NewsFetcher.prototype.storeFromRss_ = function(xmlDoc) {
 	util.sendEventToAllWindows.bind(null, 'news-loaded'));
 };
 
-var newsFetcher = new NewsFetcher();
-window.addEventListener('load', newsFetcher.init.bind(newsFetcher));
+var newsFetcher = new NewsFetcher()

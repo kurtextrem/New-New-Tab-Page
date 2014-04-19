@@ -750,8 +750,8 @@ infoMenu.prototype.footerToggle = function() {
 function newPopup() {
 	this.obj = {}
 	this.obj[newPopup.STRING] = false
-	this.start()
-	this.regEvents()
+	//this.start()
+	//this.regEvents()
 }
 
 newPopup.STRING = 'newPopupV111'

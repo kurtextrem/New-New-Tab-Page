@@ -1,20 +1,29 @@
 'use strict';
+// https://developer.chrome.com/extensions/sessions
 function RecentlyClosed() {
+	if (sessionStorage['map'] === undefined)
+		sessionStorage['map'] = '{}'
+}
+
+RecentlyClosed.ITEMS = 4
+
+RecentlyClosed.prototype.init = function() {
+	sessionStorage['RecentlyClosed'] = true
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-		if (changeInfo.status == 'complete')
-			this.map[tab.id] = tab
+		if (changeInfo.status == 'complete') {
+			var parse = JSON.parse(sessionStorage['map'])
+			parse[tab.id] = tab
+			sessionStorage['map'] = JSON.stringify(parse)
+		}
 	}.bind(this))
 	chrome.tabs.onRemoved.addListener(function(id){
 		this.retrieveInfo(id)
 	}.bind(this))
 }
 
-RecentlyClosed.ITEMS = 4
-RecentlyClosed.prototype.map= {}
-
 RecentlyClosed.prototype.retrieveInfo = function(id) {
-	var tab = this.map[id]
-	if (typeof tab != 'undefined')
+	var tab = JSON.parse(sessionStorage['map'])[id]
+	if (tab !== undefined)
 		this.store(tab.url, tab.title)
 }
 RecentlyClosed.prototype.store = function(url, title) {

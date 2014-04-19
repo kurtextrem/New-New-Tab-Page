@@ -1,11 +1,15 @@
 'use strict';
 function Thumbnails() {
-	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this));
-	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this));
 }
 
 Thumbnails.WIDTH = 214; // 120
 Thumbnails.HEIGHT = 134; // 80
+
+Thumbnails.prototype.init = function() {
+	sessionStorage['Thumbnails'] = true
+	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this))
+	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this))
+}
 
 Thumbnails.prototype.stripUrl_ = function(url) {
 	return url.replace(/^https?:\/\//, '')
@@ -78,19 +82,18 @@ Thumbnails.prototype.checkTab_ = function(tab) {
 			return;
 
 		chrome.tabs.captureVisibleTab(
-			tab.windowId, {format: 'png'}, this.onTabCapture_.bind(this, url));
+			tab.windowId, {format: 'png'}, this.onTabCapture_.bind(this, tab.url));
 	}.bind(this));
 };
 
 Thumbnails.prototype.onTabCapture_ = function(url, dataurl) {
 	//console.log('Thumbnails.onTabCapture_', url);
 	this.cropAndResize_(dataurl, Thumbnails.WIDTH, Thumbnails.HEIGHT,
-		this.set.bind(this, url));
+		this.set.bind(this, url))
 };
 
-Thumbnails.prototype.cropAndResize_ = function(
-	imageUrl, width, height, callback) {
-	var image = new Image();
+Thumbnails.prototype.cropAndResize_ = function(imageUrl, width, height, callback) {
+	var image = new Image()
 	image.onload = function() {
 		var w, h;
 		var canvas = document.createElement('canvas');
@@ -129,7 +132,7 @@ Thumbnails.prototype.cropAndResize_ = function(
 
 		callback(canvas.toDataURL());
 	}.bind(this);
-	image.src = imageUrl;
+	image.src = imageUrl
 };
 
 Thumbnails.prototype.set = function(url, image) {
@@ -148,4 +151,4 @@ Thumbnails.prototype.set = function(url, image) {
 	}.bind(this));
 };
 
-var thumbnails = new Thumbnails();
+var thumbnails = new Thumbnails()
