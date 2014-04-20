@@ -40,10 +40,7 @@ $.fn.ready(ntp.init.bind(ntp))
 
 function MostVisited() {
 	this.ui_ = new MostVisitedUI(this.undoDomainBlock_.bind(this), this.unblockAllDomains_.bind(this));
-	this.thumbnails_ = this.lastBlockedDomain_ = null;
-	chrome.runtime.getBackgroundPage(function(a) {
-		this.thumbnails_ = a.thumbnails
-	}.bind(this))
+	this.lastBlockedDomain_ = null;
 }
 MostVisited.BUTTON_TYPE = 'thumbnail'
 MostVisited.DATA_SOURCE = 'topSites' // history / topSites
@@ -97,6 +94,38 @@ MostVisited.prototype.onHistorySearchComplete_ = function(a) {
 MostVisited.prototype.getFavicon_ = function(a) {
 	return 'chrome://favicon/' + a
 };
+MostVisited.prototype.stripUrl_ = function(url) {
+	return url.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.replace(/\/$/, '')
+};
+
+MostVisited.prototype.get = function(url, callback, failCallback) {
+	url = this.stripUrl_(url)
+	var key = 'thumbnail-' + url
+	var request = {}
+	request[key] = null
+	chrome.storage.local.get(request, function(res) {
+		var thumbnail = res[key]
+		if (!thumbnail) {
+			thumbnail = {lastRequested: 0,
+				lastDownloaded: 0,
+				image: null}
+			res[key] = thumbnail
+
+			failCallback()
+		}
+
+		thumbnail.lastRequested = Date.now()
+		chrome.storage.local.set(res)
+
+		if (thumbnail.lastDownloaded > 0) {
+			callback(thumbnail.image)
+		} else {
+			failCallback()
+		}
+	}.bind(this))
+};
 MostVisited.prototype.filterAndShow_ = function(a, b) {
 	this.ui_.reset()
 	for (var c = 0, d = 0, realD = 0; c < a.length && 7 > d; c++, realD++) {
@@ -123,7 +152,7 @@ MostVisited.prototype.filterAndShow_ = function(a, b) {
 				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
 				g = this.getFavicon_(f)
 				this.ui_.showFavicon(e, g)
-				this.thumbnails_.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
+				this.get(f, this.onThumbnailFound_.bind(this, e), this.onThumbnailNotFound_.bind(this, e, f, g))
 			} else if ('chrome-thumb' === MostVisited.BUTTON_TYPE) {
 				e = this.ui_.addThumbnailButton(g, e, f, this.addDomainToBlacklist_.bind(this, g), a[c].index)
 				this.ui_.showFavicon(e, this.getFavicon_(f))
@@ -237,11 +266,7 @@ SuggestRequest.prototype.onResponse_ = function(a) {
 
 function Weather() {
 	this.ui_ = new WeatherUI()
-	this.delay_ = null
 	$(document).bind("weather-loaded", this.show.bind(this))
-	chrome.runtime.getBackgroundPage(function(a) {
-		this.delay_ = a.WeatherFetcher.DELAY
-	}.bind(this))
 }
 Weather.prototype.show = function() {
 	this.ui_.reset()
@@ -660,10 +685,9 @@ function recentlyClosed() {
 }
 
 recentlyClosed.prototype.requestRecentlyClosed = function() {
-	chrome.runtime.getBackgroundPage(function(a) {
-		a.recentlyClosed.get(function(a){
-			this.ui_.setRecentlyClosed(a)
-		}.bind(this))
+	chrome.storage.local.get('recentlyClosed', function(res) {
+		if (res.recentlyClosed !== undefined)
+			this.ui_.setRecentlyClosed(res.recentlyClosed)
 	}.bind(this))
 }
 

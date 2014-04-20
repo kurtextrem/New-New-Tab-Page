@@ -11,39 +11,6 @@ Thumbnails.prototype.init = function() {
 	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this))
 }
 
-Thumbnails.prototype.stripUrl_ = function(url) {
-	return url.replace(/^https?:\/\//, '')
-		.replace(/^www\./, '')
-		.replace(/\/$/, '');
-};
-
-Thumbnails.prototype.get = function(url, callback, failCallback) {
-	url = this.stripUrl_(url);
-	var key = 'thumbnail-' + url;
-	var request = {};
-	request[key] = null;
-	chrome.storage.local.get(request, function(res) {
-		var thumbnail = res[key];
-		if (!thumbnail) {
-			thumbnail = {lastRequested: 0,
-				lastDownloaded: 0,
-				image: null};
-			res[key] = thumbnail;
-
-			failCallback()
-		}
-
-		thumbnail.lastRequested = Date.now()
-		chrome.storage.local.set(res);
-
-		if (thumbnail.lastDownloaded > 0) {
-			callback(thumbnail.image);
-		} else {
-			failCallback();
-		}
-	}.bind(this));
-};
-
 Thumbnails.CHROME_SCALING = false;
 
 /**

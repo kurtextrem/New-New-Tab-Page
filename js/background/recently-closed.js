@@ -56,13 +56,5 @@ RecentlyClosed.prototype.moveForward = function(array) {
 	return newArray
 }
 
-RecentlyClosed.prototype.get = function(callback) {
-	var key = 'recentlyClosed'
-	chrome.storage.local.get(key, function(res) {
-		if (typeof(res.recentlyClosed) == 'undefined')
-			return
-		callback(res.recentlyClosed)
-	}.bind(this));
-}
 
 var recentlyClosed = new RecentlyClosed()
