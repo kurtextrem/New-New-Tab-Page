@@ -22,9 +22,12 @@ RecentlyClosed.prototype.init = function() {
 }
 
 RecentlyClosed.prototype.retrieveInfo = function(id) {
-	var tab = JSON.parse(sessionStorage['map'])[id]
-	if (tab !== undefined)
-		this.store(tab.url, tab.title)
+	var map = JSON.parse(sessionStorage['map'])
+	if (map[id] !== undefined) {
+		this.store(map[id].url, map[id].title)
+		delete map[id]
+		sessionStorage['map'] = JSON.stringify(map)
+	}
 }
 RecentlyClosed.prototype.store = function(url, title) {
 	var key = 'recentlyClosed'
