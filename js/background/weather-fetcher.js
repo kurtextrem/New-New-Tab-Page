@@ -11,7 +11,7 @@ function WeatherFetcher() {
 	this.unit = chrome.i18n.getMessage('temperatureUnit')
 }
 
-WeatherFetcher.DELAY = 60
+WeatherFetcher.DELAY = 3600 * 1000
 WeatherFetcher.TEXT = [{a: 22.5,text: chrome.i18n.getMessage('N')}, {a: 67.5,text: chrome.i18n.getMessage('NE')}, {a: 112.5,text: chrome.i18n.getMessage('E')}, {a: 157.5,text: chrome.i18n.getMessage('SE')}, {a: 202.5,text: chrome.i18n.getMessage('S')}, {a: 247.5,text: chrome.i18n.getMessage('SW')}, {a: 292.5,text: chrome.i18n.getMessage('W')}, {a: 337.5,text: chrome.i18n.getMessage('NW')}, {a: 360,text: chrome.i18n.getMessage('N')}]
 WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "light_snow.png",4: "freezing.png",5: "light_rain.png",6: "light_rain.png",7: "light_snow.png",8: "light_snow.png",9: "tstorms.png",10: "sunny.png",11: "cloudy.png",12: "light_rain.png",13: "cloudy.png",14: "cloudy.png",
         15: "light_rain.png",16: "light_snow.png",17: "tstorms.png",18: "light_rain.png",19: "cloudy.png",20: "light_rain.png",21: "light_rain.png",22: "light_rain.png",23: "light_rain.png",24: "light_rain.png",25: "light_snow.png",26: "light_snow.png",27: "light_snow.png",28: "light_rain.png",29: "cloudy.png",30: "cloudy.png",31: "light_rain.png",32: "light_rain.png",33: "light_rain.png",34: "light_rain.png",35: "light_snow.png",36: "light_snow.png",37: "light_snow.png",38: "light_rain.png",39: "light_rain.png",40: "light_rain.png",
@@ -30,8 +30,8 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
 WeatherFetcher.prototype.init = function(bound) {
 	//console.log('init');
 	if (!bound) {
-		chrome.idle.onStateChanged.addListener(this.init.bind(this, true))
-		chrome.alarms.create('weatherFetcher', {delayInMinutes: WeatherFetcher.DELAY, periodInMinutes: WeatherFetcher.DELAY})
+		chrome.idle.onStateChanged.addListener(this.startWeatherRetrieval.bind(this))
+		chrome.alarms.create('weatherFetcher', {delayInMinutes: 60, periodInMinutes: 60})
 		chrome.alarms.onAlarm.addListener(function(alarm) {
 			if (alarm.name === 'weatherFetcher')
 				this.startWeatherRetrieval()
