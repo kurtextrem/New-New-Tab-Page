@@ -4,6 +4,11 @@ function NewsFetcher() {
 }
 
 NewsFetcher.prototype.init = function() {
+	chrome.alarms.create('newsFetcher', {delayInMinutes: 15, periodInMinutes: 15})
+	this.startRetrieval()
+};
+
+NewsFetcher.prototype.addListener = function() {
 	chrome.idle.onStateChanged.addListener(function() {
 		chrome.storage.local.get({news: null}, function(a) {
 			a = a.news
@@ -11,13 +16,13 @@ NewsFetcher.prototype.init = function() {
 				this.startRetrieval()
 		}.bind(this))
 	}.bind(this))
-	chrome.alarms.create('newsFetcher', {delayInMinutes: 15, periodInMinutes: 15})
 	chrome.alarms.onAlarm.addListener(function(alarm) {
-		if (alarm.name === 'newsFetcher')
+		if (alarm.name === 'newsFetcher') {
+			//console.log('news listener' + new Date())
 			this.startRetrieval()
+		}
 	}.bind(this))
-	this.startRetrieval()
-};
+}
 
 NewsFetcher.prototype.startRetrieval = function() {
 	//console.log('Requesting news from RSS.');

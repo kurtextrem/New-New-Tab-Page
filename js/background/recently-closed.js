@@ -8,7 +8,6 @@ function RecentlyClosed() {
 RecentlyClosed.ITEMS = 4
 
 RecentlyClosed.prototype.init = function() {
-	sessionStorage['RecentlyClosed'] = true
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 		if (changeInfo.status == 'complete') {
 			var parse = JSON.parse(sessionStorage['map'])

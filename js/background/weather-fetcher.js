@@ -28,13 +28,18 @@ WeatherFetcher.MAP = {0: "unknown.png",1: "heavy_snow.png",2: "snow.png",3: "lig
  WeatherFetcher.DAYS = [chrome.i18n.getMessage('sun'), chrome.i18n.getMessage('mon'), chrome.i18n.getMessage('tue'), chrome.i18n.getMessage('wed'), chrome.i18n.getMessage('thu'), chrome.i18n.getMessage('fri'), chrome.i18n.getMessage('sat')]
 
 WeatherFetcher.prototype.init = function() {
-	chrome.idle.onStateChanged.addListener(this.startWeatherRetrieval.bind(this))
 	chrome.alarms.create('weatherFetcher', {delayInMinutes: 60, periodInMinutes: 60})
-	chrome.alarms.onAlarm.addListener(function(alarm) {
-		if (alarm.name === 'weatherFetcher')
-			this.startWeatherRetrieval()
-	}.bind(this))
 	this.startWeatherRetrieval()
+}
+
+WeatherFetcher.prototype.addListener = function() {
+	chrome.idle.onStateChanged.addListener(this.startWeatherRetrieval.bind(this))
+	chrome.alarms.onAlarm.addListener(function(alarm) {
+		if (alarm.name === 'weatherFetcher') {
+			//console.log('weather listener' + new Date())
+			this.startWeatherRetrieval()
+		}
+	}.bind(this))
 }
 
 WeatherFetcher.prototype.startWeatherRetrieval = function(force) {

@@ -6,7 +6,6 @@ Thumbnails.WIDTH = 214; // 120
 Thumbnails.HEIGHT = 134; // 80
 
 Thumbnails.prototype.init = function() {
-	sessionStorage['Thumbnails'] = true
 	chrome.tabs.onUpdated.addListener(this.delayedCheckVisibleTab_.bind(this))
 	chrome.tabs.onActivated.addListener(this.delayedCheckVisibleTab_.bind(this))
 }
