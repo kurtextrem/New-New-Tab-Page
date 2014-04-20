@@ -4,6 +4,13 @@ function NewsFetcher() {
 }
 
 NewsFetcher.prototype.init = function() {
+	chrome.idle.onStateChanged.addListener(function() {
+		chrome.storage.local.get({news: null}, function(a) {
+			a = a.news
+			if (!a || 0 === a.length || 9E5 < Date.now() - a.date) // 900 000 ms / 15 min
+				this.startRetrieval()
+		}.bind(this))
+	}.bind(this))
 	chrome.alarms.create('newsFetcher', {delayInMinutes: 15, periodInMinutes: 15})
 	chrome.alarms.onAlarm.addListener(function(alarm) {
 		if (alarm.name === 'newsFetcher')

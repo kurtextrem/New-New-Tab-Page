@@ -229,7 +229,7 @@ News.prototype.showCachedNews_ = function(a) {
 	a = a.news;
 	if (!a || 0 === a.length || 36E5 < Date.now() - a.date)
 		this.ui_.hide(), chrome.runtime.getBackgroundPage(function(a) {
-			a.newsFetcher.init()
+			a.newsFetcher.startRetrieval()
 		});
 		//console.log("No news or old news, retrying.")
 	else {
@@ -280,7 +280,7 @@ Weather.prototype.show = function() {
 Weather.prototype.requestNewWeather_ = function() {
 	//console.log("requestNewWeather_");
 	chrome.runtime.getBackgroundPage(function(a) {
-		a.weatherFetcher.init()
+		a.weatherFetcher.startWeatherRetrieval()
 	}.bind(this))
 };
 Weather.prototype.showValues_ = function(a) {

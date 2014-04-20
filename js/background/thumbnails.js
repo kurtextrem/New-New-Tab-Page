@@ -31,6 +31,12 @@ Thumbnails.prototype.checkVisibleTab_ = function() {
 	}.bind(this));
 };
 
+Thumbnails.prototype.stripUrl_ = function(url) {
+	return url.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.replace(/\/$/, '')
+};
+
 Thumbnails.prototype.checkTab_ = function(tab) {
 	if (!tab.active || !tab.url || tab.status !== 'complete' ||
 		tab.url.indexOf('http') !== 0)
