@@ -1,4 +1,3 @@
-'use strict';
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -27,6 +26,7 @@
  */
 
 var i18nTemplate = (function() {
+	'use strict';
 	/**
 	 * This provides the handlers for the templating engine. The key is used as
 	 * the attribute name and the value is the function that gets called for every

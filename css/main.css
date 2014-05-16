@@ -4,10 +4,6 @@ body {
 	background-color: #e5e5e5 !important;
 }
 
-body.hidden {
-	visibility: hidden;
-}
-
 body.bg-dawn {
 	background: url('../images/backgrounds/context_header_bg_dawn.jpg') repeat-x top center;
 }
