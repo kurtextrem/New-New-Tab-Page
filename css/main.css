@@ -1,7 +1,8 @@
 body {
-	font-family: 'Roboto', Arial, sans-serif;
- -webkit-user-select: none;
 	background-color: #e5e5e5 !important;
+	font-family: 'Roboto', Arial, sans-serif;
+
+ -webkit-user-select: none;
 }
 
 body.bg-dawn {
@@ -28,8 +29,8 @@ a:visited {
 
 #logo {
 	display: block;
-	height: 101px;
 	margin: 60px auto 20px auto;
+	height: 101px;
 	border: none;
 }
 
@@ -38,10 +39,10 @@ a:visited {
 #search-container {
 	position: relative;
 	display: -webkit-box;
-	width: 100%;
-	max-width: 800px;
-	height: 30px;
 	margin: 0 auto 40px auto;
+	max-width: 800px;
+	width: 100%;
+	height: 30px;
 }
 
 #search-input {
@@ -51,15 +52,15 @@ a:visited {
 	left: 0;
 	z-index: 1000;
 	display: block;
-	width: 100%;
-	height: 40px;
+	margin: 0;
 	padding-right: 5px;
 	padding-left: 10px;
-	margin: 0;
-	font-size: 16px;
+	width: 100%;
+	height: 40px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .15);
+	font-size: 16px;
 }
 
 #search-input:hover {
@@ -68,8 +69,8 @@ a:visited {
 }
 
 #search-input:focus {
-	border: 1px solid #38e;
 	outline: none;
+	border: 1px solid #38e;
 	box-shadow: none;
 	opacity: 1;
 }
@@ -81,12 +82,12 @@ a:visited {
 	left: 0;
 	z-index: 999;
 	display: -webkit-box;
-	padding: 0;
-	margin: 0;
 	visibility: hidden;
-	background-color: #fff;
+	margin: 0;
+	padding: 0;
 	border: 1px solid #ccc;
 	border-radius: 1px;
+	background-color: #fff;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .05);
 	opacity: 1.0;
 
@@ -99,24 +100,24 @@ a:visited {
 
 .suggestion-line {
 	display: -webkit-box;
-	width: auto;
 	padding: 5px 8px 2px 8px;
+	width: auto;
 	font: 16px sans-serif;
 }
 
 .suggestion-line:hover,
 .suggestion-line.lead {
-	cursor: default;
 	background-color: #eee;
+	cursor: default;
 }
 
 /* Most visited pages */
 
 #most-visited-container {
 	display: -webkit-box;
+	margin: 0 auto 50px auto;
 	width: 100%;
 	height: 105px;
-	margin: 0 auto 50px auto;
 
  -webkit-box-align: stretch;
  -webkit-box-orient: horizontal;
@@ -125,8 +126,8 @@ a:visited {
 
 .most-visited-box {
 	display: -webkit-box;
-	width: 195px;
 	margin: 0;
+	width: 195px;
 	border-radius: 3px;
 
  -webkit-box-align: center;
@@ -137,25 +138,25 @@ a:visited {
 .most-visited-big-icon {
 	position: relative;
 	display: -webkit-box;
+	margin-bottom: 10px;
 	width: 64px;
 	height: 64px;
-	margin-bottom: 10px;
-	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 64px 64px;
+	background-repeat: no-repeat;
 }
 
 .most-visited-thumbnail {
 	position: relative;
 	display: -webkit-box;
+	margin-bottom: 10px;
 	width: 193px;
 	height: 120px;
-	margin-bottom: 10px;
-	color: #888;
-	background-color: white;
-	background-size: 193px 120px;
 	border: 1px solid #c0c0c0;
 	border-radius: 3px;
+	background-color: white;
+	background-size: 193px 120px;
+	color: #888;
 
  -webkit-box-orient: vertical;
  -webkit-box-pack: center;
@@ -170,13 +171,13 @@ a:visited {
 }
 
 .most-visited-domain {
-	padding: 5px;
-	margin: auto;
 	overflow: hidden;
-	font-size: 13px;
+	margin: auto;
+	padding: 5px;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-size: 13px;
 }
 
 .most-visited-icon {
@@ -190,13 +191,13 @@ a:visited {
 }
 
 .most-visited-title {
-	width: 100%;
 	overflow: hidden;
-	font-size: 10px;
+	width: 100%;
 	color: #888;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-size: 10px;
 }
 
 .most-visited-box:hover .most-visited-title {
@@ -214,10 +215,10 @@ a:visited {
 	display: -webkit-box;
 	width: 16px;
 	height: 16px;
-	cursor: pointer;
 	background: no-repeat;
 	background-color: transparent;
 	opacity: 0;
+	cursor: pointer;
  -webkit-transition: opacity 500ms ease-in-out;
 }
 
@@ -263,6 +264,7 @@ a:visited {
 	position: relative;
 	font-family: arial, sans-serif;
 	cursor: default;
+
  -webkit-user-select: none;
 }
 
@@ -301,18 +303,18 @@ a:visited {
 	top: 8px;
 	z-index: 90;
 	display: inline-block;
-	padding: 6px 0 6px 10px;
 	margin: -6px 0;
-	font-size: 80%;
-	font-weight: 700;
-	color: #222;
-	text-align: center;
-	background: #f9edbe;
-	background-color: #f9edbe;
+	padding: 6px 0 6px 10px;
 	border: 1px solid transparent;
 	border-color: #f0c36d;
 	border-radius: 2px;
+	background: #f9edbe;
+	background-color: #f9edbe;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+	color: #222;
+	text-align: center;
+	font-weight: 700;
+	font-size: 80%;
 }
 
 .msg__text > span {
@@ -346,8 +348,8 @@ a:visited {
 	position: relative;
 	left: -111px;
 	display: -webkit-box;
-	max-width: 1135px;
 	margin: auto;
+	max-width: 1135px;
 
  -webkit-box-orient: horizontal;
 }
@@ -368,22 +370,22 @@ a:visited {
 
 .content-box {
 	display: -webkit-box;
-	min-height: 40px;
 	margin: 10px;
-	color: #888;
-	background-color: white;
+	min-height: 40px;
 	border-radius: 3px;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
+	background-color: white;
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1);
+	color: #888;
 }
 
 .content-box h2 {
-	width: 185px;
 	margin: 20px;
 	margin-right: 16px;
-	font-size: 19px;
+	width: 185px;
 	font-weight: normal;
+	font-size: 19px;
 	cursor: default;
 }
 
@@ -410,9 +412,9 @@ a:visited {
 
 #weather-current {
 	display: -webkit-box;
-	width: 300px;
-	padding-top: 10px;
 	margin: 0 auto 0 auto;
+	padding-top: 10px;
+	width: 300px;
 
  -webkit-box-align: center;
  -webkit-box-orient: horizontal;
@@ -420,8 +422,8 @@ a:visited {
 
 #weather-current-box {
 	display: -webkit-box;
-	width: 140px;
 	padding-left: 40px;
+	width: 140px;
 	font-size: 14px;
 
  -webkit-box-orient: vertical;
@@ -443,9 +445,9 @@ a:visited {
 #weather-temperature {
 	display: -webkit-box;
 	padding-left: 10px;
+	color: #444;
 	font-size: 75px;
 	line-height: 1;
-	color: #444;
 }
 
 #weather-temperature::after,
@@ -463,8 +465,8 @@ a:visited {
 }
 
 .weather-forecast:not(:last-of-type) {
-	padding-right: 50px;
 	margin-right: -51px;
+	padding-right: 50px;
 	border-right: 1px solid #e5e5e5;
 }
 
@@ -473,11 +475,11 @@ a:visited {
 }
 
 .weather-forecast div {
-	font-size: 13px;
-	font-weight: bold;
 	color: #888;
 	text-align: center;
 	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 13px;
 }
 
 .weather-forecast:first-of-type {
@@ -551,9 +553,9 @@ a:visited {
 }
 
 #apps-list {
-	width: 100%;
-	padding-bottom: 10px;
 	overflow: auto;
+	padding-bottom: 10px;
+	width: 100%;
 	border-top: 1px solid #ddd;
 }
 
@@ -564,14 +566,14 @@ a:visited {
 #box-icons a {
 	position: relative;
 	display: inline-block;
+	overflow: hidden;
+	padding: 16px 15px 8px 8px;
 	width: 67px;
 	height: 92px;
-	padding: 16px 15px 8px 8px;
-	overflow: hidden;
-	font-size: 13px;
 	color: #aaa;
-	text-align: center;
 	vertical-align: top;
+	text-align: center;
+	font-size: 13px;
 }
 
 #box-icons a:nth-of-type(4n) {
@@ -599,8 +601,8 @@ a:visited {
 
 .news-item {
 	display: -webkit-box;
-	padding: 20px;
 	margin-right: 30px;
+	padding: 20px;
 	border-bottom: 1px solid #eee;
 }
 
@@ -615,10 +617,10 @@ a:visited {
 
 .news-time {
 	display: -webkit-flex;
-	width: 20px;
 	margin-left: -2px;
-	font-size: 13px;
+	width: 20px;
 	word-wrap: break-word;
+	font-size: 13px;
 	cursor: default;
 
  -webkit-align-items: center;
@@ -626,9 +628,9 @@ a:visited {
 
 .news-item a {
 	display: block;
+	color: #444;
 	font-size: 16.5px;
 	line-height: 1.2;
-	color: #444;
 }
 
 .news-item a:hover,
@@ -638,10 +640,10 @@ a:visited {
 
 .news-publisher {
 	display: block;
-	font-size: 12px;
 	color: #888;
-	cursor: default;
+	font-size: 12px;
 	opacity: 1;
+	cursor: default;
 }
 
 .news-item a:hover > .news-publisher {
@@ -661,8 +663,8 @@ a:visited {
 }
 
 .recentClosed-icon {
-	background-repeat: no-repeat;
 	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .hide {
@@ -682,9 +684,9 @@ a:visited {
 	z-index: 99;
 	width: 24px;
 	height: 24px;
-	cursor: help !important;
 	background-image: url('../images/ic_now_feedback_sprite.png');
 	background-position: 0 0;
+	cursor: help !important;
 }
 
 .infoButton:hover {
@@ -703,30 +705,30 @@ a:visited {
 }
 
 .infoText {
-	font-size: 14px;
 	font-style: italic;
+	font-size: 14px;
 	cursor: default;
 }
 
 .infoText a {
 	display: inline !important;
 	padding: 0 !important;
-	font-family: inherit;
 	border-bottom: 1px dotted grey;
+	font-family: inherit;
  -webkit-transition: border-bottom 500ms ease;
 }
 
 .infoText a:hover {
-	color: #aaa !important;
 	border-bottom: 1px dotted lightgrey;
+	color: #aaa !important;
 }
 
 .extendedInfo {
 	position: relative;
 	padding: 1px 20px 2px 20px;
- -webkit-user-select: initial;
 	background-color: rgba(0, 0, 0, .8);
 
+ -webkit-user-select: initial;
 	pointer: cursor;
 }
 
@@ -734,16 +736,16 @@ a:visited {
 	position: absolute;
 	top: 2px;
 	left: -20px;
-	width: 100%;
 	padding: 10px 10px 10px 20px;
+	width: 100%;
 	background-color: rgba(0, 0, 0, .9);
 }
 
 #box-weather .extendedInfo {
 	top: 20px;
 	left: -20px;
-	width: 102%;
 	padding-right: 10px;
+	width: 102%;
 }
 
 .sliderContainer {
@@ -775,21 +777,21 @@ a:visited {
 	position: relative;
 	right: 5px;
 	margin-left: -7px;
-	line-height: 1.5;
 	content: attr(min);
+	line-height: 1.5;
 }
 
 .infoExtension > input[type=range]::after {
 	position: relative;
 	left: 5px;
 	margin-right: -7px;
-	line-height: 1.5;
 	content: attr(max);
+	line-height: 1.5;
 }
 
 .slideThree {
-	background: #333;
 	border-radius: 50px;
+	background: #333;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .2);
 }
 
@@ -797,23 +799,23 @@ a:visited {
 	position: absolute;
 	right: 10px;
 	z-index: 0;
+	color: #000;
+	content: '__MSG_off__';
+	text-transform: uppercase;
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, .15);
 	font: 12px/26px 'Roboto', Arial, sans-serif;
 	font-weight: bold;
-	color: #000;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, .15);
-	text-transform: uppercase;
-	content: '__MSG_off__';
 }
 
 .slideThree:before {
 	position: absolute;
 	left: 10px;
 	z-index: 0;
+	color: #00bf00;
+	content: '__MSG_on__';
+	text-transform: uppercase;
 	font: 12px/26px 'Roboto', Arial, sans-serif;
 	font-weight: bold;
-	color: #00bf00;
-	text-transform: uppercase;
-	content: '__MSG_on__';
 }
 
 .slideThree label {
@@ -824,11 +826,11 @@ a:visited {
 	display: block;
 	width: 34px;
 	height: 20px;
-	cursor: pointer;
+	border-radius: 50px;
 	background: #fcfff4;
 	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	border-radius: 50px;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+	cursor: pointer;
  -webkit-transition: all .4s ease;
          transition: all .4s ease;
 }
@@ -844,16 +846,16 @@ a:visited {
 	bottom: 90px;
 	left: 50%;
 	z-index: 999;
+	margin-left: -300px;
 	width: 600px;
 	height: 220px;
-	margin-left: -300px;
-	font-family: Arial, Helvetica, sans-serif;
-	cursor: default;
-	background-color: white;
 	border: 1px solid lightgray;
 	border-top-width: 2px;
 	border-bottom-width: 3px;
 	border-radius: 2px;
+	background-color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	cursor: default;
 }
 
 @-webkit-keyframes shake {
@@ -886,52 +888,52 @@ a:visited {
 }
 
 .new-promo-headline {
+	margin: 0;
 	padding: 14px 0;
 	padding-bottom: 3px;
-	margin: 0;
+	border-bottom: 1px solid #eee;
 	font-size: 18px;
 	line-height: 24px;
-	border-bottom: 1px solid #eee;
 }
 
 .new-promo-headline,
 .new-promo-text {
 	padding-left: 30px;
-	font-family: 'Segoe UI', Tahoma, sans-serif;
-	font-weight: normal;
 	color: #303942;
+	font-weight: normal;
+	font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
 .new-promo-text {
-	width: 55%;
 	padding-top: 11px;
-	font-size: 16px;
+	width: 55%;
 	word-wrap: break-word;
+	font-size: 16px;
 }
 
 .new-promo-learn-more {
 	position: absolute;
 	bottom: 15px;
 	left: 30px;
+	padding: 0 8px;
 	width: 90px;
 	height: 27px;
-	padding: 0 8px;
-	font-size: 11px;
-	font-weight: bold;
-	line-height: 27px;
+	border: 1px solid #2f5bb7;
+	border-radius: 2px;
+	background-color: #4d90fe;
 	color: white !important;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 27px;
 	cursor: pointer;
-	background-color: #4d90fe;
-	border: 1px solid #2f5bb7;
-	border-radius: 2px;
 }
 
 .new-promo-learn-more:hover {
-	background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
 	border-color: #2f5bb7;
+	background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
 }
 
 #new-promo > img {
@@ -971,22 +973,22 @@ a:visited {
 }
 
 ::-webkit-scrollbar-track:vertical {
-	background-color: white;
-	background-clip: padding-box;
 	border-right: 0 solid transparent;
 	border-left: 0 solid transparent;
+	background-color: white;
+	background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-track:horizontal {
-	background-color: white;
-	background-clip: padding-box;
 	border-top: 5px solid transparent;
 	border-bottom: 0 solid transparent;
+	background-color: white;
+	background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb {
-	min-height: 28px;
 	padding-top: 100px;
+	min-height: 28px;
 	background-color: rgba(0, 0, 0, .2);
 	background-clip: padding-box;
 	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
