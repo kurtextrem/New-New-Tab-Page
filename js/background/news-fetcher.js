@@ -42,7 +42,7 @@
 		setTimeout(this.startRetrieval.bind(this), this.retryDelay_)
 	}
 
-	NewsFetcher.prototype.storeFromRss_ = function(xmlDoc) {
+	NewsFetcher.prototype.storeFromRss_ = function (xmlDoc) {
 		this.retryDelay_ = 1000
 
 		var items = xmlDoc.querySelectorAll('item')
@@ -54,10 +54,13 @@
 			var title = item.querySelectorAll('title')[0].innerHTML
 			var url = item.querySelectorAll('link')[0].innerHTML
 			var date = (new Date(item.querySelectorAll('pubDate')[0].innerHTML)).valueOf()
-			news.push({'title': title, 'url': url, 'date': date})
+			var img = item.querySelectorAll('description')[0].textContent.match(/<img src="([^"]+)"/)
+			if (img !== null)
+				img = img[1]
+			news.push({ title: title, url: url, date: date, img: img })
 		}
 
-		chrome.storage.local.set({news: news}, util.sendEventToAllWindows.bind(null, 'news-loaded'))
+		chrome.storage.local.set({ news: news }, util.sendEventToAllWindows.bind(null, 'news-loaded'))
 	}
 
 	window.newsFetcher = new NewsFetcher()

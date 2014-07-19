@@ -243,7 +243,7 @@
 			//this.ui_.addHeading();
 			this.ui_.show();
 			for (var b = 0; b < Math.min(6, a.length); b++)
-				this.ui_.add(a[b].title, a[b].url, a[b].date);
+				this.ui_.add(a[b].title, a[b].url, a[b].date, a[b].img);
 			this.ui_.addMoreLink()
 		}
 	};
@@ -509,11 +509,13 @@
 		var a = $('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>');
 		$('#box-news').append(a)
 	};
-	NewsUI.prototype.add = function (a, b, c) {
-		c = this.formatter_.format(c);
-		a = a.match(/(.+) -( .+)/)
-		a = $('<div class="news-item"><div class="news-time">' + c.replace(':', '') + '</div><a href="' + b + '">' + a[1] + "<span class='news-publisher'>" + a[2] + "</span></a></div>");
-		$("#news-container").append(a)
+	NewsUI.prototype.add = function (a, b, c, img) {
+		c = this.formatter_.format(c)
+		a = a.split(' - ')
+		var source = a.pop()
+		a = a.join(' - ').replace(' - FAZ', '')
+		a = $('<div class="news-item"><div class="news-time"><img src="' + img + '"></div><a href="' + b + '"><img src="' + img + '">' + a + '<span class="news-publisher">' + c + ' ' + source + '</span></a></div>')
+		$('#news-container').append(a)
 	};
 	NewsUI.prototype.addMoreLink = function () {
 		var a = $('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>');
