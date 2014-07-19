@@ -1,24 +1,27 @@
 body {
 	background-color: #e5e5e5 !important;
 	font-family: 'Roboto', Arial, sans-serif;
+	background-size: 111%, cover;
+	background-repeat: no-repeat;
+	background-position: top center;
 
  -webkit-user-select: none;
 }
 
 body.bg-dawn {
-	background: url('../images/backgrounds/context_header_bg_dawn.jpg') repeat-x top center;
+	background: url('../images/backgrounds/context_header_bg_dawn.jpg');
 }
 
 body.bg-daylight {
-	background: url('../images/backgrounds/context_header_bg_daylight.jpg') repeat-x top center;
+	background: url('../images/backgrounds/context_header_bg_daylight.jpg');
 }
 
 body.bg-dusk {
-	background: url('../images/backgrounds/context_header_bg_dusk.jpg') repeat-x top center;
+	background: url('../images/backgrounds/context_header_bg_dusk.jpg');
 }
 
 body.bg-twilight {
-	background: url('../images/backgrounds/context_header_bg_twilight.jpg') repeat-x top center;
+	background: url('../images/backgrounds/context_header_bg_twilight.jpg');
 }
 
 a,
