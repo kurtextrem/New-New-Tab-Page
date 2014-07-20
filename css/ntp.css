@@ -11,23 +11,13 @@ body  > #most-visited {
 	margin-top: 80px;
 }
 
-#most-visited #mv-tiles {
-	width: 100% !important;
-	padding: 0 0;
+body #mv-tiles {
+	height: auto;
 	text-align: center;
 }
 
-body #mv-tiles {
-	height: auto;
-}
-
 .mv-row.mv-row {
-	display: inline-block; /* or float? */
 	margin-bottom: 20px;
-}
-
-#most-visited .mv-row:last-of-type .mv-tile:first-of-type {
-	-webkit-margin-start: 30px;
 }
 
 #most-visited .mv-tile:first-child {

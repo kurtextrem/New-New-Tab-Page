@@ -2,8 +2,12 @@
 	'use strict';
 
 	var App = function () {
+		this.checkResolution()
 		this.addMissingDOM()
 		this.loadBoxes()
+		$.fn.ready(function () {
+			window.setTimeout(this.addClasses.bind(this), 400)
+		}.bind(this))
 	}
 
 	App.prototype.addMissingDOM = function () {
@@ -18,6 +22,19 @@
 		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 			$('body').append(xhr.responseText)
 		}
+	}
+
+	App.prototype.checkResolution = function () {
+		if (screen.availWidth < 1380) {
+			$('#main-cards > .row > .col-lg-3').removeClass('col-lg-offset-1').addClass('col-lg-4')
+			$('.mv-row').addClass('col-lg-12')
+		}
+	}
+
+	App.prototype.addClasses = function () {
+		$('#most-visited').addClass('container-fluid')
+		.find('#mv-tiles').addClass('row').css('width', 'auto')
+		.find('.mv-row').addClass('col-lg-6')
 	}
 
 	window.App =  new App()
