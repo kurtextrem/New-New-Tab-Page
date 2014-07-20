@@ -1,44 +1,9 @@
-<!DOCTYPE html>
-<html i18n-values="lang:@@ui_locale">
-<head>
-	<title i18n-content="title"></title>
-	<meta charset="utf-8">
-	<meta name="google" value="notranslate">
-	<link rel="icon" href="icons/google.ico">
-	<!-- build:css css/main.css -->
-	<link href="css/main.css" rel="stylesheet">
-	<!-- endbuild -->
-</head>
-<body>
-	<a id="logo-link" i18n-values="href:google"><img id="logo" src="images/logo3w.png"></a>
-	<div id="search-container">
-		<input id="search-input" type="search" autocomplete="off" i18n-values="placeholder:search" x-webkit-speech>
-		<div id="search-suggestions"></div>
-	</div>
-	<div id="most-visited-container"><div style="text-align:center;width:100%;color:rgba(0,0,0,.2)" i18n-content="reloadPlease">Reload the page please</div></div>
-	<div id="content-boxes-container">
-		<div class="content-boxes-column">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3 col-md-offset-1">
 			<div class="content-box" id="box-icons">
 				<div class="infoButtonMain">
 					<div class="infoButton"></div>
-				</div>
-				<div id="promoted-services">
-					<a i18n-values="href:serviceURL('','translate')">
-						<img src="images/translate-64.png">
-						<div class="icon-title" i18n-content='translate'></div>
-					</a>
-					<a href="http://www.youtube.com/">
-						<img src="images/youtube.png">
-						<div class="icon-title">YouTube</div>
-					</a>
-					<a href="http://plus.google.com/">
-						<img src="images/gplus-64.png">
-						<div class="icon-title">Google+</div>
-					</a>
-					<a i18n-values="href:serviceURL('','maps')">
-						<img src="images/maps-resized.png">
-						<div class="icon-title" i18n-content='maps'></div>
-					</a>
 				</div>
 				<div id="apps-list"></div>
 				<div class="extendedInfoMain">
@@ -48,28 +13,28 @@
 				</div>
 			</div>
 		</div>
-		<div class="content-boxes-column">
+		<div class="col-md-4">
 			<div class="content-box" id="box-recent">
 				<h2 i18n-content="recentlyClosed"></h2>
 				<div id="recent-recent">
 					<a href="#">
-						<img class="recentClosed-icon hide"></a>
+					<img class="recentClosed-icon hide"></a>
 				</div>
 				<div id="recent-2nd">
 					<a href="#">
-						<img class="recentClosed-icon hide"></a>
+					<img class="recentClosed-icon hide"></a>
 				</div>
 				<div id="recent-3rd">
 					<a href="#">
-						<img class="recentClosed-icon hide"></a>
+					<img class="recentClosed-icon hide"></a>
 				</div>
 				<div id="recent-4th">
 					<a href="#">
-						<img class="recentClosed-icon hide"></a>
+					<img class="recentClosed-icon hide"></a>
 				</div>
 				<div id="recent-5th">
 					<a href="#">
-						<img class="recentClosed-icon hide"></a>
+					<img class="recentClosed-icon hide"></a>
 				</div>
 			</div>
 
@@ -78,7 +43,7 @@
 					<div class="infoButton"></div>
 				</div>
 				<h2>
-					<a i18n-content="weather"></a>
+				<a i18n-content="weather"></a>
 				</h2>
 				<div id="weather-current">
 					<a><img id="weather-current-icon"></a>
@@ -124,7 +89,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="content-boxes-column">
+		<div class="col-md-3">
 			<div class="content-box" id="box-news">
 				<div class="infoButtonMain">
 					<div class="infoButton"></div>
@@ -138,14 +103,4 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- build:js js/util.js -->
-	<script src="js/util.js"></script>
-	<!-- endbuild -->
-	<!-- build:js js/page.js -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/all.js"></script>
-	<script src="js/page.js"></script>
-	<!-- endbuild -->
-</body>
-</html>
+</div>
