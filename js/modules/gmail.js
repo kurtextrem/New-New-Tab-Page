@@ -9,10 +9,10 @@
 
 	Module.prototype.storageKeys = [{
 		name: 'gmailID',
-		type: null
+		type: 0
 	}, {
 		name: 'gmailLastUpdate',
-		type: null
+		type: 0
 	}, {
 		name: 'gmailCount',
 		type: 0

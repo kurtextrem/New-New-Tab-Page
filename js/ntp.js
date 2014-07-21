@@ -1,12 +1,12 @@
-+ function (window, $, $ajax) {
++function (window, $, $ajax) {
 	'use strict';
 
 	var App = function () {
 		this.now = Date.now()
 
+		this.loadBoxes()
 		this.checkResolution()
 		this.addMissingDOM()
-		this.loadBoxes()
 		$.fn.ready(function () {
 			window.setTimeout(this.addClasses.bind(this), 400)
 		}.bind(this))
@@ -23,8 +23,8 @@
 			name: obj.name,
 			obj: obj
 		})
-		var length = obj.storageKeys.length || 1
-		while (--length) {
+		var length = obj.storageKeys.length
+		while (length--) {
 			this.storageKeys[obj.storageKeys[length].name] = obj.storageKeys[length].type
 		}
 	}
@@ -32,8 +32,9 @@
 	App.prototype.close = function () {
 		chrome.storage.local.get(this.storageKeys, function (obj) {
 			this.loadedObj = obj
+			console.log('Loaded keys')
+			this.bootModules()
 		}.bind(this))
-		console.log('All modules loaded')
 	}
 
 	App.prototype.addMissingDOM = function () {
@@ -46,19 +47,20 @@
 			cache: 'true'
 		}).success(function (body) {
 			$('body').append(body)
-			this.bootModules()
 		}.bind(this))
 	}
 
 	App.prototype.bootModules = function () {
 		var length = this.modules.length
-		while (--length) {
+		while (length--) {
 			this.modules[length].obj.init(this.loadedObj)
 		}
+		console.log('Started modules')
 	}
 
 	App.prototype.checkResolution = function () {
 		if (screen.availWidth < 1380) {
+			console.log('Adjust for resolution')
 			$('#main-cards > .row > .col-lg-3').removeClass('col-lg-offset-1').addClass('col-lg-4')
 			$('.mv-row').addClass('col-lg-12')
 		}
