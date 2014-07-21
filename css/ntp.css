@@ -2,13 +2,13 @@ body {
 	background-color: #ececec !important;
 }
 /* removes the search + logo */
-#lga, form {
+form {
 	display: none;
 }
 
 /* modifies the most visited tiles */
 body  > #most-visited {
-	margin-top: 80px;
+	margin-top: 30px;
 }
 
 body #mv-tiles {
@@ -79,14 +79,35 @@ body #mv-tiles {
 
 /* top bar */
 body > #mngb {
-	background: #f1f1f1;
-	border-bottom: 1px solid #ccc;
+	/*background: #f1f1f1;
+	border-bottom: 1px solid #ccc;*/
 	height: 60px;
 	top: 0;
 }
 
 #gb > div {
 	height: 60px;
+	background-color: rgba(255, 255, 255, 0.89);
+	border-bottom-left-radius: 5px;
+	transition: background-color 500ms;
+}
+
+#gb > div:hover {
+	height: 60px;
+	background-color: rgba(255, 255, 255, 1);
+	border-bottom-left-radius: 5px;
+}
+
+#lga {
+	margin-top: 0 !important;
+	padding-top: 20px;
+	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dawn.webp);
+	background-position: 0 45.5%;
+	background-size: cover;
+}
+
+#lga > img {
+	padding-top: 0 !important;
 }
 
 /* Boxes */

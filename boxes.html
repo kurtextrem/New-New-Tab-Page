@@ -1,40 +1,53 @@
 <div class="container-fluid" id="main-cards">
 	<div class="row">
 		<div class="col-lg-3 col-lg-offset-1 col-md-4">
-			<div class="content-box" id="box-icons">
+			<div class="content-box" id="box-mails">
 				<div class="infoButtonMain">
 					<div class="infoButton"></div>
 				</div>
-				<div id="apps-list"></div>
+				<div id="mail-list"></div>
 				<div class="extendedInfoMain">
 					<div class="extendedInfo hide">
-						<p class="infoText" i18n-content="promotedServices"></p>
+						<p class="infoText" i18n-content="promotedServices">Displays your mails from GMail. If the box isn't loading visit gmail.com and log in.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-4 col-md-3">
-			<div class="content-box" id="box-recent">
-				<h2 i18n-content="recentlyClosed"></h2>
-				<div id="recent-recent">
-					<a href="#">
-					<img class="recentClosed-icon hide"></a>
+			<div class="content-box" id="box-clock">
+				<div class="infoButtonMain">
+					<div class="infoButton"></div>
 				</div>
-				<div id="recent-2nd">
-					<a href="#">
-					<img class="recentClosed-icon hide"></a>
-				</div>
-				<div id="recent-3rd">
-					<a href="#">
-					<img class="recentClosed-icon hide"></a>
-				</div>
-				<div id="recent-4th">
-					<a href="#">
-					<img class="recentClosed-icon hide"></a>
-				</div>
-				<div id="recent-5th">
-					<a href="#">
-					<img class="recentClosed-icon hide"></a>
+				<div id="clock"></div>
+				<div class="extendedInfoMain">
+					<div class="extendedInfo hide">
+						<div class="extendedInfo-footer">
+							<div class="extendedInfo-footer__text">
+								<div class="sliderContainer">
+									<span i18n-content="coolWeather">24h clock</span>
+									<div class="slideThree" id="coolWeather">
+										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
+										<label for="coolWeatherCb"></label>
+									</div>
+								</div>
+								<div class="sliderContainer">
+									<span i18n-content="coolWeather">Bold hour</span>
+									<div class="slideThree" id="coolWeather">
+										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
+										<label for="coolWeatherCb">s</label>
+									</div>
+								</div>
+								<div class="sliderContainer">
+									<span i18n-content="coolWeather">Bold minutes</span>
+									<div class="slideThree" id="coolWeather">
+										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
+										<label for="coolWeatherCb"></label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
 				</div>
 			</div>
 
