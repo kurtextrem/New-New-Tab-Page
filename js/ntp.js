@@ -3,6 +3,7 @@
 
 	var App = function () {
 		this.now = Date.now()
+		this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
 
 		this.loadBoxes()
 		this.checkResolution()
