@@ -46,8 +46,8 @@
 		this.retryDelay_ = 1000
 
 		var items = xmlDoc.getElementsByTagName('item'),
-		data = []
-		console.log('Got ' + items.length + ' ' + this.name + ' at', new Date())
+		data = { entries: [] }
+		console.log('Got ' + items.length + ' ' + this.name)
 		data.date = window.App.now
 		data.title = xmlDoc.querySelector('title').innerHTML
 		data.url = xmlDoc.querySelector('link').innerHTML
@@ -56,12 +56,12 @@
 			var img = item.getElementsByTagName('description')[0].textContent.match(/<img src="([^"]+)"/)
 			if (img !== null)
 				img = img[1]
-			data.push({
+			data.entries[i] = {
 				title: item.getElementsByTagName('title')[0].innerHTML,
 				url: item.getElementsByTagName('link')[0].innerHTML,
 				date: (new Date(item.getElementsByTagName('pubDate')[0].innerHTML)).valueOf(),
 				img: img
-			})
+			}
 		}
 
 		chrome.storage.local.set({
@@ -79,10 +79,10 @@
 		this.ui_.empty()
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
-		var length = Math.min(6, data.length)
+		var length = Math.min(6, data.entries.length)
 		this.ui_.addHeading(data.url, data.title)
 		for (var i = 0; i < length; i++)
-			this.ui_.addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
+			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].img)
 		//this.ui_.addMoreLink(news.url)
 		this.ui_.addToDOM()
 	}
@@ -118,9 +118,10 @@
 	}
 
 	ModuleUI.prototype.addToDOM = function (html) {
-		$(this.content).append(html || this.html)
+		html = html || this.html
+		$(this.content).append(html)
 		chrome.storage.local.set({
-			newsHTML: this.html
+			newsHTML: html
 		})
 	}
 

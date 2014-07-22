@@ -141,6 +141,11 @@ form {
 	text-align: left;
 }
 
+.box__item:only-child {
+	padding: 15px;
+	text-align: center;
+}
+
 .box__item:first-child > h2 {
 	font-weight: normal;
 }
