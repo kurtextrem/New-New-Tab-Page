@@ -122,10 +122,13 @@ form {
 	min-height: 40px;
 }
 
-.content-box h2 {
+.content-box__content h2 {
 	font-size: 20px;
 	font-weight: normal;
-	margin: 20px;
+}
+
+.content-box__content {
+	padding: 15px;
 }
 
 /* Weather */
@@ -224,58 +227,6 @@ form {
 #weather-geolocation-permission a:hover {
 	color: #000;
 	text-decoration: none;
-}
-
-
-/* Currency */
-#box-currency {
-	display: none;
-}
-
-/* Service & apps icons */
-#box-icons {
-	-webkit-box-orient: vertical;
-	-webkit-box-align: center;
-	display: box;
-	max-height: 280px;
-	overflow: auto;
-}
-
-#promoted-services {
-	box-orient: horizontal;
-	display: box;
-}
-
-#promoted-services img {
-	height: 64px;
-	width: 64px;
-}
-
-#apps-list {
-	border-top: 1px solid #DDD;
-	width: 352px;
-}
-
-#box-icons a {
-	color: #AAA;
-	font-size: 12px;
-	display: inline-block;
-	height: 92px;
-	overflow: hidden;
-	padding: 16px 8px 8px 8px;
-	position: relative;
-	text-align: center;
-	vertical-align: top;
-	width: 72px;
-}
-
-#box-icons a:hover {
-	color: #444;
-}
-
-#apps-list img {
-	height: 64px;
-	width: 64px;
 }
 
 /* News */
