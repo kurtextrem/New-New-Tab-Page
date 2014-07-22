@@ -1,3 +1,4 @@
+/* global console,qwest */
 +function (window, $, $ajax) {
 	'use strict';
 
@@ -64,6 +65,7 @@
 		}
 	}
 
+	/** @deprecated  Added the classes using CSS */
 	App.prototype.addClasses = function () {
 		$('#most-visited').addClass('container-fluid')
 			.find('#mv-tiles').addClass('row').css('width', 'auto')
