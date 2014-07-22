@@ -7,9 +7,6 @@
 		this.loadBoxes()
 		this.checkResolution()
 		this.addMissingDOM()
-		$.fn.ready(function () {
-			window.setTimeout(this.addClasses.bind(this), 400)
-		}.bind(this))
 	}
 
 	App.prototype.modules = []
