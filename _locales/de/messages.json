@@ -1,6 +1,6 @@
 {
 	"extDesc": {
-		"message": "Neue 'Neuer Tab' Seite. Wetter, News, Suche, kürzlich geschlossene Tabs und Apps an einem Ort.",
+		"message": "Neue 'Neuer Tab' Seite. Wetter, News und Mails an einem Ort.",
 		"description": "Extension description."
 
 	},
@@ -12,51 +12,9 @@
 		"message": "NT neuGedacht",
 		"description": "Extension short name."
 	},
-	"translate": {
-		"message": "Übersetzer",
-		"description": ""
-	},
-	"maps": {
-		"message": "Maps",
-		"description": ""
-	},
 	"title": {
 		"message": "Neuer Tab",
 		"description": "Page title."
-	},
-	"removedWebsite": {
-		"message": "Website von den Meistbesuchten Websiten entfernt.",
-		"description": ""
-	},
-	"search": {
-		"message": "Suchen",
-		"description": ""
-	},
-	"remove": {
-		"message": "Entfernen",
-		"description": ""
-	},
-	"undo": {
-		"message": "Rückgängig",
-		"description": ""
-	},
-	"restoreAll": {
-		"message": "Alle wiederherstellen",
-		"description": ""
-	},
-	"recentlyClosed": {
-		"message": "Kürzlich geschlossen",
-		"description": ""
-	},
-	"google": {
-		"message": "http$SECURE$://www.google.de/",
-		"description": "",
-		"placeholders": {
-			"secure": {
-				"content": "$1",
-				"example": "s"
-			}
-		}
 	},
 	"serviceURL": {
 		"message": "http$SECURE$://$SERVICE$.google.de/",
@@ -72,20 +30,6 @@
 			}
 		}
 	},
-	"searchURL": {
-		"message": "http$SECURE$://www.google.de/search?q=$STRING$",
-		"description": "",
-		"placeholders": {
-			"string": {
-				"content": "$2",
-				"example": "Weather"
-			},
-			"secure": {
-				"content": "$1",
-				"example": "s"
-			}
-		}
-	},
 	"weather": {
 		"message": "Wetter",
 		"description": ""
@@ -94,20 +38,12 @@
 		"message": "Aktuellen Standort benutzen.",
 		"description": ""
 	},
-	"apps": {
-		"message": "Apps",
-		"description": ""
-	},
 	"news": {
 		"message": "News",
 		"description": ""
 	},
 	"moreNews": {
 		"message": "Mehr News",
-		"description": ""
-	},
-	"promotedServices": {
-		"message": "Die ersten 4 Apps werden durch Google beworben (Mehr auf chrome://apps)",
 		"description": ""
 	},
 	"locationBased": {
@@ -136,10 +72,6 @@
 	},
 	"chromeWebStore": {
 		"message": "Chrome Web Store",
-		"description": ""
-	},
-	"reloadPlease": {
-		"message": "Bitte lade die Seite neu.",
 		"description": ""
 	},
 	"favorite": {
@@ -305,10 +237,6 @@
 	"E": {
 		"message": "O",
 		"description": "Shortcut for east (wind direction)"
-	},
-	"moreForeCasts": {
-		"message": "Ab heute kannst du ganz einfach einstellen, wie viele Tage du in der Wetter Vorschau sehen willst.",
-		"description": "Detailed text of the whats new popup v1.1"
 	},
 	"forecastAmount": {
 		"message": "Anzahl der Tage",
