@@ -3,6 +3,7 @@
 
 	function Module() {
 		this.retryDelay_ = 1000
+		this.html = ''
 		this.ui_ = new ModuleUI()
 	}
 
@@ -20,9 +21,6 @@
 			this.startRetrieval()
 		else
 			this.showCached(obj.news)
-		return window.setInterval(function () {
-			this.startRetrieval()
-		}.bind(this), 15 * 60000)
 	}
 
 	Module.prototype.startRetrieval = function () {
@@ -50,16 +48,16 @@
 	Module.prototype.storeFromRss_ = function (xmlDoc) {
 		this.retryDelay_ = 1000
 
-		var items = xmlDoc.querySelectorAll('item')
+		var items = xmlDoc.getElementsByTagName('item')
 		//console.log('Got ' + items.length + ' news at', new Date());
 		var news = []
 		news.date = Date.now()
 		for (var i = 0; i < items.length; i++) {
 			var item = items[i]
-			var title = item.querySelectorAll('title')[0].innerHTML
-			var url = item.querySelectorAll('link')[0].innerHTML
-			var date = (new Date(item.querySelectorAll('pubDate')[0].innerHTML)).valueOf()
-			var img = item.querySelectorAll('description')[0].textContent.match(/<img src="([^"]+)"/)
+			var title = item.getElementsByTagName('title')[0].innerHTML
+			var url = item.getElementsByTagName('link')[0].innerHTML
+			var date = (new Date(item.getElementsByTagName('pubDate')[0].innerHTML)).valueOf()
+			var img = item.getElementsByTagName('description')[0].textContent.match(/<img src="([^"]+)"/)
 			if (img !== null)
 				img = img[1]
 			news.push({
@@ -79,8 +77,9 @@
 		this.ui_.reset()
 		var length = Math.min(6, news.length)
 		for (var i = 0; i < length; i++)
-			this.ui_.add(news[i].title, news[i].url, news[i].date, news[i].img)
+			this.ui_.addHTML(news[i].title, news[i].url, news[i].date, news[i].img)
 		this.ui_.addMoreLink()
+		this.ui_.addToDOM()
 	}
 
 	function ModuleUI() {
@@ -96,19 +95,23 @@
 	}
 
 	ModuleUI.prototype.addHeading = function () {
-		$('#box-news').append('<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>')
+		this.html += '<div class="news-item" id="news-heading"><h2>' + chrome.i18n.getMessage('news') + '</h2></div>'
 	}
 
-	ModuleUI.prototype.add = function (title, url, date, img) {
+	ModuleUI.prototype.addHTML = function (title, url, date, img) {
 		date = this.formatter_.format(date)
 		title = title.split(' - ')
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
-		$('#news-container').append('<div class="news-item row"><div class="news-img col-lg-3"><img src="' + img + '"></div><div class="news-title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="news-publisher">' + date + ' &ndash;  ' + source + '</span></div></div>')
+		this.html += '<div class="news-item row"><div class="news-img col-lg-3"><img src="' + img + '"></div><div class="news-title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="news-publisher">' + date + ' &ndash;  ' + source + '</span></div></div>'
 	}
 
 	ModuleUI.prototype.addMoreLink = function () {
-		$('#news-container').append('<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>')
+		this.html += '<div class="news-item" id="news-more"><a href="' + chrome.i18n.getMessage('serviceURL', ['', 'news']) + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>'
+	}
+
+	ModuleUI.prototype.addToDOM = function () {
+		$('#news-container').append(this.html)
 	}
 
 	window.App.register(new Module())
