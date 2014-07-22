@@ -5,7 +5,7 @@
 				<div class="infoButtonMain">
 					<div class="infoButton"></div>
 				</div>
-				<div id="mail-list"></div>
+				<div id="mail-container"></div>
 				<div class="extendedInfoMain">
 					<div class="extendedInfo hide">
 						<p class="infoText" i18n-content="promotedServices">Displays your mails from GMail. If the box isn't loading visit gmail.com and log in.</p>
@@ -16,6 +16,12 @@
 									<div class="slideThree" id="coolWeather">
 										<input type="checkbox" value="None" id="coolWeatherCb" name="check">
 										<label for="coolWeatherCb"></label>
+									</div>
+								</div>
+								<div class="sliderContainer">
+									<span i18n-content="forecastAmount">Amount</span>
+									<div class="infoExtension" id="forecastSlider">
+										<input type="range" value="6" id="forecastSliderCb" max="9" min="0">
 									</div>
 								</div>
 							</div>
@@ -118,7 +124,7 @@
 				<div class="infoButtonMain">
 					<div class="infoButton"></div>
 				</div>
-				<div id="news-container"></div>
+				<div id="news-container"><h2 class="news-item">No news found.</h2></div>
 				<div class="extendedInfoMain">
 					<div class="extendedInfo hide">
 						<p class="infoText" i18n-content="locationBased"></p>

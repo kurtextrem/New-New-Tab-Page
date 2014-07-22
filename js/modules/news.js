@@ -104,7 +104,7 @@
 		title = title.split(' - ')
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
-		$('#news-container').append('<div class="news-item row"><div class="news-img col-lg-3"><img src="' + img + '"></div><div class="col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="news-publisher">&ndash; ' + date + ' &#8208; ' + source + '</span></div></div>')
+		$('#news-container').append('<div class="news-item row"><div class="news-img col-lg-3"><img src="' + img + '"></div><div class="news-title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="news-publisher">' + date + ' &ndash;  ' + source + '</span></div></div>')
 	}
 
 	ModuleUI.prototype.addMoreLink = function () {

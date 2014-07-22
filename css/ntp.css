@@ -7,12 +7,12 @@ form {
 }
 
 /* modifies the most visited tiles */
-body  > #most-visited {
-	margin-top: 30px;
+#most-visited#most-visited {
+	margin-top: 25px;
 }
 
 
-body #mv-tiles {
+#mv-tiles#mv-tiles {
 	height: auto;
 	text-align: center;
 	width: auto !important;
@@ -80,7 +80,7 @@ body #mv-tiles {
 }
 
 /* top bar */
-body > #mngb {
+#mngb#mngb {
 	/*background: #f1f1f1;
 	border-bottom: 1px solid #ccc;*/
 	height: 60px;
@@ -100,12 +100,13 @@ body > #mngb {
 	border-bottom-left-radius: 5px;
 }
 
-#lga {
+#lga#lga {
 	margin-top: 0 !important;
 	padding-top: 20px;
 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dawn.webp);
-	background-position: 0 45.5%;
+	background-position: 0 40.5%;
 	background-size: cover;
+	height: 131px;
 }
 
 #lga > img {
@@ -311,6 +312,10 @@ body > #mngb {
 
 .news-item a:hover {
 	text-decoration: underline;
+}
+
+.news-title {
+	text-align: left;
 }
 
 /* Info */
