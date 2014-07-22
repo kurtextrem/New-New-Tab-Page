@@ -1,7 +1,7 @@
 +function (window, $, $ajax) {
 	'use strict';
 
-	var Module = function () {
+	function Module () {
 
 	}
 

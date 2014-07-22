@@ -68,9 +68,8 @@
 			url: entries.getElementsByTagName('link')
 		}
 
-		if (data.count) {
+		if (data.count)
 			this.requestPermission(this.showNotification.bind(this, data.count))
-		}
 		return data.count
 	}
 

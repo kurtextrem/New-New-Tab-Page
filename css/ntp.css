@@ -230,23 +230,25 @@ form {
 }
 
 /* News */
-
-#box-news {
-}
-
-#news-title-box {
-}
-
 .news-item {
 	border-top: 1px solid #EEE;
-	padding: 16px;
+	padding: 15px;
 }
 
-#news-more a {
+.news-item:first-child {
+	padding: 0 0 0 15px;
+	text-align: left;
+}
+
+.news-item:first-child > h2 {
+	font-weight: normal;
+}
+
+.news-caption.news-caption a {
 	color: #888;
 }
 
-#news-more a:hover {
+.news-caption.news-caption a:hover {
 	color: #000;
 	text-decoration: none;
 }
