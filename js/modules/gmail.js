@@ -142,13 +142,14 @@
 
 	ModuleUI.prototype.addHTML = function (title, url, date, author) {
 		var dateObj = new Date(date),
-		dateString = dateObj.toDateString()
-		if (dateString === new Date(window.App.now).toDateString())
+		dateDay = dateObj.getDay()
+		if (dateObj.toDateString() === new Date(window.App.now).toDateString())
 			date = 'Today'
-		else if (new Date(dateObj.valueOf() - 86400000).toDateString() === dateString)
+		else if (new Date(dateObj.valueOf() - 86400000).getDay() === dateDay - 1)
 			date = 'Yesterday'
-		else if (new Date(dateObj.valueOf() - 86400000 * 2).toDateString() === dateString)
+		else if (new Date(dateObj.valueOf() - 86400000 * 2).getDay() === dateDay - 2)
 			date = 'The day before yesterday'
+
 		if (typeof date === 'number')
 			date = this.formatter_.format(date)
 		else
