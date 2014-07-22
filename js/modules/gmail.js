@@ -25,7 +25,7 @@
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
 
-		if (window.App.now - 0 > 5 * 60000)
+		if (window.App.now - obj[this.name].date > 5 * 60000)
 			this.update()
 		else
 			this.showCached(obj[this.name + 'HTML'] || obj[this.name])
@@ -58,10 +58,9 @@
 
 		console.log('Got ' + items.length + ' ' + this.name)
 		data.date = window.App.now
-		data.count = items.length
 		data.title = xmlDoc.querySelector('title').innerHTML
-		data.fullcount = xmlDoc.getElementsByTagName('fullcount')[0].innerHTML
-		for (var i = 0; i < data.count; i++) {
+		data.count = xmlDoc.getElementsByTagName('fullcount')[0].innerHTML
+		for (var i = 0; i < items.length; i++) {
 			var item = items[i]
 			data.entries[i] = {
 				title: item.getElementsByTagName('title')[0].innerHTML,
@@ -72,7 +71,7 @@
 		}
 
 		if (data.count !== this.count)
-			this.requestPermission(this.showNotification.bind(this, data.count))
+			this.requestPermission(this.showNotification.bind(this, data.count > this.count ? data.count - this.count : data.count, data.count))
 		chrome.storage.local.set({
 			gmail: data
 		}, this.updateUI.bind(this, data))
@@ -84,23 +83,23 @@
 		setTimeout(this.startRetrieval.bind(this), this.retryDelay_)*/
 	}
 
-	Module.prototype.showNotification = function (count) {
+	Module.prototype.showNotification = function (count, total) {
 		var opt = {
 			tag: 'gmail-notification' + window.App.now,
 			lang: window.App.lang,
-			title: 'You have new unread emails',
-			body: count + ' new email.',
-			iconUrl: chrome.extension.getURL('img/icon-48.png')
+			title: 'You have ' + count + ' new mail(s)',
+			body: count + ' new and a total of ' + total + ' unread mail(s).',
+			icon: 'https://cdn1.iconfinder.com/data/icons/free-colorful-icons/128/gmail.png'
 		},
 			notification = new Notification(opt.title, opt)
 			notification.onclick = function () {
-					window.open('http://mail.google.com/')
+					window.open('http://mail.google.com/mail')
 					notification.close()
 			}
 			notification.onshow = function () {
 				window.setTimeout(function () {
 					notification.close()
-				}, 10000)
+				}, 15000)
 			}
 			notification.onerror = function () {
 				this.error()
@@ -112,7 +111,7 @@
 		this.ui_.empty()
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
-		var length = Math.min(6, data.entries.length)
+		var length = Math.min(8, data.entries.length)
 		this.ui_.addHeading(data.count, data.title)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
@@ -121,10 +120,13 @@
 	}
 
 	function ModuleUI(name) {
-		this.formatter_ = Intl.DateTimeFormat([], {
-			hour: 'numeric',
-			minute: '2-digit',
-			hour12: false
+		this.formatter_ = Intl.DateTimeFormat(window.App.lang, {
+			year: '2-digit',
+			month: '2-digit',
+			day: 'numeric',
+			weekday: 'short',
+			hour: '2-digit',
+			minute: '2-digit'
 		})
 		this.html = ''
 		this.content = name + ' > .box__content'
@@ -139,7 +141,18 @@
 	}
 
 	ModuleUI.prototype.addHTML = function (title, url, date, author) {
-		date = this.formatter_.format(date)
+		var dateObj = new Date(date),
+		dateString = dateObj.toDateString()
+		if (dateString === new Date(window.App.now).toDateString())
+			date = 'Today'
+		else if (new Date(dateObj.valueOf() - 86400000).toDateString() === dateString)
+			date = 'Yesterday'
+		else if (new Date(dateObj.valueOf() - 86400000 * 2).toDateString() === dateString)
+			date = 'The day before yesterday'
+		if (typeof date === 'number')
+			date = this.formatter_.format(date)
+		else
+			date = date + ', ' + ('0' + dateObj.getHours()).slice(-2) + ':' + ('0' + dateObj.getMinutes()).slice(-2)
 		this.html += '<div class="box__item row"><div class="box__item__title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '">' + date + ' &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
