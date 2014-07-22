@@ -1,8 +1,10 @@
+/* global Notification */
 +function (window, $, $ajax) {
 	'use strict';
 
-	var Module = function () {
+	function Module() {
 		this.instanceID = null
+		this.permission = 0
 	}
 
 	Module.prototype.name = 'gmail'
@@ -19,6 +21,7 @@
 	}]
 
 	Module.prototype.init = function (obj) {
+		this.requestPermission(function () {})
 		if (!obj.gmailID) {
 			this.instanceID = 'gmc' + parseInt(Date.now() * Math.random(), 10)
 			chrome.storage.local.set({
@@ -27,11 +30,15 @@
 		}
 		this.gmailCount = obj.gmailCount
 		this.gmailLastUpdate = obj.gmailLastUpdate
-		if (window.App.now - this.gmailLastUpdatec > 5 * 60000)
-			this.update()
-		return window.setInterval(function () {
-			this.startRetrieval()
-		}.bind(this), 5 * 60000)
+	}
+
+	Module.prototype.requestPermission = function (cb) {
+		if (this.permission)
+			return cb()
+		Notification.requestPermission(function (status) {
+			this.permission = status === 'granted'
+			cb()
+		}.bind(this))
 	}
 
 	Module.prototype.update = function () {
@@ -41,7 +48,7 @@
 			type: 'xml'
 		}).success(function (res) {
 			chrome.storage.local.set({
-				gmailLastUpdate: App.now,
+				gmailLastUpdate: window.App.now,
 				gmailCount: this.parseData(res)
 			})
 		}.bind(this)).error(this.error_.bind(this))
@@ -50,37 +57,36 @@
 
 
 	Module.prototype.parseData = function (xmlDoc) {
-		var items = xmlDoc.querySelectorAll('item'),
-			count = items.querySelectorAll('entry > summary').length
-
-			/*var GmailData = {
-			'summary': $xml.find('entry').find('summary'),
-			'title': $xml.find('entry').find('title'),
-			'count': $xml.find('fullcount'),
-			'sub_title': $xml.find('title'),
-			'name': $xml.find('entry').find('author').find('name'),
-			'email': $xml.find('entry').find('author').find('email'),
-			'url': $xml.find('entry').find('link')
-		}*/
-
-		if (count) {
-			var opt = {
-				type: 'basic',
-				title: 'You have new unread emails',
-				message: count + ' new email.',
-				iconUrl: chrome.extension.getURL('img/icon-48.png')
-			}
-			chrome.notifications.create('gmail-notification', opt, function (ID) {
-				chrome.notifications.onClicked.addListener(function (a) {
-					chrome.tabs.create({
-						//url: 'http://gmail.com'
-					})
-
-					chrome.notifications.clear(a, function () {})
-				})
-			})
+		var items = xmlDoc.getElementsByTagName('item'),
+		entries = xmlDoc.getElementsByTagName('entry'),
+		data = {
+			count: entries.length,
+			title: entries.getElementsByTagName('title'),
+			fullcount: items.getElementsByTagName('fullcount'),
+			sub_title: items.getElementsByTagName('title'),
+			author: entries.getElementsByTagName('author'),
+			url: entries.getElementsByTagName('link')
 		}
-		return count
+
+		if (data.count) {
+			this.requestPermission(this.showNotification.bind(this, data.count))
+		}
+		return data.count
+	}
+
+	Module.prototype.showNotification = function (count) {
+		var opt = {
+			tag: 'gmail-notification' + window.App.now,
+			lang: window.App.lang,
+			title: 'You have new unread emails',
+			body: count + ' new email.',
+			iconUrl: chrome.extension.getURL('img/icon-48.png')
+		},
+		notification = new Notification(opt.title, opt)
+		.onclick(function () {
+			chrome.tabs.create({ url: 'http://mail.google.com/' })
+			notification.close()
+		})
 	}
 
 	window.App.register(new Module())
