@@ -3,7 +3,7 @@
 	'use strict';
 
 	function Module() {
-		this.retryDelay_ = 1000
+		this.html = ''
 		this.ui_ = new ModuleUI('#box-' + this.name)
 	}
 
@@ -20,14 +20,15 @@
 	}]
 
 	Module.prototype.init = function (obj) {
+		this.html = obj[this.name + 'HTML']
 		if (window.App.now - obj[this.name].date > 9E5)
 			this.update()
 		else
-			this.showCached(obj[this.name + 'HTML'] || obj[this.name])
+			this.showCached(this.html || obj[this.name])
 	}
 
 	Module.prototype.update = function () {
-		console.log('Requesting news from RSS.');
+		console.log('Requesting ' + this.name)
 		$ajax.get('https://news.google.com/news/feeds', {
 			output: 'rss',
 			pz: '1',
@@ -43,8 +44,6 @@
 	}
 
 	Module.prototype.success = function (xmlDoc) {
-		this.retryDelay_ = 1000
-
 		var items = xmlDoc.getElementsByTagName('item'),
 		data = { entries: [] }
 		console.log('Got ' + items.length + ' ' + this.name)
@@ -70,13 +69,12 @@
 	}
 
 	Module.prototype.error = function (message) {
-		console.error('Failed news request.' + message)
-		/*this.retryDelay_ = util.updateRetryDelay(this.retryDelay_)
-		setTimeout(this.startRetrieval.bind(this), this.retryDelay_)*/
+		console.error('Failed ' + this.name + ' request. ' + message)
+		if (this.html)
+			this.showCached(this.html)
 	}
 
 	Module.prototype.updateUI = function (data) {
-		this.ui_.empty()
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 		var length = Math.min(6, data.entries.length)
@@ -87,7 +85,7 @@
 		this.ui_.addToDOM()
 	}
 
-	function ModuleUI(name) {
+	var ModuleUI = function (name) {
 		this.formatter_ = Intl.DateTimeFormat([], {
 			hour: 'numeric',
 			minute: '2-digit',
@@ -95,10 +93,6 @@
 		})
 		this.html = ''
 		this.content = name + ' > .box__content'
-	}
-
-	ModuleUI.prototype.empty = function () {
-		$(this.content).empty()
 	}
 
 	ModuleUI.prototype.addHeading = function (url, title) {
@@ -118,12 +112,14 @@
 	}
 
 	ModuleUI.prototype.addToDOM = function (html) {
-		html = html || this.html
-		$(this.content).append(html)
+		html = html || this.html || 1
+		$(this.content).html(html)
 		chrome.storage.local.set({
 			newsHTML: html
 		})
 	}
 
-	window.App.register(new Module())
+	//ModuleUI = window.App.ModuleUI.extend(ModuleUI)
+
+	window.App.register(new Module()) // without new
 }(window, $, qwest)

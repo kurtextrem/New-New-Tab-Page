@@ -3,8 +3,9 @@
 	'use strict';
 
 	function Module() {
-		this.retryDelay_ = 1000
 		this.permission = 0
+		this.count = 0
+		this.html = ''
 		this.ui_ = new ModuleUI('#box-' + this.name)
 	}
 
@@ -24,23 +25,27 @@
 	Module.prototype.init = function (obj) {
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
+		this.html = obj[this.name + 'HTML']
 
 		if (window.App.now - obj[this.name].date > 5 * 60000)
 			this.update()
 		else
-			this.showCached(obj[this.name + 'HTML'] || obj[this.name])
+			this.showCached(this.html || obj[this.name])
 	}
 
 	Module.prototype.requestPermission = function (cb) {
 		if (this.permission)
 			return cb()
 		Notification.requestPermission(function (status) {
-			this.permission = status === 'granted'
-			cb()
+			if (status === 'granted') {
+				this.permission = 1
+				cb()
+			}
 		}.bind(this))
 	}
 
 	Module.prototype.update = function () {
+		console.log('Requesting ' + this.name)
 		$ajax.get('https://mail.google.com/mail/feed/atom', {}, {
 			type: 'xml'
 		}).success(this.success.bind(this)).error(this.error.bind(this))
@@ -72,15 +77,16 @@
 
 		if (data.count !== this.count)
 			this.requestPermission(this.showNotification.bind(this, data.count > this.count ? data.count - this.count : data.count, data.count))
+
 		chrome.storage.local.set({
 			gmail: data
 		}, this.updateUI.bind(this, data))
 	}
 
 	Module.prototype.error = function (message) {
-		console.error('Failed mails request. ' + message)
-		/*this.retryDelay_ = util.updateRetryDelay(this.retryDelay_)
-		setTimeout(this.startRetrieval.bind(this), this.retryDelay_)*/
+		console.error('Failed ' + this.name + ' request. ' + message)
+		if (this.html)
+			this.showCached(this.html)
 	}
 
 	Module.prototype.showNotification = function (count, total) {
@@ -108,7 +114,6 @@
 	}
 
 	Module.prototype.updateUI = function (data) {
-		this.ui_.empty()
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 		var length = Math.min(8, data.entries.length)
@@ -130,10 +135,6 @@
 		})
 		this.html = ''
 		this.content = name + ' > .box__content'
-	}
-
-	ModuleUI.prototype.empty = function () {
-		$(this.content).empty()
 	}
 
 	ModuleUI.prototype.addHeading = function (count, title) {
@@ -162,8 +163,8 @@
 	}
 
 	ModuleUI.prototype.addToDOM = function (html) {
-		html = html || this.html
-		$(this.content).append(html)
+		html = html || this.html || 1
+		$(this.content).html(html)
 		chrome.storage.local.set({
 			gmailHTML: html
 		})

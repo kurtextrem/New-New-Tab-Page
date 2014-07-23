@@ -1,8 +1,8 @@
-/* global console,qwest */
-+function (window, $, $ajax) {
+/* global console,qwest,Class */
++function (window, $, $ajax, Class) {
 	'use strict';
 
-	var App = function () {
+	function App() {
 		this.now = Date.now()
 		this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
 
@@ -21,6 +21,7 @@
 		this.modules.push({
 			name: obj.name,
 			obj: obj
+			//obj: this.Module.extend(obj)
 		})
 		var length = obj.storageKeys.length
 		while (length--) {
@@ -52,7 +53,7 @@
 	App.prototype.bootModules = function () {
 		var length = this.modules.length
 		while (length--) {
-			this.modules[length].obj.init(this.loadedObj)
+			this.modules[length].obj.init(this.loadedObj) // new
 		}
 		console.log('Started modules')
 	}
@@ -72,5 +73,19 @@
 			.find('.mv-row').addClass('col-lg-6')
 	}
 
+	/**
+	 * Represents the Module namespace and the core functions for modules to inherit.
+	 */
+	var Module = {}
+
+	App.prototype.Module = Class.extend(Module)
+
+	/**
+	 * Represents the Module namespace and the core functions for modules to inherit.
+	 */
+	var ModuleUI = {}
+
+	App.prototype.Module = Class.extend(ModuleUI)
+
 	window.App = new App()
-}(window, $, qwest)
+}(window, $, qwest, Class)
