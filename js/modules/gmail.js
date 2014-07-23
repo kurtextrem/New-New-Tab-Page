@@ -1,17 +1,20 @@
-/* global Notification,console,Intl,qwest */
-+function (window, $, $ajax) {
+/* global Notification,console,Intl */
++function (window) {
 	'use strict';
 
-	function Module() {
-		this.permission = 0
-		this.count = 0
-		this.html = ''
-		this.ui_ = new ModuleUI('#box-' + this.name)
-	}
+	var TIME = 5,
+		URL = 'https://mail.google.com/mail/feed/atom',
+		PARAMS = {},
+		TYPE = {
+			type: 'xml'
+		}
 
-	Module.prototype.name = 'gmail'
+	var Module = {}
 
-	Module.prototype.storageKeys = [{
+	/** @see ntp.js */
+	Module.name = 'gmail'
+
+	Module.storageKeys = [{
 		name: 'gmail',
 		type: {
 			count: 0,
@@ -22,18 +25,16 @@
 		type: ''
 	}]
 
-	Module.prototype.init = function (obj) {
+	/** @see ntp.js */
+	Module.init = function (obj) {
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
-		this.html = obj[this.name + 'HTML']
+		this.permission = 0
 
-		if (window.App.now - obj[this.name].date > 5 * 60000)
-			this.update()
-		else
-			this.showCached(this.html || obj[this.name])
+		this._super(obj, TIME)
 	}
 
-	Module.prototype.requestPermission = function (cb) {
+	Module.requestPermission = function (cb) {
 		if (this.permission)
 			return cb()
 		Notification.requestPermission(function (status) {
@@ -44,22 +45,18 @@
 		}.bind(this))
 	}
 
-	Module.prototype.update = function () {
-		console.log('Requesting ' + this.name)
-		$ajax.get('https://mail.google.com/mail/feed/atom', {}, {
-			type: 'xml'
-		}).success(this.success.bind(this)).error(this.error.bind(this))
+	/** @see ntp.js */
+	Module.update = function () {
+		this._super(URL, PARAMS, TYPE)
 		// xhr.open("GET", url, true,"u","1");
 	}
 
-	Module.prototype.showCached = function (data) {
-		console.log('Showing cached ' + this.name)
-		this.updateUI(data)
-	}
-
-	Module.prototype.success = function (xmlDoc) {
+	/** @see ntp.js */
+	Module.success = function (xmlDoc) {
 		var items = xmlDoc.getElementsByTagName('entry'),
-			data = { entries: [] }
+			data = {
+				entries: []
+			}
 
 		console.log('Got ' + items.length + ' ' + this.name)
 		data.date = window.App.now
@@ -83,13 +80,8 @@
 		}, this.updateUI.bind(this, data))
 	}
 
-	Module.prototype.error = function (message) {
-		console.error('Failed ' + this.name + ' request. ' + message)
-		if (this.html)
-			this.showCached(this.html)
-	}
-
-	Module.prototype.showNotification = function (count, total) {
+	/** @see ntp.js */
+	Module.showNotification = function (count, total) {
 		var opt = {
 			tag: 'gmail-notification' + window.App.now,
 			lang: window.App.lang,
@@ -99,32 +91,37 @@
 		},
 			notification = new Notification(opt.title, opt)
 			notification.onclick = function () {
-					window.open('http://mail.google.com/mail')
-					notification.close()
+				window.open('http://mail.google.com/mail')
+				notification.close()
 			}
-			notification.onshow = function () {
-				window.setTimeout(function () {
-					notification.close()
-				}, 15000)
-			}
-			notification.onerror = function () {
-				this.error()
-			}.bind(this)
-			notification.onclose = function () {}
+		notification.onshow = function () {
+			window.setTimeout(function () {
+				notification.close()
+			}, 15000)
+		}
+		notification.onerror = function () {
+			this.error()
+		}.bind(this)
+		notification.onclose = function () {}
 	}
 
-	Module.prototype.updateUI = function (data) {
+	/** @see ntp.js */
+	Module.updateUI = function (data) {
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 		var length = Math.min(8, data.entries.length)
 		this.ui_.addHeading(data.count, data.title)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
-			//this.ui_.addMoreLink(news.url)
-		this.ui_.addToDOM()
+		this._super()
 	}
 
-	function ModuleUI(name) {
+	/************\
+	|  UI Section   |
+	\************/
+
+	/** @see ntp.js */
+	var ModuleUI = function (name) {
 		this.formatter_ = Intl.DateTimeFormat(window.App.lang, {
 			year: '2-digit',
 			month: '2-digit',
@@ -133,23 +130,24 @@
 			hour: '2-digit',
 			minute: '2-digit'
 		})
-		this.html = ''
-		this.content = name + ' > .box__content'
+		this._super(name)
 	}
 
-	ModuleUI.prototype.addHeading = function (count, title) {
+	/** @see ntp.js */
+	ModuleUI.addHeading = function (count, title) {
 		this.html += '<div class="box__item box__caption"><h2><a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a></h2></div>'
 	}
 
-	ModuleUI.prototype.addHTML = function (title, url, date, author) {
+	/** @see ntp.js */
+	ModuleUI.addHTML = function (title, url, date, author) {
 		var dateObj = new Date(date),
-		dateDay = dateObj.getDay()
-		if (dateObj.toDateString() === new Date(window.App.now).toDateString())
-			date = 'Today'
-		else if (new Date(dateObj.valueOf() - 86400000).getDay() === dateDay - 1)
-			date = 'Yesterday'
-		else if (new Date(dateObj.valueOf() - 86400000 * 2).getDay() === dateDay - 2)
-			date = 'The day before yesterday'
+			dateDay = dateObj.getDay()
+			if (dateObj.toDateString() === new Date(window.App.now).toDateString())
+				date = 'Today'
+			else if (new Date(dateObj.valueOf() - 86400000).getDay() === dateDay - 1)
+				date = 'Yesterday'
+			else if (new Date(dateObj.valueOf() - 86400000 * 2).getDay() === dateDay - 2)
+				date = 'The day before yesterday'
 
 		if (typeof date === 'number')
 			date = this.formatter_.format(date)
@@ -158,17 +156,14 @@
 		this.html += '<div class="box__item row"><div class="box__item__title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '">' + date + ' &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
-	ModuleUI.prototype.addMoreLink = function (url) {
-		this.html += '<div class="box__item box__caption"><a href="' + url + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>'
-	}
-
-	ModuleUI.prototype.addToDOM = function (html) {
-		html = html || this.html || 1
-		$(this.content).html(html)
+	/** @see ntp.js */
+	ModuleUI.addToDOM = function (html) {
 		chrome.storage.local.set({
-			gmailHTML: html
+			gmailHTML: this._super(html)
 		})
 	}
 
-	window.App.register(new Module())
-}(window, $, qwest)
+	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
+
+	window.App.register(Module)
+}(window)

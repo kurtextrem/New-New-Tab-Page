@@ -18,11 +18,7 @@
 	App.prototype.loadedObj = {}
 
 	App.prototype.register = function (obj) {
-		this.modules.push({
-			name: obj.name,
-			obj: obj
-			//obj: this.Module.extend(obj)
-		})
+		this.modules.push(this.Module.extend(obj))
 		var length = obj.storageKeys.length
 		while (length--) {
 			this.storageKeys[obj.storageKeys[length].name] = obj.storageKeys[length].type
@@ -53,7 +49,7 @@
 	App.prototype.bootModules = function () {
 		var length = this.modules.length
 		while (length--) {
-			this.modules[length].obj.init(this.loadedObj) // new
+			new this.modules[length](this.loadedObj)
 		}
 		console.log('Started modules')
 	}
@@ -73,19 +69,119 @@
 			.find('.mv-row').addClass('col-lg-6')
 	}
 
-	/**
-	 * Represents the Module namespace and the core functions for modules to inherit.
-	 */
+	/************************************************************************************\
+	|  Represents the Module namespace and the core functions for modules to inherit.       |
+	\ ************************************************************************************/
 	var Module = {}
+
+	Module.name = ''
+
+	Module.storageKeys = []
+
+	Module.init = function (obj, /** @private */ TIME) {
+		this.html = obj[this.name + 'HTML']
+		this.ui_ = new ModuleUI('#box-' + this.name)
+
+		this.showCached(this.html || obj[this.name])
+		if (window.App.now - obj[this.name].date > TIME * 60000)
+			this.update()
+	}
+
+	Module.showCached = function (data) {
+		console.log('Showing cached ' + this.name)
+		this.updateUI(data)
+	}
+
+	Module.update = function (/** @private */ url, /** @private */ param, /** @private */ type) {
+		console.log('Requesting ' + this.name)
+		$ajax.get(url, param, type).success(this.success.bind(this)).error(this.error.bind(this))
+	}
+
+	Module.success = function (/** xmlDoc */) {}
+
+	Module.error = function (message) {
+		console.error('Failed ' + this.name + ' request. ' + message)
+		if (this.html)
+			this.showCached(this.html)
+	}
+
+	Module.updateUI = function (/** data */) {
+		//this.ui_.addMoreLink(news.url)
+		this.ui_.addToDOM()
+	}
 
 	App.prototype.Module = Class.extend(Module)
 
-	/**
-	 * Represents the Module namespace and the core functions for modules to inherit.
-	 */
+
+	/************************************************************************************\
+	|   Represents the UI namespace and the core functions for modules to inherit.                 |
+	\ ************************************************************************************/
 	var ModuleUI = {}
 
-	App.prototype.Module = Class.extend(ModuleUI)
+	/**
+	 * Constructor.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String}   	name 	ID to identify the box
+	 */
+	ModuleUI.init = function (name) {
+		this.html = ''
+		this.content = name + ' > .box__content'
+	}
 
+	/**
+	 * Adds a heading.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String}   	url
+	 * @param  	{String}   	title
+	 */
+	ModuleUI.addHeading = function (/** url, title */) {}
+
+	/**
+	 * Adds HTML.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 */
+	ModuleUI.addHTML = function (/** params */) {}
+
+	/**
+	 * Adds a "more" link.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String}   	url
+	 */
+	ModuleUI.addMoreLink = function (url) {
+		this.html += '<div class="box__item box__caption"><a href="' + url + '">' + chrome.i18n.getMessage('more') + '</a></div>'
+	}
+
+	/**
+	 * Adds the HTML to the DOM.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String}   	html
+	 * @return 	{String} 	The HTML to use
+	 */
+	ModuleUI.addToDOM = function (html) {
+		html = html || this.html || 1
+		$(this.content).html(html)
+
+		return html
+	}
+
+	/**
+	 * Makes the UI inheritable.
+	 */
+	App.prototype.ModuleUI = Class.extend(ModuleUI)
+
+
+	/**
+	 * Initiates the App and makes it public.
+	 */
 	window.App = new App()
 }(window, $, qwest, Class)

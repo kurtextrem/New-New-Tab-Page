@@ -1,15 +1,23 @@
-/* global console,Intl,qwest */
-+function (window, $, $ajax) {
+/* global console,Intl */
++function (window) {
 	'use strict';
 
-	function Module() {
-		this.html = ''
-		this.ui_ = new ModuleUI('#box-' + this.name)
-	}
+	var TIME = 15,
+		URL = 'https://news.google.com/news/feeds',
+		PARAMS = {
+			output: 'rss',
+			pz: '1',
+			hl: chrome.i18n.getMessage('@@ui_locale')
+		},
+		TYPE = {
+			type: 'xml'
+		}
 
-	Module.prototype.name = 'news'
+	var Module = {}
 
-	Module.prototype.storageKeys = [{
+	Module.name = 'news'
+
+	Module.storageKeys = [{
 		name: 'news',
 		type: {
 			date: 0
@@ -19,33 +27,22 @@
 		type: ''
 	}]
 
-	Module.prototype.init = function (obj) {
-		this.html = obj[this.name + 'HTML']
-		if (window.App.now - obj[this.name].date > 9E5)
-			this.update()
-		else
-			this.showCached(this.html || obj[this.name])
+	/** @see ntp.js */
+	Module.init = function (obj) {
+		this._super(obj, TIME)
 	}
 
-	Module.prototype.update = function () {
-		console.log('Requesting ' + this.name)
-		$ajax.get('https://news.google.com/news/feeds', {
-			output: 'rss',
-			pz: '1',
-			hl: chrome.i18n.getMessage('@@ui_locale')
-		}, {
-			type: 'xml'
-		}).success(this.success.bind(this)).error(this.error.bind(this))
+	/** @see ntp.js */
+	Module.update = function () {
+		this._super(URL, PARAMS, TYPE)
 	}
 
-	Module.prototype.showCached = function (data) {
-		console.log('Showing cached ' + this.name)
-		this.updateUI(data)
-	}
-
-	Module.prototype.success = function (xmlDoc) {
+	/** @see ntp.js */
+	Module.success = function (xmlDoc) {
 		var items = xmlDoc.getElementsByTagName('item'),
-		data = { entries: [] }
+			data = {
+				entries: []
+			}
 		console.log('Got ' + items.length + ' ' + this.name)
 		data.date = window.App.now
 		data.title = xmlDoc.querySelector('title').innerHTML
@@ -68,38 +65,38 @@
 		}, this.updateUI.bind(this, data))
 	}
 
-	Module.prototype.error = function (message) {
-		console.error('Failed ' + this.name + ' request. ' + message)
-		if (this.html)
-			this.showCached(this.html)
-	}
-
-	Module.prototype.updateUI = function (data) {
+	/** @see ntp.js */
+	Module.updateUI = function (data) {
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 		var length = Math.min(6, data.entries.length)
 		this.ui_.addHeading(data.url, data.title)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].img)
-		//this.ui_.addMoreLink(news.url)
-		this.ui_.addToDOM()
+		this._super()
 	}
 
+	/************\
+	|  UI Section   |
+	\************/
+
+	/** @see ntp.js */
 	var ModuleUI = function (name) {
 		this.formatter_ = Intl.DateTimeFormat([], {
 			hour: 'numeric',
 			minute: '2-digit',
 			hour12: false
 		})
-		this.html = ''
-		this.content = name + ' > .box__content'
+		this._super(name)
 	}
 
-	ModuleUI.prototype.addHeading = function (url, title) {
+	/** @see ntp.js */
+	ModuleUI.addHeading = function (url, title) {
 		this.html += '<div class="box__item box__caption"><h2><a href="' + url + '">' + title + '</a></h2></div>'
 	}
 
-	ModuleUI.prototype.addHTML = function (title, url, date, img) {
+	/** @see ntp.js */
+	ModuleUI.addHTML = function (title, url, date, img) {
 		date = this.formatter_.format(date)
 		title = title.split(' - ')
 		var source = title.pop()
@@ -107,19 +104,14 @@
 		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item__title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author">' + date + ' &ndash;  ' + source + '</span></div></div>'
 	}
 
-	ModuleUI.prototype.addMoreLink = function (url) {
-		this.html += '<div class="box__item box__caption"><a href="' + url + '">' + chrome.i18n.getMessage('moreNews') + '</a></div>'
-	}
-
-	ModuleUI.prototype.addToDOM = function (html) {
-		html = html || this.html || 1
-		$(this.content).html(html)
+	/** @see ntp.js */
+	ModuleUI.addToDOM = function (html) {
 		chrome.storage.local.set({
-			newsHTML: html
+			newsHTML: this._super(html)
 		})
 	}
 
-	//ModuleUI = window.App.ModuleUI.extend(ModuleUI)
+	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
 
-	window.App.register(new Module()) // without new
-}(window, $, qwest)
+	window.App.register(Module)
+}(window)
