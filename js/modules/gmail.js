@@ -31,6 +31,7 @@
 		this.count = obj[this.name].count
 		this.permission = 0
 
+		this.ui_ = new ModuleUI('#box-' + this.name)
 		this._super(obj, TIME)
 	}
 

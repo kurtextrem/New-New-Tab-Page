@@ -80,7 +80,6 @@
 
 	Module.init = function (obj, /** @private */ TIME) {
 		this.html = obj[this.name + 'HTML']
-		this.ui_ = new ModuleUI('#box-' + this.name)
 
 		this.showCached(this.html || obj[this.name])
 		if (window.App.now - obj[this.name].date > TIME * 60000)

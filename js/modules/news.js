@@ -29,6 +29,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
+		this.ui_ = new ModuleUI('#box-' + this.name)
 		this._super(obj, TIME)
 	}
 
