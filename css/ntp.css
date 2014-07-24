@@ -139,13 +139,17 @@ form {
 /**
  * General css for the content boxes.
  */
-.container-fluid > .row {
-	flex-wrap: wrap;
-	display: flex;
-	overflow: hidden;
+/* Clearfix breaks the flexbox */
+#main-cards::before, #main-cards::after, #main-cards > .row::before,  #main-cards > .row::after {
+	display: block;
 }
 
-.row > .col-lg-3 {
+#main-cards > .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#main-cards > .row > .col-lg-3 {
 	display: flex;
 }
 
@@ -157,13 +161,13 @@ form {
 	min-height: 40px;
 }
 
+.box__content {
+	cursor: default;
+}
+
 .box__content h2 {
 	font-size: 20px;
 	font-weight: normal;
-}
-
-.box__content {
-	cursor: default;
 }
 
 .box__item {
@@ -171,14 +175,14 @@ form {
 	padding: 15px;
 }
 
-.box__item:first-child {
-	padding: 0 0 0 15px;
-	text-align: left;
-}
-
 .box__item:only-child {
 	padding: 15px;
 	text-align: center;
+}
+
+.box__item:first-child {
+	padding: 0 0 0 15px;
+	text-align: left;
 }
 
 .box__item:first-child > h2 {
@@ -499,7 +503,7 @@ form {
 	height: 20px;
 	border-radius: 50px;
 	background: #fcfff4;
-	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 	cursor: pointer;
 	transition: all .4s ease;
