@@ -13,10 +13,13 @@
 			type: 'xml'
 		}
 
+	/** @see ntp.js */
 	var Module = {}
 
+	/** @see ntp.js */
 	Module.name = 'news'
 
+	/** @see ntp.js */
 	Module.storageKeys = [{
 		name: 'news',
 		type: {

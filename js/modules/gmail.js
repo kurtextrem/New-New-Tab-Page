@@ -9,11 +9,13 @@
 			type: 'xml'
 		}
 
+	/** @see ntp.js */
 	var Module = {}
 
 	/** @see ntp.js */
 	Module.name = 'gmail'
 
+	/** @see ntp.js */
 	Module.storageKeys = [{
 		name: 'gmail',
 		type: {
@@ -35,6 +37,14 @@
 		this._super(obj, TIME)
 	}
 
+	/**
+	 * [requestPermission description]
+	 *
+	 * @author Jacob Groß (kurtextrem)
+	 * @date   2014-07-24
+	 * @param  {Function} cb [description]
+	 * @return {[type]}      [description]
+	 */
 	Module.requestPermission = function (cb) {
 		if (this.permission)
 			return cb()

@@ -2,10 +2,13 @@
 +function (window) {
 	'use strict';
 
+	/** @see ntp.js */
 	var Module = {}
 
+	/** @see ntp.js */
 	Module.name = 'clock'
 
+	/** @see ntp.js */
 	Module.storageKeys = [{
 		name: 'clock',
 		type: {
