@@ -110,7 +110,7 @@
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
-		var length = Math.min(8, data.entries.length)
+		var length = Math.min(7, data.entries.length)
 		this.ui_.addHeading(data.count, data.title)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
@@ -122,8 +122,11 @@
 	\************/
 
 	/** @see ntp.js */
-	var ModuleUI = function (name) {
-		this.formatter_ = Intl.DateTimeFormat(window.App.lang, {
+	var ModuleUI = {}
+
+	/** @see ntp.js */
+	ModuleUI.init = function (name) {
+		this.formatter = Intl.DateTimeFormat(window.App.lang, {
 			year: '2-digit',
 			month: '2-digit',
 			day: 'numeric',
@@ -151,7 +154,7 @@
 				date = 'The day before yesterday'
 
 		if (typeof date === 'number')
-			date = this.formatter_.format(date)
+			date = this.formatter.format(date)
 		else
 			date = date + ', ' + ('0' + dateObj.getHours()).slice(-2) + ':' + ('0' + dateObj.getMinutes()).slice(-2)
 		this.html += '<div class="box__item row"><div class="box__item__title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '">' + date + ' &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'

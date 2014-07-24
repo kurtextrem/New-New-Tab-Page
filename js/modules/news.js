@@ -82,8 +82,11 @@
 	\************/
 
 	/** @see ntp.js */
-	var ModuleUI = function (name) {
-		this.formatter_ = Intl.DateTimeFormat([], {
+	var ModuleUI = {}
+
+	/** @see ntp.js */
+	ModuleUI.init = function (name) {
+		this.formatter = Intl.DateTimeFormat([], {
 			hour: 'numeric',
 			minute: '2-digit',
 			hour12: false
@@ -98,7 +101,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (title, url, date, img) {
-		date = this.formatter_.format(date)
+		date = this.formatter.format(date)
 		title = title.split(' - ')
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
