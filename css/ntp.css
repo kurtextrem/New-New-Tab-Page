@@ -142,6 +142,7 @@ form {
 .container-fluid > .row {
 	flex-wrap: wrap;
 	display: flex;
+	overflow: hidden;
 }
 
 .row > .col-lg-3 {
