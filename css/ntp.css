@@ -559,217 +559,265 @@ form {
  */
  .Austin_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 85%;
+ 	background-size: 100% 164%;
  }
  .Austin_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 85%;
+ 	background-size: 100% 164%;
  }
  .Austin_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 85%;
+ 	background-size: 100% 164%;
  }
  .Austin_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 85%;
+ 	background-size: 100% 164%;
  }
 
 
  .Beach_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0px 99%;
+ 	background-size: 100% 234%;
  }
  .Beach_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0px 99%;
+ 	background-size: 100% 234%;
  }
  .Beach_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0px 99%;
+ 	background-size: 100% 234%;
  }
  .Beach_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0px 99%;
+ 	background-size: 100% 234%;
  }
 
 
  .Berlin_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 48%;
+ 	background-size: 100% 188%;
  }
  .Berlin_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 48%;
+ 	background-size: 100% 188%;
  }
  .Berlin_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 48%;
+ 	background-size: 100% 188%;
  }
  .Berlin_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 48%;
+ 	background-size: 100% 188%;
  }
 
 
  .Chicago_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 36%;
+ 	background-size: 100% 281%;
  }
  .Chicago_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 36%;
+ 	background-size: 100% 281%;
  }
  .Chicago_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 36%;
+ 	background-size: 100% 281%;
  }
  .Chicago_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 36%;
+ 	background-size: 100% 281%;
  }
 
 
  .Default_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Dawn.webp);
- 	background-position: 0 92.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .Default_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Day.webp);
- 	background-position: 0 92.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .Default_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Dusk.webp);
- 	background-position: 0 92.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .Default_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Night.webp);
- 	background-position: 0 92.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
 
 
  .GreatPlains_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .GreatPlains_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .GreatPlains_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
  .GreatPlains_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 90%;
+ 	background-size: 100% 281%;
  }
 
 
  .London_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 62%;
+ 	background-size: 100% 331%;
  }
  .London_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 62%;
+ 	background-size: 100% 331%;
  }
  .London_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 62%;
+ 	background-size: 100% 331%;
  }
  .LondonNight {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 62%;
+ 	background-size: 100% 331%;
  }
 
 
  .NewYork_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 93%;
+ 	background-size: 100% 271%;
  }
  .NewYork_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 93%;
+ 	background-size: 100% 271%;
  }
  .NewYork_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 93%;
+ 	background-size: 100% 271%;
  }
  .NewYorkNight {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 93%;
+ 	background-size: 100% 271%;
  }
 
 
  .Paris_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 278%;
  }
  .Paris_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 278%;
  }
  .Paris_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 278%;
  }
  .Paris_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 278%;
  }
 
 
  .SanFrancisco_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 365%;
  }
  .SanFrancisco_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 365%;
  }
  .SanFrancisco_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 365%;
  }
  .SanFranciscoNight {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 92%;
+ 	background-size: 100% 365%;
  }
 
 
  .Seattle_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 246%;
  }
  .Seattle_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 246%;
  }
  .Seattle_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 246%;
  }
  .Seattle_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 246%;
  }
 
 
  .Tahoe_Dawn {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Dawn.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 191%;
  }
  .Tahoe_Day {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Day.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 191%;
  }
  .Tahoe_Dusk {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Dusk.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 191%;
  }
  .Tahoe_Night {
  	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Night.webp);
- 	background-position: 0 40.5%;
+ 	background-position: 0 91%;
+ 	background-size: 100% 191%;
  }
 
 
