@@ -121,14 +121,13 @@ form {
 }
 
 /**
- * @todo Let the user select the background images.
+ * Header.
  */
 #lga#lga {
 	margin-top: 0 !important;
 	padding-top: 20px;
-	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dawn.webp);
-	background-position: 0 40.5%;
 	background-size: cover;
+	background-repeat: no-repeat;
 	height: 131px;
 }
 
@@ -159,6 +158,7 @@ form {
 	color: #888;
 	margin: 10px;
 	min-height: 40px;
+	width: 100%;
 }
 
 .box__content {
@@ -175,11 +175,6 @@ form {
 	padding: 15px;
 }
 
-.box__item:only-child {
-	padding: 15px;
-	text-align: center;
-}
-
 .box__item:first-child {
 	padding: 0 0 0 15px;
 	text-align: left;
@@ -187,6 +182,11 @@ form {
 
 .box__item:first-child > h2 {
 	font-weight: normal;
+}
+
+.box__item:only-child {
+	padding: 15px;
+	text-align: center;
 }
 
 .box__caption.box__caption a {
@@ -553,6 +553,225 @@ form {
 	.clearfix:before,.clearfix:after,.container:before,.container:after,.container-fluid:before,.container-fluid:after,.row:before,.row:after, #most-visited:before, #most-visited:after, #mv-tiles:before, #mv-tiles:after {content:" ";display:table}
 	.clearfix:after,.container:after,.container-fluid:after,.row:after, #most-visited:after, #mv-tiles:after {clear:both}
 	.center-block{display:block;margin-left:auto;margin-right:auto}.pull-right{float:right !important}.pull-left{float:left !important}.hide{display:none !important}.show{display:block !important}.invisible{visibility:hidden}.text-hide{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.hidden{display:none !important;visibility:hidden !important}.affix{position:fixed;transform:translate3d(0, 0, 0)}@-ms-viewport{width:device-width}.visible-xs,.visible-sm,.visible-md,.visible-lg{display:none !important}.visible-xs-block,.visible-xs-inline,.visible-xs-inline-block,.visible-sm-block,.visible-sm-inline,.visible-sm-inline-block,.visible-md-block,.visible-md-inline,.visible-md-inline-block,.visible-lg-block,.visible-lg-inline,.visible-lg-inline-block{display:none !important}@media (max-width:767px){.visible-xs{display:block !important}table.visible-xs{display:table}tr.visible-xs{display:table-row !important}th.visible-xs,td.visible-xs{display:table-cell !important}}@media (max-width:767px){.visible-xs-block{display:block !important}}@media (max-width:767px){.visible-xs-inline{display:inline !important}}@media (max-width:767px){.visible-xs-inline-block{display:inline-block !important}}@media (min-width:768px) and (max-width:991px){.visible-sm{display:block !important}table.visible-sm{display:table}tr.visible-sm{display:table-row !important}th.visible-sm,td.visible-sm{display:table-cell !important}}@media (min-width:768px) and (max-width:991px){.visible-sm-block{display:block !important}}@media (min-width:768px) and (max-width:991px){.visible-sm-inline{display:inline !important}}@media (min-width:768px) and (max-width:991px){.visible-sm-inline-block{display:inline-block !important}}@media (min-width:992px) and (max-width:1199px){.visible-md{display:block !important}table.visible-md{display:table}tr.visible-md{display:table-row !important}th.visible-md,td.visible-md{display:table-cell !important}}@media (min-width:992px) and (max-width:1199px){.visible-md-block{display:block !important}}@media (min-width:992px) and (max-width:1199px){.visible-md-inline{display:inline !important}}@media (min-width:992px) and (max-width:1199px){.visible-md-inline-block{display:inline-block !important}}@media (min-width:1200px){.visible-lg{display:block !important}table.visible-lg{display:table}tr.visible-lg{display:table-row !important}th.visible-lg,td.visible-lg{display:table-cell !important}}@media (min-width:1200px){.visible-lg-block{display:block !important}}@media (min-width:1200px){.visible-lg-inline{display:inline !important}}@media (min-width:1200px){.visible-lg-inline-block{display:inline-block !important}}@media (max-width:767px){.hidden-xs{display:none !important}}@media (min-width:768px) and (max-width:991px){.hidden-sm{display:none !important}}@media (min-width:992px) and (max-width:1199px){.hidden-md{display:none !important}}@media (min-width:1200px){.hidden-lg{display:none !important}}.visible-print{display:none !important}@media print{.visible-print{display:block !important}table.visible-print{display:table}tr.visible-print{display:table-row !important}th.visible-print,td.visible-print{display:table-cell !important}}.visible-print-block{display:none !important}@media print{.visible-print-block{display:block !important}}.visible-print-inline{display:none !important}@media print{.visible-print-inline{display:inline !important}}.visible-print-inline-block{display:none !important}@media print{.visible-print-inline-block{display:inline-block !important}}@media print{.hidden-print{display:none !important}}
+
+/**
+ * Background images.
+ */
+ .Austin_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Austin_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Austin_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Austin_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Austin_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Beach_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Beach_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Beach_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Beach_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Beach_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Berlin_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Berlin_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Berlin_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Berlin_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Berlin_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Chicago_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Chicago_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Chicago_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Chicago_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Chicago_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Default_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Dawn.webp);
+ 	background-position: 0 92.5%;
+ }
+ .Default_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Day.webp);
+ 	background-position: 0 92.5%;
+ }
+ .Default_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Dusk.webp);
+ 	background-position: 0 92.5%;
+ }
+ .Default_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Default_Night.webp);
+ 	background-position: 0 92.5%;
+ }
+
+
+ .GreatPlains_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .GreatPlains_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .GreatPlains_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .GreatPlains_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/GreatPlains_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .London_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .London_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .London_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .LondonNight {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/London_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .NewYork_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .NewYork_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .NewYork_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .NewYorkNight {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/NewYork_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Paris_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Paris_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Paris_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Paris_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Paris_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .SanFrancisco_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .SanFrancisco_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .SanFrancisco_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .SanFranciscoNight {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/SanFrancisco_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Seattle_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Seattle_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Seattle_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Seattle_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Seattle_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
+
+ .Tahoe_Dawn {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Dawn.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Tahoe_Day {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Day.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Tahoe_Dusk {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Dusk.webp);
+ 	background-position: 0 40.5%;
+ }
+ .Tahoe_Night {
+ 	background: url(chrome-extension://__MSG_@@extension_id__/img/headers/Tahoe_Night.webp);
+ 	background-position: 0 40.5%;
+ }
+
 
 /* @todo: Need better breakpoints */
  @media only screen and (max-width: 1840px) {
