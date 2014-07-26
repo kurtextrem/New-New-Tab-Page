@@ -2,6 +2,9 @@
 +function (window) {
 	'use strict';
 
+	/**
+	 * Constants used in the constructor.
+	 */
 	var TIME = 15,
 		URL = 'https://news.google.com/news/feeds',
 		PARAMS = {
@@ -118,7 +121,9 @@
 		})
 	}
 
+	/** @see ntp.js */
 	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
 
+	/** @see ntp.js */
 	window.App.register(Module)
 }(window)

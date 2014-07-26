@@ -2,6 +2,9 @@
 +function (window) {
 	'use strict';
 
+	/**
+	 * Constants used in the constructor.
+	 */
 	var TIME = 5,
 		URL = 'https://mail.google.com/mail/feed/atom',
 		PARAMS = {},
@@ -29,9 +32,9 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
+		this.permission = 0
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
-		this.permission = 0
 
 		this.ui_ = new ModuleUI('#box-' + this.name)
 		this._super(obj, TIME)
@@ -84,7 +87,7 @@
 		}
 
 		if (data.count !== this.count)
-			this.requestPermission(this.showNotification.bind(this, data.count > this.count ? data.count - this.count : data.count, data.count))
+			this.requestPermission(this.showNotification.bind(this, data.count >= this.count ? data.count - this.count : data.count, data.count))
 
 		chrome.storage.local.set({
 			gmail: data
@@ -156,7 +159,7 @@
 	ModuleUI.addHTML = function (title, url, date, author) {
 		var dateObj = new Date(date),
 			dateDay = dateObj.getDay()
-			if (dateObj.toDateString() === new Date(window.App.now).toDateString())
+			if (dateObj.toDateString() === window.App.date.toDateString())
 				date = 'Today'
 			else if (new Date(dateObj.valueOf() - 86400000).getDay() === dateDay - 1)
 				date = 'Yesterday'
@@ -177,7 +180,9 @@
 		})
 	}
 
+	/** @see ntp.js */
 	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
 
+	/** @see ntp.js */
 	window.App.register(Module)
 }(window)

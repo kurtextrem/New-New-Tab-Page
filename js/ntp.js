@@ -2,21 +2,36 @@
 +function (window, $, $ajax, Class) {
 	'use strict';
 
+	/**
+	 * Main constructor for the App.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	function App() {
-		this.now = Date.now()
+		this.updateTimestamp()
 		this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
 
 		this.loadBoxes()
 		this.checkResolution()
-		this.addMissingDOM()
 	}
 
+	/** @type	{Array}		Reference to the registered modules. */
 	App.prototype.modules = []
 
+	/** @type	{Object}	Reference to the module's storage keys. */
 	App.prototype.storageKeys = {}
 
+	/** @type	{Array}		Reference to loaded storage data, which is given to every module's constructor. */
 	App.prototype.loadedObj = {}
 
+	/**
+	 * Registers a module.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 * @param  	{Object}   		obj 	The module's prototype.
+	 */
 	App.prototype.register = function (obj) {
 		this.modules.push(this.Module.extend(obj))
 		var length = obj.storageKeys.length
@@ -25,6 +40,26 @@
 		}
 	}
 
+	/**
+	 * Initiates the modules.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
+	App.prototype.bootModules = function () {
+		var length = this.modules.length
+		while (length--) {
+			new this.modules[length](this.loadedObj)
+		}
+		console.log('Started modules')
+	}
+
+	/**
+	 * Ends the registration process and loads the data for them.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	App.prototype.close = function () {
 		chrome.storage.local.get(this.storageKeys, function (obj) {
 			this.loadedObj = obj
@@ -33,10 +68,12 @@
 		}.bind(this))
 	}
 
-	App.prototype.addMissingDOM = function () {
-		//$('#mngb').append('<div><div style="float:left;padding-left:10px;height:60px;min-width:0;padding-left:10px" class="gb_Z gb_Ac gb_e gb_Dc"><img alt="Chrome" src="chrome-search://theme/IDR_PRODUCT_LOGO"></div></div>')
-	}
-
+	/**
+	 * Loads the boxes.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	App.prototype.loadBoxes = function () {
 		$ajax.get(chrome.extension.getURL('boxes.html'), {}, {
 			type: 'html',
@@ -46,23 +83,30 @@
 		}.bind(this))
 	}
 
-	App.prototype.bootModules = function () {
-		var length = this.modules.length
-		while (length--) {
-			new this.modules[length](this.loadedObj)
-		}
-		console.log('Started modules')
-	}
-
+	/**
+	 * Adds classes for responsiveness, if needed.
+	 *
+	 * @author 	Jacob Groß
+	 */
 	App.prototype.checkResolution = function () {
 		if (screen.availWidth < 1380) {
-			console.log('Adjust for resolution')
+			console.log('Adjusting for resolution')
 			$('#main-cards > .row > .col-lg-3').removeClass('col-lg-offset-1').addClass('col-lg-4')
 			$('.mv-row').addClass('col-lg-12')
 		}
 	}
 
-	/** @deprecated  Added the classes using CSS */
+	/**
+	 * Updates the timestamp vars.
+	 *
+	 * @author 	Jacob Groß
+	 */
+	App.prototype.updateTimestamp = function () {
+		this.date = new Date()
+		this.now = this.date.valueOf()
+	}
+
+	/** @deprecated  Added the classes using CSS; Used for reference */
 	App.prototype.addClasses = function () {
 		$('#most-visited').addClass('container-fluid')
 			.find('#mv-tiles').addClass('row').css('width', 'auto')
@@ -74,10 +118,19 @@
 	\ ************************************************************************************/
 	var Module = {}
 
+	/** @type	{String}		The module's name. */
 	Module.name = ''
 
+	/** @type	{String}		The module's storage keys. */
 	Module.storageKeys = []
 
+	/**
+	 * Represents the constructor.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String}   	obj 	The loaded data.
+	 */
 	Module.init = function (obj, /** @private */ TIME) {
 		this.html = obj[this.name + 'HTML']
 
@@ -86,29 +139,63 @@
 			this.update()
 	}
 
+	/**
+	 * Outputs the cached HTML.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 * @param  	{String|Object}   	data
+	 */
 	Module.showCached = function (data) {
 		console.log('Showing cached ' + this.name)
 		this.updateUI(data)
 	}
 
+	/**
+	 * Updates the module's data.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-23
+	 */
 	Module.update = function (/** @private */ url, /** @private */ param, /** @private */ type) {
 		console.log('Requesting ' + this.name)
 		$ajax.get(url, param, type).success(this.success.bind(this)).error(this.error.bind(this))
 	}
 
+	/**
+	 * Function called after a successfull update request.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	Module.success = function (/** xmlDoc */) {}
 
+	/**
+	 * Function called after an failed update request.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	Module.error = function (message) {
 		console.error('Failed ' + this.name + ' request. ' + message)
 		if (this.html)
 			this.showCached(this.html)
 	}
 
+	/**
+	 * Tells the UI to update.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-26
+	 */
 	Module.updateUI = function (/** data */) {
 		//this.ui_.addMoreLink(news.url)
 		this.ui_.addToDOM()
 	}
 
+	/**
+	 * Makes the Module inheritable.
+	 */
 	App.prototype.Module = Class.extend(Module)
 
 
@@ -118,15 +205,16 @@
 	var ModuleUI = {}
 
 	/**
-	 * Constructor.
+	 * Represents the constructor.
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 * @param  	{String}   	name 	ID to identify the box
 	 */
-	ModuleUI.init = function (name) {
+	ModuleUI.init = function (name, options, /** @private */ notBox) {
 		this.html = ''
-		this.content = name + ' > .box__content'
+		this.options = options
+		this.content = notBox ? name : name + ' > .box__content'
 	}
 
 	/**
