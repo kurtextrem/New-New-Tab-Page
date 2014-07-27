@@ -1,4 +1,4 @@
-+ function (window) {
++function (window) {
 	'use strict';
 
 	/** @see ntp.js */
@@ -10,7 +10,7 @@
 	/** @see ntp.js */
 	Module.storageKeys = [{
 		name: 'dayBackground',
-		type: 'Default'
+		type: 'Beach'
 	}]
 
 	/** @see ntp.js */

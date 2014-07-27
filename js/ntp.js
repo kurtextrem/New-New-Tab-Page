@@ -222,10 +222,10 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
-	 * @param  	{String}   	url
-	 * @param  	{String}   	title
 	 */
-	ModuleUI.addHeading = function (/** url, title */) {}
+	ModuleUI.addHeading = function (/** @private */ html) {
+		this.html += '<header class="box__item box__caption"><h2>' + html + '</h2></header>'
+	}
 
 	/**
 	 * Adds HTML.
@@ -266,6 +266,40 @@
 	 */
 	App.prototype.ModuleUI = Class.extend(ModuleUI)
 
+
+	/************************************************************************************\
+	|   Represents the info namespace and core functions for the UI to inherit.                           |
+	\ ************************************************************************************/
+	var ModuleUIExtended = {}
+
+	ModuleUIExtended.init = function (name, options, /** @private */ notBox) {
+		this._super(name, options, notBox)
+		this.info = name + ' > .box-info__content'
+		this.addListener(name)
+	}
+
+	ModuleUIExtended.addListener = function (name) {
+		// @todo: will-change on mousedown?
+		var $info = $(name + ' > .box-info')
+		$info.on('click', function () {
+			this.toggleInfo($info)
+		}.bind(this))
+	}
+
+	ModuleUIExtended.toggleInfo = function ($info) {
+		$info.toggleClass('box-info__active')
+		$(this.content).toggleClass('hide')
+		$info = $(this.info)
+		$info.toggleClass('hide')
+		window.setTimeout(function () {
+			$info.toggleClass('fade')
+		}, 100)
+	}
+
+	/**
+	 * Makes the UI inheritable.
+	 */
+	App.prototype.ModuleUIExtended = App.prototype.ModuleUI.extend(ModuleUIExtended)
 
 	/**
 	 * Initiates the App and makes it public.

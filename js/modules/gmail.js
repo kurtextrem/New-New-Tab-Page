@@ -152,7 +152,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (count, title) {
-		this.html += '<div class="box__item box__caption"><h2><a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a></h2></div>'
+		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>')
 	}
 
 	/** @see ntp.js */
@@ -181,7 +181,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
+	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
 
 	/** @see ntp.js */
 	window.App.register(Module)

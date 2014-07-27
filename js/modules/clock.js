@@ -69,7 +69,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI = window.App.ModuleUI.extend(ModuleUI)
+	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
 
 	/** @see ntp.js */
 	window.App.register(Module)
