@@ -156,11 +156,10 @@ form {
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
 	color: #888;
 	margin: 10px;
-	min-height: 40px;
 	width: 100%;
 	position: relative;
 	cursor: default;
-	min-height: 120px;
+	min-height: 100px;
 }
 
 .box__content h2 {
@@ -371,11 +370,12 @@ form {
 
 /* Content */
 .box-info__content {
-	position: absolute;
+	position: relative;
 	top: 12px;
 	opacity: 0;
 	transition: opacity 750ms;
 	width: 100%;
+	padding-bottom: 30px;
 }
 
 .box-info__active ~  .box-info__content.fade {
@@ -410,6 +410,7 @@ form {
 	cursor: pointer;
 	outline: none;
 	user-select: none;
+	top: -8px;
 }
 input.cmn-toggle-round + label {
 	padding: 2px;
