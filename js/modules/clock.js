@@ -14,11 +14,14 @@
 		type: {
 			twelveHours: false
 		}
+	}, {
+		name: 'dayBackground',
+		type: 'Beach'
 	}]
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name])
+		this.ui_ = new ModuleUI('#box-' + this.name, obj)
 
 		this.update()
 		window.setInterval(function () {
@@ -60,8 +63,8 @@
 	ModuleUI.addHTML = function (timestamp) {
 		this.html = ''
 
-		var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''
-		if (this.options.twelveHours && hours > 12) {
+		var hours = timestamp.getHours(), postfix = this.options.clock.twelveHours ? 'am' : ''
+		if (this.options.clock.twelveHours && hours > 12) {
 			hours = hours - 12
 			postfix = 'pm'
 		}

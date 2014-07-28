@@ -8,10 +8,7 @@
 	Module.name = 'dayBackground'
 
 	/** @see ntp.js */
-	Module.storageKeys = [{
-		name: 'dayBackground',
-		type: 'Beach'
-	}]
+	Module.storageKeys = []
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
