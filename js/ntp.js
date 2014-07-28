@@ -223,8 +223,8 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 */
-	ModuleUI.addHeading = function (/** @private */ html) {
-		this.html += '<header class="box__item box__caption"><h2>' + html + '</h2></header>'
+	ModuleUI.addHeading = function (/** @private */ html, /** @private */ date) {
+		this.html += '<header class="box__item box__caption" title="Last refresh: ' + date + '"><h2>' + html + '</h2></header>'
 	}
 
 	/**
@@ -272,34 +272,95 @@
 	\ ************************************************************************************/
 	var ModuleUIExtended = {}
 
+	/** @see  ModuleUI */
 	ModuleUIExtended.init = function (name, options, /** @private */ notBox) {
 		this._super(name, options, notBox)
 		this.info = name + ' > .box-info__content'
 		this.addListener(name)
+		this.load(name)
 	}
 
+	/**
+	 * Adds specific listener.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-28
+	 * @param  	{string}   	name 	The module's name
+	 */
 	ModuleUIExtended.addListener = function (name) {
 		// @todo: will-change on mousedown?
-		var $info = $(name + ' > .box-info')
-		$info.on('click', function () {
-			this.toggleInfo($info)
+		var $infoToggle = $(name + ' > .box-info'),
+		$infoContent = $(this.info)
+
+		// "i" click
+		$infoToggle.on('click', function () {
+			this.toggleInfo($infoToggle, $infoContent)
+		}.bind(this))
+
+		// options change
+		$infoContent.find('input, select').on('change', function (e) {
+			this.save(e.target.value.split('__')[1], e.target.value)
 		}.bind(this))
 	}
 
-	ModuleUIExtended.toggleInfo = function ($info) {
-		$info.toggleClass('box-info__active')
+	/**
+	 * Toggles the UI content.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-28
+	 * @param  	$infoToggle
+	 * @param  	$infoContent
+	 */
+	ModuleUIExtended.toggleInfo = function ($infoToggle, $infoContent) {
+		$infoToggle.toggleClass('box-info__active')
 		$(this.content).toggleClass('hide')
-		$info = $(this.info)
-		$info.toggleClass('hide')
+		$infoContent.toggleClass('hide')
 		window.setTimeout(function () {
-			$info.toggleClass('fade')
+			$infoContent.toggleClass('fade')
 		}, 100)
+	}
+
+	/**
+	 * Saves to the storage.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-28
+	 * @param  	{string|array}   	key 	The key(s) to safe
+	 * @param  	{string|array}   	val 	The value(s) to safe
+	 */
+	ModuleUIExtended.save = function (key, val) {
+		var obj = {}
+		if (typeof key === 'string')
+			obj[key] = val
+		else {
+			var i = key.length
+			while (i--) {
+				obj[key] = val[i]
+			}
+		}
+		chrome.storage.local.set(obj)
+	}
+
+	/**
+	 * Loads the current options.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-07-28
+	 * @param 	{string} 		name
+	 */
+	ModuleUIExtended.load = function (name) {
+		for (var index in this.options) {
+			if (this.options.hasOwnProperty(index)) {
+				$('#' + name + '__' + index).val(this.options[index])
+			}
+		}
 	}
 
 	/**
 	 * Makes the UI inheritable.
 	 */
 	App.prototype.ModuleUIExtended = App.prototype.ModuleUI.extend(ModuleUIExtended)
+
 
 	/**
 	 * Initiates the App and makes it public.
