@@ -36,7 +36,7 @@
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
 
-		this.ui_ = new ModuleUI('#box-' + this.name)
+		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name])
 		this._super(obj, TIME)
 	}
 
@@ -124,7 +124,7 @@
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 		var length = Math.min(7, data.entries.length)
-		this.ui_.addHeading(data.count, data.title)
+		this.ui_.addHeading(data.count, data.title, data.date)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
 		this._super()
@@ -151,8 +151,8 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addHeading = function (count, title) {
-		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>')
+	ModuleUI.addHeading = function (count, title, date) {
+		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', this.formatter.format(date))
 	}
 
 	/** @see ntp.js */
