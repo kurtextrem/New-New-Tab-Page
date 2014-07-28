@@ -301,7 +301,10 @@
 
 		// options change
 		$infoContent.find('input, select').on('change', function (e) {
-			this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], e.target.value)
+			var val = e.target.value
+			if (e.target.type === 'checkbox')
+				val = !!e.target.checked
+			this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
 		}.bind(this))
 	}
 
@@ -356,7 +359,10 @@
 	ModuleUIExtended.load = function (name) {
 		for (var index in this.options) {
 			if (this.options.hasOwnProperty(index)) {
-				$(name + ' > [id$="' + index + '"]').val(this.options[index])
+				var elem = $('[id$="' + index + '"]', name)
+				if (elem.filter('[type=checkbox]')[0] !== undefined)
+					return elem.filter('[type=checkbox]')[0].checked = this.options[index]
+				elem.val(this.options[index])
 			}
 		}
 	}
