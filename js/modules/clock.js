@@ -10,18 +10,16 @@
 
 	/** @see ntp.js */
 	Module.storageKeys = [{
-		name: 'clock',
+		name: 'clockOptions',
 		type: {
-			twelveHours: false
+			twelveHours: false,
+			dayBackground: 'Beach'
 		}
-	}, {
-		name: 'dayBackground',
-		type: 'Beach'
 	}]
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#box-' + this.name, obj)
+		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 
 		this.update()
 		window.setInterval(function () {

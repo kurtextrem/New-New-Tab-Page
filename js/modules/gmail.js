@@ -28,6 +28,11 @@
 	}, {
 		name: 'gmailHTML',
 		type: ''
+	}, {
+		name: 'gmailOptions',
+		type: {
+			amount: 6
+		}
 	}]
 
 	/** @see ntp.js */
@@ -36,7 +41,7 @@
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
 
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name])
+		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
@@ -138,7 +143,7 @@
 	var ModuleUI = {}
 
 	/** @see ntp.js */
-	ModuleUI.init = function (name) {
+	ModuleUI.init = function (name, options) {
 		this.formatter = Intl.DateTimeFormat(window.App.lang, {
 			year: '2-digit',
 			month: '2-digit',
@@ -147,7 +152,7 @@
 			hour: '2-digit',
 			minute: '2-digit'
 		})
-		this._super(name)
+		this._super(name, options)
 	}
 
 	/** @see ntp.js */

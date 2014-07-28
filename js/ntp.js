@@ -285,7 +285,7 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-28
-	 * @param  	{string}   	name 	The module's name
+	 * @param  	{string}   	name 	The module's box id
 	 */
 	ModuleUIExtended.addListener = function (name) {
 		// @todo: will-change on mousedown?
@@ -299,7 +299,7 @@
 
 		// options change
 		$infoContent.find('input, select').on('change', function (e) {
-			this.save(e.target.value.split('__')[1], e.target.value)
+			this.save(name.replace(/#box-(.*)/, '$1'), e.target.value.split('__')[1], e.target.value)
 		}.bind(this))
 	}
 
@@ -325,17 +325,20 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-28
+	 * @param  	{string}   	name 	The module's name
 	 * @param  	{string|array}   	key 	The key(s) to safe
 	 * @param  	{string|array}   	val 	The value(s) to safe
 	 */
-	ModuleUIExtended.save = function (key, val) {
+	ModuleUIExtended.save = function (name, key, val) {
 		var obj = {}
+		name = name + 'Options'
+		obj[name] = {}
 		if (typeof key === 'string')
-			obj[key] = val
+			obj[name][key] = val
 		else {
 			var i = key.length
 			while (i--) {
-				obj[key] = val[i]
+				obj[name][key] = val[i]
 			}
 		}
 		chrome.storage.local.set(obj)
@@ -346,12 +349,12 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-28
-	 * @param 	{string} 		name
+	 * @param  	{string}   	name 	The module's box id
 	 */
 	ModuleUIExtended.load = function (name) {
 		for (var index in this.options) {
 			if (this.options.hasOwnProperty(index)) {
-				$('#' + name + '__' + index).val(this.options[index])
+				$(name + ' > [id$="' + index + '"]').val(this.options[index])
 			}
 		}
 	}

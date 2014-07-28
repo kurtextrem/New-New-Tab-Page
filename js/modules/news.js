@@ -31,11 +31,16 @@
 	}, {
 		name: 'newsHTML',
 		type: ''
+	}, {
+		name: 'newsOptions',
+		type: {
+			amount: 6
+		}
 	}]
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#box-' + this.name)
+		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
@@ -91,13 +96,13 @@
 	var ModuleUI = {}
 
 	/** @see ntp.js */
-	ModuleUI.init = function (name) {
+	ModuleUI.init = function (name, options) {
 		this.formatter = Intl.DateTimeFormat([], {
 			hour: 'numeric',
 			minute: '2-digit',
 			hour12: false
 		})
-		this._super(name)
+		this._super(name, options)
 	}
 
 	/** @see ntp.js */
