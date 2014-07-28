@@ -12,7 +12,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#lga', obj[this.name])
+		this.ui_ = new ModuleUI('#lga', obj.clockOptions.dayBackground)
 
 		this.update()
 	}

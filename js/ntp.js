@@ -277,7 +277,6 @@
 		this._super(name, options, notBox)
 		this.info = name + ' > .box-info__content'
 		this.addListener(name)
-		this.load(name)
 	}
 
 	/**
@@ -295,11 +294,14 @@
 		// "i" click
 		$infoToggle.on('click', function () {
 			this.toggleInfo($infoToggle, $infoContent)
+		}.bind(this)).on('click.once', function () { // load options on startup
+			$infoToggle.off('click.once')
+			this.load(name)
 		}.bind(this))
 
 		// options change
 		$infoContent.find('input, select').on('change', function (e) {
-			this.save(name.replace(/#box-(.*)/, '$1'), e.target.value.split('__')[1], e.target.value)
+			this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], e.target.value)
 		}.bind(this))
 	}
 
