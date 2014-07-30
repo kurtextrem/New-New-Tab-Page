@@ -26,7 +26,10 @@
 	Module.storageKeys = [{
 		name: 'news',
 		type: {
-			date: 0
+			date: 0,
+			title: chrome.i18n.getMessage('news'),
+			url: 'https://news.google.com',
+			entries: []
 		}
 	}, {
 		name: 'newsHTML',
@@ -56,12 +59,13 @@
 				entries: []
 			}
 		console.log('Got ' + items.length + ' ' + this.name)
+
 		data.date = window.App.date
 		data.title = xmlDoc.querySelector('title').innerHTML
 		data.url = xmlDoc.querySelector('link').innerHTML
 		for (var i = 0; i < items.length; i++) {
-			var item = items[i]
-			var img = item.getElementsByTagName('description')[0].textContent.match(/<img src="([^"]+)"/)
+			var item = items[i],
+			img = item.getElementsByTagName('description')[0].textContent.match(/<img src="([^"]+)"/)
 			if (img !== null)
 				img = img[1]
 			data.entries[i] = {

@@ -23,7 +23,9 @@
 		name: 'gmail',
 		type: {
 			count: 0,
-			date: 0
+			date: 0,
+			title: chrome.i18n.getMessage('mails'),
+			entries: []
 		}
 	}, {
 		name: 'gmailHTML',
@@ -91,7 +93,9 @@
 			}
 		}
 
-		if (data.count !== this.count)
+		console.log('new ' + data.count)
+		console.log('old ' + this.count)
+		if (data.count > this.count)
 			this.requestPermission(this.showNotification.bind(this, data.count >= this.count ? data.count - this.count : data.count, data.count))
 
 		chrome.storage.local.set({
