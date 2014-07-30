@@ -5,8 +5,8 @@
 	/**
 	 * Constants used in the constructor.
 	 */
-	var TIME = 60,
-		URL = 'http://ntpserv.appspot.com/weather',
+	var TIME = 0, // 60
+		URL = 'https://ntpserv.appspot.com/weather',
 		TYPE = {
 			type: 'json'
 		}
@@ -53,79 +53,36 @@
 	/** @see ntp.js */
 	Module.init = function (obj) {
 		this.permission = 0
-		this.latitude = 0
-		this.longitude = 0
 		this.country = ''
 		this.location = ''
 		this.celsius = obj[this.name + 'Options'].celsius
 
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
-		this.requestPermission(this._super.bind(this, obj, TIME))
+		this._super(obj, TIME)
 	}
 
-	/**
-	 * [requestPermission description]
-	 *
-	 * @author Jacob Groß (kurtextrem)
-	 * @date   2014-07-24
-	 * @param  {Function} cb [description]
-	 * @return {[type]}      [description]
-	 */
-	Module.requestPermission = function (cb) {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			this.permission = 1
-			this.latitude = position.coords.latitude
-			this.longitude = position.coords.longitude
-			cb()
-		}.bind(this), function (error) {
-			console.error(error)
-			this.permission = 1
-			this.latitude = 34.1
-			this.longitude = -118.2
-			cb()
-		}.bind(this), {
-			enableHighAccuracy: false,
-			//timeout: 20 * 1000,
-			maximumAge: 86400000 // 1 day
-		})
+	Module.getLocationName = function (cb) {
+		console.log('Requesting location')
+
+		$ajax.get('https://freegeoip.net/json/', {}, { type: 'jsonp', cache: true })
+		.success(function (data) {
+			console.log('Location: ' + data)
+
+			this.location = data.city
+			this.country = data.country_name
+			cb({ lat: data.latitude, long: data.longitude }, TYPE)
+		}.bind(this))
+		.error(function (message) {
+			console.error('Reverse geocoding request failed: ' + message)
+			this.country = 'United States'
+			this.location = 'Los Angeles'
+			cb({ lat: 34.1, long: -118.2 }, TYPE)
+		}.bind(this))
 	}
 
 	/** @see ntp.js */
 	Module.update = function () {
-		this.getLocationName(this._super.bind(this, URL, {
-			lat: this.latitude,
-			'long': this.longitude
-		}, TYPE))
-	}
-
-	Module.getLocationName = function (cb) {
-		var params = {
-			language: window.App.lang,
-			latlng: this.latitude + ',' + this.longitude,
-			sensor: false
-		}
-
-		console.log('Request location name for:', this.latitude, this.longitude)
-
-		$ajax.get('https://maps.googleapis.com/maps/api/geocode/json', params)
-		.success(this.handleLocationResponse.bind(this, cb))
-		.error(function (message) {
-			console.error('Reverse geocoding request failed: ' + message)
-		}.bind(this))
-	}
-
-	Module.handleLocationResponse = function (cb, data) {
-		console.log('Location:', data)
-
-		var byType = {}
-		for (var i = 0; i < data.results.length; i++) {
-			byType[data.results[i].types[0]] = data.results[i].address_components[0]
-		}
-
-		this.location = (byType.locality && byType.locality.long_name) || (byType.administrative_area_level_2 && byType.administrative_area_level_2.short_name)
-		this.country = byType.country ? byType.country.long_name : ''
-
-		cb()
+		this.getLocationName(this._super.bind(this, URL))
 	}
 
 	/** @see ntp.js */

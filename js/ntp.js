@@ -134,9 +134,9 @@
 	Module.init = function (obj, /** @private */ TIME) {
 		this.html = obj[this.name + 'HTML']
 
-		this.showCached(this.html || obj[this.name])
 		if (window.App.now - obj[this.name].date > TIME * 60000)
 			this.update()
+		this.showCached(this.html || obj[this.name])
 	}
 
 	/**
@@ -147,6 +147,7 @@
 	 * @param  	{String|Object}   	data
 	 */
 	Module.showCached = function (data) {
+		if (!data && !data.date) return
 		console.log('Showing cached ' + this.name)
 		this.updateUI(data)
 	}
