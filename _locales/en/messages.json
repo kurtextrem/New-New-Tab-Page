@@ -47,41 +47,13 @@
 		"message": "Recently Closed",
 		"description": "The title for the recently closed box"
 	},
-	"google": {
-		"message": "http$SECURE$://www.google.com/",
-		"description": "Google URL, just costumize the domain ending for you language",
-		"placeholders": {
-			"secure": {
-				"content": "$1",
-				"example": "s"
-			}
-		}
-	},
 	"serviceURL": {
-		"message": "http$SECURE$://$SERVICE$.google.com/",
+		"message": "https://$SERVICE$.google.com/",
 		"description": "Google Service URL, just costumize the domain ending for you language",
 		"placeholders": {
 			"service": {
 				"content": "$2",
 				"example": "news"
-			},
-			"secure": {
-				"content": "$1",
-				"example": "s"
-			}
-		}
-	},
-	"searchURL": {
-		"message": "http$SECURE$://www.google.com/search?q=$STRING$",
-		"description": "Google Search URL, just costumize the domain ending for you language",
-		"placeholders": {
-			"string": {
-				"content": "$2",
-				"example": "Weather"
-			},
-			"secure": {
-				"content": "$1",
-				"example": "s"
 			}
 		}
 	},

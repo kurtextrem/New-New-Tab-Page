@@ -17,16 +17,12 @@
 		"description": "Page title."
 	},
 	"serviceURL": {
-		"message": "http$SECURE$://$SERVICE$.google.de/",
+		"message": "https://$SERVICE$.google.de/",
 		"description": "",
 		"placeholders": {
 			"service": {
 				"content": "$2",
 				"example": "news"
-			},
-			"secure": {
-				"content": "$1",
-				"example": "s"
 			}
 		}
 	},
