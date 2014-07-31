@@ -60,7 +60,7 @@
 			}
 		console.log('Got ' + items.length + ' ' + this.name)
 
-		data.date = window.App.date
+		data.date = window.App.now
 		data.title = xmlDoc.querySelector('title').innerHTML
 		data.url = xmlDoc.querySelector('link').innerHTML
 		for (var i = 0; i < items.length; i++) {
@@ -111,7 +111,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (url, title, date) {
-		this._super('<a href="' + url + '">' + title + '</a>', date)
+		this._super('<a href="' + url + '">' + title + '</a>', new Date(date))
 	}
 
 	/** @see ntp.js */
