@@ -205,7 +205,7 @@ form {
 	text-decoration: underline;
 }
 
-.box__item__title {
+.box__item--title {
 	text-align: left;
 }
 
@@ -247,15 +247,61 @@ form {
 /**
  * Weather widget specific css.
  */
-#box-weather {
-	-webkit-box-orient: vertical;
-	padding: 20px;
+
+#box-weather .box__caption {
+	font-size: 17px;
 }
 
-#box-weather h2 {
-	margin: 0px;
+#box-weather .box__img {
+	margin: 0;
+	text-align: right;
 }
 
+#box-weather .box__img > img {
+	height: 75px;
+	width: 75px;
+}
+
+#box-weather .box__item--title {
+	color: #444;
+	font-size: 75px;
+	margin-left: -25px;
+	margin-top: -5px;
+}
+
+.weather__current--box > .weather__current--data {
+	padding: 0;
+	list-style-type: none;
+	text-align: left;
+	font-size: 15px;
+	margin-top: 7px;
+}
+
+.weather__current--condition {
+	text-transform: uppercase;
+}
+
+.weather__current--wind::before,
+.weather__current--humidity::before {
+	position: relative;
+	top: 3px;
+	opacity: .3;
+}
+
+.weather__current--wind::before {
+	margin-right: 5px;
+	content: url(chrome-extension://__MSG_@@extension_id__/img/wind.webp);
+}
+
+/* by http://www.wpzoom.com */
+
+.weather__current--humidity::before {
+	top: 5px;
+	margin-right: 5px;
+	content: url(chrome-extension://__MSG_@@extension_id__/img/wet.webp);
+}
+
+/**
 #weather-date {
 	font-size: 14px;
 }
@@ -275,11 +321,6 @@ form {
 	font-size: 14px;
 	padding-left: 40px;
 	width: 140px;
-}
-
-#weather-current-icon {
-	width: 60px;
-	height: 60px;
 }
 
 #weather-current-temperature {
@@ -325,23 +366,7 @@ form {
 
 .temperature-low {
 	color: #AAA;
-}
-
-#weather-geolocation-permission {
-	display: -webkit-box;
-	overflow: hidden;
-	padding-top: 16px;
-	-webkit-transition: height 200ms;
-}
-
-#weather-geolocation-permission.hidden {
-	height: 0;
-}
-
-#weather-geolocation-permission a:hover {
-	color: #000;
-	text-decoration: none;
-}
+}*/
 
 /**
  * Represents the 'info' widget, which extends normal widgets.

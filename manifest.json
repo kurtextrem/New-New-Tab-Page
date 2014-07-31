@@ -20,7 +20,7 @@
 	}],
 	"minimum_chrome_version": "33",
 
-	"permissions": ["geolocation", "storage", "*://*.google.com/*"],
+	"permissions": ["geolocation", "storage", "*://*.google.com/*", "*://ntpserv.appspot.com/*"],
 	"optional_permissions": [],
 
 	"web_accessible_resources": ["boxes.html", "_locales/*", "img/*", "fonts/*"]

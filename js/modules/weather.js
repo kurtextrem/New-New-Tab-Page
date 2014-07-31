@@ -8,7 +8,8 @@
 	var TIME = 0, // 60
 		URL = 'https://ntpserv.appspot.com/weather',
 		TYPE = {
-			type: 'json'
+			type: 'json',
+			cache: true
 		}
 
 	/** @see ntp.js */
@@ -52,15 +53,14 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.permission = 0
-		this.country = ''
-		this.location = ''
+		this.location = localStorage['devloc::swml.location'] || 'Los Angeles'
 		this.celsius = obj[this.name + 'Options'].celsius
 
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
+	/** SSL connection currently not working */
 	Module.getLocationName = function (cb) {
 		console.log('Requesting location')
 
@@ -70,19 +70,22 @@
 
 			this.location = data.city
 			this.country = data.country_name
-			cb({ lat: data.latitude, long: data.longitude }, TYPE)
+			cb({ lat: data.latitude, 'long': data.longitude }, TYPE)
 		}.bind(this))
 		.error(function (message) {
 			console.error('Reverse geocoding request failed: ' + message)
 			this.country = 'United States'
 			this.location = 'Los Angeles'
-			cb({ lat: 34.1, long: -118.2 }, TYPE)
+			cb({ lat: 34.1, 'long': -118.2 }, TYPE)
 		}.bind(this))
 	}
 
 	/** @see ntp.js */
 	Module.update = function () {
-		this.getLocationName(this._super.bind(this, URL))
+		this._super(URL, {
+			lat: localStorage['devloc::web.gws.devloc.lat'] || 34.1,
+			'long': localStorage['devloc::web.gws.devloc.lon'] || -118.2
+		}, TYPE)
 	}
 
 	/** @see ntp.js */
@@ -94,7 +97,6 @@
 		console.log('Got ' + items.length + ' ' + this.name)
 
 		data.location = this.location
-		data.country = this.country
 		data.temperature = json.current.temp_f
 		data.humidity = json.current.humidity
 		data.icon = this.MAP[json.current.condition] || 'unkown'
@@ -107,8 +109,8 @@
 		else if (wind_direction < 0 || wind_direction > 360)
 			wind_direction = chrome.i18n.getMessage('mixed')
 		else {
-			wind_direction = this.text[wind_direction] || 'undefined'
-			wind_direction = wind_direction + ', ' + (json.current.wind_speed_mph * 3.6).toLocaleString()
+			wind_direction = this.TEXT[wind_direction] || 'unkown'
+			wind_direction = wind_direction + ', ' + (json.current.wind_speed_mph * 3.6)
 		}
 		data.wind = wind_direction
 
@@ -117,10 +119,10 @@
 			var item = items[i],
 			date = new Date(item.date)
 			if (date.getUTCDate() !== today) {
-				data.entries[i] = {
+				data.entries[i - 1] = {
 					day: this.DAYS[date.getDay()],
-					low: this.convert_(item.low_temp_f),
-					high: this.convert_(item.high_temp_f),
+					low: item.low_temp_f,
+					high: item.high_temp_f,
 					icon: this.MAP[item.condition],
 					condition: item.condition
 				}
@@ -141,8 +143,8 @@
 		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind, data.humidity)
 
 		var length = Math.min(6, data.entries.length)
-		for (var i = 0; i < length; i++)
-			this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
+		//for (var i = 0; i < length; i++)
+		//	this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
 
 		this._super()
 	}
@@ -173,29 +175,30 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (title, date) {
-		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURI(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', this.formatter.format(date))
+		title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
+		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', this.formatter.format(date))
 	}
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (low, high, day, icon, condition) {
-		this.html += '<div class="weather-forecast"><div>' + day + '</div><img src="' + this.getIconURL(icon) + '" title="' + condition + '"><div><span class="temperature-high">' + this.convert(high) + '</span><span class="temperature-low">' + this.convert(low) + '</span></div></div>'
+		this.html += '<div class="weather-forecast" class="box__item col-lg-12"><div>' + day + '</div><img src="' + this.getIconURL(icon) + '" title="' + condition + '"><div><span class="temperature-high">' + this.convert(high) + '</span><span class="temperature-low">' + this.convert(low) + '</span></div></div>'
 	}
 
 	ModuleUI.updateCurrent = function (icon, temperature, condition, wind, humidity) {
-		this.html += '<div id="weather-current">'
-		this.html += '<img id="weather-current-icon" src="' + this.getIconURL(icon) + '">'
-		this.html += '<div id="weather-current-temperature"><div id="weather-temperature">' + this.convert(temperature) + '</div></div>'
+		this.html += '<div id="weather-current" class="box__item row">'
+		this.html += '<div class="box__img col-lg-5"><img id="weather-current-icon" src="' + this.getIconURL(icon) + '"></div>'
+		this.html += '<div id="weather-current-temperature"  class="box__item--title col-lg-4">' + this.convert(temperature) + '<span>°</span></div>'
 
-		wind = [wind, wind.split(',')[1]]
+		wind = [wind, wind.split(', ')[1]]
 		if (this.options.celsius) {
 			wind.push(chrome.i18n.getMessage('speedUnit'))
-			wind[1] = wind[1] * 1.609
+			wind[1] = (wind[1] * 1.609).toLocaleString()
 		} else
-		wind.push(chrome.i18n.getMessage('speedUnit2'))
-		if (wind[1] === null)
+			wind.push(chrome.i18n.getMessage('speedUnit2'))
+		if (!wind[1])
 			wind = [wind, '', '']
 
-		this.html += '<div id="weather__current--box"><div id="weather-condition">' + condition + '</div><div id="weather-wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind + ' ' + wind[2] + '">' + wind[1] + '<sup>' + wind[2] + '</sup></div><div id="weather-humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '</div></div>'
+		this.html += '<div class="weather__current--box col-lg-3 col-lg-pull-1"><ul class="weather__current--data"><li class="weather__current--condition">' + condition + '</li><li class="weather__current--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind + '">' + wind[1] + '<sup>' + wind[2] + '</sup></li><li class="weather__current--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
 		this.html += '</div>'
 	}
 
@@ -218,7 +221,7 @@
 	/** @see ntp.js */
 	ModuleUI.addToDOM = function (html) {
 		chrome.storage.local.set({
-			gmailHTML: this._super(html)
+			weatherHTML: this._super(html)
 		})
 	}
 
