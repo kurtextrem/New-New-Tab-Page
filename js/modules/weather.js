@@ -54,7 +54,6 @@
 	/** @see ntp.js */
 	Module.init = function (obj) {
 		this.location = localStorage['devloc::swml.location'] || 'Los Angeles'
-		this.celsius = obj[this.name + 'Options'].celsius
 
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
@@ -103,16 +102,16 @@
 		data.date = Date.parse(json.update_time)
 		data.condition = chrome.i18n.getMessage(data.icon.replace('_', ''))
 
+		data.wind_speed = json.current.wind_speed_mph
 		var wind_direction = json.current.wind_direction
-		if (json.current.wind_speed_mph === 0)
+		if (data.wind_speed === 0)
 			wind_direction = chrome.i18n.getMessage('windless')
 		else if (wind_direction < 0 || wind_direction > 360)
 			wind_direction = chrome.i18n.getMessage('mixed')
 		else {
 			wind_direction = this.TEXT[wind_direction] || 'unkown'
-			wind_direction = wind_direction + ', ' + (json.current.wind_speed_mph * 3.6)
 		}
-		data.wind = wind_direction
+		data.wind_direction = wind_direction
 
 		var today = window.App.date.getDate()
 		for (var i = 0; i < items.length; i++) {
@@ -140,7 +139,7 @@
 			return this.ui_.addToDOM(data)
 
 		this.ui_.addHeading(data.location, data.date)
-		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind, data.humidity)
+		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
 
 		this.ui_.beginRow()
 		var length = Math.min(6, data.entries.length)
@@ -194,21 +193,19 @@
 		this.html += '</div><!-- /row -->'
 	}
 
-	ModuleUI.updateCurrent = function (icon, temperature, condition, wind, humidity) {
+	ModuleUI.updateCurrent = function (icon, temperature, condition, wind_speed, wind_direction, humidity) {
 		this.html += '<div class="weather__data--current box__item row">'
 		this.html += '<div class="weather__data--img box__img col-lg-5 "><img src="' + this.getIconURL(icon) + '"></div>'
 		this.html += '<div class="weather__data--temperature box__item--title col-lg-4">' + this.convert(temperature) + '</div>'
 
-		wind = [wind, wind.split(', ')[1]] // full string, speed
+		var unit = ''
 		if (this.options.celsius) {
-			wind.push(chrome.i18n.getMessage('speedUnit')) // full string, speed, unit
-			wind[1] = (wind[1] * 1.609).toLocaleString()
+			wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
+			unit = chrome.i18n.getMessage('kmh')
 		} else
-			wind.push(chrome.i18n.getMessage('speedUnit2'))
-		if (!wind[1])
-			wind = [wind[0], '', '']
+			unit = chrome.i18n.getMessage('mph')
 
-		this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind[0] + '">' + wind[1] + '<sup>' + wind[2] + '</sup></li><li class="weather__data--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
+		this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind_direction + ', ' + wind_speed + unit + '">' + wind_speed + '<sup>' + unit + '</sup></li><li class="weather__data--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
 		this.html += '</div>'
 	}
 
