@@ -217,7 +217,7 @@ form {
 /**
  * Clock widget specific css.
  */
-#clock {
+#box-clock > .box__content {
 	font-family: Roboto, sans-serif;
 }
 
@@ -252,16 +252,6 @@ form {
 	font-size: 17px;
 }
 
-#box-weather .box__img {
-	margin: 0;
-	text-align: right;
-}
-
-#box-weather .box__img > img {
-	height: 75px;
-	width: 75px;
-}
-
 #box-weather .box__item--title {
 	color: #444;
 	font-size: 75px;
@@ -269,7 +259,11 @@ form {
 	margin-top: -5px;
 }
 
-.weather__current--box > .weather__current--data {
+.weather__data--current {
+	padding-bottom: 0;
+}
+
+.weather__data {
 	padding: 0;
 	list-style-type: none;
 	text-align: left;
@@ -277,28 +271,80 @@ form {
 	margin-top: 7px;
 }
 
-.weather__current--condition {
+.weather__data--img {
+	margin: 0;
+	text-align: right;
+}
+
+.weather__data--img > img {
+	height: 75px;
+	width: 75px;
+}
+
+.weather__data--day {
 	text-transform: uppercase;
 }
 
-.weather__current--wind::before,
-.weather__current--humidity::before {
+.weather__data--day::after {
+	content: '.';
+}
+
+.weather__data--temperature::after {
+	content: '°';
+}
+
+.weather__data--condition {
+	text-transform: uppercase;
+}
+
+.weather__data--wind::before,
+.weather__data--humidity::before {
 	position: relative;
 	top: 3px;
 	opacity: .3;
 }
 
-.weather__current--wind::before {
+.weather__data--wind::before {
 	margin-right: 5px;
 	content: url(chrome-extension://__MSG_@@extension_id__/img/wind.webp);
 }
 
 /* by http://www.wpzoom.com */
-
-.weather__current--humidity::before {
+.weather__data--humidity::before {
 	top: 5px;
 	margin-right: 5px;
 	content: url(chrome-extension://__MSG_@@extension_id__/img/wet.webp);
+}
+
+/* Forecast */
+.weather__data--forecast > .weather__data {
+	color: #888;
+	font-weight: bold;
+	font-size: 13px;
+	text-align: center;
+	border-left: 1px solid #e5e5e5;
+	padding: 15px 15px 0 6px;
+}
+
+.weather__data--forecast > .weather__data:first-child {
+	border-left: none;
+}
+
+.weather__data--forecast .weather__data--img {
+	text-align: center;
+}
+
+.weather__data--forecast .weather__data--img > img {
+	width: 35px;
+	height: 35px;
+}
+
+.weather__data--high {
+	color: #666;
+}
+
+.weather__data--low {
+	color: #AAA;
 }
 
 /**

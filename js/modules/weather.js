@@ -5,7 +5,7 @@
 	/**
 	 * Constants used in the constructor.
 	 */
-	var TIME = 0, // 60
+	var TIME = 60,
 		URL = 'https://ntpserv.appspot.com/weather',
 		TYPE = {
 			type: 'json',
@@ -142,9 +142,11 @@
 		this.ui_.addHeading(data.location, data.date)
 		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind, data.humidity)
 
+		this.ui_.beginRow()
 		var length = Math.min(6, data.entries.length)
-		//for (var i = 0; i < length; i++)
-		//	this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
+		for (var i = 0; i < length; i++)
+			this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
+		this.ui_.endRow()
 
 		this._super()
 	}
@@ -181,24 +183,32 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (low, high, day, icon, condition) {
-		this.html += '<div class="weather-forecast" class="box__item col-lg-12"><div>' + day + '</div><img src="' + this.getIconURL(icon) + '" title="' + condition + '"><div><span class="temperature-high">' + this.convert(high) + '</span><span class="temperature-low">' + this.convert(low) + '</span></div></div>'
+		this.html += '<ul class="weather__data col-lg-2"><li class="weather__data--day">' + day + '</li><li class="weather__data--img"><img src="' + this.getIconURL(icon) + '" title="' + condition + '"></li><li class="weather__data--temperature weather__data--high">' + this.convert(high) + '</li><li class="weather__data--temperature weather__data--low">' + this.convert(low) + '</li></ul>'
+	}
+
+	ModuleUI.beginRow = function () {
+		this.html += '<div class="weather__data--forecast row">'
+	}
+
+	ModuleUI.endRow = function () {
+		this.html += '</div><!-- /row -->'
 	}
 
 	ModuleUI.updateCurrent = function (icon, temperature, condition, wind, humidity) {
-		this.html += '<div id="weather-current" class="box__item row">'
-		this.html += '<div class="box__img col-lg-5"><img id="weather-current-icon" src="' + this.getIconURL(icon) + '"></div>'
-		this.html += '<div id="weather-current-temperature"  class="box__item--title col-lg-4">' + this.convert(temperature) + '<span>°</span></div>'
+		this.html += '<div class="weather__data--current box__item row">'
+		this.html += '<div class="weather__data--img box__img col-lg-5 "><img src="' + this.getIconURL(icon) + '"></div>'
+		this.html += '<div class="weather__data--temperature box__item--title col-lg-4">' + this.convert(temperature) + '</div>'
 
-		wind = [wind, wind.split(', ')[1]]
+		wind = [wind, wind.split(', ')[1]] // full string, speed
 		if (this.options.celsius) {
-			wind.push(chrome.i18n.getMessage('speedUnit'))
+			wind.push(chrome.i18n.getMessage('speedUnit')) // full string, speed, unit
 			wind[1] = (wind[1] * 1.609).toLocaleString()
 		} else
 			wind.push(chrome.i18n.getMessage('speedUnit2'))
 		if (!wind[1])
-			wind = [wind, '', '']
+			wind = [wind[0], '', '']
 
-		this.html += '<div class="weather__current--box col-lg-3 col-lg-pull-1"><ul class="weather__current--data"><li class="weather__current--condition">' + condition + '</li><li class="weather__current--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind + '">' + wind[1] + '<sup>' + wind[2] + '</sup></li><li class="weather__current--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
+		this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind[0] + '">' + wind[1] + '<sup>' + wind[2] + '</sup></li><li class="weather__data--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
 		this.html += '</div>'
 	}
 
