@@ -324,6 +324,7 @@ form {
 	text-align: center;
 	border-left: 1px solid #e5e5e5;
 	padding: 15px 15px 0 6px;
+	/* @todo: flex for center + automatic width? */
 }
 
 .weather__data--forecast > .weather__data:first-child {

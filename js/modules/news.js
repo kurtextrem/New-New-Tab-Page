@@ -85,8 +85,9 @@
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
-		var length = Math.min(6, data.entries.length)
+
 		this.ui_.addHeading(data.url, data.title, data.date)
+		var length = Math.min(6, data.entries.length) // @todo: respect option
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].img)
 		this._super()
