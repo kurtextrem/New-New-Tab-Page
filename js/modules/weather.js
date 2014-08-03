@@ -180,11 +180,11 @@
 	}
 
 	ModuleUI.beginRow = function () {
-		this.html += '<div class="weather__data--forecast row">'
+		this.html += '<div class="weather__data--forecast">'
 	}
 
 	ModuleUI.endRow = function () {
-		this.html += '</div><!-- /row -->'
+		this.html += '</div><!-- /forecast -->'
 	}
 
 	ModuleUI.updateCurrent = function (icon, temperature, condition, wind_speed, wind_direction, humidity) {

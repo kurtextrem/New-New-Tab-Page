@@ -247,16 +247,19 @@ form {
 /**
  * Weather widget specific css.
  */
+#box-weather {
+	font-family: Roboto, sans-serif;
+}
 
 #box-weather .box__caption {
 	font-size: 17px;
 }
 
 #box-weather .box__item--title {
-	color: #444;
+	color: black;
 	font-size: 75px;
 	margin-left: -25px;
-	margin-top: -5px;
+	line-height: 1.1;
 }
 
 .weather__data--current {
@@ -272,7 +275,7 @@ form {
 }
 
 .weather__data--img {
-	margin: 0;
+	margin: 5px 0 0 0;
 	text-align: right;
 }
 
@@ -317,19 +320,23 @@ form {
 }
 
 /* Forecast */
+.weather__data--forecast {
+	display: flex;
+	justify-content: space-between;
+}
+
 .weather__data--forecast > .weather__data {
 	color: #888;
 	font-weight: bold;
 	font-size: 13px;
 	text-align: center;
-	border-left: 1px solid #e5e5e5;
-	padding: 15px 15px 0 6px;
-	/* @todo: flex for center + automatic width? */
+	padding: 0 15px 0 6px;
+	/*border-right: 1px solid #e5e5e5;*/
 }
 
-.weather__data--forecast > .weather__data:first-child {
-	border-left: none;
-}
+/*.weather__data--forecast > .weather__data:last-child {
+	border-right: none;
+}*/
 
 .weather__data--forecast .weather__data--img {
 	text-align: center;
@@ -348,72 +355,6 @@ form {
 	color: #AAA;
 }
 
-/**
-#weather-date {
-	font-size: 14px;
-}
-
-#weather-current {
-	-webkit-box-align: center;
-	-webkit-box-orient: horizontal;
-	display: -webkit-box;
-	margin: 0 auto 0 auto;
-	padding-top: 10px;
-	width: 300px;
-}
-
-#weather-current-box {
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
-	font-size: 14px;
-	padding-left: 40px;
-	width: 140px;
-}
-
-#weather-current-temperature {
-	-webkit-box-align: start;
-	-webkit-box-orient: horizontal;
-	display: -webkit-box;
-}
-
-#weather-temperature {
-	color: #444;
-	display: -webkit-box;
-	font-size: 60px;
-	padding-left: 10px;
-}
-
-#celsius {
-	display: -webkit-box;
-	position: relative;
-	top: 10px;
-}
-
-#weather-forecast-box {
-	-webkit-box-orient: horizontal;
-	-webkit-box-pack: justify;
-	display: -webkit-box;
-	padding: 15px 20px 0 20px;
-}
-
-.weather-forecast div {
-	color: #888;
-	font-size: 12px;
-	text-align: center;
-}
-
-.weather-forecast img {
-	width: 35px;
-	height: 35px;
-}
-
-.temperature-high {
-	color: #666;
-}
-
-.temperature-low {
-	color: #AAA;
-}*/
 
 /**
  * Represents the 'info' widget, which extends normal widgets.
