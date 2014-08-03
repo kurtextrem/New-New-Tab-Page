@@ -223,14 +223,16 @@ form {
 
 .clock__hours, .clock__minutes {
 	font-size: 60px;
-	padding: 0 10px 0 0;
 	line-height: 60px;
 	color: black;
 }
 
+.clock__hours {
+	padding: 0 15px 0 0;
+}
+
 .clock__minutes {
 	font-weight: 100;
-	padding-left: 5px;
 }
 
 .clock__postfix {
@@ -240,7 +242,7 @@ form {
 }
 
 .clock__date {
-	padding: 5px 0;
+	padding: 5px 0 0 0;
 }
 
 
@@ -263,6 +265,8 @@ form {
 }
 
 .weather__data--current {
+	border-top: 0;
+	padding-top: 0;
 	padding-bottom: 0;
 }
 
