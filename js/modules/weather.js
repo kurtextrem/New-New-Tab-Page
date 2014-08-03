@@ -104,9 +104,7 @@
 
 		data.wind_speed = json.current.wind_speed_mph
 		var wind_direction = json.current.wind_direction
-		if (data.wind_speed === 0)
-			wind_direction = chrome.i18n.getMessage('windless')
-		else if (wind_direction < 0 || wind_direction > 360)
+		if (wind_direction < 0 || wind_direction > 360)
 			wind_direction = chrome.i18n.getMessage('mixed')
 		else {
 			wind_direction = this.TEXT[wind_direction] || 'unkown'
@@ -142,7 +140,7 @@
 		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
 
 		this.ui_.beginRow()
-		var length = Math.min(6, data.entries.length)
+		var length = Math.min(4, data.entries.length) // @todo: respect option || Math.max(data.entries.length, option.amount)
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
 		this.ui_.endRow()
@@ -167,10 +165,6 @@
 			hour: '2-digit',
 			minute: '2-digit'
 		})
-		/*if (val.forecast_length != 4)
-			window.setTimeout(function () {
-				$('.weather-forecast').css('border-right', 'none')
-			}, 200)*/
 		this._super(name, options)
 	}
 
@@ -199,11 +193,17 @@
 		this.html += '<div class="weather__data--temperature box__item--title col-lg-4">' + this.convert(temperature) + '</div>'
 
 		var unit = ''
-		if (this.options.celsius) {
-			wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
-			unit = chrome.i18n.getMessage('kmh')
-		} else
-			unit = chrome.i18n.getMessage('mph')
+		if (wind_speed === 0) {
+			wind_speed = chrome.i18n.getMessage('windless')
+			unit = ''
+			wind_direction = ''
+		} else {
+			if (this.options.celsius) {
+				wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
+				unit = chrome.i18n.getMessage('kmh')
+			} else
+				unit = chrome.i18n.getMessage('mph')
+		}
 
 		this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind_direction + ', ' + wind_speed + unit + '">' + wind_speed + '<sup>' + unit + '</sup></li><li class="weather__data--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity +  '%">' + humidity + '%</li></ul></div>'
 		this.html += '</div>'
