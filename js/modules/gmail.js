@@ -110,7 +110,7 @@
 			lang: window.App.lang,
 			title: 'You have ' + count + ' new mail(s)',
 			body: count + ' new and a total of ' + total + ' unread mail(s).',
-			icon: 'https://cdn1.iconfinder.com/data/icons/free-colorful-icons/128/gmail.png'
+			icon: 'https://cdn1.iconfinder.com/data/icons/free-colorful-icons/128/gmail.png' // @todo: Switch to local image
 		},
 			notification = new Notification(opt.title, opt)
 			notification.onclick = function () {
@@ -125,15 +125,19 @@
 		notification.onerror = function () {
 			this.error()
 		}.bind(this)
-		notification.onclose = function () {}
+		//notification.onclose = function () {}
+		window.addEventListener('unload', function () {
+			notification.close()
+		}, false)
 	}
 
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
-		var length = Math.min(7, data.entries.length)
+
 		this.ui_.addHeading(data.count, data.title, data.date)
+		var length = Math.min(7, data.entries.length) // @todo: respect option
 		for (var i = 0; i < length; i++)
 			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
 		this._super()
