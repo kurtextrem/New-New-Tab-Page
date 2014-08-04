@@ -3,12 +3,12 @@
 		<div class="col-lg-3 col-lg-offset-1 col-md-4">
 			<div class="box" id="box-gmail">
 				<i class="box-info"></i>
-				<div class="box__content"><h2 class="box__item">No mails found.</h2></div>
+				<div class="box__content"><h2 class="box__item" i18n-content="gmail_none">No mails found.</h2></div>
 				<div class="box-info__content container-fluid hide">
-					<p class="box-info__text"><strong i18n-content="promotedServices">Displays your mails from GMail. If the box isn't loading visit <a href="https://mails.google.com/mail">gmail.com</a> and log in.</strong></p>
-					<p class="box-info__text"><strong i18n-content="promotedServices">If you want to disable notifications, go to your Chrome Settings (chrome://settings) and revoke the notification permission for Google.</strong></p>
+					<p class="box-info__text"><strong i18n-content="gmail_description1">Displays your mails from GMail. If the box isn't loading visit <a href="https://mails.google.com/mail">gmail.com</a> and log in.</strong></p>
+					<p class="box-info__text"><strong i18n-content="gmail_description2">If you want to disable notifications, go to your Chrome Settings (chrome://settings) and revoke the notification permission for Google.</strong></p>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="gmail__amount">Amount</label></div>
+						<div class="col-lg-5"><label for="gmail__amount" i18n-content="gmail_amount">Amount</label></div>
 						<div class="col-lg-6">0<input type="range" value="6" id="gmail__amount" max="19" min="0">20</div>
 					</div>
 				</div>
@@ -19,20 +19,20 @@
 				<i class="box-info"></i>
 				<div id="clock" class="box__content box__item"></div>
 				<div class="box-info__content container-fluid hide">
-					<p class="box-info__text"><strong i18n-content="promotedServices">A Google Now-like clock.</strong></p>
+					<p class="box-info__text"><strong i18n-content="clock_description">A Google Now-like clock.</strong></p>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="clock__twelveHours">12h clock</label></div>
+						<div class="col-lg-5"><label for="clock__twelveHours"  i18n-content="clock_12h">12h clock</label></div>
 						<div class="col-lg-6 col-lg-push-1"><input type="checkbox" id="clock__twelveHours" class="cmn-toggle cmn-toggle-round"><label for="clock__twelveHours"></label></div>
 					</div>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="clock__dayBackground">Background theme</label></div>
+						<div class="col-lg-5"><label for="clock__dayBackground"  i18n-content="clock_background">Background theme</label></div>
 						<div class="col-lg-6 col-lg-push-1">
 							<select id="clock__dayBackground">
 								<option>Austin</option>
 								<option>Berlin</option>
-								<option selected>Beach</option>
+								<option selected i18n-content="clock_beach">Beach</option>
 								<option>Chicago</option>
-								<option>Default</option>
+								<option i18n-content="clock_default">Default</option>
 								<option value="GreatPlains">Great Plains</option>
 								<option>London</option>
 								<option value="NewYork">New York</option>
@@ -48,20 +48,20 @@
 
 			<div class="box" id="box-weather">
 				<i class="box-info"></i>
-				<div class="box__content container-fluid"><h2><a i18n-content="weather" class="box__item">Wetter</a></h2></div>
+				<div class="box__content container-fluid"><h2><a class="box__item" i18n-content="weather"></a></h2></div>
 				<div class="box-info__content container-fluid hide">
 					<p class="box-info__text"><strong i18n-content="locationBased"></strong></p>
-					<p class="box-info__text"><strong>If the weather is not personalized, go to Google and search for <a href="https://www.google.de/search?q=Wetter#footcnt">Weather</a>. Click "Use exact location" in the footer.</strong></p>
+					<p class="box-info__text"><strong i18n-content="weathe_description"></strong></p>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="weather__cool"></label></div>
+						<div class="col-lg-5"><label for="weather__cool" i18n-content="weather_cool"></label></div>
 						<div class="col-lg-6 col-lg-push-1"><input type="checkbox" id="weather__cool" class="cmn-toggle cmn-toggle-round"><label for="weather__cool"></label></div>
 					</div>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="weather__celsius"></label></div>
+						<div class="col-lg-5"><label for="weather__celsius" i18n-content="weather_celsius"></label></div>
 						<div class="col-lg-6 col-lg-push-1"><input type="checkbox" id="weather__celsius" class="cmn-toggle cmn-toggle-round" chcked><label for="weather__celsius"></label></div>
 					</div>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="weather__amount">Amount</label></div>
+						<div class="col-lg-5"><label for="weather__amount" i18n-content="weather_amount"></label></div>
 						<div class="col-lg-6">0<input type="range" value="4" id="weather__amount" max="9" min="0">9</div>
 					</div>
 				</div>
@@ -70,11 +70,11 @@
 		<div class="col-lg-3 col-md-5">
 			<div class="box" id="box-news">
 				<i class="box-info"></i>
-				<div class="box__content"><h2 class="box__item">No news found.</h2></div>
+				<div class="box__content"><h2 class="box__item" i18n-content="news_none"></h2></div>
 				<div class="box-info__content container-fluid hide">
-					<p class="box-info__text"><strong i18n-content="locationBased">Location based</strong></p>
+					<p class="box-info__text"><strong i18n-content="locationBased"></strong></p>
 					<div class="row box-info__options">
-						<div class="col-lg-5"><label for="news__amount">Amount</label></div>
+						<div class="col-lg-5"><label for="news__amount" i18n-content="news_amount"></label></div>
 						<div class="col-lg-6">0<input type="range" value="6" id="news__amount" max="19" min="0">20</div>
 					</div>
 				</div>

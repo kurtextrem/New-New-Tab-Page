@@ -1,4 +1,4 @@
-/* global console,qwest,Class */
+/* global console, qwest, Class, i18n */
 +function (window, $, $ajax, Class) {
 	'use strict';
 
@@ -80,6 +80,7 @@
 			cache: 'true'
 		}).success(function (body) {
 			$('body').append(body)
+			i18n.process(document, chrome.i18n)
 		}.bind(this))
 	}
 
@@ -379,4 +380,4 @@
 	 * Initiates the App and makes it public.
 	 */
 	window.App = new App()
-}(window, $, qwest, Class)
+}(window, $, qwest, Class);

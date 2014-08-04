@@ -12,10 +12,7 @@
 		"message": "NT neuGedacht",
 		"description": "Extension short name."
 	},
-	"title": {
-		"message": "Neuer Tab",
-		"description": "Page title."
-	},
+
 	"serviceURL": {
 		"message": "https://$SERVICE$.google.de/",
 		"description": "",
@@ -26,46 +23,34 @@
 			}
 		}
 	},
-	"weather": {
-		"message": "Wetter",
-		"description": ""
+	"ok": {
+		"message": "ok",
+		"description": "Used as button text"
 	},
-	"useGeoLocation": {
-		"message": "Aktuellen Standort benutzen.",
-		"description": ""
-	},
+
+
 	"news": {
 		"message": "News",
 		"description": ""
 	},
-	"moreNews": {
+	"news_more": {
 		"message": "Mehr News",
 		"description": ""
 	},
+	"news_none": {
+		"message": "No news found.",
+		"description": ""
+	},
+	"news_amount": {
+		"message": "News Anzahl",
+		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+	},
 	"locationBased": {
-		"message": "Basiert auf Ihrem aktuellen Standort",
+		"message": "Basiert auf Ihrem aktuellen Standort.",
 		"description": ""
 	},
-	"coolWeather": {
-		"message": "Cooles Wetter",
-		"description": ""
-	},
-	"on": {
-		"message": "An",
-		"description": ""
-	},
-	"off": {
-		"message": "Aus",
-		"description": ""
-	},
-	"celsius": {
-		"message": "Celsius",
-		"description": ""
-	},
-	"temperatureUnit": {
-		"message": "C",
-		"description": ""
-	},
+
+
 	"chromeWebStore": {
 		"message": "Chrome Web Store",
 		"description": ""
@@ -82,13 +67,35 @@
 		"message": "Hefte deine Lieblingsseiten an!",
 		"description": "Title of the whats new popup v1"
 	},
-	"pinYourFavoritesText": {
-		"message": "Du kannst jetzt deine Lieblingsseiten anheften, damit sie nicht mehr verschwinden (wenn sie das taten).",
-		"description": "Detailed text of the whats new popup v1"
+
+
+	"weather": {
+		"message": "Wetter",
+		"description": ""
 	},
-	"ok": {
-		"message": "ok",
-		"description": "Used with buttons"
+	"useGeoLocation": {
+		"message": "Aktuellen Standort benutzen.",
+		"description": ""
+	},
+	"weather_description": {
+		"message": "If the weather is not personalized, go to Google and search for <a href='https://www.google.de/search?q=Wetter#footcnt'>Weather</a>. Click \"Use exact location\" in the footer.",
+		"description": ""
+	},
+	"weather_amount": {
+		"message": "Anzahl der Tage",
+		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+	},
+	"weather_cool": {
+		"message": "Cooles Wetter",
+		"description": ""
+	},
+	"weather_celsius": {
+		"message": "Celsius",
+		"description": ""
+	},
+	"weather_temperatureUnit": {
+		"message": "C",
+		"description": ""
 	},
 	"cloudy": {
 		"message": "Bewölkt",
@@ -166,13 +173,13 @@
 		"message": "Gemischt",
 		"description": "Weather name"
 	},
-	"speedUnit": {
+	"kmh": {
 		"message": "km/h",
-		"description": "The unit used for speed messurements"
+		"description": "Kilometers per hour shortcut"
 	},
-	"speedUnit2": {
+	"mph": {
 		"message": "mph",
-		"description": "The unit  which isn't used used for speed messurements"
+		"description": "Miles per hour shortcut"
 	},
 	"mon": {
 		"message": "Mo",
@@ -234,10 +241,8 @@
 		"message": "O",
 		"description": "Shortcut for east (wind direction)"
 	},
-	"forecastAmount": {
-		"message": "Anzahl der Tage",
-		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
-	},
+
+
 	"merryChristmas": {
 		"message": "Fröhliche Weihnachten!",
 		"description": ""

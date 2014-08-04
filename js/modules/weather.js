@@ -1,4 +1,4 @@
-/* global console,qwest,Intl */
+/* global console, qwest, Intl */
 +function (window, $ajax) {
 	'use strict';
 
@@ -236,4 +236,4 @@
 	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
 
 	window.App.register(Module)
-}(window, qwest)
+}(window, qwest);
