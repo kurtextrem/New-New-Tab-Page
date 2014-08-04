@@ -127,11 +127,16 @@ form {
 	margin-top: 0 !important;
 	padding-top: 20px;
 	background-repeat: no-repeat;
-	height: 131px;
+	height: 100%;
+	min-height: 131px;
 }
 
 #lga > img {
 	padding-top: 0 !important;
+}
+
+#lga > #dood {
+	margin-top: -16px;
 }
 
 /**
