@@ -2,7 +2,6 @@
 	"extDesc": {
 		"message": "Neue 'Neuer Tab' Seite. Wetter, News und Mails an einem Ort.",
 		"description": "Extension description."
-
 	},
 	"extName": {
 		"message": "Neuer Tab neuGedacht",
@@ -25,7 +24,47 @@
 	},
 	"ok": {
 		"message": "ok",
-		"description": "Used as button text"
+		"description": ""
+	},
+
+
+	"gmail_none": {
+		"message": "Keine Mails gefunden.",
+		"description": ""
+	},
+	"gmail_description1": {
+		"message": "Zeigt deine Mails von GMail an. Wenn die Box nicht läd, besuche <a href='https://mails.google.com/mail'>gmail.com</a> und melde dich an.",
+		"description": ""
+	},
+	"gmail_description1": {
+		"message": "Wenn du Benachrichtigungen deaktivieren willst, geh zu den Chrome Einstellungen (chrome://settings) und zieh die Erlaubnis für Benachrichtigungen auf Google.de zurück.",
+		"description": ""
+	},
+	"gmail_amount": {
+		"message": "Mail Anzahl",
+		"description": ""
+	},
+
+
+	"clock_description": {
+		"message": "Eine Google Now ähnliche Uhr.",
+		"description": ""
+	},
+	"clock_12h": {
+		"message": "12-Stunden Uhr",
+		"description": ""
+	},
+	"clock_background": {
+		"message": "Hintergrund Design",
+		"description": ""
+	},
+	"clock_beach": {
+		"message": "Strand",
+		"description": ""
+	},
+	"clock_default": {
+		"message": "Standard",
+		"description": ""
 	},
 
 
@@ -38,12 +77,12 @@
 		"description": ""
 	},
 	"news_none": {
-		"message": "No news found.",
+		"message": "Keine News gefunden.",
 		"description": ""
 	},
 	"news_amount": {
 		"message": "News Anzahl",
-		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+		"description": ""
 	},
 	"locationBased": {
 		"message": "Basiert auf Ihrem aktuellen Standort.",
@@ -78,7 +117,7 @@
 		"description": ""
 	},
 	"weather_description": {
-		"message": "If the weather is not personalized, go to Google and search for <a href='https://www.google.de/search?q=Wetter#footcnt'>Weather</a>. Click \"Use exact location\" in the footer.",
+		"message": "Wenn das Wetter nicht personalisiert ist, rufen Sie Google auf und suchen Sie nach <a href='https://www.google.de/search?q=Wetter#footcnt'>Wetter</a>. Klicken Sie danach \"Exakten Standort benutzen\" im unteren Teil.",
 		"description": ""
 	},
 	"weather_amount": {
@@ -86,7 +125,7 @@
 		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
 	},
 	"weather_cool": {
-		"message": "Cooles Wetter",
+		"message": "Coole Wetter Icons",
 		"description": ""
 	},
 	"weather_celsius": {

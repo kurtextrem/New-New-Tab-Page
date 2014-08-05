@@ -1,6 +1,6 @@
 {
 	"extDesc": {
-		"message": "New 'New Tab' Page. Weather, News, Search, recently closed tabs and apps in one place.",
+		"message": "New 'New Tab' Page. Weather, News and Mails in one place.",
 		"description": "Extension description."
 	},
 	"extName": {
@@ -11,42 +11,7 @@
 		"message": "NTP reImagined",
 		"description": "Extension short name."
 	},
-	"translate": {
-		"message": "Translate",
-		"description": "Google Translate in the apps list (first four)"
-	},
-	"maps": {
-		"message": "Maps",
-		"description": "Google Maps in the apps list (first four)"
-	},
-	"title": {
-		"message": "New Tab",
-		"description": "Page title."
-	},
-	"removedWebsite": {
-		"message": "Removed website from most visited.",
-		"description": "Appears when the 'X' on a thumbnail had been clicked"
-	},
-	"search": {
-		"message": "Search",
-		"description": "The placeholder text in the search box"
-	},
-	"remove": {
-		"message": "Remove",
-		"description": "The title for the 'X' on the most visited thumbnails (shown on hover)"
-	},
-	"undo": {
-		"message": "Undo",
-		"description": "Located in the message after a 'X' had been clicked"
-	},
-	"restoreAll": {
-		"message": "Restore all",
-		"description": "Located in the message after a 'X' had been clicked"
-	},
-	"recentlyClosed": {
-		"message": "Recently Closed",
-		"description": "The title for the recently closed box"
-	},
+
 	"serviceURL": {
 		"message": "https://$SERVICE$.google.com/",
 		"description": "Google Service URL, just costumize the domain ending for you language",
@@ -57,57 +22,77 @@
 			}
 		}
 	},
-	"weather": {
-		"message": "Weather",
-		"description": "The title for the weather box (hidden)"
+	"ok": {
+		"message": "ok",
+		"description": "Used with buttons"
 	},
-	"apps": {
-		"message": "Apps",
-		"description": "The title for the apps box (hidden)"
+
+
+	"gmail_none": {
+		"message": "No mails found.",
+		"description": ""
 	},
+	"gmail_description1": {
+		"message": "Displays your mails from GMail. If the box isn't loading visit <a href='https://mails.google.com/mail'>gmail.com</a> and log in.",
+		"description": ""
+	},
+	"gmail_description1": {
+		"message": "If you want to disable notifications, go to your Chrome Settings (chrome://settings) and revoke the notification permission for Google.",
+		"description": ""
+	},
+	"gmail_amount": {
+		"message": "Mail count",
+		"description": ""
+	},
+
+
+	"clock_description": {
+		"message": "A Google Now-like clock.",
+		"description": ""
+	},
+	"clock_12h": {
+		"message": "12h clock",
+		"description": ""
+	},
+	"clock_background": {
+		"message": "Background theme",
+		"description": ""
+	},
+	"clock_beach": {
+		"message": "Beach",
+		"description": ""
+	},
+	"clock_default": {
+		"message": "Default",
+		"description": ""
+	},
+
+
 	"news": {
 		"message": "News",
 		"description": "The title for the news box (hidden)"
 	},
-	"moreNews": {
+	"news_more": {
 		"message": "More News",
 		"description": " Located at the bottom of the news box"
 	},
-	"promotedServices": {
-		"message": "The first four Apps are promoted from Google (More on chrome://apps)",
+	"news_none": {
+		"message": "No news found.",
 		"description": ""
+	},
+	"news_amount": {
+		"message": "News amount",
+		"description": "Description for the silder that let's user determine how many items they want to see in the news-box"
 	},
 	"locationBased": {
 		"message": "Based on your location",
 		"description": "In the info box of the weather box"
 	},
-	"coolWeather": {
-		"message": "Cool weather",
-		"description": "In the info box of the weather box"
-	},
-	"on": {
-		"message": "On",
-		"description": "Used in the slider in info boxes"
-	},
-	"off": {
-		"message": "Off",
-		"description": "Used in the slider in info boxes"
-	},
-	"celsius": {
-		"message": "Celsius",
-		"description": ""
-	},
-	"temperatureUnit": {
-		"message": "F",
-		"description": "The temperature unit for this language (only insert C for Celsius or F for Fahrenheit)"
-	},
+
+
 	"chromeWebStore": {
 		"message": "Chrome Web Store",
 		"description": "Title for the Chrome Web Store in the apps list (first spot)"
-	},
-	"reloadPlease": {
-		"message": "Reload the page please.",
-		"description": "Only visible on first startup"
 	},
 	"favorite": {
 		"message": "Attach",
@@ -121,13 +106,35 @@
 		"message": "Pin your favorite sites!",
 		"description": "Title of the whats new popup v1"
 	},
-	"pinYourFavoritesText": {
-		"message": "You now can pin your favorite sites, so they won't disappear again (if they did).",
-		"description": "Detailed text of the whats new popup v1"
+
+
+	"weather": {
+		"message": "Weather",
+		"description": "The title for the weather box (hidden)"
 	},
-	"ok": {
-		"message": "ok",
-		"description": "Used with buttons"
+	"useGeoLocation": {
+		"message": "Use geo-location.",
+		"description": ""
+	},
+	"weather_description": {
+		"message": "If the weather is not personalized, go to Google and search for <a href='https://www.google.com/search?q=Wetter#footcnt'>Weather</a>. Click \"Use exact location\" in the footer.",
+		"description": ""
+	},
+	"weather_amount": {
+		"message": "Amount of days",
+		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
+	},
+	"weather_cool": {
+		"message": "Cool weather icons",
+		"description": "In the info box of the weather box"
+	},
+	"weather_celsius": {
+		"message": "Celsius",
+		"description": ""
+	},
+	"weather_temperatureUnit": {
+		"message": "F",
+		"description": "The temperature unit for this language (only insert C for Celsius or F for Fahrenheit)"
 	},
 	"cloudy": {
 		"message": "Cloudy",
@@ -205,12 +212,12 @@
 		"message": "Mixed",
 		"description": "Weather name"
 	},
-	"speedUnit": {
-		"message": "mph",
+	"kmh": {
+		"message": "km/h",
 		"description": "The unit used for speed messurements"
 	},
-	"speedUnit2": {
-		"message": "km/h",
+	"mph": {
+		"message": "mph",
 		"description": "The unit  which isn't used used for speed messurements"
 	},
 	"mon": {
@@ -273,14 +280,8 @@
 		"message": "E",
 		"description": "Shortcut for east (wind direction)"
 	},
-	"moreForeCasts": {
-		"message": "Starting today, you can easily change how many days you want to see as a forecast.",
-		"description": "Detailed text of the whats new popup v1.1"
-	},
-	"forecastAmount": {
-		"message": "Amount of days",
-		"description": "Description for the silder that let's user determine how many days they want to see in the weather-forecast"
-	},
+
+
 	"merryChristmas": {
 		"message": "Merry Christmas!",
 		"description": ""

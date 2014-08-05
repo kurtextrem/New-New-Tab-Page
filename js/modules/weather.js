@@ -31,7 +31,7 @@
 		name: 'weatherOptions',
 		type: {
 			amount: 4,
-			celsius: !!chrome.i18n.getMessage('temperatureUnit'),
+			celsius: chrome.i18n.getMessage('weather_temperatureUnit') === 'C',
 			cool: false
 		}
 	}]
