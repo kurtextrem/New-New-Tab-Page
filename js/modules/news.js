@@ -116,7 +116,7 @@
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
 		date = new Date(date)
-		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + date.toLocalString() + '">' + window.App.prettyDate(date) + '</time> &ndash;  ' + source + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + date.toLocaleString() + '">' + window.App.prettyDate(date) + '</time> &ndash;  ' + source + '</span></div></div>'
 	}
 
 	/** @see ntp.js */
