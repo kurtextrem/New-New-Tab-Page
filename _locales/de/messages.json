@@ -66,6 +66,42 @@
 		"message": "Standard",
 		"description": ""
 	},
+	"clock_ago": {
+		"message": "Vor",
+		"description": ""
+	},
+	"clock_in": {
+		"message": "In",
+		"description": ""
+	},
+	"clock_pre": {
+		"message": "true",
+		"description": ""
+	},
+	"clock_yesterday": {
+		"message": "Gestern",
+		"description": ""
+	},
+	"clock_now": {
+		"message": "Just Now",
+		"description": ""
+	},
+	"clock_minute": {
+		"message": "Minute",
+		"description": ""
+	},
+	"clock_minutes": {
+		"message": "Minuten",
+		"description": ""
+	},
+	"clock_hour": {
+		"message": "Stunde",
+		"description": ""
+	},
+	"clock_hours": {
+		"message": "Stunden",
+		"description": ""
+	},
 
 
 	"news": {

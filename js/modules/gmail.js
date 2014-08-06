@@ -162,7 +162,8 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (title, url, date, author) {
-		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time is="relative-time" data-now="' + window.App.date + '" data-lang="' + window.App.lang + '">' + date + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
+		date = new Date(date)
+		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time datetime="' + date.toISOString() + '" title="' + date.toLocalString() + '">' + window.App.prettyDate(date) + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
 	/** @see ntp.js */

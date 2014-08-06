@@ -1,4 +1,4 @@
-/* global console, qwest, Class, i18n */
+/* global console, qwest, Class, i18n, Intl */
 +function (window, $, $ajax, Class) {
 	'use strict';
 
@@ -14,7 +14,6 @@
 
 		this.loadBoxes()
 		this.checkResolution()
-		this.addCustomElements()
 	}
 
 	/** @type	{Array}		Reference to the registered modules. */
@@ -69,12 +68,6 @@
 		}.bind(this))
 	}
 
-	App.prototype.addCustomElements = function () {
-		var s = document.createElement('script')
-		s.src = chrome.extension.getURL('js/time.js')
-		document.body.appendChild(s)
-	}
-
 	/**
 	 * Loads the boxes.
 	 *
@@ -112,6 +105,50 @@
 	App.prototype.updateTimestamp = function () {
 		this.date = new Date()
 		this.now = this.date.valueOf()
+	}
+
+	App.prototype.prettyDate = function (date) {
+		var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
+			token = chrome.i18n.getMessage('clock_ago'),
+			out = '',
+			pre = Boolean(chrome.i18n.getMessage('clock_pre'))
+
+		if (diff < 0) {
+			diff = Math.abs(diff)
+			pre = true
+			token = chrome.i18n.getMessage('clock_in')
+		}
+
+		switch (true) {
+			case diff < 60:
+				return chrome.i18n.getMessage('clock_now')
+			case diff < 120:
+				out = '1 ' + chrome.i18n.getMessage('clock_minute')
+				break
+			case diff < 3600:
+				out = Math.floor(diff / 60) + ' ' + chrome.i18n.getMessage('clock_minutes')
+				break
+			case diff < 7200:
+				out = '1 ' + chrome.i18n.getMessage('clock_hour')
+				break
+			case diff < 86400:
+				out = Math.floor(diff / 3600) + ' ' + chrome.i18n.getMessage('clock_hours')
+				break;
+			case Math.floor(diff / 86400) === 1:
+				return chrome.i18n.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
+				break
+			default:
+				return Intl.DateTimeFormat(this.lang, {
+					year: '2-digit',
+					month: '2-digit',
+					day: '2-digit',
+					weekday: 'short',
+					hour: '2-digit',
+					minute: '2-digit'
+				}).format(date.valueOf())
+		}
+
+		return pre ? token + ' ' + out : out + ' ' + token
 	}
 
 	/** @deprecated  Added the classes using CSS; Used for reference */
@@ -166,7 +203,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 */
-	Module.update = function (/** @private */ url, /** @private */ param, /** @private */ type) {
+	Module.update = function ( /** @private */ url, /** @private */ param, /** @private */ type) {
 		console.log('Requesting ' + this.name)
 		$ajax.get(url, param, type).success(this.success.bind(this)).error(this.error.bind(this))
 	}
@@ -177,7 +214,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-26
 	 */
-	Module.success = function (/** xmlDoc */) {}
+	Module.success = function ( /** xmlDoc */ ) {}
 
 	/**
 	 * Function called after an failed update request.
@@ -197,7 +234,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-26
 	 */
-	Module.updateUI = function (/** data */) {
+	Module.updateUI = function ( /** data */ ) {
 		//this.ui_.addMoreLink(news.url)
 		this.ui_.addToDOM()
 	}
@@ -232,7 +269,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 */
-	ModuleUI.addHeading = function (/** @private */ html, /** @private */ date) {
+	ModuleUI.addHeading = function ( /** @private */ html, /** @private */ date) {
 		this.html += '<header class="box__item box__caption" title="Last refresh: ' + date + '"><h2>' + html + '</h2></header>'
 	}
 
@@ -242,7 +279,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 */
-	ModuleUI.addHTML = function (/** params */) {}
+	ModuleUI.addHTML = function ( /** params */ ) {}
 
 	/**
 	 * Adds a "more" link.
@@ -298,24 +335,24 @@
 	ModuleUIExtended.addListener = function (name) {
 		// @todo: will-change on mousedown?
 		var $infoToggle = $(name + ' > .box-info'),
-		$infoContent = $(this.info)
+			$infoContent = $(this.info)
 
-		// "i" click
-		$infoToggle.on('click', function () {
-			this.toggleInfo($infoToggle, $infoContent)
-		}.bind(this)).on('click.once', function () { // load options on startup
-			$infoToggle.off('click.once')
-			this.load(name)
-		}.bind(this))
+			// "i" click
+			$infoToggle.on('click', function () {
+				this.toggleInfo($infoToggle, $infoContent)
+			}.bind(this)).on('click.once', function () { // load options on startup
+				$infoToggle.off('click.once')
+				this.load(name)
+			}.bind(this))
 
-		// options change
-		$infoContent.find('input, select').on('change', function (e) {
-			var val = e.target.value
-			if (e.target.type === 'checkbox')
-				val = !!e.target.checked
-			this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
-			// @todo: Update UI
-		}.bind(this))
+			// options change
+			$infoContent.find('input, select').on('change', function (e) {
+				var val = e.target.value
+				if (e.target.type === 'checkbox')
+					val = !! e.target.checked
+				this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
+				// @todo: Update UI
+			}.bind(this))
 	}
 
 	/**
