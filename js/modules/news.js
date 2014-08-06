@@ -88,8 +88,8 @@
 
 		this.ui_.addHeading(data.url, data.title, data.date)
 		var length = Math.min(6, data.entries.length) // @todo: respect option
-		for (var i = 0; i < length; i++)
-			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].img)
+		while (length--)
+			this.ui_.addHTML(data.entries[length].title, data.entries[length].url, data.entries[length].date, data.entries[length].img)
 		this._super()
 	}
 

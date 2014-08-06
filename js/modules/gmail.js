@@ -157,7 +157,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (count, title, date) {
-		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', this.formatter.format(date))
+		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', new Date(date).toLocaleString())
 	}
 
 	/** @see ntp.js */

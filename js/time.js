@@ -8,22 +8,22 @@
 	'use strict';
 
 	var strings = {
-		ago: 'Ago',
+		ago: 'ago',
 		yesterday: 'Yesterday',
 		pre: false,
 		from: 'In',
 		now: 'Just Now',
-		minute: 'Minute',
-		minutes: 'Minutes',
-		hour: 'Hour',
-		hours: 'Hours'
+		minute: 'minute',
+		minutes: 'minutes',
+		hour: 'hour',
+		hours: 'hours'
 	}
 
 	function formatTime (seconds, lang) {
-		Intl.DateTimeFormat(lang, {
+		return Intl.DateTimeFormat(lang, {
 			year: '2-digit',
 			month: '2-digit',
-			day: 'numeric',
+			day: '2-digit',
 			weekday: 'short',
 			hour: '2-digit',
 			minute: '2-digit'
@@ -38,6 +38,7 @@
 		token = strings.ago
 		if (diff < 0) {
 			diff = Math.abs(diff)
+			strings.pre = true
 			token = strings.from
 		}
 
@@ -57,25 +58,25 @@
 				out = Math.floor(diff / 3600) + ' ' + strings.hours
 				break;
 			case Math.floor(diff / 86400) === 1:
-				out = strings.yesterday
+				return strings.yesterday + ', ' + date.toLocaleTimeString().substr(0, 5)
 				break
 
 			default:
-				return formatTime(diff, lang)
+				return formatTime(date.valueOf(), lang)
 		}
 
 		return strings.pre ? token + ' ' + out : out + ' ' + token
 
 	}
 
-	var RelativeTimePrototype = Object.create(window.HTMLTimeElement.prototype)
+	var RelativeTimePrototype = Object.create(window.HTMLElement.prototype) // HTMLTimeElement
 	RelativeTimePrototype.createdCallback = function () {
 		var time = new Date(this.textContent),
 			now = new Date(this.dataset.now),
 			lang = this.dataset.lang
 
 		this.title = formatTime(time.valueOf(), lang)
-		this.datetime = time.toISOString()
+		//this.datetime = time.toISOString()
 		this.textContent = prettyDate(time, now, lang)
 	}
 

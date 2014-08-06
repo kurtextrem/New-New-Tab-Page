@@ -14,6 +14,7 @@
 
 		this.loadBoxes()
 		this.checkResolution()
+		this.addCustomElements()
 	}
 
 	/** @type	{Array}		Reference to the registered modules. */
@@ -66,6 +67,12 @@
 			console.log('Loaded keys')
 			this.bootModules()
 		}.bind(this))
+	}
+
+	App.prototype.addCustomElements = function () {
+		var s = document.createElement('script')
+		s.src = chrome.extension.getURL('js/time.js')
+		document.body.appendChild(s)
 	}
 
 	/**
