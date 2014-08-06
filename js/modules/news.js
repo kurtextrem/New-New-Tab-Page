@@ -71,7 +71,7 @@
 			data.entries[i] = {
 				title: item.getElementsByTagName('title')[0].innerHTML,
 				url: item.getElementsByTagName('link')[0].innerHTML,
-				date: (new Date(item.getElementsByTagName('pubDate')[0].innerHTML)).valueOf(),
+				date: item.getElementsByTagName('pubDate')[0].innerHTML,
 				img: img
 			}
 		}
@@ -102,11 +102,6 @@
 
 	/** @see ntp.js */
 	ModuleUI.init = function (name, options) {
-		this.formatter = Intl.DateTimeFormat([], {
-			hour: 'numeric',
-			minute: '2-digit',
-			hour12: false
-		})
 		this._super(name, options)
 	}
 
@@ -117,11 +112,10 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (title, url, date, img) {
-		date = this.formatter.format(date)
 		title = title.split(' - ')
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
-		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author">' + date + ' &ndash;  ' + source + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time is="relative-time" data-now="' + window.App.date + '" data-lang="' + window.App.lang + '">' + date + '</time> &ndash;  ' + source + '</span></div></div>'
 	}
 
 	/** @see ntp.js */

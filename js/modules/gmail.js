@@ -1,4 +1,4 @@
-/* global Notification,console,Intl */
+/* global Notification, console, Intl */
 +function (window) {
 	'use strict';
 
@@ -88,7 +88,7 @@
 			data.entries[i] = {
 				title: item.getElementsByTagName('title')[0].innerHTML,
 				url: item.getElementsByTagName('link')[0].attributes.href.value,
-				date: (new Date(item.getElementsByTagName('modified')[0].innerHTML)).valueOf(),
+				date: item.getElementsByTagName('modified')[0].innerHTML,
 				author: item.getElementsByTagName('author')[0]
 			}
 		}
@@ -152,14 +152,6 @@
 
 	/** @see ntp.js */
 	ModuleUI.init = function (name, options) {
-		this.formatter = Intl.DateTimeFormat(window.App.lang, {
-			year: '2-digit',
-			month: '2-digit',
-			day: 'numeric',
-			weekday: 'short',
-			hour: '2-digit',
-			minute: '2-digit'
-		})
 		this._super(name, options)
 	}
 
@@ -170,20 +162,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHTML = function (title, url, date, author) {
-		var dateObj = new Date(date),
-			dateDay = dateObj.getDay()
-			if (dateObj.toDateString() === window.App.date.toDateString())
-				date = 'Today'
-			else if (new Date(dateObj.valueOf() - 86400000).getDay() === dateDay - 1)
-				date = 'Yesterday'
-			else if (new Date(dateObj.valueOf() - 86400000 * 2).getDay() === dateDay - 2)
-				date = 'The day before yesterday'
-
-		if (typeof date === 'number')
-			date = this.formatter.format(date)
-		else
-			date = date + ', ' + ('0' + dateObj.getHours()).slice(-2) + ':' + ('0' + dateObj.getMinutes()).slice(-2)
-		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '">' + date + ' &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time is="relative-time" data-now="' + window.App.date + '" data-lang="' + window.App.lang + '">' + date + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
 	/** @see ntp.js */
