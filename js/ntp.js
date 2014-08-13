@@ -354,7 +354,6 @@
 				if (e.target.type === 'checkbox')
 					val = !! e.target.checked
 				this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
-				// @todo: Update UI
 			}.bind(this))
 	}
 
@@ -396,7 +395,10 @@
 				obj[name][key] = val[i]
 			}
 		}
-		chrome.storage.local.set(obj)
+		obj[name + 'Cache'] = '' // clear cache
+		chrome.storage.local.set(obj, function () {
+			location.reload()
+		})
 	}
 
 	/**
