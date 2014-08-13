@@ -1,4 +1,4 @@
-/* global console,Intl */
+/* global console */
 +function (window) {
 	'use strict';
 
@@ -87,9 +87,8 @@
 			return this.ui_.addToDOM(data)
 
 		this.ui_.addHeading(data.url, data.title, data.date)
-		var length = Math.min(6, data.entries.length) // @todo: respect option
-		while (length--)
-			this.ui_.addHTML(data.entries[length].title, data.entries[length].url, data.entries[length].date, data.entries[length].img)
+		this.ui_.buildContent(data.entries)
+
 		this._super()
 	}
 
@@ -108,6 +107,12 @@
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (url, title, date) {
 		this._super('<a href="' + url + '">' + title + '</a>', new Date(date))
+	}
+
+	ModuleUI.buildContent = function (data) {
+		var length = Math.min(this.options.amount, data.length)
+		while (length--)
+			this.addHTML(data[length].title, data[length].url, data[length].date, data[length].img)
 	}
 
 	/** @see ntp.js */

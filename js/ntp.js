@@ -33,6 +33,7 @@
 	 * @param  	{Object}   		obj 	The module's prototype.
 	 */
 	App.prototype.register = function (obj) {
+		console.log('Adding ' + obj.name)
 		this.modules.push(this.Module.extend(obj))
 		var length = obj.storageKeys.length
 		while (length--) {
@@ -272,6 +273,8 @@
 	ModuleUI.addHeading = function ( /** @private */ html, /** @private */ date) {
 		this.html += '<header class="box__item box__caption" title="Last refresh: ' + date + '"><h2>' + html + '</h2></header>'
 	}
+
+	ModuleUI.buildContent = function (/** data */) {}
 
 	/**
 	 * Adds HTML.

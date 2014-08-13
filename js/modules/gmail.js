@@ -137,9 +137,8 @@
 			return this.ui_.addToDOM(data)
 
 		this.ui_.addHeading(data.count, data.title, data.date)
-		var length = Math.min(7, data.entries.length) // @todo: respect option
-		for (var i = 0; i < length; i++)
-			this.ui_.addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
+		this.ui_.buildContent(data.entries)
+
 		this._super()
 	}
 
@@ -158,6 +157,12 @@
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (count, title, date) {
 		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', new Date(date).toLocaleString())
+	}
+
+	ModuleUI.buildContent = function (data) {
+		var length = Math.min(this.options.amount, data.length)
+		while (length--)
+			this.addHTML(data[length].title, data[length].url, data[length].date, data[length].author)
 	}
 
 	/** @see ntp.js */

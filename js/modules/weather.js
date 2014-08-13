@@ -138,12 +138,7 @@
 
 		this.ui_.addHeading(data.location, data.date)
 		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
-
-		this.ui_.beginRow()
-		var length = Math.min(4, data.entries.length) // @todo: respect option || Math.max(data.entries.length, option.amount)
-		for (var i = 0; i < length; i++)
-			this.ui_.addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition)
-		this.ui_.endRow()
+		this.ui_.buildContent(data.entries)
 
 		this._super()
 	}
@@ -172,6 +167,14 @@
 	ModuleUI.addHeading = function (title, date) {
 		title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
 		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', this.formatter.format(date))
+	}
+
+	ModuleUI.buildContent = function (data) {
+		this.beginRow()
+		var length = Math.min(this.options.amount, data.length)
+		while (length--)
+			this.addHTML(data[length].low, data[length].high, data[length].day, data[length].icon, data[length].condition)
+		this.endRow()
 	}
 
 	/** @see ntp.js */
