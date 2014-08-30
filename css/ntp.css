@@ -1,14 +1,14 @@
-@font-face {
+﻿@font-face {
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 400;
-	src: url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.ttf);
+	src: url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.woff2);
 }
 @font-face {
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 100;
-	src: url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.ttf);
+	src: url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2);
 }
 
 /**
