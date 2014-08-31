@@ -111,8 +111,8 @@
 
 	ModuleUI.buildContent = function (data) {
 		var length = Math.min(this.options.amount, data.length)
-		while (length--)
-			this.addHTML(data[length].title, data[length].url, data[length].date, data[length].img)
+		for (var i = 0; i < length; i++)
+			this.addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
 	}
 
 	/** @see ntp.js */
