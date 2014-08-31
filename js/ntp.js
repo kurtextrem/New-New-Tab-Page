@@ -50,7 +50,11 @@
 	App.prototype.bootModules = function () {
 		var length = this.modules.length
 		while (length--) {
-			new this.modules[length](this.loadedObj)
+			try {
+				new this.modules[length](this.loadedObj)
+			} catch (e) {
+				console.error('Error while booting.', e, length, this.loadedObj, this.modules, this.modules[length])
+			}
 		}
 		console.log('Started modules')
 	}
@@ -344,7 +348,7 @@
 			$infoToggle.on('click', function () {
 				this.toggleInfo($infoToggle, $infoContent)
 			}.bind(this)).on('click.once', function () { // load options on startup
-				$infoToggle.off('click.once')
+				$infoToggle.off('click.once') // domtastic doesn't support .once
 				this.load(name)
 			}.bind(this))
 
@@ -397,7 +401,7 @@
 		}
 		obj[name + 'Cache'] = '' // clear cache
 		chrome.storage.local.set(obj, function () {
-			location.reload()
+			$(this.info + ' > .box-info__text--saved').removeClass('hide')
 		})
 	}
 
