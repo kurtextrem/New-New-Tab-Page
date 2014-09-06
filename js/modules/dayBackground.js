@@ -45,6 +45,14 @@
 		this.html = this.options + '_' + this.determine(timestamp)
 	}
 
+	/**
+	 * Determines which background image to use.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 * @param  	{Int}	    	timestamp
+	 * @return 	{String}
+	 */
 	ModuleUI.determine = function (timestamp) {
 		switch (true) {
 			case timestamp > 10 && timestamp < 19: // 11h - 18h (7h)
@@ -61,9 +69,10 @@
 		}
 	}
 
+	/** @see ntp.js */
 	ModuleUI.addToDOM = function (html) {
 		html = html || this.html
-		$(this.content).addClass(html)
+		this.content.addClass(html)
 	}
 
 	/** @see ntp.js */

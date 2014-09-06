@@ -35,7 +35,7 @@
 
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
-		this.ui_.addHTML(data)
+		this.ui_.buildContent(data)
 		this._super()
 	}
 
@@ -58,7 +58,12 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addHTML = function (timestamp) {
+	ModuleUI.buildContent = function (data) {
+		this._addHTML(data)
+	}
+
+	/** @see ntp.js */
+	ModuleUI._addHTML = function (timestamp) {
 		this.html = ''
 
 		var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''

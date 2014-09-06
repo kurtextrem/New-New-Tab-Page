@@ -126,6 +126,7 @@
 			this.error()
 		}.bind(this)
 		//notification.onclose = function () {}
+
 		window.addEventListener('unload', function () {
 			notification.close()
 		}, false)
@@ -159,20 +160,21 @@
 		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', new Date(date).toLocaleString())
 	}
 
+	/** @see ntp.js */
 	ModuleUI.buildContent = function (data) {
 		var length = Math.min(this.options.amount, data.length)
 		for (var i = 0; i < length; i++)
-			this.addHTML(data[i].title, data[i].url, data[i].date, data[i].author)
+			this._addHTML(data[i].title, data[i].url, data[i].date, data[i].author)
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addHTML = function (title, url, date, author) {
+	ModuleUI._addHTML = function (title, url, date, author) {
 		date = new Date(date)
 		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time datetime="' + date.toISOString() + '" title="' + date.toLocaleString() + '">' + window.App.prettyDate(date) + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addToDOM = function (html) {
+	ModuleUI._addToDOM = function (html) {
 		chrome.storage.local.set({
 			gmailHTML: this._super(html)
 		})

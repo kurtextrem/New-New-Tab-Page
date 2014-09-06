@@ -169,27 +169,52 @@
 		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', this.formatter.format(date))
 	}
 
+	/** @see ntp.js */
 	ModuleUI.buildContent = function (data) {
-		this.beginRow()
+		this._beginRow()
 		var length = Math.min(this.options.amount, data.length)
 		while (length--)
-			this.addHTML(data[length].low, data[length].high, data[length].day, data[length].icon, data[length].condition)
-		this.endRow()
+			this._addHTML(data[length].low, data[length].high, data[length].day, data[length].icon, data[length].condition)
+		this._endRow()
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addHTML = function (low, high, day, icon, condition) {
+	ModuleUI._addHTML = function (low, high, day, icon, condition) {
 		this.html += '<ul class="weather__data col-lg-2"><li class="weather__data--day">' + day + '</li><li class="weather__data--img"><img src="' + this.getIconURL(icon) + '" title="' + condition + '"></li><li class="weather__data--temperature weather__data--high">' + this.convert(high) + '</li><li class="weather__data--temperature weather__data--low">' + this.convert(low) + '</li></ul>'
 	}
 
-	ModuleUI.beginRow = function () {
+	/**
+	 * Starts a new row.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 */
+	ModuleUI._beginRow = function () {
 		this.html += '<div class="weather__data--forecast">'
 	}
 
-	ModuleUI.endRow = function () {
+	/**
+	 * Ends the row.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 */
+	ModuleUI._endRow = function () {
 		this.html += '</div><!-- /forecast -->'
 	}
 
+	/**
+	 * Updates the current weather row.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 * @param  	{[type]}    	icon           	[description]
+	 * @param  	{[type]}    	temperature    	[description]
+	 * @param  	{[type]}    	condition      	[description]
+	 * @param  	{[type]}    	wind_speed     	[description]
+	 * @param  	{[type]}    	wind_direction 	[description]
+	 * @param  	{[type]}    	humidity       	[description]
+	 */
 	ModuleUI.updateCurrent = function (icon, temperature, condition, wind_speed, wind_direction, humidity) {
 		this.html += '<div class="weather__data--current box__item row">'
 		this.html += '<div class="weather__data--img box__img col-lg-5 "><img src="' + this.getIconURL(icon) + '"></div>'
@@ -212,6 +237,14 @@
 		this.html += '</div>'
 	}
 
+	/**
+	 * Returns the specific icon url.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 * @param  	{String}    	which 	The icon needed.
+	 * @return 	{String}       	icon url
+	 */
 	ModuleUI.getIconURL = function (which) {
 		var hours = window.App.date.getHours(),
 		addition = ''
@@ -224,12 +257,20 @@
 		return chrome.extension.getURL('img/weather/' + addition + which + '.webp')
 	}
 
+	/**
+	 * Converts Fahrenheit to Celsius if needed.
+	 *
+	 * @author 	Jacob Groß
+	 * @date   	2014-09-06
+	 * @param 	{Int}    		fahrenheit
+	 * @return 	{Int}
+	 */
 	ModuleUI.convert = function (fahrenheit) {
 		return this.options.celsius ? Math.round(5 * (fahrenheit - 32) / 9) : fahrenheit
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addToDOM = function (html) {
+	ModuleUI._addToDOM = function (html) {
 		chrome.storage.local.set({
 			weatherHTML: this._super(html)
 		})

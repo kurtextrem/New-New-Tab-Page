@@ -109,14 +109,15 @@
 		this._super('<a href="' + url + '">' + title + '</a>', new Date(date))
 	}
 
+	/** @see ntp.js */
 	ModuleUI.buildContent = function (data) {
 		var length = Math.min(this.options.amount, data.length)
 		for (var i = 0; i < length; i++)
-			this.addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
+			this._addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addHTML = function (title, url, date, img) {
+	ModuleUI._addHTML = function (title, url, date, img) {
 		title = title.split(' - ')
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
@@ -125,7 +126,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI.addToDOM = function (html) {
+	ModuleUI._addToDOM = function (html) {
 		chrome.storage.local.set({
 			newsHTML: this._super(html)
 		})
