@@ -174,7 +174,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI._addToDOM = function (html) {
+	ModuleUI.addToDOM = function (html) {
 		chrome.storage.local.set({
 			gmailHTML: this._super(html)
 		})

@@ -270,7 +270,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI._addToDOM = function (html) {
+	ModuleUI.addToDOM = function (html) {
 		chrome.storage.local.set({
 			weatherHTML: this._super(html)
 		})

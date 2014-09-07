@@ -72,7 +72,7 @@
 	/** @see ntp.js */
 	ModuleUI.addToDOM = function (html) {
 		html = html || this.html
-		this.content.addClass(html)
+		$(this.content).addClass(html)
 	}
 
 	/** @see ntp.js */
