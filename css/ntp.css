@@ -65,7 +65,7 @@ form {
 }
 
 /* Gmail and other Google apps like notification */
-#most-visited > #mv-noti {
+#most-visited > #mv-noti, #most-visited > #mv-noti-error {
 	position: relative;
 	top: 8px;
 	z-index: 90;
@@ -80,8 +80,8 @@ form {
 	font-weight: 700;
 }
 
-#most-visited > #mv-noti.mv-noti-hide {
-	display: none;
+.mv-noti-hide {
+	display: none !important;
 }
 
 #mv-noti-msg {
@@ -326,6 +326,7 @@ form {
 
 .weather__data--condition {
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 
 .weather__data--wind::before,
