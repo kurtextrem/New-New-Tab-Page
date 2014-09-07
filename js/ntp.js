@@ -267,7 +267,7 @@
 		this.html = ''
 		this.options = options
 		this.content = notBox ? name : name + ' > .box__content'
-		$(document).on('ntp.loaded', this.loaded.bind(this, name))
+		$(document).on('ntp.loaded', this._loaded.bind(this, name))
 	}
 
 	/**
@@ -316,7 +316,7 @@
 	 * @param  	{String}   	html
 	 * @return 	{String} 	The HTML to use
 	 */
-	ModuleUI._addToDOM = function (html) {
+	ModuleUI.addToDOM = function (html) {
 		html = html || this.html || 1
 		$(this.content).html(html)
 
@@ -331,7 +331,7 @@
 	 * @param 	{String}		name	Module name
 	 */
 	ModuleUI._loaded = function (name) {
-		this.cacheObjects()
+		this._cacheObjects()
 	}
 
 	/**
