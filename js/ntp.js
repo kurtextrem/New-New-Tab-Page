@@ -380,14 +380,16 @@
 	 */
 	ModuleUIExtended._addListener = function () {
 		// @todo: will-change on mousedown?
-		var $infoToggle = $(this.info.parent().find('.box-info'))
+		var $infoToggle = this.info.parent(),
+		name = $infoToggle[0].id.split('-')[1],
+		$infoToggle = $infoToggle.find('.box-info')
 
 		// "i" click
 		$infoToggle.on('click', function () {
-			this._toggleInfo($infoToggle, this.info)
+			this._toggleInfo($infoToggle)
 		}.bind(this)).on('click.once', function () { // load options on startup
 			$infoToggle.off('click.once') // domtastic doesn't support .once
-			this._load(name)
+			this._load()
 		}.bind(this))
 
 		// options change
@@ -395,7 +397,7 @@
 			var val = e.target.value
 			if (e.target.type === 'checkbox')
 				val = !! e.target.checked
-			this._save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
+			this._save(name, e.target.id.split('__')[1], val)
 		}.bind(this))
 	}
 
@@ -407,13 +409,13 @@
 	 * @param  	$infoToggle
 	 * @param  	$infoContent
 	 */
-	ModuleUIExtended._toggleInfo = function ($infoToggle, $infoContent) {
+	ModuleUIExtended._toggleInfo = function ($infoToggle) {
 		$infoToggle.toggleClass('box-info__active')
 		this.content.toggleClass('hide')
-		$infoContent.toggleClass('hide')
+		this.info.toggleClass('hide')
 		window.setTimeout(function () {
-			$infoContent.toggleClass('fade')
-		}, 100)
+			this.info.toggleClass('fade')
+		}.bind(this), 100)
 	}
 
 	/**
@@ -439,8 +441,8 @@
 		}
 		obj[name + 'Cache'] = '' // clear cache
 		chrome.storage.local.set(obj, function () {
-			$(this.info + ' > .box-info__text--saved').removeClass('hide')
-		})
+			this.info.find('.box-info__text--saved').removeClass('hide')
+		}.bind(this))
 	}
 
 	/**
@@ -453,7 +455,7 @@
 	ModuleUIExtended._load = function (name) {
 		for (var index in this.options) {
 			if (this.options.hasOwnProperty(index)) {
-				var elem = $('[id$="' + index + '"]', name)
+				var elem = $('[id$="' + index + '"]', this.info)
 				if (elem.filter('[type=checkbox]')[0] !== undefined)
 					return elem.filter('[type=checkbox]')[0].checked = this.options[index]
 				elem.val(this.options[index])
