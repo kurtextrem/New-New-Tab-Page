@@ -56,7 +56,7 @@
 				console.error('Error while booting.', e, length, this.loadedObj, this.modules, this.modules[length])
 			}
 		}
-		$(document).trigger('ntp.loaded')
+		$(window).trigger('domReady')
 		console.log('Started modules')
 	}
 
@@ -267,7 +267,7 @@
 		this.html = ''
 		this.options = options
 		this.content = notBox ? name : name + ' > .box__content'
-		$(document).on('ntp.loaded', this._loaded.bind(this, name))
+		$(window).on('domReady', this._loaded.bind(this))
 	}
 
 	/**
@@ -328,9 +328,8 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-09-06
-	 * @param 	{String}		name	Module name
 	 */
-	ModuleUI._loaded = function (name) {
+	ModuleUI._loaded = function () {
 		this._cacheObjects()
 	}
 
@@ -362,15 +361,15 @@
 	}
 
 	/** @see ModuleUI */
-	ModuleUIExtended._loaded = function (name) {
-		this.addListener()
+	ModuleUIExtended._loaded = function () {
 		this._super()
+		this._addListener()
 	}
 
 	/** @see ModuleUI */
-	ModuleUI._cacheObjects = function () {
-		this.info = $(this.info)
+	ModuleUIExtended._cacheObjects = function () {
 		this._super()
+		this.info = $(this.info)
 	}
 
 	/**
@@ -378,18 +377,17 @@
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-28
-	 * @param  	{string}   	name 	The module's box id
 	 */
-	ModuleUIExtended._addListener = function (name) {
+	ModuleUIExtended._addListener = function () {
 		// @todo: will-change on mousedown?
-		var $infoToggle = $(name + ' > .box-info')
+		var $infoToggle = $(this.info.parent().find('.box-info'))
 
 		// "i" click
 		$infoToggle.on('click', function () {
-			this.toggleInfo($infoToggle, this.info)
+			this._toggleInfo($infoToggle, this.info)
 		}.bind(this)).on('click.once', function () { // load options on startup
 			$infoToggle.off('click.once') // domtastic doesn't support .once
-			this.load(name)
+			this._load(name)
 		}.bind(this))
 
 		// options change
@@ -397,7 +395,7 @@
 			var val = e.target.value
 			if (e.target.type === 'checkbox')
 				val = !! e.target.checked
-			this.save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
+			this._save(name.replace(/#box-(.*)/, '$1'), e.target.id.split('__')[1], val)
 		}.bind(this))
 	}
 
