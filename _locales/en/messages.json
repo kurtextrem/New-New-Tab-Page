@@ -26,6 +26,10 @@
 		"message": "ok",
 		"description": "Used with buttons"
 	},
+	"options_saved": {
+		"message": "Changes are respected with next data update.",
+		"description": ""
+	},
 
 
 	"gmail_none": {

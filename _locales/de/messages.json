@@ -26,6 +26,10 @@
 		"message": "ok",
 		"description": ""
 	},
+	"options_saved": {
+		"message": "Änderungen werden beim nächsten Daten Update berücksichtigt.",
+		"description": ""
+	},
 
 
 	"gmail_none": {
