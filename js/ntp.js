@@ -56,7 +56,9 @@
 				console.error('Error while booting.', e, length, this.loadedObj, this.modules, this.modules[length])
 			}
 		}
-		$(window).trigger('domReady')
+		window.setTimeout(function () {
+			$(window).trigger('domReady')
+		}, 100)
 		console.log('Started modules')
 	}
 
