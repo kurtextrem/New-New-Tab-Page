@@ -102,12 +102,18 @@ form {
 /**
  * Promotion messages.
  */
-#prm > .gb_hb, #prm > .gb_fb {
+#prm > .gb_hb, #prm > .gb_fb, .gb_qb.gb_qb {
 	margin-bottom: 2px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
 	color: rgb(136, 136, 136);
 	padding: 5px;
+	display: inline-block;
+	margin-left: 19px;
+	min-width: 31.78%;
+}
+
+#prm > .gb_wb.gb_Ia {
 	display: inline-block;
 }
 
