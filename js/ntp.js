@@ -56,9 +56,6 @@
 				console.error('Error while booting.', e, length, this.loadedObj, this.modules, this.modules[length])
 			}
 		}
-		window.setTimeout(function () {
-			$(window).trigger('domReady')
-		}, 100)
 		console.log('Started modules')
 	}
 
@@ -128,32 +125,32 @@
 			}
 
 		switch (true) {
-		case diff < 60:
-			return chrome.i18n.getMessage('clock_now')
-		case diff < 120:
-			out = '1 ' + chrome.i18n.getMessage('clock_minute')
-			break
-		case diff < 3600:
-			out = Math.floor(diff / 60) + ' ' + chrome.i18n.getMessage('clock_minutes')
-			break
-		case diff < 7200:
-			out = '1 ' + chrome.i18n.getMessage('clock_hour')
-			break
-		case diff < 86400:
-			out = Math.floor(diff / 3600) + ' ' + chrome.i18n.getMessage('clock_hours')
-			break;
-		case Math.floor(diff / 86400) === 1:
-			return chrome.i18n.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
-			break
-		default:
-			return Intl.DateTimeFormat(this.lang, {
-				year: '2-digit',
-				month: '2-digit',
-				day: '2-digit',
-				weekday: 'short',
-				hour: '2-digit',
-				minute: '2-digit'
-			}).format(date.valueOf())
+			case diff < 60:
+				return chrome.i18n.getMessage('clock_now')
+			case diff < 120:
+				out = '1 ' + chrome.i18n.getMessage('clock_minute')
+				break
+			case diff < 3600:
+				out = Math.floor(diff / 60) + ' ' + chrome.i18n.getMessage('clock_minutes')
+				break
+			case diff < 7200:
+				out = '1 ' + chrome.i18n.getMessage('clock_hour')
+				break
+			case diff < 86400:
+				out = Math.floor(diff / 3600) + ' ' + chrome.i18n.getMessage('clock_hours')
+				break;
+			case Math.floor(diff / 86400) === 1:
+				return chrome.i18n.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
+				break
+			default:
+				return Intl.DateTimeFormat(this.lang, {
+					year: '2-digit',
+					month: '2-digit',
+					day: '2-digit',
+					weekday: 'short',
+					hour: '2-digit',
+					minute: '2-digit'
+				}).format(date.valueOf())
 		}
 
 		return pre ? token + ' ' + out : out + ' ' + token
@@ -269,7 +266,8 @@
 		this.html = ''
 		this.options = options
 		this.content = notBox ? name : name + ' > .box__content'
-		$(window).on('domReady', this._loaded.bind(this))
+
+		this._cacheObjects()
 	}
 
 	/**
@@ -326,16 +324,6 @@
 	}
 
 	/**
-	 * Called after HTML has been added.
-	 *
-	 * @author 	Jacob Groß
-	 * @date   	2014-09-06
-	 */
-	ModuleUI._loaded = function () {
-		this._cacheObjects()
-	}
-
-	/**
 	 * Caches the variables.
 	 *
 	 * @author 	Jacob Groß
@@ -360,12 +348,6 @@
 	ModuleUIExtended.init = function (name, options, /** @private */ notBox) {
 		this._super(name, options, notBox)
 		this.info = name + ' > .box-info__content'
-	}
-
-	/** @see ModuleUI */
-	ModuleUIExtended._loaded = function () {
-		this._super()
-		this._addListener()
 	}
 
 	/** @see ModuleUI */

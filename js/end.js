@@ -1,5 +1,16 @@
 +function (window) {
 	'use strict';
 
-	window.App.close()
+	if (document.getElementById('main-cards') !== null)
+		window.App.close()
+	else {
+		var observer = new MutationObserver(function (mutations) {
+			if (document.getElementById('main-cards') !== null) {
+				window.App.close()
+				observer.disconnect()
+			}
+		})
+
+		observer.observe(document.body, { attributes: false, childList: true, characterData: false })
+	}
 } (window)
