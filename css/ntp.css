@@ -27,7 +27,7 @@ form {
  * Modifies the most visited widget.
  */
 #most-visited#most-visited {
-	margin-top: 25px;
+	margin-top: 20px;
 }
 
 
@@ -43,26 +43,31 @@ form {
 	padding: 0 0;
 }
 
+.des-mat .mv-tile.mv-tile {
+	height: 130px;
+	width: 210px;
+	-webkit-margin-start: 10px;
+}
+
+.des-mat .mv-mask.mv-mask {
+	width: 210px;
+}
+
 #most-visited .mv-tile:first-child {
 	-webkit-margin-start: 0 !important;
 }
 
-.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
-	height: 120px; /* * 1.66265060241 = width */
-	width: 199px;
+.des-mat .mv-thumb.mv-thumb, .des-mat .mv-locthumb.mv-locthumb, .des-mat .mv-locgradient.mv-locgradient, .des-mat .mv-locfallback.mv-locfallback {
+	width: 200px;
 }
 
-.mv-tile.mv-tile {
-	-webkit-margin-start: 30px;
+.des-mat .mv-title.mv-title {
+	width: 161px;
 }
 
-.mv-fav.mv-fav {
-	left: 90px;
-}
-
-.mv-title.mv-title {
-	width: 156px;
-	left: 20px;
+a[href^="http://"] > img {
+	height: 142px;
+	min-height: initial;
 }
 
 /* Gmail and other Google apps like notification */
@@ -102,7 +107,7 @@ form {
 /**
  * Promotion messages.
  */
-#prm > .gb_hb, #prm > .gb_fb, .gb_qb.gb_qb {
+#prm > .gb_gb {
 	margin-bottom: 2px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
@@ -115,6 +120,10 @@ form {
 
 #prm > .gb_wb.gb_Ia {
 	display: inline-block;
+}
+
+#prm-pt > br {
+	display: none;
 }
 
 /**
