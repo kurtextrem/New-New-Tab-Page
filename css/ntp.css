@@ -38,30 +38,25 @@ form {
 	line-height: 142px;
 }
 
-.mv-row.mv-row {
-	margin-bottom: 20px;
-	padding: 0 0;
-}
-
-.des-mat .mv-tile.mv-tile {
+#mv-tiles > .mv-tile {
 	height: 130px;
 	width: 210px;
 	-webkit-margin-start: 10px;
 }
 
-.des-mat .mv-mask.mv-mask {
+#mv-tiles .mv-mask {
 	width: 210px;
 }
 
-#most-visited .mv-tile:first-child {
+#mv-tiles > .mv-tile:first-child {
 	-webkit-margin-start: 0 !important;
 }
 
-.des-mat .mv-thumb.mv-thumb, .des-mat .mv-locthumb.mv-locthumb, .des-mat .mv-locgradient.mv-locgradient, .des-mat .mv-locfallback.mv-locfallback {
+#mv-tiles .mv-thumb, #mv-tiles .mv-locthumb, #mv-tiles .mv-locgradient, #mv-tiles .mv-locfallback {
 	width: 200px;
 }
 
-.des-mat .mv-title.mv-title {
+#mv-tiles .mv-title {
 	width: 161px;
 }
 
@@ -107,7 +102,7 @@ a[href^="http://"] > img {
 /**
  * Promotion messages.
  */
-#prm > .gb_gb {
+#prm > div {
 	margin-bottom: 2px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
