@@ -11,6 +11,6 @@
 			}
 		})
 
-		observer.observe(document.body, { attributes: false, childList: true, characterData: false })
+		observer.observe(document.body, { childList: true })
 	}
 } (window)
