@@ -247,6 +247,7 @@ a[href^="http://"] > img {
 
 .box__item--title {
 	text-align: left;
+	word-break: break-word;
 }
 
 .box__img {
