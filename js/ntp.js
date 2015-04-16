@@ -339,9 +339,9 @@
 	App.prototype.ModuleUI = Class.extend(ModuleUI)
 
 
-	/************************************************************************************\
-	|   Represents the info namespace and core functions for the UI to inherit.                           |
-	\ ************************************************************************************/
+	/***********************************************************************************************\
+	|   Represents the UI with extended options namespace and core functions for the UI to inherit.     |
+	\ **********************************************************************************************/
 	var ModuleUIExtended = {}
 
 	/** @see  ModuleUI */
@@ -377,12 +377,21 @@
 		}.bind(this))
 
 		// options change
+		var style = document.createElement('style')  // custom input[type=range] (1)
+		document.body.appendChild(style)
+
 		this.info.find('input, select').on('change', function (e) {
 			var val = e.target.value
 			if (e.target.type === 'checkbox')
 				val = !! e.target.checked
 			this._save(name, e.target.id.split('__')[1], val)
 		}.bind(this))
+		.find('[type=range]').on('input', function (e) {  // custom input[type=range] (1)
+			var min = e.target.min || 0,
+			val = (e.target.max ? ~~(100*(e.target.value - min)/(e.target.max - min)) : e.target.value) + '% 100%'
+
+			style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
+		})
 	}
 
 	/**

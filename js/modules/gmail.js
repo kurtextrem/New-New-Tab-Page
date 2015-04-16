@@ -9,7 +9,7 @@
 		URL = 'https://mail.google.com/mail/feed/atom',
 		PARAMS = {},
 		TYPE = {
-			type: 'xml'
+			responseType: 'xml'
 		}
 
 	/** @see ntp.js */

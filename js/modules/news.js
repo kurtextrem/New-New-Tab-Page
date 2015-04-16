@@ -13,7 +13,7 @@
 			hl: chrome.i18n.getMessage('@@ui_locale')
 		},
 		TYPE = {
-			type: 'xml'
+			responseType: 'xml'
 		}
 
 	/** @see ntp.js */
