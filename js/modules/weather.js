@@ -59,7 +59,7 @@
 		360: chrome.i18n.getMessage('N')
 	}
 
-	Module.MAP = { 0: 'unknown',1: 'heavy_snow',2: 'snow',3: 'light_snow',4: 'freezing',5: 'light_rain',6: 'light_rain',7: 'light_snow',8: 'light_snow',9: 'tstorms',10: 'sunny',11: 'cloudy',12: 'light_rain',13: 'cloudy',14: 'cloudy',15: 'light_rain',16: 'light_snow',17: 'tstorms',18: 'light_rain',19: 'cloudy',20: 'light_rain',21: 'light_rain',22: 'light_rain',23: 'light_rain',24: 'light_rain',25: 'light_snow',26: 'light_snow',27: 'light_snow',28: 'light_rain',29: 'cloudy',30: 'cloudy',31: 'light_rain',32: 'light_rain',33: 'light_rain',34: 'light_rain',35: 'light_snow',36: 'light_snow',37: 'light_snow',38: 'light_rain',39: 'light_rain',40: 'light_rain',41:'light_rain',42: 'light_rain',43: 'sunny',44: 'light_snow',45: 'sunny',46: 'light_rain',47: 'cloudy', 3200: 'unknown' }
+	Module.MAP = { 0: 'tstorms', 1: 'tstorms',2: 'tstorms',3: 'tstorms',4: 'tstorms',5: 'freezing',6: 'freezing',7: 'freezing',8: 'light_rain',9: 'light_rain',10: 'freezing',11: 'heavy_rain',12: 'heavy_rain', 13: 'heavy_snow',14: 'light_snow',15: 'heavy_snow',16: 'snow',17: 'heavy_snow',18: 'freezing',19: 'fog',20: 'fog',21: 'fog',22: 'fog',23: 'windy',24: 'windy',25: 'cloudy',26: 'cloudy',27: 'cloudy',28: 'cloudy',29: 'partly_cloudy',30: 'partly_cloudy',31: 'sunny',32: 'sunny',33: 'sunny',34: 'sunny',35: 'freezing',36: 'hot',37: 'tstorms',38: 'tstorms',39: 'tstorms',40: 'light_rain',41:'heavy_snow',42: 'snow',43: 'snow',44: 'partly_cloudy',45: 'tstorms',46: 'heavy_snow',47: 'tstorms', 3200: 'unknown' }
 
 	Module.DAYS = { Sun: chrome.i18n.getMessage('sun'), 'Mon': chrome.i18n.getMessage('mon'), 'Tue': chrome.i18n.getMessage('tue'), 'Wed': chrome.i18n.getMessage('wed'), 'Thu': chrome.i18n.getMessage('thu'), 'Fri': chrome.i18n.getMessage('fri'), 'Sat': chrome.i18n.getMessage('sat') }
 
@@ -90,7 +90,7 @@
 		.error(function (message) {
 			console.error('Reverse geocoding request failed: ' + message)
 			this.country = 'US'
-			this.location = 'Los Angeles'
+			this.location = localStorage['devloc::swml.location'] || 'Los Angeles'
 			cb()
 		}.bind(this))
 	}
@@ -195,7 +195,7 @@
 		this._beginRow()
 		var length = Math.min(this.options.amount, data.length)
 		for (var i = 0; i < length; i++) {
-			this._addHTML(data[length].low, data[length].high, data[length].day, data[length].icon, data[length].condition)
+			this._addHTML(data[i].low, data[i].high, data[i].day, data[i].icon, data[i].condition)
 		}
 		this._endRow()
 	}
