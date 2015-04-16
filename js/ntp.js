@@ -377,8 +377,8 @@
 
 	/** @see  ModuleUI */
 	ModuleUIExtended.init = function (name, options, /** @private */ notBox) {
-		this._super(name, options, notBox)
 		this.info = name + ' > .box-info__content'
+		this._super(name, options, notBox)
 	}
 
 	/** @see ModuleUI */
@@ -397,7 +397,7 @@
 	ModuleUIExtended._addListener = function () {
 		// @todo: will-change on mousedown?
 		var $infoToggle = this.info.parent(),
-		name = $infoToggle[0].id.split('-')[1],
+		name = $infoToggle[0].id.split('-')[1]
 		$infoToggle = $infoToggle.find('.box-info')
 
 		// "i" click
@@ -415,12 +415,12 @@
 		this.info.find('input, select').on('change', function (e) {
 			var val = e.target.value
 			if (e.target.type === 'checkbox')
-				val = !! e.target.checked
+				val = !!e.target.checked
 			this._save(name, e.target.id.split('__')[1], val)
 		}.bind(this))
 		.find('[type=range]').on('input', function (e) {  // custom input[type=range] (1)
 			var min = e.target.min || 0,
-			val = (e.target.max ? ~~(100*(e.target.value - min)/(e.target.max - min)) : e.target.value) + '% 100%'
+			val = (e.target.max ? ~~(100 * (e.target.value - min) / (e.target.max - min)) : e.target.value) + '% 100%'
 
 			style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
 		})
