@@ -11,6 +11,14 @@
 	function App() {
 		this.updateTimestamp()
 		this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
+		this.format = Intl.DateTimeFormat(this.lang, {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			weekday: 'long',
+			hour: '2-digit',
+			minute: '2-digit'
+		})
 
 		this.loadBoxes()
 		this.checkResolution()
@@ -112,7 +120,7 @@
 		this.now = this.date.valueOf()
 	}
 
-	App.prototype.prettyDate = function (date) {
+	App.prototype.prettyTime = function (date) {
 		var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
 			token = chrome.i18n.getMessage('clock_ago'),
 			out = '',
@@ -156,15 +164,23 @@
 		return pre ? token + ' ' + out : out + ' ' + token
 	}
 
+	App.prototype.prettyDate = function (date) {
+		return this.format.format(date)
+	}
+
 	App.prototype.registerElements = function () {
 		this.registerTime()
 	}
 
 	App.prototype.registerTime = function () {
 		var RelativeTimePrototype = Object.create(window.HTMLTimeElement.prototype)
+
 		RelativeTimePrototype.createdCallback = RelativeTimePrototype.attachedCallback = function () {
-			this.textContent = App.prettyDate(new Date(this.getAttribute('datetime')))
+			var date = this.getAttribute('date')
+			this.textContent = window.App.prettyTime(date)
+			this.setAttribute('title', window.App.prettyDate(date))
 		}
+
 		window.RelativeTimeElement = document.registerElement('relative-time', {
 			prototype: RelativeTimePrototype,
 			'extends': 'time'
@@ -292,7 +308,7 @@
 	 * @date   	2014-07-23
 	 */
 	ModuleUI.addHeading = function ( /** @private */ html, /** @private */ date) {
-		this.html += '<header class="box__item box__caption" title="Last refresh: ' + date + '"><h2>' + html + '</h2></header>'
+		this.html += '<header class="box__item box__caption" title="' + chrome.i18n.getMessage('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
 	}
 
 	/**
@@ -369,6 +385,7 @@
 	ModuleUIExtended._cacheObjects = function () {
 		this._super()
 		this.info = $(this.info)
+		this._addListener()
 	}
 
 	/**
@@ -393,7 +410,7 @@
 
 		// options change
 		var style = document.createElement('style')  // custom input[type=range] (1)
-		document.body.appendChild(style)
+			document.body.appendChild(style)
 
 		this.info.find('input, select').on('change', function (e) {
 			var val = e.target.value

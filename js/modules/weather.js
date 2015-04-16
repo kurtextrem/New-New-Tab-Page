@@ -118,8 +118,8 @@
 		data.location = this.location
 		data.temperature = items.item.condition.temp
 		data.humidity = items.atmosphere.humidity
-		data.icon = this.MAP[items.item.condition] || 'unknown'
-		data.date = Date.parse(items.item.pubDate.slice(0, -3))
+		data.icon = this.MAP[items.item.code] || 'unknown'
+		data.date = Date.parse(items.item.pubDate.slice(0, -4))
 		data.condition = chrome.i18n.getMessage('weather_' + items.item.condition.code)
 
 		data.wind_speed = items.wind.speed
@@ -173,21 +173,13 @@
 
 	/** @see ntp.js */
 	ModuleUI.init = function (name, options) {
-		this.formatter = Intl.DateTimeFormat(window.App.lang, {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			weekday: 'long',
-			hour: '2-digit',
-			minute: '2-digit'
-		})
 		this._super(name, options)
 	}
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (title, date) {
 		title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
-		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', this.formatter.format(date))
+		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
 	}
 
 	/** @see ntp.js */
