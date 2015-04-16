@@ -156,6 +156,21 @@
 		return pre ? token + ' ' + out : out + ' ' + token
 	}
 
+	App.prototype.registerElements = function () {
+		this.registerTime()
+	}
+
+	App.prototype.registerTime = function () {
+		var RelativeTimePrototype = Object.create(window.HTMLTimeElement.prototype)
+		RelativeTimePrototype.createdCallback = RelativeTimePrototype.attachedCallback = function () {
+			this.textContent = App.prettyDate(new Date(this.getAttribute('datetime')))
+		}
+		window.RelativeTimeElement = document.registerElement('relative-time', {
+			prototype: RelativeTimePrototype,
+			'extends': 'time'
+		})
+	}
+
 	/** @deprecated  Added the classes using CSS; Used for reference */
 	App.prototype.addClasses = function () {
 		$('#most-visited').addClass('container-fluid')
