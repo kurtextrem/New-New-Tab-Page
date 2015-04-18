@@ -5,11 +5,6 @@
 	/**
 	 * http://codepen.io/fleeting/pen/Idsaj
 	 * https://github.com/CyanogenMod/android_packages_apps_LockClock/blob/cm-12.0/res/values-de/strings.xml
-	 * https://github.com/monkeecreate/jquery.simpleWeather
-	 * var now = new Date();
-      var weatherUrl = 'https://query.yahooapis.com/v1/public/yql?';
-      if(options.location !== '') {
-        weatherUrl += 'select * from weather.forecast where woeid in (select woeid from geo.placefinder where text="'+options.location+'" and gflags="R" limit 1) and u="'+options.unit+'"';
 	 */
 	/**
 	 * Constants used in the constructor.
@@ -45,24 +40,21 @@
 		}
 	}]
 
-	// compass = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N']
 	Module.TEXT = {
-		22.5: chrome.i18n.getMessage('N'),
-		45: chrome.i18n.getMessage('NNE'),
-		67.5: chrome.i18n.getMessage('NE'),
-		112.5: chrome.i18n.getMessage('E'),
-		157.5: chrome.i18n.getMessage('SE'),
-		202.5: chrome.i18n.getMessage('S'),
-		247.5: chrome.i18n.getMessage('SW'),
-		292.5: chrome.i18n.getMessage('W'),
-		337.5: chrome.i18n.getMessage('NW'),
+		0: chrome.i18n.getMessage('N'),
+		45: chrome.i18n.getMessage('NE'),
+		90: chrome.i18n.getMessage('E'),
+		135: chrome.i18n.getMessage('SE'),
+		180: chrome.i18n.getMessage('S'),
+		225: chrome.i18n.getMessage('SW'),
+		270: chrome.i18n.getMessage('W'),
 		315: chrome.i18n.getMessage('NW'),
 		360: chrome.i18n.getMessage('N')
 	}
 
 	Module.MAP = { 0: 'tstorms', 1: 'tstorms',2: 'tstorms',3: 'tstorms',4: 'tstorms',5: 'freezing',6: 'freezing',7: 'freezing',8: 'light_rain',9: 'light_rain',10: 'freezing',11: 'heavy_rain',12: 'heavy_rain', 13: 'heavy_snow',14: 'light_snow',15: 'heavy_snow',16: 'snow',17: 'heavy_snow',18: 'freezing',19: 'fog',20: 'fog',21: 'fog',22: 'fog',23: 'windy',24: 'windy',25: 'cloudy',26: 'cloudy',27: 'cloudy',28: 'cloudy',29: 'partly_cloudy',30: 'partly_cloudy',31: 'sunny',32: 'sunny',33: 'sunny',34: 'sunny',35: 'freezing',36: 'hot',37: 'tstorms',38: 'tstorms',39: 'tstorms',40: 'light_rain',41:'heavy_snow',42: 'snow',43: 'snow',44: 'partly_cloudy',45: 'tstorms',46: 'heavy_snow',47: 'tstorms', 3200: 'unknown' }
 
-	Module.DAYS = { Sun: chrome.i18n.getMessage('sun'), 'Mon': chrome.i18n.getMessage('mon'), 'Tue': chrome.i18n.getMessage('tue'), 'Wed': chrome.i18n.getMessage('wed'), 'Thu': chrome.i18n.getMessage('thu'), 'Fri': chrome.i18n.getMessage('fri'), 'Sat': chrome.i18n.getMessage('sat') }
+	Module.DAYS = { Sun: chrome.i18n.getMessage('sun'), Mon: chrome.i18n.getMessage('mon'), Tue: chrome.i18n.getMessage('tue'), Wed: chrome.i18n.getMessage('wed'), Thu: chrome.i18n.getMessage('thu'), Fri: chrome.i18n.getMessage('fri'), Sat: chrome.i18n.getMessage('sat') }
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
@@ -119,12 +111,12 @@
 		data.location = decodeURIComponent(this.location) || items.location.city
 		data.temperature = items.item.condition.temp
 		data.humidity = items.atmosphere.humidity
-		data.icon = this.MAP[items.item.code] || 'unknown'
+		data.icon = this.MAP[items.item.condition.code] || 'unknown'
 		data.date = Date.parse(items.item.pubDate.slice(0, -4))
 		data.condition = chrome.i18n.getMessage('weather_' + items.item.condition.code)
 
 		data.wind_speed = items.wind.speed
-		data.wind_direction = this.TEXT[Math.round(items.wind.direction / 22.5)]
+		data.wind_direction = this.TEXT[Math.round(items.wind.direction / 45)]
 		data.pressure = items.atmosphere.pressure
 		data.rising = items.atmosphere.rising
 		data.visibility = items.atmosphere.visibility
@@ -180,7 +172,7 @@
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (title, date) {
 		title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
-		this._super('<a href="' + window.location.href.split('/_/')[0] + '/search?q=' + window.encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
+		this._super('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
 	}
 
 	/** @see ntp.js */
