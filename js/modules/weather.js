@@ -82,8 +82,8 @@
 		}.bind(this))
 		.error(function (message) {
 			console.error('Reverse geocoding request failed: ' + message)
+			this.location = localStorage['devloc::swml.location'].slice(1, -1) || 'Los Angeles'
 			this.country = 'US'
-			this.location = localStorage['devloc::swml.location'] || 'Los Angeles'
 			cb()
 		}.bind(this))
 	}
