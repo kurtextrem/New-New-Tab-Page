@@ -56,6 +56,7 @@
 		247.5: chrome.i18n.getMessage('SW'),
 		292.5: chrome.i18n.getMessage('W'),
 		337.5: chrome.i18n.getMessage('NW'),
+		315: chrome.i18n.getMessage('NW'),
 		360: chrome.i18n.getMessage('N')
 	}
 
@@ -65,7 +66,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.location = localStorage['devloc::swml.location']
+		this.location = localStorage['devloc::swml.location'].slice(1, -1)
 		if (!this.location) {
 			this.getLocationName(this.update)
 		}
@@ -81,7 +82,7 @@
 		.success(function (data) {
 			console.log('Location: ' + data)
 
-			this.location = data.city
+			this.location = localStorage['devloc::swml.location'].slice(1, -1) || data.city
 			this.country = data.country_code
 			localStorage['devloc::web.gws.devloc.lat'] = data.latitude
 			localStorage['devloc::web.gws.devloc.lon'] = data.longitude
@@ -115,7 +116,7 @@
 			}
 		console.log('Got ' + items.length + ' ' + this.name)
 
-		data.location = this.location
+		data.location = decodeURIComponent(this.location) || items.location.city
 		data.temperature = items.item.condition.temp
 		data.humidity = items.atmosphere.humidity
 		data.icon = this.MAP[items.item.code] || 'unknown'
