@@ -33,8 +33,8 @@ form {
 #mv-tiles#mv-tiles {
 	height: auto;
 	text-align: center;
-	width: auto !important;
-	line-height: 142px;
+	width: 1376px !important; /*width: auto !important;*/
+	line-height: 0; /*line-height: 142px;*/
 }
 
 #mv-tiles > .mv-tile {
