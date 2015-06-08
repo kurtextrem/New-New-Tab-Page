@@ -58,10 +58,11 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.location = localStorage['devloc::swml.location'].slice(1, -1)
-		if (!this.location) {
+		this.location = localStorage['devloc::swml.location']
+		if (this.location)
+			this.location = this.location.slice(1, -1)
+		else
 			this.getLocationName(this.update)
-		}
 
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
@@ -106,7 +107,7 @@
 			data = {
 				entries: []
 			}
-		console.log('Got ' + items.length + ' ' + this.name)
+		console.log('Got ' + items.length + ' ' + this.name, items)
 
 		data.location = decodeURIComponent(this.location) || items.location.city
 		data.temperature = items.item.condition.temp
