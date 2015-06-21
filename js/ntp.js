@@ -478,14 +478,6 @@
 	 * @param  	{string}   	name 	The module's box id
 	 */
 	ModuleUIExtended._load = function (name) {
-		for (var index in this.options) {
-			if (this.options.hasOwnProperty(index)) {
-				var elem = $('[id$="' + index + '"]', this.info)
-				if (elem.filter('[type=checkbox]')[0] !== undefined)
-					return elem.filter('[type=checkbox]')[0].checked = this.options[index]
-				elem.val(this.options[index])
-			}
-		}
 		var elem = $('[id$="' + name + '"]', this.info)
 		if (elem.filter('[type=checkbox]')[0] !== undefined)
 			return elem.filter('[type=checkbox]')[0].checked = this.options[name]
