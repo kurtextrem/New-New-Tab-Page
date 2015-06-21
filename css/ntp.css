@@ -298,7 +298,11 @@ a[href^="http://"] > img {
 }
 
 #box-weather .box__caption {
-	font-size: 17px;
+	padding-top: 1px;
+}
+
+#box-weather .box__caption > h2 > a {
+	font-size: 18px;
 }
 
 #box-weather .box__item--title {
