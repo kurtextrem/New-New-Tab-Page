@@ -486,10 +486,6 @@
 				elem.val(this.options[index])
 			}
 		}
-		var elem = $('[id$="' + name + '"]', this.info)
-		if (elem.filter('[type=checkbox]')[0] !== undefined)
-			return elem.filter('[type=checkbox]')[0].checked = this.options[name]
-		elem.val(this.options[name])
 	}
 
 	/**
