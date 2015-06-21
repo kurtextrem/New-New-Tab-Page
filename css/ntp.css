@@ -23,6 +23,10 @@ form {
 	display: none;
 }
 
+.hide {
+	display: none;
+}
+
 /**
  * Modifies the most visited widget.
  */
