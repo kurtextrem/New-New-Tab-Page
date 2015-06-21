@@ -397,7 +397,7 @@
 	ModuleUIExtended._addListener = function () {
 		// @todo: will-change on mousedown?
 		var $infoToggle = this.info.parent(),
-		name = $infoToggle[0].id.split('-')[1]
+		name = $infoToggle.attr('id').split('-')[1]
 		$infoToggle = $infoToggle.find('.box-info')
 
 		// "i" click
