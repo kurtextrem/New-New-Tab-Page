@@ -404,8 +404,8 @@
 		$infoToggle.on('click', function () {
 			this._toggleInfo($infoToggle)
 		}.bind(this)).on('click.once', function () { // load options on startup
-			$infoToggle.off('click.once') // domtastic doesn't support .once
-			this._load()
+			$infoToggle.off('click.once') // sprint doesn't support .once
+			this._load(name)
 		}.bind(this))
 
 		// options change
