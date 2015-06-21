@@ -1,5 +1,5 @@
 /* global console, qwest, Intl */
-+function (window, $ajax) {
++function (window, $ajax, App) {
 	'use strict';
 
 	/**
@@ -52,7 +52,7 @@
 		360: chrome.i18n.getMessage('N')
 	}
 
-	Module.MAP = { 0: 'tstorms', 1: 'tstorms',2: 'tstorms',3: 'tstorms',4: 'tstorms',5: 'freezing',6: 'freezing',7: 'freezing',8: 'light_rain',9: 'light_rain',10: 'freezing',11: 'heavy_rain',12: 'heavy_rain', 13: 'heavy_snow',14: 'light_snow',15: 'heavy_snow',16: 'snow',17: 'heavy_snow',18: 'freezing',19: 'fog',20: 'fog',21: 'fog',22: 'fog',23: 'windy',24: 'windy',25: 'cloudy',26: 'cloudy',27: 'cloudy',28: 'cloudy',29: 'partly_cloudy',30: 'partly_cloudy',31: 'sunny',32: 'sunny',33: 'sunny',34: 'sunny',35: 'freezing',36: 'hot',37: 'tstorms',38: 'tstorms',39: 'tstorms',40: 'light_rain',41:'heavy_snow',42: 'snow',43: 'snow',44: 'partly_cloudy',45: 'tstorms',46: 'heavy_snow',47: 'tstorms', 3200: 'unknown' }
+	Module.MAP = { 0: 'thunderstorms', 1: 'thunderstorms',2: 'thunderstorms',3: 'thunderstorms',4: 'thunderstorms',5: 'freezing',6: 'freezing',7: 'freezing',8: 'rain_light',9: 'rain_light',10: 'freezing',11: 'heavy_rain',12: 'heavy_rain', 13: 'snow_heavy',14: 'snow_light',15: 'snow_heavy',16: 'snow',17: 'snow_heavy',18: 'freezing',19: 'fog',20: 'fog',21: 'fog',22: 'fog',23: 'windy',24: 'windy',25: 'cloudy',26: 'cloudy',27: 'cloudy',28: 'cloudy',29: 'partly_cloudy',30: 'partly_cloudy',31: 'sunny',32: 'sunny',33: 'sunny',34: 'sunny',35: 'freezing',36: 'hot',37: 'thunderstorms',38: 'thunderstorms',39: 'thunderstorms',40: 'rain_light',41:'snow_heavy',42: 'snow',43: 'snow',44: 'partly_cloudy',45: 'thunderstorms',46: 'snow_heavy',47: 'thunderstorms', 3200: 'unknown' }
 
 	Module.DAYS = { Sun: chrome.i18n.getMessage('sun'), Mon: chrome.i18n.getMessage('mon'), Tue: chrome.i18n.getMessage('tue'), Wed: chrome.i18n.getMessage('wed'), Thu: chrome.i18n.getMessage('thu'), Fri: chrome.i18n.getMessage('fri'), Sat: chrome.i18n.getMessage('sat') }
 
@@ -285,7 +285,7 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
+	ModuleUI = App.ModuleUIExtended.extend(ModuleUI)
 
-	window.App.register(Module)
-}(window, qwest);
+	App.register(Module)
+}(window, qwest, window.App);
