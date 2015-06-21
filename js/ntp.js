@@ -471,13 +471,12 @@
 	}
 
 	/**
-	 * Loads the current options.
+	 * Updates the DOM of the options according to the values.
 	 *
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-28
-	 * @param  	{string}   	name 	The module's box id
 	 */
-	ModuleUIExtended._load = function (name) {
+	ModuleUIExtended._load = function () {
 		for (var index in this.options) {
 			if (this.options.hasOwnProperty(index)) {
 				var elem = $('[id$="' + index + '"]', this.info)
