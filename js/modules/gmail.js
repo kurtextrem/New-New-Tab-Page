@@ -68,11 +68,11 @@
 
 	/** @see ntp.js */
 	Module.update = function () {
-		//this._super(URL, PARAMS, TYPE)
+		this._super(URL, PARAMS, TYPE)
 	}
 
 	/** @see ntp.js */
-	Module.success = function (xmlDoc) {
+	Module.success = function (xhr, xmlDoc) {
 		var items = xmlDoc.getElementsByTagName('entry'),
 			data = {
 				entries: []
@@ -156,7 +156,7 @@
 
 	/** @see ntp.js */
 	ModuleUI.addHeading = function (count, title, date) {
-		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', new Date(date).toLocaleString())
+		this._super('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', date)
 	}
 
 	/** @see ntp.js */
@@ -169,7 +169,7 @@
 	/** @see ntp.js */
 	ModuleUI._addHTML = function (title, url, date, author) {
 		date = new Date(date)
-		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time date="' + date + '" is="relative-time">' + window.App.prettyTime(date) + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time datetime="' + date.toISOString() + '" title="' + window.App.prettyDate(date) + '">' + window.App.prettyTime(date) + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
 	}
 
 	/** @see ntp.js */

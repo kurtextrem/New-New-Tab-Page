@@ -72,7 +72,7 @@
 		console.log('Requesting location')
 
 		$ajax.get('https://freegeoip.net/json/', {}, { type: 'json' })
-		.success(function (data) {
+		.then(function (xhr, data) {
 			console.log('Location: ' + data)
 
 			this.location = localStorage['devloc::swml.location'].slice(1, -1) || data.city
@@ -81,8 +81,8 @@
 			localStorage['devloc::web.gws.devloc.lon'] = data.longitude
 			cb()
 		}.bind(this))
-		.error(function (message) {
-			console.error('Reverse geocoding request failed: ' + message)
+		.catch(function (xhr, data, err) {
+			console.error('Reverse geocoding request failed: ' + err)
 			this.location = localStorage['devloc::swml.location'].slice(1, -1) || 'Los Angeles'
 			this.country = 'US'
 			cb()
@@ -108,11 +108,12 @@
 			rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
 			diagnostics: true,
 			q: 'select * from weather.forecast where woeid in (select woeid from geo.placefinder where text="' + (localStorage['devloc::web.gws.devloc.lat'] || 34.1) + ', ' + (localStorage['devloc::web.gws.devloc.lon'] || -118.2) + '" and gflags="R" limit 1) and u="f"'
-		}, TYPE).success(this.success.bind(this)).error(this.error.bind(this))
+		}, TYPE)
+		.then(this.success.bind(this)).catch(this.error.bind(this))
 	}
 
 	/** @see ntp.js */
-	Module.success = function (json) {
+	Module.success = function (xhr, json) {
 		var items =  json.query.results.channel,
 			data = {
 				entries: []

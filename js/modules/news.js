@@ -1,6 +1,6 @@
 /* global console */
 +function (window) {
-	'use strict';
+	'use strict'
 
 	/**
 	 * Constants used in the constructor.
@@ -49,11 +49,11 @@
 
 	/** @see ntp.js */
 	Module.update = function () {
-		//this._super(URL, PARAMS, TYPE)
+		this._super(URL, PARAMS, TYPE)
 	}
 
 	/** @see ntp.js */
-	Module.success = function (xmlDoc) {
+	Module.success = function (xhr, xmlDoc) {
 		var items = xmlDoc.getElementsByTagName('item'),
 			data = {
 				entries: []
@@ -122,7 +122,7 @@
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
 		date = new Date(date)
-		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time date="' + date + '" is="relative-time">' + window.App.prettyTime(date) + '</time> &ndash;  ' + source + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__img col-lg-3"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + window.App.prettyDate(date) + '">' + window.App.prettyTime(date) + '</time> &ndash;  ' + source + '</span></div></div>'
 	}
 
 	/** @see ntp.js */

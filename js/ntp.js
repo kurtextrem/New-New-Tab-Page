@@ -88,13 +88,15 @@
 	 * @date   	2014-07-26
 	 */
 	App.prototype.loadBoxes = function () {
-		$ajax.get(chrome.extension.getURL('boxes.html'), {}, {
-			type: 'html',
-			cache: true
-		}).success(function (body) {
-			$('body').append(body)
+		$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
+		.then(function (xhr, data) {
+			$('body').append(data)
 			i18n.process(document, chrome.i18n)
 		}.bind(this))
+		.catch(function (err) {
+			console.error(err)
+			$('body').append('<p class="center">Error while loading.</p>')
+		})
 	}
 
 	/**
@@ -168,25 +170,6 @@
 		return this.format.format(date)
 	}
 
-	App.prototype.registerElements = function () {
-		this.registerTime()
-	}
-
-	App.prototype.registerTime = function () {
-		var RelativeTimePrototype = Object.create(window.HTMLTimeElement.prototype)
-
-		RelativeTimePrototype.createdCallback = RelativeTimePrototype.attachedCallback = function () {
-			var date = this.getAttribute('date')
-			this.textContent = window.App.prettyTime(date)
-			this.setAttribute('title', window.App.prettyDate(date))
-		}
-
-		window.RelativeTimeElement = document.registerElement('relative-time', {
-			prototype: RelativeTimePrototype,
-			'extends': 'time'
-		})
-	}
-
 	/** @deprecated  Added the classes using CSS; Used for reference */
 	App.prototype.addClasses = function () {
 		$('#most-visited').addClass('container-fluid')
@@ -241,7 +224,10 @@
 	 */
 	Module.update = function ( /** @private */ url, /** @private */ param, /** @private */ type) {
 		console.log('Requesting ' + this.name)
-		$ajax.get(url, param, type).success(this.success.bind(this)).error(this.error.bind(this))
+
+		$ajax.get(url, param, type)
+		.then(this.success.bind(this))
+		.catch(this.error.bind(this))
 	}
 
 	/**
@@ -250,7 +236,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-26
 	 */
-	Module.success = function ( /** xmlDoc */ ) {}
+	Module.success = function (/** The XHR object */ xhr, /** Response */response) {}
 
 	/**
 	 * Function called after an failed update request.
@@ -258,8 +244,8 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-26
 	 */
-	Module.error = function (message) {
-		console.error('Failed ' + this.name + ' request. ' + message)
+	Module.error = function (xhr, response, error) {
+		console.error('Failed ' + this.name + ' request. ', err)
 		if (this.html)
 			this.showCached(this.html)
 	}
