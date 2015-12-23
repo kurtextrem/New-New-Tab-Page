@@ -1,6 +1,6 @@
 /* global Notification, console */
 +function (window) {
-	'use strict';
+	'use strict'
 
 	/**
 	 * Constants used in the constructor.

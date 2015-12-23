@@ -1,6 +1,6 @@
 /* global console, qwest, Intl */
 +function (window, $ajax, App) {
-	'use strict';
+	'use strict'
 
 	/**
 	 * http://codepen.io/fleeting/pen/Idsaj

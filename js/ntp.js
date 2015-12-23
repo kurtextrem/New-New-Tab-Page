@@ -1,6 +1,6 @@
 /* global console, qwest, Class, i18n, Intl */
 +function (window, $, $ajax, Class) {
-	'use strict';
+	'use strict'
 
 	/**
 	 * Main constructor for the App.

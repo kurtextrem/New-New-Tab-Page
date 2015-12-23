@@ -1,5 +1,5 @@
 +function (window) {
-	'use strict';
+	'use strict'
 
 	if (document.getElementById('main-cards') !== null)
 		window.App.close()
