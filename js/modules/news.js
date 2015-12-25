@@ -2,6 +2,9 @@
 +function (window) {
 	'use strict'
 
+	var chrome = window.chrome,
+		App = window.App
+
 	/**
 	 * Constants used in the constructor.
 	 */
@@ -10,11 +13,13 @@
 		PARAMS = {
 			output: 'rss',
 			pz: '1',
-			hl: chrome.i18n.getMessage('@@ui_locale')
+			hl: chrome.i18n.getMessage('@@ui_locale'),
+			num: 30
 		},
 		TYPE = {
 			responseType: 'xml'
-		}
+		},
+		SHUFFLE = 2
 
 	/** @see ntp.js */
 	var Module = {}
@@ -37,14 +42,29 @@
 	}, {
 		name: 'newsOptions',
 		type: {
-			amount: 6
+			amount: 6,
+			shuffle: true
 		}
 	}]
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
-		this._super(obj, TIME)
+		this.html = obj[this.name + 'HTML']
+
+		if (App.now - obj[this.name].date > TIME * 60000) // true update
+			return this.update()
+
+		this.showCached(this.html || obj[this.name])
+
+		if (!this.ui_.options.shuffle) return
+		chrome.storage.local.get({ news_shuffle: 0 }, function (data) {
+			if (App.now - data.news_shuffle > SHUFFLE * 60000) { // shuffle news
+				console.log('Shuffling news')
+				this.updateUI(obj[this.name])
+				chrome.storage.local.set({ news_shuffle: App.now })
+			}
+		}.bind(this))
 	}
 
 	/** @see ntp.js */
@@ -58,9 +78,9 @@
 			data = {
 				entries: []
 			}
-		console.log('Got ' + items.length + ' ' + this.name)
+		console.log('Got ' + items.length + ' ' + this.name, items)
 
-		data.date = window.App.now
+		data.date = App.now
 		data.title = xmlDoc.querySelector('title').innerHTML
 		data.url = xmlDoc.querySelector('link').innerHTML
 		for (var i = 0; i < items.length; i++) {
@@ -111,8 +131,10 @@
 
 	/** @see ntp.js */
 	ModuleUI.buildContent = function (data) {
-		var length = Math.min(this.options.amount, data.length)
-		for (var i = 0; i < length; i++)
+		var options = Math.min(this.options.amount, data.length),
+		length = Math.floor(Math.random() * (data.length - options + 1))
+		options += length
+		for (var i = length; i < options; i++)
 			this._addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
 	}
 
@@ -122,7 +144,7 @@
 		var source = title.pop()
 		title = title.join(' - ').replace(' - FAZ', '')
 		date = new Date(date)
-		this.html += '<div class="box__item row"><div class="box__img col-lg-3 img-responsive"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + window.App.prettyDate(date) + '">' + window.App.prettyTime(date) + '</time> &ndash;  ' + source + '</span></div></div>'
+		this.html += '<div class="box__item row"><div class="box__img col-lg-3 img-responsive"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + App.prettyDate(date) + '">' + App.prettyTime(date) + '</time> &ndash;  ' + source + '</span></div></div>'
 	}
 
 	/** @see ntp.js */
@@ -133,8 +155,8 @@
 	}
 
 	/** @see ntp.js */
-	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
+	ModuleUI = App.ModuleUIExtended.extend(ModuleUI)
 
 	/** @see ntp.js */
-	window.App.register(Module)
+	App.register(Module)
 }(window)

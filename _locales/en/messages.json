@@ -88,6 +88,10 @@
 		"message": "News amount",
 		"description": "Description for the silder that let's user determine how many items they want to see in the news-box"
 	},
+	"news_shuffle": {
+		"message": "Alternate News",
+		"description": "Description for the checkbox that let's user determine if he wants different news every page reload."
+	},
 	"locationBased": {
 		"message": "Based on your location",
 		"description": "In the info box of the weather box"

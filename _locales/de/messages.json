@@ -124,6 +124,10 @@
 		"message": "News Anzahl",
 		"description": ""
 	},
+	"news_shuffle": {
+		"message": "Alternierend",
+		"description": ""
+	},
 	"locationBased": {
 		"message": "Basiert auf Ihrem aktuellen Standort.",
 		"description": ""
