@@ -1,6 +1,11 @@
-/* global console, qwest, Class, i18n, Intl */
-+function (window, $, $ajax, Class) {
+/* global console, i18n, Intl */
++function (window) {
 	'use strict'
+
+	var $ajax = window.qwest,
+		$ = window.$,
+		Class = window.Class,
+		chrome = window.chrome
 
 	/**
 	 * Main constructor for the App.
@@ -11,7 +16,7 @@
 	function App() {
 		this.updateTimestamp()
 		this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
-		this.format = Intl.DateTimeFormat(this.lang, {
+		this.format = window.Intl.DateTimeFormat(this.lang, {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric',
@@ -199,7 +204,7 @@
 		this.html = obj[this.name + 'HTML']
 
 		if (window.App.now - obj[this.name].date > TIME * 60000)
-			this.update()
+			return this.update()
 		this.showCached(this.html || obj[this.name])
 	}
 
@@ -465,9 +470,10 @@
 	ModuleUIExtended._load = function () {
 		for (var index in this.options) {
 			if (this.options.hasOwnProperty(index)) {
-				var elem = $('[id$="' + index + '"]', this.info)
-				if (elem.filter('[type=checkbox]')[0] !== undefined)
-					return elem.filter('[type=checkbox]')[0].checked = this.options[index]
+				var elem = this.info.find('[id$="' + index + '"]'),
+					checkbox = elem.filter('[type=checkbox]').get(0)
+				if (checkbox !== undefined)
+					return checkbox.checked = this.options[index]
 				elem.val(this.options[index])
 			}
 		}
@@ -483,4 +489,4 @@
 	 * Initiates the App and makes it public.
 	 */
 	window.App = new App()
-}(window, $, qwest, Class);
+}(window);

@@ -1,6 +1,9 @@
-/* global console, qwest, Intl */
-+function (window, $ajax, App) {
+/* global console */
++function (window) {
 	'use strict'
+
+	var App = window.App,
+		$ajax = window.qwest
 
 	/**
 	 * http://codepen.io/fleeting/pen/Idsaj
@@ -73,7 +76,7 @@
 
 		$ajax.get('https://freegeoip.net/json/', {}, { type: 'json' })
 		.then(function (xhr, data) {
-			console.log('Location: ' + data)
+			console.log('Location:', data)
 
 			this.location = localStorage['devloc::swml.location'].slice(1, -1) || data.city
 			this.country = data.country_code
@@ -82,7 +85,7 @@
 			cb()
 		}.bind(this))
 		.catch(function (xhr, data, err) {
-			console.error('Reverse geocoding request failed: ' + err)
+			console.error('Reverse geocoding request failed:', err)
 			this.location = localStorage['devloc::swml.location'].slice(1, -1) || 'Los Angeles'
 			this.country = 'US'
 			cb()
@@ -266,7 +269,7 @@
 	 * @return 	{String}       	icon url
 	 */
 	ModuleUI.getIconURL = function (which) {
-		var hours = window.App.date.getHours(),
+		var hours = App.date.getHours(),
 		addition = ''
 
 		if (hours > 19 || hours < 6)
@@ -300,4 +303,4 @@
 	ModuleUI = App.ModuleUIExtended.extend(ModuleUI)
 
 	App.register(Module)
-}(window, qwest, window.App);
+}(window);
