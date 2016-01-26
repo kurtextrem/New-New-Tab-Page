@@ -12,7 +12,7 @@
 	/**
 	 * Constants used in the constructor.
 	 */
-	var TIME = 45,
+	var TIME = 60, // Yahoo TTL
 		URL = 'https://query.yahooapis.com/v1/public/yql',
 		TYPE = {
 			responseType: 'json',
@@ -85,6 +85,7 @@
 		}.bind(this))
 		.catch(function (err, xhr, response) {
 			console.error('Reverse geocoding request failed:', err)
+
 			this.location = localStorage['devloc::swml.location']
 			this.location = this.location ? this.location.slice(1, -1) : 'Los Angeles'
 			this.country = 'US'
@@ -97,8 +98,9 @@
 	/** @see ntp.js */
 	Module.update = function () {
 		console.log('Requesting ' + this.name)
+
 		this.getLocationName()
-		.then(this.getWeatherData)
+		.then(this.getWeatherData.bind(this))
 	}
 
 	/**
@@ -225,7 +227,7 @@
 	 * @date   	2014-09-06
 	 */
 	ModuleUI._endRow = function () {
-		this.html += '</div><!-- /forecast -->'
+		this.html += '</div>'
 	}
 
 	/**
