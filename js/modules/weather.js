@@ -110,7 +110,7 @@
 			format: 'json',
 			rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
 			diagnostics: true,
-			q: 'select * from weather.forecast where woeid in (select woeid from geo.placefinder where text="' + (localStorage['devloc::web.gws.devloc.lat'] || 34.1) + ', ' + (localStorage['devloc::web.gws.devloc.lon'] || -118.2) + '" and gflags="R" limit 1) and u="f"'
+			q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + (localStorage['devloc::web.gws.devloc.lat'] || 34.1) + ', ' + (localStorage['devloc::web.gws.devloc.lon'] || -118.2) + ')" and gflags="R" limit 1) and u="f"'
 		}, TYPE)
 		.then(this.success.bind(this)).catch(this.error.bind(this))
 	}
