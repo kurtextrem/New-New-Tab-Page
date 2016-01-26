@@ -37,11 +37,15 @@
 		"description": ""
 	},
 	"gmail_description1": {
-		"message": "Zeigt deine Mails von GMail an. Wenn die Box nicht läd, besuche <a href='https://mails.google.com/mail'>gmail.com</a> und melde dich an.",
+		"message": "Zeigt deine Mails von GMail an.",
 		"description": ""
 	},
-	"gmail_description1": {
-		"message": "Wenn du Benachrichtigungen deaktivieren willst, geh zu den Chrome Einstellungen (chrome://settings) und zieh die Erlaubnis für Benachrichtigungen auf Google.de zurück.",
+	"gmail_description2": {
+		"message": "Wenn die Box keine Mails zeigt, gehe zu Gmail und melde dich an.",
+		"description": ""
+	},
+	"gmail_description3": {
+		"message": "Benachrichtigungen kannst du in den Chrome Einstellungen (chrome://settings) deaktivieren. Zieh die Erlaubnis für Benachrichtigungen auf Google.de zurück.",
 		"description": ""
 	},
 	"gmail_amount": {

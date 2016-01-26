@@ -33,15 +33,19 @@
 
 
 	"gmail_none": {
-		"message": "No mails found.",
+		"message": "No Mails found.",
 		"description": ""
 	},
 	"gmail_description1": {
-		"message": "Displays your mails from GMail. If the box isn't loading visit <a href='https://mails.google.com/mail'>gmail.com</a> and log in.",
+		"message": "Displays your mails from Gmail.",
 		"description": ""
 	},
-	"gmail_description1": {
-		"message": "If you want to disable notifications, go to your Chrome Settings (chrome://settings) and revoke the notification permission for Google.",
+	"gmail_description2": {
+		"message": "Visit Gmail and log in if the box doesn't show mails.",
+		"description": ""
+	},
+	"gmail_description3": {
+		"message": "You can disable notifications in the Chrome Settings (chrome://settings - revoke the notification permission for Google).",
 		"description": ""
 	},
 	"gmail_amount": {
@@ -81,7 +85,7 @@
 		"description": " Located at the bottom of the news box"
 	},
 	"news_none": {
-		"message": "No news found.",
+		"message": "No News found.",
 		"description": ""
 	},
 	"news_amount": {
@@ -119,6 +123,10 @@
 	"weather": {
 		"message": "Weather",
 		"description": "The title for the weather box (hidden)"
+	},
+	"weather_none": {
+		"message": "Couldn't get weather.",
+		"description": ""
 	},
 	"useGeoLocation": {
 		"message": "Use geo-location.",
