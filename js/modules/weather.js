@@ -1,5 +1,5 @@
 /* global console */
-+function (window) {
+!function (window) {
 	'use strict'
 
 	var App = window.App,
@@ -12,7 +12,7 @@
 	/**
 	 * Constants used in the constructor.
 	 */
-	var TIME = 60,
+	var TIME = 45,
 		URL = 'https://query.yahooapis.com/v1/public/yql',
 		TYPE = {
 			responseType: 'json',
@@ -61,42 +61,44 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.location = localStorage['devloc::swml.location']
-		if (this.location)
-			this.location = this.location.slice(1, -1)
-		else
-			this.getLocationName(this.update)
+		this.location = ''
+		this.country = ''
+		this.lat = 0
+		this.long = 0
 
 		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
-	Module.getLocationName = function (cb) {
+	Module.getLocationName = function () {
 		console.log('Requesting location')
 
-		$ajax.get('https://freegeoip.net/json/', {}, { type: 'json' })
+		return $ajax.get('https://freegeoip.net/json/', {}, { type: 'json' })
 		.then(function (xhr, data) {
 			console.log('Location:', data)
 
-			this.location = localStorage['devloc::swml.location'].slice(1, -1) || data.city
+			this.location = data.city || localStorage['devloc::swml.location'].slice(1, -1)
 			this.country = data.country_code
-			localStorage['devloc::web.gws.devloc.lat'] = data.latitude
-			localStorage['devloc::web.gws.devloc.lon'] = data.longitude
-			cb()
+			this.lat = data.latitude
+			this.long = data.longitude
+			return data
 		}.bind(this))
-		.catch(function (xhr, data, err) {
+		.catch(function (err, xhr, response) {
 			console.error('Reverse geocoding request failed:', err)
-			this.location = localStorage['devloc::swml.location'].slice(1, -1) || 'Los Angeles'
+			this.location = localStorage['devloc::swml.location']
+			this.location = this.location ? this.location.slice(1, -1) : 'Los Angeles'
 			this.country = 'US'
-			cb()
+			this.lat = 34.1
+			this.long = -118.2
+			return xhr
 		}.bind(this))
 	}
 
 	/** @see ntp.js */
 	Module.update = function () {
-		this.getLocationName(function () {
-			this.getWeatherData()
-		}.bind(this))
+		console.log('Requesting ' + this.name)
+		this.getLocationName()
+		.then(this.getWeatherData)
 	}
 
 	/**
@@ -110,7 +112,7 @@
 			format: 'json',
 			rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
 			diagnostics: true,
-			q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + (localStorage['devloc::web.gws.devloc.lat'] || 34.1) + ', ' + (localStorage['devloc::web.gws.devloc.lon'] || -118.2) + ')" and gflags="R" limit 1) and u="f"'
+			q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + this.lat + ',' + this.long + ')" limit 1) and u="f"'
 		}, TYPE)
 		.then(this.success.bind(this)).catch(this.error.bind(this))
 	}

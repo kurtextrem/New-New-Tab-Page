@@ -249,10 +249,11 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-26
 	 */
-	Module.error = function (xhr, response, error) {
+	Module.error = function (err, xhr, response) {
 		console.error('Failed ' + this.name + ' request. ', err)
 		if (this.html)
 			this.showCached(this.html)
+		return xhr
 	}
 
 	/**
