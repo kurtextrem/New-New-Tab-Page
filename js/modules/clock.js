@@ -1,5 +1,5 @@
 /* global Intl */
-+function (window) {
+!function (window) {
 	'use strict'
 
 	/** @see ntp.js */

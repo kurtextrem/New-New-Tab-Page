@@ -1,5 +1,5 @@
 /* global console, i18n, Intl */
-+function (window) {
+!function (window) {
 	'use strict'
 
 	var $ajax = window.qwest,
@@ -227,7 +227,7 @@
 	 * @author 	Jacob Groß
 	 * @date   	2014-07-23
 	 */
-	Module.update = function ( /** @private */ url, /** @private */ param, /** @private */ type) {
+	Module.update = function (/** @private */ url, /** @private */ param, /** @private */ type) {
 		console.log('Requesting ' + this.name)
 
 		$ajax.get(url, param, type)

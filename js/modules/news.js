@@ -1,5 +1,5 @@
 /* global console */
-+function (window) {
+!function (window) {
 	'use strict'
 
 	var chrome = window.chrome,

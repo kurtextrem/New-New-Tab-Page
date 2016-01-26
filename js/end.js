@@ -1,4 +1,4 @@
-+function (window) {
+!function (window) {
 	'use strict'
 
 	if (document.getElementById('main-cards') !== null)

@@ -1,5 +1,5 @@
 /* global Notification, console */
-+function (window) {
+!function (window) {
 	'use strict'
 
 	/**
