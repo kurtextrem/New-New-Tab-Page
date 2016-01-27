@@ -25,6 +25,13 @@
 body {
 	/* background-color: #ececec !important; */
 	line-height: 1.42857143 !important;
+	animation: fadeIn .25s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
 }
 
 /* removes the search */
