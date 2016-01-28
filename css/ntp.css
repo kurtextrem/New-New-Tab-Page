@@ -317,7 +317,7 @@ a[href^="http://"] > img {
 
 #box-weather .box__item--title {
 	color: black;
-	font-size: 75px;
+	font-size: 5.5em;
 	margin-left: -15px;
 	line-height: 1.1;
 }
@@ -656,5 +656,10 @@ input[type='range']:focus {
  	.mv-title.mv-title {
  		width: 100px !important;
  		left: 50px !important;
+ 	}
+
+ 	.col-lg-3 {
+ 		max-width: 33%;
+		flex-basis: 33%;
  	}
  }
