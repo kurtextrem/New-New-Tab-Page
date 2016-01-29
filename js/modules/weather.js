@@ -256,7 +256,7 @@
 	 */
 	ModuleUI.updateCurrent = function (icon, temperature, condition, wind_speed, wind_direction, humidity) {
 		this.html += '<div class="weather__data--current box__item row">'
-		this.html += '<div class="weather__data--img box__img col-lg-5 "><img src="' + this.getIconURL(icon) + '"></div>'
+		this.html += '<div class="weather__data--img box__img col-lg-5"><img src="' + this.getIconURL(icon) + '"></div>'
 		this.html += '<div class="weather__data--temperature box__item--title col-lg-4">' + this.convert(temperature) + '</div>'
 
 		var unit = ''
