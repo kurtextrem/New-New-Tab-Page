@@ -577,7 +577,7 @@ input[type='range']::-webkit-slider-thumb {
 	box-shadow: 0 0 0.125em #d4d4d4, 0 0 0.125em #d4d4d4, 0 1px 0.125em white, 0 1px 0.125em white, 0 0.125em 0.125em #d4d4d4;
 	background: #f8f8f8;
 }
-input[type='range'] /deep/ #track::before {
+input[type='range'] #track::before {
 	position: absolute;
 	bottom: 1em;
 	font-size: .875em;
