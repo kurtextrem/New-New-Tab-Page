@@ -14,8 +14,8 @@
 * {
 	box-sizing: border-box;
 }
-*:before,
-*:after {
+*::before,
+*::after {
 	box-sizing: border-box;
 }
 
@@ -188,7 +188,7 @@ a[href^="http://"] > img {
  * General css for the content boxes.
  */
 /* Clearfix breaks the flexbox */
-#main-cards:before, #main-cards:after, #main-cards > .row:before,  #main-cards > .row:after {
+#main-cards::before, #main-cards::after, #main-cards > .row::before,  #main-cards > .row::after {
 	display: block;
 }
 
@@ -317,7 +317,7 @@ a[href^="http://"] > img {
 
 #box-weather .box__item--title {
 	color: black;
-	font-size: 5.5em;
+	font-size: 75px;
 	margin-left: -15px;
 	line-height: 1.1;
 }
@@ -350,12 +350,14 @@ a[href^="http://"] > img {
 	text-transform: uppercase;
 }
 
-.weather__data--day:after {
+.weather__data--day::after {
 	content: '.';
+	position: absolute;
 }
 
-.weather__data--temperature:after {
+.weather__data--temperature::after {
 	content: '°';
+	position: absolute;
 }
 
 .weather__data--condition {
@@ -363,8 +365,8 @@ a[href^="http://"] > img {
 	white-space: nowrap;
 }
 
-.weather__data--wind:before,
-.weather__data--humidity:before {
+.weather__data--wind::before,
+.weather__data--humidity::before {
 	position: relative;
 	top: 3px;
 	opacity: .3;
@@ -376,7 +378,7 @@ a[href^="http://"] > img {
 }
 
 /* by http://www.wpzoom.com */
-.weather__data--humidity:before {
+.weather__data--humidity::before {
 	top: 5px;
 	margin-right: 5px;
 	content: url(chrome-extension://__MSG_@@extension_id__/img/wet.webp);
@@ -497,8 +499,8 @@ input.cmn-toggle-round + label {
 	border-radius: 60px;
 	transform: translateX(6rem);
 }
-input.cmn-toggle-round + label:before,
-input.cmn-toggle-round + label:after {
+input.cmn-toggle-round + label::before,
+input.cmn-toggle-round + label::after {
 	display: block;
 	position: absolute;
 	top: 1px;
@@ -506,23 +508,23 @@ input.cmn-toggle-round + label:after {
 	bottom: 1px;
 	content: "";
 }
-input.cmn-toggle-round + label:before {
+input.cmn-toggle-round + label::before {
 	right: 1px;
 	background-color: #f1f1f1;
 	border-radius: 30px;
 	transition: background 0.4s;
 }
-input.cmn-toggle-round + label:after {
+input.cmn-toggle-round + label::after {
 	width: 28px;
 	background-color: #fff;
 	border-radius: 100%;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 	transition: margin 0.4s;
 }
-input.cmn-toggle-round:checked + label:before {
+input.cmn-toggle-round:checked + label::before {
 	background-color: #8ce196;
 }
-input.cmn-toggle-round:checked + label:after {
+input.cmn-toggle-round:checked + label::after {
 	margin-left: 30px;
 }
 
@@ -575,7 +577,7 @@ input[type='range']::-webkit-slider-thumb {
 	box-shadow: 0 0 0.125em #d4d4d4, 0 0 0.125em #d4d4d4, 0 1px 0.125em white, 0 1px 0.125em white, 0 0.125em 0.125em #d4d4d4;
 	background: #f8f8f8;
 }
-input[type='range'] /deep/ #track:before {
+input[type='range'] /deep/ #track::before {
 	position: absolute;
 	bottom: 1em;
 	font-size: .875em;
