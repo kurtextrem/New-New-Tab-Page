@@ -165,7 +165,7 @@
 			if (!cond) console.warn('Unknown condition -- translation', item.condition)
 			data.entries[i] = {
 				day: this.DAYS[item.day],
-				date: item.date // @todo: translate
+				date: item.date, // @todo: translate
 				low: item.low,
 				high: item.high,
 				icon: this.MAP[item.code]  || ('unknown' && console.warn('Unknown condition -- icon', item.condition)),

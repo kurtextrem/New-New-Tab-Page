@@ -78,7 +78,7 @@
 				entries: []
 			}
 
-		console.log('Got ' + items.length + ' ' + this.name)
+		console.log('Got ' + items.length + ' ' + this.name, items)
 		data.date = window.App.now
 		data.title = xmlDoc.querySelector('title').innerHTML
 		data.count = xmlDoc.getElementsByTagName('fullcount')[0].innerHTML
