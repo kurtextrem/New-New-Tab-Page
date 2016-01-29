@@ -127,8 +127,7 @@
 			}
 		console.log('Got ' + this.name, items)
 
-		data.date = Date.parse(items.item.pubDate.slice(0, -4))
-		data.date.setMinutes(data.date.getMinutes() + TIME + 1) // refresh 1min after TTL
+		data.date = Date.parse(items.item.pubDate.slice(0, -4)) + 60000 * TIME + 60000 // refresh 1min after TTL
 
 		data.location = decodeURIComponent(this.location) || items.location.city
 		data.temperature = items.item.condition.temp
@@ -266,8 +265,9 @@
 			unit = ''
 			wind_direction = ''
 		} else {
+			wind_speed = ~~wind_speed
 			if (this.options.celsius) {
-				wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
+				//wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
 				unit = chrome.i18n.getMessage('kmh')
 			} else
 				unit = chrome.i18n.getMessage('mph')

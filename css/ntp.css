@@ -361,7 +361,6 @@ a[href^="http://"] > img {
 }
 
 .weather__data--condition {
-	text-transform: uppercase;
 	white-space: nowrap;
 }
 
