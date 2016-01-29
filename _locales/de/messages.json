@@ -184,6 +184,7 @@
 		"message": "C",
 		"description": ""
 	},
+
 	"cloudy": {
 		"message": "Bewölkt",
 		"description": "Weather name"
@@ -196,11 +197,11 @@
 		"message": "Eisig",
 		"description": "Weather name"
 	},
-	"heavyrain": {
+	"rain_heavy": {
 		"message": "Starker Regen",
 		"description": "Weather name"
 	},
-	"heavysnow": {
+	"snow_heavy": {
 		"message": "Starker Schnee",
 		"description": "Weather name"
 	},
@@ -208,15 +209,15 @@
 		"message": "Heiß",
 		"description": "Weather name"
 	},
-	"lightrain": {
+	"rain_light": {
 		"message": "Leichter Regen",
 		"description": "Weather name"
 	},
-	"lightsnow": {
+	"snow_light": {
 		"message": "Leichter Schnee",
 		"description": "Weather name"
 	},
-	"partlycloudy": {
+	"partly_cloudy": {
 		"message": "Teilweiße bewölkt",
 		"description": "Weather name"
 	},
@@ -236,7 +237,7 @@
 		"message": "Unbekannt",
 		"description": "Weather name"
 	},
-	"tstorms": {
+	"thunderstorms": {
 		"message": "Unwetter",
 		"description": "Weather name"
 	},
@@ -244,21 +245,22 @@
 		"message": "Windig",
 		"description": "Weather name"
 	},
+
 	"wind": {
 		"message": "Wind",
-		"description": "Weather name"
+		"description": "Wind icon title"
 	},
 	"humidity": {
 		"message": "Luftfeuchtigkeit",
-		"description": "Weather name"
+		"description": "Humidity icon title"
 	},
 	"windless": {
 		"message": "Windstill",
-		"description": "Weather name"
+		"description": "Wind icon text"
 	},
 	"mixed": {
 		"message": "Gemischt",
-		"description": "Weather name"
+		"description": "Wind icon text"
 	},
 	"kmh": {
 		"message": "km/h",

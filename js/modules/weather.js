@@ -43,17 +43,17 @@
 		}
 	}]
 
-	Module.TEXT = {
-		0: chrome.i18n.getMessage('N'),
-		45: chrome.i18n.getMessage('NE'),
-		90: chrome.i18n.getMessage('E'),
-		135: chrome.i18n.getMessage('SE'),
-		180: chrome.i18n.getMessage('S'),
-		225: chrome.i18n.getMessage('SW'),
-		270: chrome.i18n.getMessage('W'),
-		315: chrome.i18n.getMessage('NW'),
-		360: chrome.i18n.getMessage('N')
-	}
+	Module.TEXT = [
+		chrome.i18n.getMessage('N'), // 0
+		chrome.i18n.getMessage('NE'), // 45
+		chrome.i18n.getMessage('E'), // 90
+		chrome.i18n.getMessage('SE'), // 135
+		chrome.i18n.getMessage('S'), // 180
+		chrome.i18n.getMessage('SW'), // 225
+		chrome.i18n.getMessage('W'), // 270
+		chrome.i18n.getMessage('NW'), // 315
+		chrome.i18n.getMessage('N') // 360
+	]
 
 	Module.MAP = { 0: 'thunderstorms', 1: 'thunderstorms',2: 'thunderstorms',3: 'thunderstorms',4: 'thunderstorms',5: 'freezing',6: 'freezing',7: 'freezing',8: 'rain_light',9: 'rain_light',10: 'freezing',11: 'rain_heavy',12: 'rain_heavy', 13: 'snow_heavy',14: 'snow_light',15: 'snow_heavy',16: 'snow',17: 'snow_heavy',18: 'freezing',19: 'fog',20: 'fog',21: 'fog',22: 'fog',23: 'windy',24: 'windy',25: 'cloudy',26: 'cloudy',27: 'cloudy',28: 'cloudy',29: 'partly_cloudy',30: 'partly_cloudy',31: 'sunny',32: 'sunny',33: 'sunny',34: 'sunny',35: 'freezing',36: 'hot',37: 'thunderstorms',38: 'thunderstorms',39: 'thunderstorms',40: 'rain_light',41:'snow_heavy',42: 'snow',43: 'snow',44: 'partly_cloudy',45: 'thunderstorms',46: 'snow_heavy',47: 'thunderstorms', 3200: 'unknown' }
 
@@ -125,38 +125,51 @@
 			data = {
 				entries: []
 			}
-		console.log('Got ' + items.length + ' ' + this.name, items)
+		console.log('Got ' + this.name, items)
 
-		data.date = App.now
+		data.date = Date.parse(items.item.pubDate.slice(0, -4))
+		data.date.setMinutes(data.date.getMinutes() + TIME + 1) // refresh 1min after TTL
+
 		data.location = decodeURIComponent(this.location) || items.location.city
 		data.temperature = items.item.condition.temp
-		data.humidity = items.atmosphere.humidity
-		data.icon = this.MAP[items.item.condition.code] || 'unknown'
-		data.pubDate = Date.parse(items.item.pubDate.slice(0, -4))
-		data.condition = chrome.i18n.getMessage('weather_' + items.item.condition.code)
+		data.icon = this.MAP[+items.item.condition.code] || ('unknown' && console.warn('Unknown condition -- icon', items.item.condition))
+		data.condition = chrome.i18n.getMessage(data.icon) || items.item.condition.text
+		if (!data.condition)
+			console.warn('Unknown condition -- translation', items.item.condition)
 
-		data.wind_speed = items.wind.speed
+		// wind
+		data.wind_chill = items.wind.chill
 		data.wind_direction = this.TEXT[Math.round(items.wind.direction / 45)]
+		data.wind_speed = items.wind.speed
+
+		// atmosphere
+		data.humidity = items.atmosphere.humidity
 		data.pressure = items.atmosphere.pressure
 		data.rising = items.atmosphere.rising
 		data.visibility = items.atmosphere.visibility
+
+		// astronomy
 		data.sunrise = items.astronomy.sunrise
 		data.sunset = items.astronomy.sunset
 
-		if (items.item.condition.temp < 80 && items.atmosphere.humidity < 40) {
-			data.heatindex = -42.379 + 2.04901523 * items.item.condition.temp + 10.14333127 * items.atmosphere.humidity - 0.22475541 * items.item.condition.temp * items.atmosphere.humidity - 6.83783 * (Math.pow(10, -3)) * (Math.pow(items.item.condition.temp, 2)) - 5.481717 * (Math.pow(10, -2)) * (Math.pow(items.atmosphere.humidity, 2)) + 1.22874 * (Math.pow(10, -3)) * (Math.pow(items.item.condition.temp, 2)) * items.atmosphere.humidity + 8.5282 * (Math.pow(10, -4)) * items.item.condition.temp * (Math.pow(items.atmosphere.humidity, 2)) - 1.99 * (Math.pow(10, -6)) * (Math.pow(items.item.condition.temp, 2)) * (Math.pow(items.atmosphere.humidity, 2))
+		if (data.temperature < 80 && data.temperature < 40) {
+			data.heatindex = -42.379 + 2.04901523 * data.temperature + 10.14333127 * data.humidity - 0.22475541 * data.temperature * data.humidity - 6.83783 * (Math.pow(10, -3)) * (Math.pow(data.temperature, 2)) - 5.481717 * (Math.pow(10, -2)) * (Math.pow(data.humidity, 2)) + 1.22874 * (Math.pow(10, -3)) * (Math.pow(data.temperature, 2)) * data.humidity + 8.5282 * (Math.pow(10, -4)) * data.temperature * (Math.pow(data.humidity, 2)) - 1.99 * (Math.pow(10, -6)) * (Math.pow(data.temperature, 2)) * (Math.pow(data.humidity, 2))
 		} else {
 			data.heatindex = items.item.condition.temp
 		}
 
 		for (var i = 0; i < items.item.forecast.length; i++) {
-			var item = items.item.forecast[i]
+			var item = items.item.forecast[i],
+			cond = chrome.i18n.getMessage(this.MAP[item.code]) || item.text
+
+			if (!cond) console.warn('Unknown condition -- translation', item.condition)
 			data.entries[i] = {
 				day: this.DAYS[item.day],
+				date: item.date // @todo: translate
 				low: item.low,
 				high: item.high,
-				icon: this.MAP[item.code]  || 'unknown',
-				condition: chrome.i18n.getMessage('weather_' + items.item.condition.code)
+				icon: this.MAP[item.code]  || ('unknown' && console.warn('Unknown condition -- icon', item.condition)),
+				condition: cond
 			}
 		}
 
@@ -170,7 +183,7 @@
 		if (typeof data === 'string')
 			return this.ui_.addToDOM(data)
 
-		this.ui_.addHeading(data.location, data.pubDate)
+		this.ui_.addHeading(data.location, data.date)
 		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
 		this.ui_.buildContent(data.entries)
 
@@ -200,14 +213,14 @@
 		this._beginRow()
 		var length = Math.min(this.options.amount, data.length)
 		for (var i = 0; i < length; i++) {
-			this._addHTML(data[i].low, data[i].high, data[i].day, data[i].icon, data[i].condition)
+			this._addHTML(data[i].low, data[i].high, data[i].day, data[i].icon, data[i].condition, data[i].date)
 		}
 		this._endRow()
 	}
 
 	/** @see ntp.js */
-	ModuleUI._addHTML = function (low, high, day, icon, condition) {
-		this.html += '<ul class="weather__data col-lg-2"><li class="weather__data--day">' + day + '</li><li class="weather__data--img"><img src="' + this.getIconURL(icon) + '" title="' + condition + '"></li><li class="weather__data--temperature weather__data--high">' + this.convert(high) + '</li><li class="weather__data--temperature weather__data--low">' + this.convert(low) + '</li></ul>'
+	ModuleUI._addHTML = function (low, high, day, icon, condition, date) {
+		this.html += '<ul class="weather__data col-lg-2"><li class="weather__data--day" title="' + date + '">' + day + '</li><li class="weather__data--img"><img src="' + this.getIconURL(icon) + '" title="' + condition + '"></li><li class="weather__data--temperature weather__data--high">' + this.convert(high) + '</li><li class="weather__data--temperature weather__data--low">' + this.convert(low) + '</li></ul>'
 	}
 
 	/**

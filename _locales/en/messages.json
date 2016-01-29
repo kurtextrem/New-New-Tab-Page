@@ -152,6 +152,7 @@
 		"message": "F",
 		"description": "The temperature unit for this language (only insert C for Celsius or F for Fahrenheit)"
 	},
+
 	"cloudy": {
 		"message": "Cloudy",
 		"description": "Weather name"
@@ -164,11 +165,11 @@
 		"message": "Freezing",
 		"description": "Weather name"
 	},
-	"heavyrain": {
+	"rain_heavy": {
 		"message": "Heavy rain",
 		"description": "Weather name"
 	},
-	"heavysnow": {
+	"snow_heavy": {
 		"message": "Heavy snow",
 		"description": "Weather name"
 	},
@@ -176,15 +177,15 @@
 		"message": "Hot",
 		"description": "Weather name"
 	},
-	"lightrain": {
+	"rain_light": {
 		"message": "Light rain",
 		"description": "Weather name"
 	},
-	"lightsnow": {
+	"snow_light": {
 		"message": "Light snow",
 		"description": "Weather name"
 	},
-	"partlycloudy": {
+	"partly_cloudy": {
 		"message": "Partly cloudy",
 		"description": "Weather name"
 	},
@@ -204,7 +205,7 @@
 		"message": "Unknown",
 		"description": "Weather name"
 	},
-	"tstorms": {
+	"thunderstorms": {
 		"message": "Thunderstorm",
 		"description": "Weather name"
 	},
@@ -212,21 +213,22 @@
 		"message": "Windy",
 		"description": "Weather name"
 	},
+
 	"wind": {
 		"message": "Wind",
-		"description": "Weather name"
+		"description": "Wind icon title"
 	},
 	"humidity": {
 		"message": "Humidity",
-		"description": "Weather name"
+		"description": "Humidity icon title"
 	},
 	"windless": {
 		"message": "Windless",
-		"description": "Weather name"
+		"description": "Wind icon text"
 	},
 	"mixed": {
 		"message": "Mixed",
-		"description": "Weather name"
+		"description": "Wind icon text"
 	},
 	"kmh": {
 		"message": "km/h",
@@ -236,6 +238,7 @@
 		"message": "mph",
 		"description": "The unit  which isn't used used for speed messurements"
 	},
+
 	"mon": {
 		"message": "Mon",
 		"description": "Shortcut for Monday"
@@ -264,6 +267,7 @@
 		"message": "Sun",
 		"description": "Shortcut for Sunday"
 	},
+
 	"N": {
 		"message": "N",
 		"description": "Shortcut for north (wind direction)"
