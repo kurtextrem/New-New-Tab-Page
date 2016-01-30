@@ -128,7 +128,7 @@
 		console.log('Got ' + this.name, items)
 
 		data.date = Date.parse(items.item.pubDate.slice(0, -4)) + 60000 // refresh 1min after TTL
-		if (data.date - App.now > TIME * 60000) // sometimes Yahoo stops delivering new data
+		if (App.now - data.date > TIME * 60000) // sometimes Yahoo stops delivering new data
 			data.date = App.now
 
 		data.location = decodeURIComponent(this.location) || items.location.city
