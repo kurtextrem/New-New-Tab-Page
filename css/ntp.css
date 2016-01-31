@@ -636,7 +636,7 @@ input[type='range']:focus {
  	}
  }
 
- @media only screen and (max-width: 1600px) {
+ @media only screen and (max-width: 1700px) {
  	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
  		height: 95px; /* * 1.66265060241 = width */
  		width: 157px;
@@ -645,6 +645,11 @@ input[type='range']:focus {
  	.mv-title.mv-title {
  		width: 100px !important;
  		left: 50px !important;
+ 	}
+
+ 	#main-cards > .row > .col-lg-3 {
+ 		max-width: 33% !important;
+ 		flex-basis: 33% !important;
  	}
  }
 
@@ -658,9 +663,8 @@ input[type='range']:focus {
  		width: 100px !important;
  		left: 50px !important;
  	}
-
- 	.col-lg-3 {
- 		max-width: 33%;
-		flex-basis: 33%;
+ 	#most-visited, #mv-tiles {
+ 		max-width: 100%;
+ 		overflow: hidden;
  	}
  }
