@@ -12,7 +12,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#lga', obj.clockOptions.dayBackground)
+		this.ui = new ModuleUI('#lga', obj.clockOptions.dayBackground)
 
 		this.update()
 	}
@@ -24,7 +24,7 @@
 
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
-		this.ui_.addHTML(data)
+		this.ui.addHTML(data)
 		this._super()
 	}
 

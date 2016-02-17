@@ -49,7 +49,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this.html = obj[this.name + 'HTML']
 
 		if (App.now - obj[this.name].date > TIME * 60000) // true update
@@ -57,7 +57,7 @@
 
 		this.showCached(this.html || obj[this.name])
 
-		if (!this.ui_.options.shuffle) return
+		if (!this.ui.options.shuffle) return
 		chrome.storage.local.get({ news_shuffle: 0 }, function (data) {
 			if (App.now - data.news_shuffle > SHUFFLE * 60000) { // shuffle news
 				console.log('Shuffling news')
@@ -104,10 +104,10 @@
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
-			return this.ui_.addToDOM(data)
+			return this.ui.addToDOM(data)
 
-		this.ui_.addHeading(data.url, data.title, data.date)
-		this.ui_.buildContent(data.entries)
+		this.ui.addHeading(data.url, data.title, data.date)
+		this.ui.buildContent(data.entries)
 
 		this._super()
 	}

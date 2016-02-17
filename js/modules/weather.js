@@ -66,7 +66,7 @@
 		this.lat = 0
 		this.long = 0
 
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
@@ -98,6 +98,7 @@
 	/** @see ntp.js */
 	Module.update = function () {
 		console.log('Requesting ' + this.name)
+		//this.ui.addHeading('Loading weather', App.now)
 
 		this.getLocationName()
 		.then(this.getWeatherData.bind(this))
@@ -182,11 +183,11 @@
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
-			return this.ui_.addToDOM(data)
+			return this.ui.addToDOM(data)
 
-		this.ui_.addHeading(data.location, data.date)
-		this.ui_.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
-		this.ui_.buildContent(data.entries)
+		this.ui.addHeading(data.location, data.date)
+		this.ui.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
+		this.ui.buildContent(data.entries)
 
 		this._super()
 	}

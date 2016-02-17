@@ -19,7 +19,7 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 
 		this.update()
 		window.setInterval(function () {
@@ -35,7 +35,7 @@
 
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
-		this.ui_.buildContent(data)
+		this.ui.buildContent(data)
 		this._super()
 	}
 

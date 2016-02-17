@@ -175,13 +175,6 @@
 		return this.format.format(date)
 	}
 
-	/** @deprecated  Added the classes using CSS; Used for reference */
-	App.prototype.addClasses = function () {
-		$('#most-visited').addClass('container-fluid')
-			.find('#mv-tiles').addClass('row').css('width', 'auto')
-			.find('.mv-row').addClass('col-lg-6')
-	}
-
 	/************************************************************************************\
 	|  Represents the Module namespace and the core functions for modules to inherit.       |
 	\ ************************************************************************************/
@@ -202,6 +195,7 @@
 	 */
 	Module.init = function (obj, /** @private */ TIME) {
 		this.html = obj[this.name + 'HTML']
+		this.ui = this.ui || {}
 
 		if (window.App.now - obj[this.name].date > TIME * 60000)
 			return this.update()
@@ -229,6 +223,7 @@
 	 */
 	Module.update = function (/** @private */ url, /** @private */ param, /** @private */ type) {
 		console.log('Requesting ' + this.name)
+		//this.ui.addHeading('Loading ' + this.name, App.now)
 
 		$ajax.get(url, param, type)
 		.then(this.success.bind(this))
@@ -263,8 +258,8 @@
 	 * @date   	2014-07-26
 	 */
 	Module.updateUI = function ( /** data */ ) {
-		//this.ui_.addMoreLink(news.url)
-		this.ui_.addToDOM()
+		//this.ui.addMoreLink(news.url)
+		this.ui.addToDOM()
 	}
 
 	/**

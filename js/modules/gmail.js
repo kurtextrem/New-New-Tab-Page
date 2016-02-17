@@ -43,7 +43,7 @@
 		this.requestPermission(function () {})
 		this.count = obj[this.name].count
 
-		this.ui_ = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
 
@@ -134,10 +134,10 @@
 	/** @see ntp.js */
 	Module.updateUI = function (data) {
 		if (typeof data === 'string')
-			return this.ui_.addToDOM(data)
+			return this.ui.addToDOM(data)
 
-		this.ui_.addHeading(data.count, data.title, data.date)
-		this.ui_.buildContent(data.entries)
+		this.ui.addHeading(data.count, data.title, data.date)
+		this.ui.buildContent(data.entries)
 
 		this._super()
 	}
