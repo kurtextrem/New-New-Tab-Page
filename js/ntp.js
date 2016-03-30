@@ -3,7 +3,7 @@
 	'use strict'
 
 	var $ajax = window.qwest,
-		$ = window.$,
+		$ = window.$, // Sprint
 		Class = window.Class,
 		chrome = window.chrome
 
@@ -397,7 +397,7 @@
 
 		// options change
 		var style = document.createElement('style')  // custom input[type=range] (1)
-			document.body.appendChild(style)
+		document.body.appendChild(style)
 
 		this.info.find('input, select').on('change', function (e) {
 			var val = e.target.value

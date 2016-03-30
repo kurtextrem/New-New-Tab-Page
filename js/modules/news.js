@@ -43,7 +43,8 @@
 		name: 'newsOptions',
 		type: {
 			amount: 6,
-			shuffle: true
+			shuffle: true,
+			shuffleDate: 0
 		}
 	}]
 
@@ -57,14 +58,11 @@
 
 		this.showCached(this.html || obj[this.name])
 
-		if (!this.ui.options.shuffle) return
-		chrome.storage.local.get({ news_shuffle: 0 }, function (data) {
-			if (App.now - data.news_shuffle > SHUFFLE * 60000) { // shuffle news
-				console.log('Shuffling news')
-				this.updateUI(obj[this.name])
-				chrome.storage.local.set({ news_shuffle: App.now })
-			}
-		}.bind(this))
+		if (!this.ui.options.shuffle || App.now - this.ui.options.shuffleDate <  SHUFFLE * 60000) return
+		console.log('Shuffling news')
+		this.updateUI(obj[this.name])
+		this.ui.options.shuffleDate = App.now
+		chrome.storage.local.set({ newsOptions: this.ui.options })
 	}
 
 	/** @see ntp.js */

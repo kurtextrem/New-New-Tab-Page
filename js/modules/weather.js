@@ -17,7 +17,8 @@
 		TYPE = {
 			responseType: 'json',
 			cache: true
-		}
+		},
+		LOCATION_CACHE = 12 // hours
 
 	/** @see ntp.js */
 	var Module = {}
@@ -39,7 +40,13 @@
 		type: {
 			amount: 4,
 			celsius: chrome.i18n.getMessage('weather_temperatureUnit') === 'C',
-			cool: false
+			cool: false,
+
+			location: 'Los Angeles',
+			country: 'US',
+			lat: 34.1,
+			long: -118.2,
+			locationDate: 0
 		}
 	}]
 
@@ -61,11 +68,6 @@
 
 	/** @see ntp.js */
 	Module.init = function (obj) {
-		this.location = ''
-		this.country = ''
-		this.lat = 0
-		this.long = 0
-
 		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 		this._super(obj, TIME)
 	}
@@ -77,20 +79,21 @@
 		.then(function (xhr, data) {
 			console.log('Location:', data)
 
-			this.location = data.city || localStorage['devloc::swml.location'].slice(1, -1)
-			this.country = data.country_code
-			this.lat = data.latitude
-			this.long = data.longitude
+			this.ui.options.location = data.city || localStorage['devloc::swml.location'].slice(1, -1)
+			this.ui.options.country = data.country_code
+			this.ui.options.lat = data.latitude
+			this.ui.options.long = data.longitude
+			this.ui.options.locationDate = App.now
 			return data
 		}.bind(this))
 		.catch(function (err, xhr, response) {
 			console.error('Reverse geocoding request failed:', err)
 
-			this.location = localStorage['devloc::swml.location']
-			this.location = this.location ? this.location.slice(1, -1) : 'Los Angeles'
-			this.country = 'US'
-			this.lat = 34.1
-			this.long = -118.2
+			this.ui.options.location = localStorage['devloc::swml.location']
+			this.ui.options.location = this.location ? this.location.slice(1, -1) : 'Los Angeles'
+			this.ui.options.country = 'US'
+			this.ui.options.lat = 34.1
+			this.ui.options.long = -118.2
 			return xhr
 		}.bind(this))
 	}
@@ -98,10 +101,17 @@
 	/** @see ntp.js */
 	Module.update = function () {
 		console.log('Requesting ' + this.name)
-		//this.ui.addHeading('Loading weather', App.now)
+		// this.ui.addHeading('Loading weather', App.now)
 
-		this.getLocationName()
-		.then(this.getWeatherData.bind(this))
+		if (this.ui.options.locationDate < LOCATION_CACHE * 60000) {
+			this.getLocationName()
+			.then(function (data) {
+				chrome.storage.local.set(this.name + 'Options', this.ui.options)
+				return data
+			}.bind(this))
+			.then(this.getWeatherData.bind(this))
+		} else
+			this.getWeatherData()
 	}
 
 	/**
