@@ -18,7 +18,7 @@
 			responseType: 'json',
 			cache: true
 		},
-		LOCATION_CACHE = 12 // hours
+		LOCATION_CACHE = 6 // hours
 
 	/** @see ntp.js */
 	var Module = {}
@@ -43,7 +43,7 @@
 			cool: false,
 
 			location: 'Los Angeles',
-			country: 'US',
+			country: 'US', // unused
 			lat: 34.1,
 			long: -118.2,
 			locationDate: 0
@@ -75,7 +75,7 @@
 	Module.getLocationName = function () {
 		console.log('Requesting location')
 
-		return $ajax.get('https://freegeoip.net/json/', {}, { type: 'json' })
+		return $ajax.get('https://freegeoip.net/json/', {}, { type: 'json', timeout: 5000 })
 		.then(function (xhr, data) {
 			console.log('Location:', data)
 
@@ -89,11 +89,7 @@
 		.catch(function (err, xhr, response) {
 			console.error('Reverse geocoding request failed:', err)
 
-			this.ui.options.location = localStorage['devloc::swml.location']
-			this.ui.options.location = this.location ? this.location.slice(1, -1) : 'Los Angeles'
-			this.ui.options.country = 'US'
-			this.ui.options.lat = 34.1
-			this.ui.options.long = -118.2
+			throw err
 			return xhr
 		}.bind(this))
 	}
@@ -103,13 +99,27 @@
 		console.log('Requesting ' + this.name)
 		// this.ui.addHeading('Loading weather', App.now)
 
-		if (this.ui.options.locationDate < LOCATION_CACHE * 60000) {
+		if (this.ui.options.locationDate < LOCATION_CACHE * 60 * 60000) {
 			this.getLocationName()
 			.then(function (data) {
 				chrome.storage.local.set(this.name + 'Options', this.ui.options)
+				this.getWeatherData()
 				return data
 			}.bind(this))
-			.then(this.getWeatherData.bind(this))
+			.catch(function () {
+				if (localStorage['devloc::swml.location'])
+					this.ui.options.location =  localStorage['devloc::swml.location'].slice(1, -1)
+				this.ui.options.lat = localStorage['devloc::web.gws.devloc.lat'] || this.ui.options.lat
+				this.ui.options.long = localStorage['devloc::web.gws.devloc.lon'] || this.ui.options.long
+
+				this.ui.options.locationDate = App.now + LOCATION_CACHE / 2 * 60 * 60000
+
+				var obj = {}
+				obj[this.name + 'Options'] = this.ui.options
+				chrome.storage.local.set(obj)
+
+				this.getWeatherData()
+			}.bind(this))
 		} else
 			this.getWeatherData()
 	}
@@ -125,7 +135,7 @@
 			format: 'json',
 			rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
 			diagnostics: true,
-			q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + this.lat + ',' + this.long + ')" limit 1) and u="f"'
+			q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + this.ui.options.lat + ',' + this.ui.options.long + ')" limit 1) and u="f"'
 		}, TYPE)
 		.then(this.success.bind(this)).catch(this.error.bind(this))
 	}
@@ -142,7 +152,7 @@
 		if (App.now - data.date > TIME * 60000) // sometimes Yahoo stops delivering new data
 			data.date = App.now
 
-		data.location = decodeURIComponent(this.location) || items.location.city
+		data.location = decodeURIComponent(this.ui.options.location) || items.location.city
 		data.temperature = items.item.condition.temp
 		data.icon = this.MAP[+items.item.condition.code] || ('unknown' && console.warn('Unknown condition -- icon', items.item.condition))
 		data.condition = chrome.i18n.getMessage(data.icon) || items.item.condition.text

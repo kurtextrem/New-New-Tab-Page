@@ -133,11 +133,11 @@
 			out = '',
 			pre = Boolean(chrome.i18n.getMessage('clock_pre'))
 
-			if (diff < 0) {
-				diff = Math.abs(diff)
-				pre = true
-				token = chrome.i18n.getMessage('clock_in')
-			}
+		if (diff < 0) {
+			diff = Math.abs(diff)
+			pre = true
+			token = chrome.i18n.getMessage('clock_in')
+		}
 
 		switch (true) {
 			case diff < 60:
