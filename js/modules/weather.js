@@ -142,6 +142,10 @@
 
 	/** @see ntp.js */
 	Module.success = function (xhr, json) {
+		if (!json.query.count) {
+			console.warn(json)
+			throw 'Did not get ' + this.name
+		}
 		var items =  json.query.results.channel,
 			data = {
 				entries: []

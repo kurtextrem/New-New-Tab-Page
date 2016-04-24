@@ -245,7 +245,7 @@
 	 * @date   	2014-07-26
 	 */
 	Module.error = function (err, xhr, response) {
-		console.error('Failed ' + this.name + ' request. ', err)
+		console.error('Failed ' + this.name + ' request. ', err, response)
 		if (this.html)
 			this.showCached(this.html)
 		return xhr
