@@ -29,8 +29,8 @@
 		this.checkResolution()
 	}
 
-	/** @type	{Array}		Reference to the registered modules. */
-	App.prototype.modules = []
+	/** @type	{Integer}	Stores how large the module register is. */
+	App.prototype.modulesLength = 0
 
 	/** @type	{Object}	Reference to the module's storage keys. */
 	App.prototype.storageKeys = {}
@@ -47,7 +47,11 @@
 	 */
 	App.prototype.register = function (obj) {
 		console.log('Adding ' + obj.name)
-		this.modules.push(this.Module.extend(obj))
+
+		var index = this.modulesLength
+		this.modulesLength++
+		this[index] = this.Module.extend(obj)
+
 		var length = obj.storageKeys.length
 		while (length--) {
 			this.storageKeys[obj.storageKeys[length].name] = obj.storageKeys[length].type
@@ -61,12 +65,12 @@
 	 * @date   	2014-07-26
 	 */
 	App.prototype.bootModules = function () {
-		var length = this.modules.length
+		var length = this.modulesLength
 		while (length--) {
 			try { // @todo: Remove for more speed
-				new this.modules[length](this.loadedObj)
+				new this[length](this.loadedObj)
 			} catch (e) {
-				console.error('Error while booting.', e, length, this.loadedObj, this.modules, this.modules[length])
+				console.error('Error while booting.', e, length, this.loadedObj, this[length])
 			}
 		}
 		console.log('Started modules')
