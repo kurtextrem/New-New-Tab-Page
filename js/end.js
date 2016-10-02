@@ -1,4 +1,4 @@
-!function (window) {
+(function (window) {
 	'use strict'
 
 	if (document.getElementById('main-cards') !== null)
@@ -13,4 +13,4 @@
 
 		observer.observe(document.body, { childList: true })
 	}
-} (window)
+} (window));

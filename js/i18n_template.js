@@ -23,7 +23,7 @@
  *
  * Modified to support chrome.i18n.getMessage()
  */
-!function (window) {
+(function (window) {
 	'use strict';
 	window.i18n = (function () {
 		/**
@@ -134,4 +134,4 @@
 			process: process
 		};
 	}());
-} (window);
+} (window));
