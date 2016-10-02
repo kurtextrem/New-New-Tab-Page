@@ -1,82 +1,85 @@
 /* global Intl */
-!function (window) {
+(function (window) {
 	'use strict'
 
-	/** @see ntp.js */
-	var Module = {}
+	class Module extends window.Module {
+		/** @see ntp.js */
+		static get name () { return 'clock' }
 
-	/** @see ntp.js */
-	Module.name = 'clock'
-
-	/** @see ntp.js */
-	Module.storageKeys = [{
-		name: 'clockOptions',
-		type: {
-			twelveHours: false,
-			dayBackground: 'Beach'
+		/** @see ntp.js */
+		static get storageKeys() {
+			return [{
+				name: 'clockOptions',
+				type: {
+					twelveHours: false,
+					dayBackground: 'Beach'
+				}
+			}]
 		}
-	}]
 
-	/** @see ntp.js */
-	Module.init = function (obj) {
-		this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+		/** @see ntp.js */
+		constructor (obj) {
+			super(obj, Module.name) // always call super first, if we don't `this` === undefined
 
-		this.update()
-		window.setInterval(function () {
-			window.App.updateTimestamp()
-			this.update(obj)
-		}.bind(this), 25000)
+			this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+
+			this.update()
+			window.setInterval(function () {
+				window.App.updateTimestamp()
+				this.update(obj)
+			}.bind(this), 25000)
+		}
+
+		/** @see ntp.js */
+		update () {
+			this.updateUI(window.App.date)
+		}
+
+		/** @see ntp.js */
+		updateUI (data) {
+			this.ui.buildContent(data)
+			super.updateUI()
+		}
 	}
 
-	/** @see ntp.js */
-	Module.update = function () {
-		this.updateUI(window.App.date)
-	}
-
-	/** @see ntp.js */
-	Module.updateUI = function (data) {
-		this.ui.buildContent(data)
-		this._super()
-	}
 
 	/************\
 	|  UI Section   |
 	\************/
 
 	/** @see ntp.js */
-	var ModuleUI = {}
+	class ModuleUI extends window.ModuleUIExtended {
+		/** @see ntp.js */
+		constructor (name, options) {
+			super(name, options) // always call super first, if we don't `this` === undefined
 
-	/** @see ntp.js */
-	ModuleUI.init = function (name, options) {
-		this.formatter = Intl.DateTimeFormat(window.App.lang, {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			weekday: 'long'
-		})
-		this._super(name, options)
-	}
-
-	/** @see ntp.js */
-	ModuleUI.buildContent = function (data) {
-		this._addHTML(data)
-	}
-
-	/** @see ntp.js */
-	ModuleUI._addHTML = function (timestamp) {
-		this.html = ''
-
-		var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''
-		if (this.options.twelveHours && hours > 12) {
-			hours = hours - 12
-			postfix = 'pm'
+			this.formatter = Intl.DateTimeFormat(window.App.lang, {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+				weekday: 'long'
+			})
 		}
-		this.html += '<span class="clock__hours">' + ('0' + hours).slice(-2) + '</span><span class="clock__minutes">' + ('0' + timestamp.getMinutes()).slice(-2) + '</span><span class="clock__postfix">' + postfix + '</span><div class="clock__date">' + this.formatter.format(timestamp) + '</div>'
-	}
 
-	/** @see ntp.js */
-	ModuleUI = window.App.ModuleUIExtended.extend(ModuleUI)
+		/** @see ntp.js */
+		buildContent (data) {
+			this._addHTML(data)
+		}
+
+		/** @see ntp.js */
+		_addHTML (timestamp) {
+			this.html = ''
+
+			var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''
+			if (this.options.twelveHours && hours > 12) {
+				hours = hours - 12
+				postfix = 'pm'
+			}
+			this.html += '<span class="clock__hours">' + ('0' + hours).slice(-2) + '</span><span class="clock__minutes">' + ('0' + timestamp.getMinutes()).slice(-2) + '</span><span class="clock__postfix">' + postfix + '</span><div class="clock__date">' + this.formatter.format(timestamp) + '</div>'
+		}
+	}
 
 	/** @see ntp.js */
 	window.App.register(Module)
-}(window)
+
+}(window));
