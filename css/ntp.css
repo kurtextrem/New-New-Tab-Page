@@ -8,7 +8,7 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 100;
-	src: local('Roboto Thin'), local('Roboto-Thin'), url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2);
+	src: local('Roboto Thin'), url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2);
 }
 
 * {
@@ -116,7 +116,8 @@ a[href^="http://"] > img {
  * Promotion messages.
  */
 #prm > div {
-	margin-bottom: 2px;
+	margin-bottom: 5px;
+	margin-top: -10px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
 	color: rgb(136, 136, 136);
@@ -128,6 +129,12 @@ a[href^="http://"] > img {
 
 #prm > .gb_wb.gb_Ia {
 	display: inline-block;
+}
+
+#prm > .gb_oe {
+	position: relative !important;
+	left: 0 !important;
+	top: 0 !important;
 }
 
 #prm-pt > br {
@@ -219,6 +226,10 @@ a[href^="http://"] > img {
 	font-size: 20px;
 	font-weight: normal;
 	line-height: 1;
+}
+
+.box__content > h2:only-child {
+	padding-top:  15px;
 }
 
 .box__item {
