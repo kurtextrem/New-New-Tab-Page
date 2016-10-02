@@ -200,12 +200,16 @@
 		 *
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
-		 * @param  	{String}   	obj 	The loaded data.
+		 * @param  	{String}   	obj 		The loaded data.
+		 * @param  	{String}   	NAME 	The module name.
+		 * @param  	{object}   	UI 		The UI of the module.
+		 * @param  	{int}   		TIME 	The time between updates.
 		 */
-		constructor (obj, NAME, /** @private */ TIME) {
+		constructor (obj, NAME, ui, TIME) {
 			this.name = NAME
 			this.html = obj[this.name + 'HTML']
-			// this.ui = this.ui || {}
+			if (ui && !(ui instanceof ModuleUI)) throw 'Parameter 3 must be an instance of ModuleUI'
+			this.ui = ui
 
 			if (!TIME) return // we don't want the following things to execute
 
