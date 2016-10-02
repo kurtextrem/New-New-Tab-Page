@@ -47,7 +47,6 @@
 	|  UI Section   |
 	\************/
 
-	/** @see ntp.js */
 	class ModuleUI extends window.ModuleUIExtended {
 		/** @see ntp.js */
 		constructor (name, options) {
