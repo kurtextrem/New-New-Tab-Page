@@ -14,16 +14,23 @@
 	 */
 	class App {
 		constructor () {
-			/** @type	{Integer}	Stores how large the module register is. */
+			/** @type	{int}		Stores how large the module register is. */
 			this.modulesLength = 0
 
-			/** @type	{Object}	Reference to the module's storage keys. */
+			/** @type	{object}		Reference to the module's storage keys. */
 			this.storageKeys = {}
 
-			/** @type	{Array}		Reference to loaded storage data, which is given to every module's constructor. */
+			/** @type	{array}		Reference to loaded storage data, which is given to every module's constructor. */
 			this.loadedObj = {}
 
-			this.updateTimestamp()
+			/** @type 	{map} 		Translations dictionary (Chrome API). */
+			this.dictionary = new Map()
+
+			/** @type 	{object} 	Holds the current date object. */
+			this.date = null
+			/** @type 	{int} 		The current timestamp */
+			this.now = null
+
 			this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
 			this.format = window.Intl.DateTimeFormat(this.lang, {
 				year: 'numeric',
@@ -33,6 +40,8 @@
 				hour: '2-digit',
 				minute: '2-digit'
 			})
+
+			this.updateTimestamp()
 
 			this.loadBoxes()
 			this.checkResolution()
@@ -128,38 +137,38 @@
 		 */
 		updateTimestamp () {
 			this.date = new Date()
-			this.now = this.date.valueOf()
+			this.now = Date.now()
 		}
 
 		prettyTime (date) {
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
-				token = chrome.i18n.getMessage('clock_ago'),
+				token = this.getMsg('clock_ago'),
 				out = '',
-				pre = Boolean(chrome.i18n.getMessage('clock_pre'))
+				pre = Boolean(this.getMsg('clock_pre'))
 
 			if (diff < 0) {
 				diff = Math.abs(diff)
 				pre = true
-				token = chrome.i18n.getMessage('clock_in')
+				token = this.getMsg('clock_in')
 			}
 
 			switch (true) {
 				case diff < 60:
-					return chrome.i18n.getMessage('clock_now')
+					return this.getMsg('clock_now')
 				case diff < 120:
-					out = '1 ' + chrome.i18n.getMessage('clock_minute')
+					out = '1 ' + this.getMsg('clock_minute')
 					break
 				case diff < 3600:
-					out = Math.floor(diff / 60) + ' ' + chrome.i18n.getMessage('clock_minutes')
+					out = Math.floor(diff / 60) + ' ' + this.getMsg('clock_minutes')
 					break
 				case diff < 7200:
-					out = '1 ' + chrome.i18n.getMessage('clock_hour')
+					out = '1 ' + this.getMsg('clock_hour')
 					break
 				case diff < 86400:
-					out = Math.floor(diff / 3600) + ' ' + chrome.i18n.getMessage('clock_hours')
+					out = Math.floor(diff / 3600) + ' ' + this.getMsg('clock_hours')
 					break;
 				case Math.floor(diff / 86400) === 1:
-					return chrome.i18n.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
+					return this.getMsg('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
 					break
 				default:
 					return Intl.DateTimeFormat(this.lang, {
@@ -177,6 +186,15 @@
 
 		prettyDate (date) {
 			return this.format.format(date)
+		}
+
+		getMsg (string) {
+			var s = this.dictionary.get(string)
+			if (s) return s
+
+			s = chrome.i18n.getMessage(string)
+			this.dictionary.set(string, s)
+			return s
 		}
 	}
 
@@ -273,7 +291,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		updateUI ( /** data */ ) {
+		updateUI (/** data */) {
 			//this.ui.addMoreLink(news.url)
 			this.ui.addToDOM()
 		}
@@ -298,7 +316,7 @@
 			this.options = options
 			this.content = notBox ? name : name + ' > .box__content'
 
-			// this._cacheObjects()
+			this._cacheObjects()
 		}
 
 		/**
@@ -307,8 +325,8 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		addHeading ( /** @private */ html, /** @private */ date) {
-			this.html += '<header class="box__item box__caption" title="' + chrome.i18n.getMessage('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
+		addHeading (/** @private */ html, /** @private */ date) {
+			this.html += '<header class="box__item box__caption" title="' + window.App.getMsg('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
 		}
 
 		/**
@@ -318,7 +336,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		buildContent ( /** data */ ) {}
+		buildContent (/** data */) {}
 
 		/**
 		 * Adds HTML.
@@ -326,7 +344,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		_addHTML ( /** params */ ) {}
+		_addHTML (/** params */) {}
 
 		/**
 		 * Adds a "more" link.
@@ -336,7 +354,7 @@
 		 * @param  	{String}   	url
 		 */
 		_addMoreLink (url) {
-			this.html += '<div class="box__item box__caption"><a href="' + url + '">' + chrome.i18n.getMessage('more') + '</a></div>'
+			this.html += '<div class="box__item box__caption"><a href="' + url + '">' + window.App.getMsg('more') + '</a></div>'
 		}
 
 		/**
@@ -449,18 +467,18 @@
 		 * @param  	{string|array}   	key 	The key(s) to safe
 		 * @param  	{string|array}   	val 	The value(s) to safe
 		 */
-		 _save (name, key, val) {
-		 	var obj = {}
-		 	name = name + 'Options'
-		 	obj[name] = {}
-		 	if (typeof key === 'string')
-		 		obj[name][key] = val
-		 	else {
-		 		var i = key.length
-		 		while (i--) {
-		 			obj[name][key] = val[i]
-		 		}
-		 	}
+		_save (name, key, val) {
+			var obj = {}
+			name = name + 'Options'
+			obj[name] = {}
+			if (typeof key === 'string')
+				obj[name][key] = val
+			else {
+				var i = key.length
+				while (i--) {
+					obj[name][key] = val[i]
+				}
+			}
 			obj[name + 'Cache'] = '' // clear cache
 			chrome.storage.local.set(obj, function () {
 				this.info.find('.box-info__text--saved').removeClass('hide')
@@ -473,16 +491,16 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-28
 		 */
-		 _load () {
-		 	for (var index in this.options) {
-		 		if (this.options.hasOwnProperty(index)) {
-		 			var elem = this.info.find('[id$="' + index + '"]'),
-		 			checkbox = elem.filter('[type=checkbox]').get(0)
-		 			if (checkbox !== undefined)
-		 				return checkbox.checked = this.options[index]
-		 			elem.val(this.options[index])
-		 		}
-		 	}
+		_load () {
+			for (var index in this.options) {
+				if (this.options.hasOwnProperty(index)) {
+					var elem = this.info.find('[id$="' + index + '"]'),
+					checkbox = elem.filter('[type=checkbox]').get(0)
+					if (checkbox !== undefined)
+						return checkbox.checked = this.options[index]
+					elem.val(this.options[index])
+				}
+			}
 		}
 	}
 
