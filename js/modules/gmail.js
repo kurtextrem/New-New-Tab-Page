@@ -1,4 +1,4 @@
-/* global Notification, console */
+/* global Notification */
 (function (window) {
 	'use strict'
 
@@ -23,7 +23,7 @@
 				type: {
 					count: 0,
 					date: 0,
-					title: chrome.i18n.getMessage('mails'),
+					title: window.App.getMessage('mails'),
 					entries: []
 				}
 			}, {

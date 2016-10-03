@@ -1,4 +1,3 @@
-/* global console */
 (function (window) {
 	'use strict'
 
@@ -13,7 +12,7 @@
 		PARAMS = {
 			output: 'rss',
 			pz: '1',
-			hl: chrome.i18n.getMessage('@@ui_locale'),
+			hl: App.getMessage('@@ui_locale'),
 			num: 30
 		},
 		TYPE = {
@@ -31,7 +30,7 @@
 				name: 'news',
 				type: {
 					date: 0,
-					title: chrome.i18n.getMessage('news'),
+					title: App.getMessage('news'),
 					url: 'https://news.google.com',
 					entries: []
 				}

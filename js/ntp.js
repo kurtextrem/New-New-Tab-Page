@@ -20,8 +20,8 @@
 			/** @type	{object}		Reference to the module's storage keys. */
 			this.storageKeys = {}
 
-			/** @type	{array}		Reference to loaded storage data, which is given to every module's constructor. */
-			this.loadedObj = {}
+			/** @type	{object}		Reference to loaded storage data, which is given to every module's constructor. */
+			this.loadedObj = null
 
 			/** @type 	{map} 		Translations dictionary (Chrome API). */
 			this.dictionary = new Map()
@@ -109,7 +109,7 @@
 			$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
 			.then(function (xhr, data) {
 				$('body').append(data)
-				i18n.process(document, chrome.i18n)
+				window.i18n.process(document, window.App)
 			}.bind(this))
 			.catch(function (err) {
 				console.error(err)
@@ -142,33 +142,33 @@
 
 		prettyTime (date) {
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
-				token = this.getMsg('clock_ago'),
+				token = this.getMessage('clock_ago'),
 				out = '',
-				pre = Boolean(this.getMsg('clock_pre'))
+				pre = Boolean(this.getMessage('clock_pre'))
 
 			if (diff < 0) {
 				diff = Math.abs(diff)
 				pre = true
-				token = this.getMsg('clock_in')
+				token = this.getMessage('clock_in')
 			}
 
 			switch (true) {
 				case diff < 60:
-					return this.getMsg('clock_now')
+					return this.getMessage('clock_now')
 				case diff < 120:
-					out = '1 ' + this.getMsg('clock_minute')
+					out = '1 ' + this.getMessage('clock_minute')
 					break
 				case diff < 3600:
-					out = Math.floor(diff / 60) + ' ' + this.getMsg('clock_minutes')
+					out = Math.floor(diff / 60) + ' ' + this.getMessage('clock_minutes')
 					break
 				case diff < 7200:
-					out = '1 ' + this.getMsg('clock_hour')
+					out = '1 ' + this.getMessage('clock_hour')
 					break
 				case diff < 86400:
-					out = Math.floor(diff / 3600) + ' ' + this.getMsg('clock_hours')
+					out = Math.floor(diff / 3600) + ' ' + this.getMessage('clock_hours')
 					break;
 				case Math.floor(diff / 86400) === 1:
-					return this.getMsg('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
+					return this.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
 					break
 				default:
 					return Intl.DateTimeFormat(this.lang, {
@@ -188,7 +188,7 @@
 			return this.format.format(date)
 		}
 
-		getMsg (string) {
+		getMessage (string) {
 			var s = this.dictionary.get(string)
 			if (s) return s
 
@@ -326,7 +326,7 @@
 		 * @date   	2014-07-23
 		 */
 		addHeading (/** @private */ html, /** @private */ date) {
-			this.html += '<header class="box__item box__caption" title="' + window.App.getMsg('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
+			this.html += '<header class="box__item box__caption" title="' + window.App.getMessage('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
 		}
 
 		/**
@@ -354,7 +354,7 @@
 		 * @param  	{String}   	url
 		 */
 		_addMoreLink (url) {
-			this.html += '<div class="box__item box__caption"><a href="' + url + '">' + window.App.getMsg('more') + '</a></div>'
+			this.html += '<div class="box__item box__caption"><a href="' + url + '">' + window.App.getMessage('more') + '</a></div>'
 		}
 
 		/**

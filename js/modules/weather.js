@@ -1,4 +1,3 @@
-/* global console */
 (function (window) {
 	'use strict'
 
@@ -38,7 +37,7 @@
 				name: 'weatherOptions',
 				type: {
 					amount: 4,
-					celsius: chrome.i18n.getMessage('weather_temperatureUnit') === 'C',
+					celsius: App.getMessage('weather_temperatureUnit') === 'C',
 					cool: false,
 
 					location: 'Los Angeles',
@@ -55,15 +54,15 @@
 			super(obj, Module.name, new ModuleUI('#box-' + Module.name, obj[Module.name + 'Options']), TIME)
 
 			this.TEXT = [
-				chrome.i18n.getMessage('N'), // 0
-				chrome.i18n.getMessage('NE'), // 45
-				chrome.i18n.getMessage('E'), // 90
-				chrome.i18n.getMessage('SE'), // 135
-				chrome.i18n.getMessage('S'), // 180
-				chrome.i18n.getMessage('SW'), // 225
-				chrome.i18n.getMessage('W'), // 270
-				chrome.i18n.getMessage('NW'), // 315
-				chrome.i18n.getMessage('N') // 360
+				App.getMessage('N'), // 0
+				App.getMessage('NE'), // 45
+				App.getMessage('E'), // 90
+				App.getMessage('SE'), // 135
+				App.getMessage('S'), // 180
+				App.getMessage('SW'), // 225
+				App.getMessage('W'), // 270
+				App.getMessage('NW'), // 315
+				App.getMessage('N') // 360
 			]
 			this.MAP = {
 				0: 'thunderstorms',
@@ -117,13 +116,13 @@
 				3200: 'unknown'
 			}
 			this.DAYS = {
-				Sun: chrome.i18n.getMessage('sun'),
-				Mon: chrome.i18n.getMessage('mon'),
-				Tue: chrome.i18n.getMessage('tue'),
-				Wed: chrome.i18n.getMessage('wed'),
-				Thu: chrome.i18n.getMessage('thu'),
-				Fri: chrome.i18n.getMessage('fri'),
-				Sat: chrome.i18n.getMessage('sat')
+				Sun: App.getMessage('sun'),
+				Mon: App.getMessage('mon'),
+				Tue: App.getMessage('tue'),
+				Wed: App.getMessage('wed'),
+				Thu: App.getMessage('thu'),
+				Fri: App.getMessage('fri'),
+				Sat: App.getMessage('sat')
 			}
 		}
 
@@ -217,7 +216,7 @@
 			data.location = decodeURIComponent(this.ui.options.location) || items.location.city
 			data.temperature = items.item.condition.temp
 			data.icon = this.MAP[+items.item.condition.code] || ('unknown' && console.warn('Unknown condition -- icon', items.item.condition))
-			data.condition = chrome.i18n.getMessage(data.icon) || items.item.condition.text
+			data.condition = App.getMessage(data.icon) || items.item.condition.text
 			if (!data.condition)
 				console.warn('Unknown condition -- translation', items.item.condition)
 
@@ -244,7 +243,7 @@
 
 			for (var i = 0; i < items.item.forecast.length; i++) {
 				var item = items.item.forecast[i],
-					cond = chrome.i18n.getMessage(this.MAP[item.code]) || item.text
+					cond = App.getMessage(this.MAP[item.code]) || item.text
 
 				if (!cond) console.warn('Unknown condition -- translation', item.condition)
 				data.entries[i] = {
@@ -288,7 +287,7 @@
 		/** @see ntp.js */
 		addHeading(title, date) {
 			title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
-			super.addHeading('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(chrome.i18n.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
+			super.addHeading('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(App.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
 		}
 
 		/** @see ntp.js */
@@ -345,19 +344,19 @@
 
 			var unit = ''
 			if (wind_speed === 0) {
-				wind_speed = chrome.i18n.getMessage('windless')
+				wind_speed = App.getMessage('windless')
 				unit = ''
 				wind_direction = ''
 			} else {
 				wind_speed = ~~wind_speed
 				if (this.options.celsius) {
 					//wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
-					unit = chrome.i18n.getMessage('kmh')
+					unit = App.getMessage('kmh')
 				} else
-					unit = chrome.i18n.getMessage('mph')
+					unit = App.getMessage('mph')
 			}
 
-			this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + chrome.i18n.getMessage('wind') + ': ' + wind_direction + ', ' + wind_speed + unit + '">' + wind_speed + '<sup>' + unit + '</sup></li><li class="weather__data--humidity" title="' + chrome.i18n.getMessage('humidity') + ': ' + humidity + '%">' + humidity + '%</li></ul></div>'
+			this.html += '<div class="weather__data--box col-lg-3 col-lg-pull-1"><ul class="weather__data"><li class="weather__data--condition">' + condition + '</li><li class="weather__data--wind" title="' + App.getMessage('wind') + ': ' + wind_direction + ', ' + wind_speed + unit + '">' + wind_speed + '<sup>' + unit + '</sup></li><li class="weather__data--humidity" title="' + App.getMessage('humidity') + ': ' + humidity + '%">' + humidity + '%</li></ul></div>'
 			this.html += '</div>'
 		}
 
