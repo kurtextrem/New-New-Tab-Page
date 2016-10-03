@@ -220,6 +220,7 @@ a[href^="http://"] > img {
 	position: relative;
 	cursor: default;
 	min-height: 100px;
+	contain: content;
 }
 
 .box__content h2 {
@@ -648,59 +649,59 @@ input[type='range']:focus {
  */
 /* @todo: Need better breakpoints */
  @media only screen and (max-width: 1860px) {
- 	#mv-tiles > .mv-tile {
- 		height: 100px;
- 		width: 166px;
- 		-webkit-margin-start: 10px;
- 	}
+	#mv-tiles > .mv-tile {
+		height: 100px;
+		width: 166px;
+		-webkit-margin-start: 10px;
+	}
 
- 	#mv-tiles .mv-mask {
- 		width: 166px;
- 	}
+	#mv-tiles .mv-mask {
+		width: 166px;
+	}
 
- 	#mv-tiles .mv-thumb, #mv-tiles .mv-locthumb, #mv-tiles .mv-locgradient, #mv-tiles .mv-locfallback {
- 		width: 156px;
- 	}
+	#mv-tiles .mv-thumb, #mv-tiles .mv-locthumb, #mv-tiles .mv-locgradient, #mv-tiles .mv-locfallback {
+		width: 156px;
+	}
 
- 	#mv-tiles .mv-title {
- 		width: 126px;
- 	}
+	#mv-tiles .mv-title {
+		width: 126px;
+	}
 
- 	a[href^="http://"] > img {
- 		height: 80px;
- 		min-height: initial;
- 	}
+	a[href^="http://"] > img {
+		height: 80px;
+		min-height: initial;
+	}
  }
 
  @media only screen and (max-width: 1700px) {
- 	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
- 		height: 95px; /* * 1.66265060241 = width */
- 		width: 157px;
- 	}
+	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
+		height: 95px; /* * 1.66265060241 = width */
+		width: 157px;
+	}
 
- 	.mv-title.mv-title {
- 		width: 100px !important;
- 		left: 50px !important;
- 	}
+	.mv-title.mv-title {
+		width: 100px !important;
+		left: 50px !important;
+	}
 
- 	#main-cards > .row > .col-lg-3 {
- 		max-width: 33% !important;
- 		flex-basis: 33% !important;
- 	}
+	#main-cards > .row > .col-lg-3 {
+		max-width: 33% !important;
+		flex-basis: 33% !important;
+	}
  }
 
  @media only screen and (max-width: 1400px) {
- 	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
- 		height: 70px; /* * 1.66265060241 = width */
- 		width: 116px;
- 	}
+	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
+		height: 70px; /* * 1.66265060241 = width */
+		width: 116px;
+	}
 
- 	.mv-title.mv-title {
- 		width: 100px !important;
- 		left: 50px !important;
- 	}
- 	#most-visited, #mv-tiles {
- 		max-width: 100%;
- 		overflow: hidden;
- 	}
+	.mv-title.mv-title {
+		width: 100px !important;
+		left: 50px !important;
+	}
+	#most-visited, #mv-tiles {
+		max-width: 100%;
+		overflow: hidden;
+	}
  }
