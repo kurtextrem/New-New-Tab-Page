@@ -2,13 +2,13 @@
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 400;
-	src: local('Roboto'), url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.woff2);
+	src: local('Roboto'), url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.woff2");
 }
 @font-face {
 	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 100;
-	src: local('Roboto Thin'), url(chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2);
+	src: local('Roboto Thin'), url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2");
 }
 
 * {
@@ -35,6 +35,10 @@ form {
 
 .hide {
 	display: none;
+}
+
+.container-fluid {
+	padding:  0;
 }
 
 /**
@@ -386,14 +390,14 @@ a[href^="http://"] > img {
 
 .weather__data--wind::before {
 	margin-right: 5px;
-	content: url(chrome-extension://__MSG_@@extension_id__/img/wind.webp);
+	content: url("chrome-extension://__MSG_@@extension_id__/img/wind.webp");
 }
 
 /* by http://www.wpzoom.com */
 .weather__data--humidity::before {
 	top: 5px;
 	margin-right: 5px;
-	content: url(chrome-extension://__MSG_@@extension_id__/img/wet.webp);
+	content: url("chrome-extension://__MSG_@@extension_id__/img/wet.webp");
 }
 
 /* Forecast */
@@ -444,7 +448,7 @@ a[href^="http://"] > img {
 	z-index: 99;
 	width: 24px;
 	height: 24px;
-	background-image: url('chrome-extension://__MSG_@@extension_id__/img/ic_now_feedback_sprite.webp');
+	background-image: url("chrome-extension://__MSG_@@extension_id__/img/ic_now_feedback_sprite.webp");
 	background-position: 0 0;
 	cursor: help !important;
 }
@@ -500,7 +504,8 @@ a[href^="http://"] > img {
 	position: relative;
 	cursor: pointer;
 	outline: none;
-	user-select: none;
+	-webkit-user-select: none;
+	        user-select: none;
 	top: -8px;
 }
 input.cmn-toggle-round + label {
@@ -649,59 +654,62 @@ input[type='range']:focus {
  */
 /* @todo: Need better breakpoints */
  @media only screen and (max-width: 1860px) {
-	#mv-tiles > .mv-tile {
-		height: 100px;
-		width: 166px;
-		-webkit-margin-start: 10px;
-	}
-
-	#mv-tiles .mv-mask {
-		width: 166px;
-	}
-
-	#mv-tiles .mv-thumb, #mv-tiles .mv-locthumb, #mv-tiles .mv-locgradient, #mv-tiles .mv-locfallback {
-		width: 156px;
-	}
-
-	#mv-tiles .mv-title {
-		width: 126px;
-	}
-
-	a[href^="http://"] > img {
-		height: 80px;
-		min-height: initial;
-	}
+     #mv-tiles > .mv-tile {
+         height: 100px;
+         width: 166px;
+         -webkit-margin-start: 10px;
+     }
+     #mv-tiles .mv-mask {
+         width: 166px;
+     }
+     #mv-tiles .mv-thumb,
+     #mv-tiles .mv-locthumb,
+     #mv-tiles .mv-locgradient,
+     #mv-tiles .mv-locfallback {
+         width: 156px;
+     }
+     #mv-tiles .mv-title {
+         width: 126px;
+     }
+     a[href^="http://"] > img {
+         height: 80px;
+         min-height: initial;
+     }
  }
 
  @media only screen and (max-width: 1700px) {
-	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
-		height: 95px; /* * 1.66265060241 = width */
-		width: 157px;
-	}
-
-	.mv-title.mv-title {
-		width: 100px !important;
-		left: 50px !important;
-	}
-
-	#main-cards > .row > .col-lg-3 {
-		max-width: 33% !important;
-		flex-basis: 33% !important;
-	}
+     .mv-tile.mv-tile,
+     .mv-thumb.mv-thumb,
+     .mv-mask.mv-mask {
+         height: 95px;
+         /* * 1.66265060241 = width */
+         width: 157px;
+     }
+     .mv-title.mv-title {
+         width: 100px !important;
+         left: 50px !important;
+     }
+     #main-cards > .row > .col-lg-3 {
+         max-width: 33% !important;
+         flex-basis: 33% !important;
+     }
  }
 
  @media only screen and (max-width: 1400px) {
-	.mv-tile.mv-tile, .mv-thumb.mv-thumb, .mv-mask.mv-mask {
-		height: 70px; /* * 1.66265060241 = width */
-		width: 116px;
-	}
-
-	.mv-title.mv-title {
-		width: 100px !important;
-		left: 50px !important;
-	}
-	#most-visited, #mv-tiles {
-		max-width: 100%;
-		overflow: hidden;
-	}
+     .mv-tile.mv-tile,
+     .mv-thumb.mv-thumb,
+     .mv-mask.mv-mask {
+         height: 70px;
+         /* * 1.66265060241 = width */
+         width: 116px;
+     }
+     .mv-title.mv-title {
+         width: 100px !important;
+         left: 50px !important;
+     }
+     #most-visited,
+     #mv-tiles {
+         max-width: 100%;
+         overflow: hidden;
+     }
  }
