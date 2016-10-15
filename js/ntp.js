@@ -231,9 +231,10 @@
 
 			if (!TIME) return // we don't want the following things to execute
 
+			this.showCached(this.html || obj[this.name])
+
 			if (window.App.now - obj[this.name].date > TIME * 60000)
 				return this.update()
-			this.showCached(this.html || obj[this.name])
 		}
 
 		/**

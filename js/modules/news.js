@@ -54,10 +54,10 @@
 			this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
 			this.html = obj[this.name + 'HTML']
 
+			this.showCached(this.html || obj[this.name])
+
 			if (App.now - obj[this.name].date > TIME * 60000) // true update
 				return this.update()
-
-			this.showCached(this.html || obj[this.name])
 
 			if (!this.ui.options.shuffle || App.now - this.ui.options.shuffleDate < SHUFFLE * 60000) return
 
