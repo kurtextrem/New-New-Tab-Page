@@ -34,12 +34,6 @@
 		update () {
 			this.updateUI(window.App.date)
 		}
-
-		/** @see ntp.js */
-		updateUI (data) {
-			this.ui.buildContent(data)
-			super.updateUI()
-		}
 	}
 
 
@@ -61,12 +55,7 @@
 		}
 
 		/** @see ntp.js */
-		buildContent (data) {
-			this._addHTML(data)
-		}
-
-		/** @see ntp.js */
-		_addHTML (timestamp) {
+		buildContent (timestamp) {
 			this.html = ''
 
 			var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''

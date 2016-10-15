@@ -32,7 +32,7 @@
 			}, {
 				name: 'gmailOptions',
 				type: {
-					amount: 6
+					count: 6
 				}
 			}]
 		}
@@ -44,6 +44,7 @@
 			this.permission = 0
 			this.requestPermission(function () {})
 			this.count = obj[this.name].count
+			this.gmailURL = chrome.extension.getURL('img/gmail.png')
 		}
 
 		/**
@@ -108,11 +109,11 @@
 					lang: window.App.lang,
 					title: 'You have ' + count + ' new mail(s)',
 					body: count + ' new and a total of ' + total + ' unread mail(s).',
-					icon: 'https://cdn1.iconfinder.com/data/icons/free-colorful-icons/128/gmail.png' // @todo: Switch to local image
+					icon: this.gmailURL // @todo: Switch to local image
 				},
 				notification = new Notification(opt.title, opt)
 			notification.onclick = function () {
-				window.open('http://mail.google.com/mail')
+				window.open('https://mail.google.com/mail')
 				notification.close()
 			}
 			notification.onshow = function () {
@@ -121,7 +122,7 @@
 				}, 15000)
 			}
 			notification.onerror = function () {
-					this.error()
+				this.error()
 			}.bind(this)
 			//notification.onclose = function () {}
 
@@ -129,18 +130,6 @@
 				notification.close()
 			}, false)
 		}
-
-		/** @see ntp.js */
-		updateUI(data) {
-			if (typeof data === 'string')
-				return this.ui.addToDOM(data)
-
-			this.ui.addHeading(data.count, data.title, data.date)
-			this.ui.buildContent(data.entries)
-
-			super.updateUI()
-		}
-
 	}
 
 	/************\
@@ -155,15 +144,24 @@
 		}
 
 		/** @see ntp.js */
+		update (data) {
+			this.addHeading(data.count, data.title, data.date)
+
+			super.update(data)
+		}
+
+		/** @see ntp.js */
 		addHeading(count, title, date) {
 			super.addHeading('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', date)
 		}
 
 		/** @see ntp.js */
 		buildContent(data) {
-			var length = Math.min(this.options.amount, data.length)
+			var length = Math.min(this.options.amount, data.entries.length)
 			for (var i = 0; i < length; i++)
-				this._addHTML(data[i].title, data[i].url, data[i].date, data[i].author)
+				this._addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
+
+			super.buildContent(data)
 		}
 
 		/** @see ntp.js */

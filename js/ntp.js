@@ -192,7 +192,7 @@
 			var s = this.dictionary.get(string)
 			if (s) return s
 
-			s = chrome.i18n.getMessage(string)
+			s = chrome.i18n.getMessage(string) || 'i18n::' + string
 			this.dictionary.set(string, s)
 			return s
 		}
@@ -270,7 +270,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		success (/** The XHR object */ xhr, /** Response */response) {}
+		success (xhr, response) {}
 
 		/**
 		 * Function called after an failed update request.
@@ -291,9 +291,12 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		updateUI (/** data */) {
-			//this.ui.addMoreLink(news.url)
-			this.ui.addToDOM()
+		updateUI (data) {
+			if (!data) return this.ui.addToDOM()
+			if (typeof data === 'string')
+				return this.ui.addToDOM(data)
+
+			return this.ui.update(data)
 		}
 	}
 
@@ -319,24 +322,32 @@
 			this._cacheObjects()
 		}
 
+		update (data) {
+			this.buildContent(data)
+
+			this.addToDOM()
+		}
+
 		/**
 		 * Adds a heading.
 		 *
 		 * @author 	Jacob Groß
-		 * @date   	2014-07-23
+		 * @date   	2016-10-15
+		 * @param	{string}		html
+		 * @param 	{Date}		date
+		 * @param	{object}		data 	Loaded data
 		 */
-		addHeading (/** @private */ html, /** @private */ date) {
+		addHeading (html, date, data) {
 			this.html += '<header class="box__item box__caption" title="' + window.App.getMessage('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
 		}
 
 		/**
 		 * Builds the UI content.
-		 * Called from Module.
 		 *
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		buildContent (/** data */) {}
+		buildContent (data) {}
 
 		/**
 		 * Adds HTML.
@@ -347,17 +358,6 @@
 		_addHTML (/** params */) {}
 
 		/**
-		 * Adds a "more" link.
-		 *
-		 * @author 	Jacob Groß
-		 * @date   	2014-07-23
-		 * @param  	{String}   	url
-		 */
-		_addMoreLink (url) {
-			this.html += '<div class="box__item box__caption"><a href="' + url + '">' + window.App.getMessage('more') + '</a></div>'
-		}
-
-		/**
 		 * Adds the HTML to the DOM.
 		 *
 		 * @author 	Jacob Groß
@@ -366,7 +366,7 @@
 		 * @return 	{String} 	The HTML to use
 		 */
 		addToDOM (html) {
-			html = html || this.html || 1
+			html = html || this.html || ''
 			$(this.content).html(html)
 
 			return html
@@ -394,13 +394,38 @@
 			super(name, options, notBox) // always call super first, if we don't `this` === undefined
 
 			this.info = name + ' > .box-info__content'
+			this._redraw = false
 			this._cacheObjectsExtended()
 		}
 
 		/** @see ModuleUI */
 		_cacheObjectsExtended () {
 			this.info = $(this.info)
+		}
+
+		buildContent (data) {
+			if (data.entries && this.options.count < data.entries.length)
+				this.addMoreLink()
+
+			super.buildContent(data)
+		}
+
+		/**
+		 * Adds a "more" button.
+		 *
+		 * @author 	Jacob Groß
+		 * @date   	2014-07-23
+		 * @param  	{String}   	url
+		 */
+		addMoreLink (url) {
+			this.html += '<footer><button class="jfk-button jfk-button--contrast js-more">' + window.App.getMessage('more') + '</button></footer>'
+		}
+
+		addToDOM (html) {
+			html = super.addToDOM(html)
 			this._addListener()
+
+			return html
 		}
 
 		/**
@@ -410,16 +435,24 @@
 		 * @date   	2014-07-28
 		 */
 		_addListener () {
+			// more
+			var name = this.content.parent().attr('id').split('-')[1]
+			this.content.find('.js-more').on('click', function () {
+				this.html = ''
+				this.options.count += this.options.count
+				this.update(window.App.loadedObj[name])
+			}.bind(this))
+
+			if (this._redraw) return // we don't add the following listeners twice
+
 			// @todo: will-change on mousedown?
-			var $infoToggle = this.info.parent(),
-			name = $infoToggle.attr('id').split('-')[1]
-			$infoToggle = $infoToggle.find('.box-info')
+			var $infoToggle = this.info.parent().find('.box-info')
 
 			// "i" click
 			$infoToggle.on('click', function () {
 				this._toggleInfo($infoToggle)
 			}.bind(this)).on('click.once', function () { // load options on startup
-				$infoToggle.off('click.once') // sprint doesn't support .once
+				$infoToggle.off('click.once') // sprint doesn't support .one
 				this._load(name)
 			}.bind(this))
 
@@ -439,6 +472,8 @@
 
 				style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
 			})
+
+			this._redraw = true
 		}
 
 		/**

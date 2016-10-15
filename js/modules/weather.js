@@ -36,7 +36,7 @@
 			}, {
 				name: 'weatherOptions',
 				type: {
-					amount: 4,
+					count: 4,
 					celsius: App.getMessage('weather_temperatureUnit') === 'C',
 					cool: false,
 
@@ -189,12 +189,12 @@
 		 */
 		getWeatherData() {
 			$ajax.get(URL, {
-					format: 'json',
-					rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
-					diagnostics: true,
-					q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + this.ui.options.lat + ',' + this.ui.options.long + ')" limit 1) and u="f"'
-				}, TYPE)
-				.then(this.success.bind(this)).catch(this.error.bind(this))
+				format: 'json',
+				rnd: App.date.getFullYear() + App.date.getMonth() + App.date.getDay() + App.date.getHours(),
+				diagnostics: true,
+				q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + this.ui.options.lat + ',' + this.ui.options.long + ')" limit 1) and u="f"'
+			}, TYPE)
+			.then(this.success.bind(this)).catch(this.error.bind(this))
 		}
 
 		/** @see ntp.js */
@@ -260,18 +260,6 @@
 				weather: data
 			}, this.updateUI.bind(this, data))
 		}
-
-		/** @see ntp.js */
-		updateUI(data) {
-			if (typeof data === 'string')
-				return this.ui.addToDOM(data)
-
-			this.ui.addHeading(data.location, data.date)
-			this.ui.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
-			this.ui.buildContent(data.entries)
-
-			super.updateUI()
-		}
 	}
 
 	/************\
@@ -285,6 +273,14 @@
 		}
 
 		/** @see ntp.js */
+		update (data) {
+			this.addHeading(data.location, data.date)
+			this.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
+
+			super.update(data)
+		}
+
+		/** @see ntp.js */
 		addHeading(title, date) {
 			title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
 			super.addHeading('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(App.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
@@ -293,11 +289,13 @@
 		/** @see ntp.js */
 		buildContent(data) {
 			this._beginRow()
-			var length = Math.min(this.options.amount, data.length)
+			var length = Math.min(this.options.count, data.entries.length)
 			for (var i = 0; i < length; i++) {
-				this._addHTML(data[i].low, data[i].high, data[i].day, data[i].icon, data[i].condition, data[i].date)
+				this._addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition, data.entries[i].date)
 			}
 			this._endRow()
+
+			//super.buildContent(data)
 		}
 
 		/** @see ntp.js */

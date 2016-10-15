@@ -40,7 +40,7 @@
 			}, {
 				name: 'newsOptions',
 				type: {
-					amount: 6,
+					count: 6,
 					shuffle: true,
 					shuffleDate: 0
 				}
@@ -103,19 +103,7 @@
 				news: data
 			}, this.updateUI.bind(this, data))
 		}
-
-		/** @see ntp.js */
-		updateUI(data) {
-			if (typeof data === 'string')
-				return this.ui.addToDOM(data)
-
-			this.ui.addHeading(data.url, data.title, data.date)
-			this.ui.buildContent(data.entries)
-
-			super.updateUI()
-		}
 	}
-
 
 
 	/************\
@@ -130,17 +118,26 @@
 		}
 
 		/** @see ntp.js */
+		update (data) {
+			this.addHeading(data.url, data.title, data.date)
+
+			super.update(data)
+		}
+
+		/** @see ntp.js */
 		addHeading(url, title, date) {
 			super.addHeading('<a href="' + url + '">' + title + '</a>', date)
 		}
 
 		/** @see ntp.js */
 		buildContent(data) {
-			var options = Math.min(this.options.amount, data.length),
-				length = Math.floor(Math.random() * (data.length - options + 1))
+			var options = Math.min(this.options.count, data.entries.length),
+				length = Math.floor(Math.random() * (data.entries.length - options + 1))
 			options += length
 			for (var i = length; i < options; i++)
-				this._addHTML(data[i].title, data[i].url, data[i].date, data[i].img)
+				this._addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].img)
+
+			super.buildContent(data)
 		}
 
 		/** @see ntp.js */

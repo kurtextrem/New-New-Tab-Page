@@ -26,6 +26,7 @@ body {
 	/* background-color: #ececec !important; */
 	line-height: 1.42857143 !important;
 	font-family: Roboto, sans-serif !important;
+	overflow-x:  hidden;
 }
 
 /* removes the search */
@@ -98,14 +99,13 @@ form {
  */
 #prm > div {
 	margin-bottom: 5px;
-	margin-top: -10px;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
 	color: rgb(136, 136, 136);
 	padding: 5px;
 	display: inline-block;
 	margin-left: 19px;
-	min-width: 31.78%;
+	min-width: 32.7333%;
 }
 
 #prm > .gb_wb.gb_Ia {
@@ -210,8 +210,9 @@ form {
 	line-height: 1;
 }
 
+/** Styles the 'loading' title. */
 .box__content > h2:only-child {
-	padding-top:  15px;
+	padding-top:  10px;
 }
 
 .box__item {
@@ -607,14 +608,7 @@ input[type="range"]:focus {
 /**
  * Buttons
  */
-.jfk-button-contrast {
-	box-shadow: none;
-	background-color: #f5f5f5;
-	background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
-	color: #444;
-	border: 1px solid rgba(0,0,0,0.1);
-}
-.jfk-button {
+ .jfk-button {
 	border-radius: 2px;
 	cursor: default;
 	font-size: 11px;
@@ -625,8 +619,38 @@ input[type="range"]:focus {
 	height: 27px;
 	line-height: 27px;
 	min-width: 54px;
+	outline: 0px;
 	padding: 0 8px;
-}
+	margin-bottom:  5px;
+ }
+
+ .jfk-button:hover {
+	box-shadow: 0 1px 1px rgba(0,0,0,.1);
+ }
+
+ .jfk-button--contrast {
+	box-shadow: none;
+	background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+	color: #444;
+	border: 1px solid rgba(0,0,0,0.1);
+ }
+
+ .jfk-button--contrast:hover {
+	background-image: linear-gradient(to bottom,#f8f8f8,#f1f1f1);
+	border: 1px solid #c6c6c6;
+	color: #333;
+	box-shadow: none;
+ }
+
+ .jfk-button--contrast:focus {
+	border: 1px solid #4d90fe;
+	outline: none;
+ }
+
+ .jfk-button--contrast:active {
+ 	box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+ 	background: #f8f8f8;
+ }
 
 /**
  * Responsiveness.

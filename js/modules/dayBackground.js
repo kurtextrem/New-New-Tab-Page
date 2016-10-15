@@ -23,12 +23,6 @@
 		update () {
 			this.updateUI(window.App.date.getHours())
 		}
-
-		/** @see ntp.js */
-		updateUI (data) {
-			this.ui.addHTML(data)
-			super.updateUI()
-		}
 	}
 
 	/************\
@@ -42,7 +36,7 @@
 		}
 
 		/** @see ntp.js */
-		addHTML (timestamp) {
+		buildContent (timestamp) {
 			this.html = this.options + '_' + this.determine(timestamp)
 		}
 

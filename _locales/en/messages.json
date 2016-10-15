@@ -301,6 +301,11 @@
 		"description": "Shortcut for east (wind direction)"
 	},
 
+	"more": {
+		"message": "More",
+		"description": "Button text for 'More'"
+	},
+
 
 	"merryChristmas": {
 		"message": "Merry Christmas!",
