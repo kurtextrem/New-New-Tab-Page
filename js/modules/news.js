@@ -51,7 +51,7 @@
 		constructor(obj) {
 			super(obj, Module.name)
 
-			this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+			this.ui = new ModuleUI(this.name, obj[this.name + 'Options'])
 			this.html = obj[this.name + 'HTML']
 
 			this.showCached(this.html || obj[this.name])
@@ -118,19 +118,14 @@
 		}
 
 		/** @see ntp.js */
-		update (data) {
-			this.addHeading(data.url, data.title, data.date)
-
-			super.update(data)
-		}
-
-		/** @see ntp.js */
 		addHeading(url, title, date) {
 			super.addHeading('<a href="' + url + '">' + title + '</a>', date)
 		}
 
 		/** @see ntp.js */
 		buildContent(data) {
+			this.addHeading(data.url, data.title, data.date)
+
 			var options = Math.min(this.options.count, data.entries.length),
 				length = Math.floor(Math.random() * (data.entries.length - options + 1))
 			options += length
@@ -147,13 +142,6 @@
 			title = title.join(' - ').replace(' - FAZ', '')
 			date = new Date(date)
 			this.html += '<div class="box__item row"><div class="box__img col-lg-3 img-responsive"><img src="' + img + '" onerror="this.remove()"></div><div class="box__item--title col-lg-9"><div><a href="' + url + '">' + title + '</a></div><span class="box__author"><time datetime="' + date.toISOString() + '" title="' + App.prettyDate(date) + '">' + App.prettyTime(date) + '</time> &ndash;  ' + source + '</span></div></div>'
-		}
-
-		/** @see ntp.js */
-		addToDOM(html) {
-			chrome.storage.local.set({
-				newsHTML: super.addToDOM(html)
-			})
 		}
 	}
 

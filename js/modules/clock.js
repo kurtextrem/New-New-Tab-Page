@@ -21,7 +21,7 @@
 		constructor (obj) {
 			super(obj, Module.name) // always call super first, if we don't `this` === undefined
 
-			this.ui = new ModuleUI('#box-' + this.name, obj[this.name + 'Options'])
+			this.ui = new ModuleUI(this.name, obj[this.name + 'Options'])
 
 			this.update()
 			window.setInterval(function () {
@@ -56,8 +56,6 @@
 
 		/** @see ntp.js */
 		buildContent (timestamp) {
-			this.html = ''
-
 			var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''
 			if (this.options.twelveHours && hours > 12) {
 				hours = hours - 12

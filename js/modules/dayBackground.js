@@ -32,7 +32,7 @@
 	class ModuleUI extends window.ModuleUI {
 		/** @see ntp.js */
 		constructor (name, options) {
-			super(name, options, true)
+			super(name, options)
 		}
 
 		/** @see ntp.js */
@@ -66,8 +66,8 @@
 
 		/** @see ntp.js */
 		addToDOM (html) {
-			html = html || this.html
-			$(this.content).addClass(html)
+			html = html || this.html || ''
+			this.$content.addClass(html)
 		}
 	}
 

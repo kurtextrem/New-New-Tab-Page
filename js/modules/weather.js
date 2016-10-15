@@ -51,7 +51,7 @@
 
 		/** @see ntp.js */
 		constructor(obj) {
-			super(obj, Module.name, new ModuleUI('#box-' + Module.name, obj[Module.name + 'Options']), TIME)
+			super(obj, Module.name, new ModuleUI(Module.name, obj[Module.name + 'Options']), TIME)
 
 			this.TEXT = [
 				App.getMessage('N'), // 0
@@ -273,14 +273,6 @@
 		}
 
 		/** @see ntp.js */
-		update (data) {
-			this.addHeading(data.location, data.date)
-			this.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
-
-			super.update(data)
-		}
-
-		/** @see ntp.js */
 		addHeading(title, date) {
 			title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
 			super.addHeading('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(App.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
@@ -288,6 +280,9 @@
 
 		/** @see ntp.js */
 		buildContent(data) {
+			this.addHeading(data.location, data.date)
+			this.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
+
 			this._beginRow()
 			var length = Math.min(this.options.count, data.entries.length)
 			for (var i = 0; i < length; i++) {
@@ -388,13 +383,6 @@
 		 */
 		convert(fahrenheit) {
 			return this.options.celsius ? Math.round(5 * (fahrenheit - 32) / 9) : fahrenheit
-		}
-
-		/** @see ntp.js */
-		addToDOM(html) {
-			chrome.storage.local.set({
-				weatherHTML: super.addToDOM(html)
-			})
 		}
 	}
 

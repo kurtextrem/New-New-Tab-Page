@@ -315,15 +315,15 @@
 		 * @param  	{String}   	name 		ID to identify the box
 		 * @param  	{object}   	options 	Module options
 		 */
-		constructor (name, options, /** @private */ notBox) {
+		constructor (name, options) {
 			this.html = ''
 			this.options = options
-			this.content = notBox ? name : name + ' > .box__content'
-
-			this._cacheObjects()
+			this.name = name
+			this.$content = $(name[0] === '#' ? name : '#box-' + name + ' > .box__content')
 		}
 
 		update (data) {
+			this.html = ''
 			this.buildContent(data)
 
 			this.addToDOM()
@@ -364,23 +364,14 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 * @param  	{String}   	html
-		 * @return 	{String} 	The HTML to use
 		 */
 		addToDOM (html) {
 			html = html || this.html || ''
-			$(this.content).html(html)
+			this.$content.html(html)
 
-			return html
-		}
-
-		/**
-		 * Caches the variables.
-		 *
-		 * @author 	Jacob Groß
-		 * @date   	2014-09-06
-		 */
-		_cacheObjects () {
-			this.content = $(this.content)
+			var obj = {}
+			obj[this.name + 'HTML'] = html
+			chrome.storage.local.set(obj)
 		}
 	}
 
@@ -391,17 +382,12 @@
 	\ **********************************************************************************************/
 	class ModuleUIExtended extends ModuleUI {
 		/** @see  ModuleUI */
-		constructor (name, options, /** @private */ notBox) {
-			super(name, options, notBox) // always call super first, if we don't `this` === undefined
+		constructor (name, options) {
+			super(name, options) // always call super first, if we don't `this` === undefined
 
-			this.info = name + ' > .box-info__content'
+			this.$info = $('#box-' + name + ' > .box-info__content')
+			/** @type {bool} Is the next call a redraw? */
 			this._redraw = false
-			this._cacheObjectsExtended()
-		}
-
-		/** @see ModuleUI */
-		_cacheObjectsExtended () {
-			this.info = $(this.info)
 		}
 
 		buildContent (data) {
@@ -423,10 +409,8 @@
 		}
 
 		addToDOM (html) {
-			html = super.addToDOM(html)
+			super.addToDOM(html)
 			this._addListener()
-
-			return html
 		}
 
 		/**
@@ -437,21 +421,23 @@
 		 */
 		_addListener () {
 			// more
-			var name = this.content.parent().attr('id').split('-')[1]
-			this.content.find('.js-more').on('click', function () {
+			this.$content.find('.js-more').on('click', function () {
 				this.html = ''
 				this.options.count += this.options.count
-				this.update(window.App.loadedObj[name])
+				this.update(window.App.loadedObj[this.name])
 			}.bind(this))
 
 			if (this._redraw) return // we don't add the following listeners twice
 
 			// @todo: will-change on mousedown?
-			var $infoToggle = this.info.parent().find('.box-info')
+			var $infoToggle = this.$info.parent().find('.box-info')
 
 			// "i" click
 			$infoToggle.on('click', function () {
 				this._toggleInfo($infoToggle)
+				if (!$infoToggle.hasClass('box-info__active')) {
+					this.update(window.App.loadedObj[this.name])
+				}
 			}.bind(this)).on('click.once', function () { // load options on startup
 				$infoToggle.off('click.once') // sprint doesn't support .one
 				this._load(name)
@@ -461,11 +447,11 @@
 			var style = document.createElement('style')  // custom input[type=range] (1)
 			document.body.appendChild(style)
 
-			this.info.find('input, select').on('change', function (e) {
+			this.$info.find('input, select').on('change', function (e) {
 				var val = e.target.value
 				if (e.target.type === 'checkbox')
 					val = !!e.target.checked
-				this._save(name, e.target.id.split('__')[1], val)
+				this._saveOption(e.target.id.split('__')[1], val)
 			}.bind(this))
 			.find('[type=range]').on('input', function (e) {  // custom input[type=range] (1)
 				var min = e.target.min || 0,
@@ -487,10 +473,10 @@
 		 */
 		_toggleInfo ($infoToggle) {
 			$infoToggle.toggleClass('box-info__active')
-			this.content.toggleClass('hide')
-			this.info.toggleClass('hide')
+			this.$content.toggleClass('hide')
+			this.$info.toggleClass('hide')
 			window.setTimeout(function () {
-				this.info.toggleClass('fade')
+				this.$info.toggleClass('fade')
 			}.bind(this), 100)
 		}
 
@@ -499,26 +485,28 @@
 		 *
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-28
-		 * @param  	{string}   	name 	The module's name
-		 * @param  	{string|array}   	key 	The key(s) to safe
-		 * @param  	{string|array}   	val 	The value(s) to safe
+		 * @param  	{string}   		name 	The module's name
+		 * @param  	{string|array}   	key 	The key(s) to save
+		 * @param  	{string|array}   	val 		The value(s) to save
 		 */
-		_save (name, key, val) {
-			var obj = {}
-			name = name + 'Options'
+		_saveOption (key, val) {
+			var obj = {},
+				name = this.name + 'Options'
 			obj[name] = {}
-			if (typeof key === 'string')
+			if (typeof key === 'string') {
 				obj[name][key] = val
-			else {
+				this.options[key] = val
+			} else {
 				var i = key.length
 				while (i--) {
-					obj[name][key] = val[i]
+					obj[name][key[i]] = val[i]
+					this.options[key[i]] = val[i]
 				}
 			}
-			obj[name + 'Cache'] = '' // clear cache
-			chrome.storage.local.set(obj, function () {
-				this.info.find('.box-info__text--saved').removeClass('hide')
-			}.bind(this))
+
+			this.html = ''
+			obj[this.name + 'HTML'] = ''
+			chrome.storage.local.set(obj)
 		}
 
 		/**
@@ -530,7 +518,7 @@
 		_load () {
 			for (var index in this.options) {
 				if (this.options.hasOwnProperty(index)) {
-					var elem = this.info.find('[id$="' + index + '"]'),
+					var elem = this.$info.find('[id$="' + index + '"]'),
 					checkbox = elem.filter('[type=checkbox]').get(0)
 					if (checkbox !== undefined)
 						return checkbox.checked = this.options[index]

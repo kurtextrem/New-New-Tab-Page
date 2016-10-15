@@ -39,7 +39,7 @@
 
 		/** @see ntp.js */
 		constructor(obj) {
-			super(obj, Module.name, new ModuleUI('#box-' + Module.name, obj[Module.name + 'Options']), TIME)
+			super(obj, Module.name, new ModuleUI(Module.name, obj[Module.name + 'Options']), TIME)
 
 			this.permission = 0
 			this.requestPermission(function () {})
@@ -144,19 +144,14 @@
 		}
 
 		/** @see ntp.js */
-		update (data) {
-			this.addHeading(data.count, data.title, data.date)
-
-			super.update(data)
-		}
-
-		/** @see ntp.js */
 		addHeading(count, title, date) {
 			super.addHeading('<a href="http://mail.google.com/mail">' + title + ' (' + count + ')</a>', date)
 		}
 
 		/** @see ntp.js */
 		buildContent(data) {
+			this.addHeading(data.count, data.title, data.date)
+
 			var length = Math.min(this.options.amount, data.entries.length)
 			for (var i = 0; i < length; i++)
 				this._addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
@@ -168,13 +163,6 @@
 		_addHTML(title, url, date, author) {
 			date = new Date(date)
 			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + author.getElementsByTagName('email')[0].innerHTML + '"><time datetime="' + date.toISOString() + '" title="' + window.App.prettyDate(date) + '">' + window.App.prettyTime(date) + '</time> &ndash;  ' + author.getElementsByTagName('name')[0].innerHTML + '</span></div></div>'
-		}
-
-		/** @see ntp.js */
-		addToDOM(html) {
-			chrome.storage.local.set({
-				gmailHTML: super.addToDOM(html)
-			})
 		}
 	}
 
