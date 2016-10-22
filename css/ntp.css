@@ -471,6 +471,14 @@ form {
 	width: 102%;
 }
 
+#box-notes > .box__content {
+	width: 100%;
+	min-height: 200px;
+	text-align: left;
+	padding:  10px;
+	font-size:  1rem;
+}
+
 /* Toggle */
 .cmn-toggle {
 	position: absolute;

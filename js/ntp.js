@@ -410,7 +410,7 @@
 
 		addToDOM (html) {
 			super.addToDOM(html)
-			this._addListener()
+			this.addListener()
 		}
 
 		/**
@@ -419,15 +419,15 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-28
 		 */
-		_addListener () {
+		addListener () {
 			// more
 			this.$content.find('.js-more').on('click', function () {
 				this.html = ''
 				this.options.count += this.options.count
-				this.update(window.App.loadedObj[this.name])
+				this.update(this.options)
 			}.bind(this))
 
-			if (this._redraw) return // we don't add the following listeners twice
+			if (this._redraw) return false // we don't add the following listeners twice
 
 			// @todo: will-change on mousedown?
 			var $infoToggle = this.$info.parent().find('.box-info')
@@ -436,7 +436,7 @@
 			$infoToggle.on('click', function () {
 				this._toggleInfo($infoToggle)
 				if (!$infoToggle.hasClass('box-info__active')) {
-					this.update(window.App.loadedObj[this.name])
+					this.update(this.options)
 				}
 			}.bind(this)).on('click.once', function () { // load options on startup
 				$infoToggle.off('click.once') // sprint doesn't support .one
@@ -460,7 +460,7 @@
 				style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
 			})
 
-			this._redraw = true
+			return this._redraw = true
 		}
 
 		/**
