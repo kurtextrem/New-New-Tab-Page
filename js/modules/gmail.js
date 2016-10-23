@@ -152,7 +152,7 @@
 		buildContent(data) {
 			this.addHeading(data.count, data.title, data.date)
 
-			var length = Math.min(this.options.amount, data.entries.length)
+			var length = Math.min(this.options.count, data.entries.length)
 			for (var i = 0; i < length; i++)
 				this._addHTML(data.entries[i].title, data.entries[i].url, data.entries[i].date, data.entries[i].author)
 

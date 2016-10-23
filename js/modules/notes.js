@@ -48,10 +48,8 @@
 
 		addListener() {
 			if (super.addListener()) {
-				const obj = { notesHTML: '' }
 				this.$content.on('input', debounce(function() {
-					obj.notesHTML = this.$content.html()
-					chrome.storage.local.set(obj)
+					chrome.storage.local.set({ notesHTML: this.$content.html() })
 				}.bind(this)))
 			}
 		}
