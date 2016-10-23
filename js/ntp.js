@@ -424,7 +424,7 @@
 			this.$content.find('.js-more').on('click', function () {
 				this.html = ''
 				this.options.count += this.options.count
-				this.update(this.options)
+				this.update(window.App.loadedObj[this.name])
 			}.bind(this))
 
 			if (this._redraw) return false // we don't add the following listeners twice
@@ -436,7 +436,7 @@
 			$infoToggle.on('click', function () {
 				this._toggleInfo($infoToggle)
 				if (!$infoToggle.hasClass('box-info__active')) {
-					this.update(this.options)
+					this.update(window.App.loadedObj[this.name])
 				}
 			}.bind(this)).on('click.once', function () { // load options on startup
 				$infoToggle.off('click.once') // sprint doesn't support .one
