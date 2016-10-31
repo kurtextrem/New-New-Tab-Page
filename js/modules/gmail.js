@@ -80,14 +80,14 @@
 
 			console.log('Got ' + items.length + ' ' + this.name, items)
 			data.date = window.App.now
-			data.title = xmlDoc.querySelector('title').textContent
-			data.count = xmlDoc.getElementsByTagName('fullcount')[0].textContent
+			data.title = xmlDoc.querySelector('title').innerHTML // innerHTML is fine for the following, as we need to have entities encoded (textContent would leave them decoded) - as we render plain text/html
+			data.count = xmlDoc.getElementsByTagName('fullcount')[0].innerHTML
 			for (var i = 0; i < items.length; i++) {
 				var item = items[i]
 				data.entries[i] = {
-					title: item.getElementsByTagName('title')[0].textContent,
+					title: item.getElementsByTagName('title')[0].innerHTML,
 					url: item.getElementsByTagName('link')[0].attributes.href.value,
-					date: item.getElementsByTagName('modified')[0].textContent,
+					date: item.getElementsByTagName('modified')[0].innerHTML,
 					author: item.getElementsByTagName('author')[0].children
 				}
 			}
