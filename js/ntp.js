@@ -76,7 +76,7 @@
 		bootModules () {
 			var length = this.modulesLength
 			while (length--) {
-				try { // @todo: Remove for more speed
+				try {
 					new this[length](this.loadedObj)
 				} catch (e) {
 					console.error('Error while booting.', e, length, this.loadedObj, this[length])
