@@ -226,7 +226,7 @@
 		constructor (obj, NAME, ui, TIME) {
 			this.name = NAME
 			this.html = obj[this.name + 'HTML']
-			if (ui && !(ui instanceof ModuleUI)) throw 'Parameter 3 must be an instance of ModuleUI'
+			if (ui && !(ui instanceof ModuleUI)) throw new Error('Parameter 3 must be an instance of ModuleUI')
 			this.ui = ui
 
 			if (!TIME) return // we don't want the following things to execute

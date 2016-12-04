@@ -136,7 +136,7 @@
 				.then(function (xhr, data) {
 					console.log('Location:', data)
 
-					this.ui.options.location = data.city || localStorage['devloc::swml.location'].slice(1, -1)
+					this.ui.options.location = data.city
 					this.ui.options.country = data.country_code
 					this.ui.options.lat = data.latitude
 					this.ui.options.long = data.longitude
@@ -146,7 +146,7 @@
 				.catch(function (err, xhr, response) {
 					console.error('Reverse geocoding request failed:', err)
 
-					throw err
+					throw new Error(err)
 					return xhr
 				}.bind(this))
 		}
@@ -164,10 +164,8 @@
 						return data
 					}.bind(this))
 					.catch(function () {
-						if (localStorage['devloc::swml.location'])
-							this.ui.options.location = localStorage['devloc::swml.location'].slice(1, -1)
-						this.ui.options.lat = localStorage['devloc::web.gws.devloc.lat'] || this.ui.options.lat
-						this.ui.options.long = localStorage['devloc::web.gws.devloc.lon'] || this.ui.options.long
+						this.ui.options.lat = this.ui.options.lat
+						this.ui.options.long = this.ui.options.long
 
 						this.ui.options.locationDate = App.now + LOCATION_CACHE / 2 * 60 * 60000
 
@@ -201,7 +199,7 @@
 		success(xhr, json) {
 			if (!json.query.count) {
 				console.warn(json)
-				throw 'Did not get ' + this.name
+				throw new Error('Did not get ' + this.name)
 			}
 			var items = json.query.results.channel,
 				data = {
