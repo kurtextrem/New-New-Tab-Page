@@ -45,6 +45,7 @@ form {
  */
 #most-visited#most-visited {
 	margin-top: 20px;
+	contain:  content;
 }
 
 #mv-tiles#mv-tiles {
@@ -116,7 +117,7 @@ form {
 	top: 0 !important;
 }
 
-#prm-pt > br {
+#prm-pt br {
 	display: none;
 }
 
