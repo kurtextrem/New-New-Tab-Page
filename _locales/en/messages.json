@@ -133,7 +133,7 @@
 		"description": ""
 	},
 	"weather_description": {
-		"message": "If the weather is not personalized, go to Google and search for <a href='https://www.google.com/search?q=Wetter#footcnt'>Weather</a>. Click \"Use exact location\" in the footer.",
+		"message": "",
 		"description": ""
 	},
 	"weather_amount": {

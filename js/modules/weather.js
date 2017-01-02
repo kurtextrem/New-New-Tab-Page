@@ -144,10 +144,9 @@
 					return data
 				}.bind(this))
 				.catch(function (err, xhr, response) {
-					console.error('Reverse geocoding request failed:', err)
+					console.warn('Reverse geocoding request failed:', err)
 
-					throw new Error(err)
-					return xhr
+					return this.ui.useGeoLocation()
 				}.bind(this))
 		}
 
@@ -381,6 +380,29 @@
 		 */
 		convert(fahrenheit) {
 			return this.options.celsius ? Math.round(5 * (fahrenheit - 32) / 9) : fahrenheit
+		}
+
+		useGeoLocation () {
+			return new Promise(function (resolve, reject) {
+				navigator.geolocation.getCurrentPosition(function (geolocation) {
+					if (!geolocation.coords.latitude) {
+						console.error('Geolocation failed', geolocation)
+					}
+
+					this.options.lat = geolocation.coords.latitude
+					this.options.long = geolocation.coords.longitude
+					this.options.locationDate = geolocation.timestamp
+					resolve(geolocation)
+				}.bind(this))
+			}.bind(this))
+		}
+
+		addListener() {
+			if (super.addListener()) {
+				this.$info.find('#weather__geolocation').on('click', function () {
+					this.useGeoLocation()
+				}.bind(this))
+			}
 		}
 	}
 

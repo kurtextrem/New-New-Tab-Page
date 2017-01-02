@@ -165,7 +165,7 @@
 		"description": ""
 	},
 	"weather_description": {
-		"message": "Wenn das Wetter nicht personalisiert ist, rufen Sie Google auf und suchen Sie nach <a href='https://www.google.de/search?q=Wetter#footcnt'>Wetter</a>. Klicken Sie danach \"Exakten Standort benutzen\" im unteren Teil.",
+		"message": "",
 		"description": ""
 	},
 	"weather_amount": {
