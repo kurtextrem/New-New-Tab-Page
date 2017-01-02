@@ -11,6 +11,11 @@
 			}
 		})
 
-		observer.observe(document.body, { childList: true })
+		document.addEventListener('readystatechange', function ready() {
+			if (document.readyState === 'interactive') {
+				observer.observe(document.body, { childList: true })
+				document.removeEventListener('readystatechange', ready)
+			}
+		})
 	}
 } (window));

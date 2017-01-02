@@ -108,12 +108,12 @@
 		loadBoxes () {
 			$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
 			.then(function (xhr, data) {
-				$('body').append(data)
-				window.i18n.process(document, window.App)
+				$(document.body).append(data)
+				window.i18n.process(document.body, window.App)
 			}.bind(this))
 			.catch(function (err) {
 				console.error(err)
-				$('body').append('<p class="center">Error while loading.</p>')
+				$(document.body).append('<p class="center">Error while loading.</p>')
 			})
 		}
 
@@ -518,8 +518,10 @@
 		_load () {
 			for (var index in this.options) {
 				if (this.options.hasOwnProperty(index)) {
-					var elem = this.$info.find('[id$="' + index + '"]'),
-					checkbox = elem.filter('[type=checkbox]').get(0)
+					var elem = this.$info.find('[id$="' + index + '"]')
+					if (!elem) continue
+
+					var checkbox = elem.filter('[type=checkbox]').get(0)
 					if (checkbox !== undefined)
 						return checkbox.checked = this.options[index]
 					elem.val(this.options[index])
