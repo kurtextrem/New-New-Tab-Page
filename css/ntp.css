@@ -1,14 +1,14 @@
 @font-face {
-	font-family: "Roboto";
+	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 400;
-	src: local("Roboto"), url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.woff2");
+	src: local('Roboto'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.woff2');
 }
 @font-face {
-	font-family: "Roboto";
+	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 100;
-	src: local("Roboto Thin"), url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2");
+	src: local('Roboto Thin'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2');
 }
 
 *,
@@ -23,7 +23,7 @@
 body {
 	/* background-color: #ececec !important; */
 	line-height: 1.42857143 !important;
-	font-family: Roboto, sans-serif !important;
+	font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 	overflow-x:  hidden;
 }
 
@@ -266,7 +266,7 @@ form {
  * Clock widget specific css.
  */
 #box-clock > .box__content {
-	font-family: Roboto, sans-serif;
+
 }
 
 .clock__hours, .clock__minutes {
@@ -298,7 +298,7 @@ form {
  * Weather widget specific css.
  */
 #box-weather {
-	font-family: Roboto, sans-serif;
+
 }
 
 #box-weather .box__caption {
@@ -312,7 +312,6 @@ form {
 #box-weather .box__item--title {
 	color: black;
 	font-size: 75px;
-	margin-left: -10px;
 	line-height: 1.1;
 }
 

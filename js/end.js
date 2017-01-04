@@ -5,7 +5,7 @@
 		window.App.close()
 	else {
 		var observer = new MutationObserver(function (mutations) {
-			if (document.getElementById('main-cards') !== null) {
+			if (mutations && mutations[0] && mutations[0].addedNodes && mutations[0].addedNodes[0].id === 'main-cards') {
 				window.App.close()
 				observer.disconnect()
 			}

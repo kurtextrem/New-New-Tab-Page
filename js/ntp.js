@@ -521,9 +521,8 @@
 					var elem = this.$info.find('[id$="' + index + '"]')
 					if (!elem) continue
 
-					var checkbox = elem.filter('[type=checkbox]').get(0)
-					if (checkbox !== undefined)
-						return checkbox.checked = this.options[index]
+					if (elem.attr('type') === 'checkbox')
+						return elem.get(0).checked = this.options[index]
 					elem.val(this.options[index])
 				}
 			}

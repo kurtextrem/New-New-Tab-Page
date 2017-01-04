@@ -128,8 +128,8 @@
 		"message": "Couldn't get weather.",
 		"description": ""
 	},
-	"useGeoLocation": {
-		"message": "Use geo-location.",
+	"weather_useGeoLocation": {
+		"message": "Refresh current geo-location",
 		"description": ""
 	},
 	"weather_description": {

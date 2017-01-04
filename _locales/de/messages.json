@@ -160,8 +160,8 @@
 		"message": "Wetter",
 		"description": ""
 	},
-	"useGeoLocation": {
-		"message": "Aktuellen Standort benutzen.",
+	"weather_useGeoLocation": {
+		"message": "Aktuellen Standort aktualisieren",
 		"description": ""
 	},
 	"weather_description": {
@@ -218,7 +218,7 @@
 		"description": "Weather name"
 	},
 	"partly_cloudy": {
-		"message": "Teilweise bewölkt",
+		"message": "Teils bewölkt",
 		"description": "Weather name"
 	},
 	"rain": {
