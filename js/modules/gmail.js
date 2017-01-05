@@ -164,12 +164,12 @@
 			var email = '', name = '', d = 0
 
 			d = new Date(date)
-			if (author) {
+			if (author && author.item) {
 				email = author.item('email').textContent
 				name = author.item('name').textContent
 			}
 
-			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + email + '"><time datetime="' + date.toISOString() + '" title="' + window.App.prettyDate(date) + '">' + window.App.prettyTime(date) + '</time> &ndash;  ' + name + '</span></div></div>'
+			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + email + '"><time datetime="' + d.toISOString() + '" title="' + window.App.prettyDate(d) + '">' + window.App.prettyTime(d) + '</time> &ndash;  ' + name + '</span></div></div>'
 		}
 	}
 

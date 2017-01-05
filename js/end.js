@@ -11,11 +11,8 @@
 			}
 		})
 
-		document.addEventListener('readystatechange', function ready() {
-			if (document.readyState === 'interactive') {
-				observer.observe(document.body, { childList: true })
-				document.removeEventListener('readystatechange', ready)
-			}
-		})
+		document.addEventListener('readystatechange', function () {  // document_start guarantees this is injected before the DOM is available, so this will fire on interactive
+			observer.observe(document.body, { childList: true })
+		}, { once: true })
 	}
 } (window));

@@ -108,12 +108,19 @@
 		loadBoxes () {
 			$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
 			.then(function (xhr, data) {
-				$(document.body).append(data)
-				window.i18n.process(document.body, window.App)
+				function append() {
+					$(document.body).append(data)
+					window.i18n.process(document.body, window.App)
+				}
+				if (document.readyState !== 'loading')
+					return append()
+				document.addEventListener('readystatechange', function () { // will fire on interactive
+					append()
+				}, { once: true })
 			}.bind(this))
 			.catch(function (err) {
 				console.error(err)
-				$(document.body).append('<p class="center">Error while loading.</p>')
+				$(document.body).append('<p class="center">Error while loading. Please try reloading.</p>')
 			})
 		}
 
@@ -140,7 +147,18 @@
 			this.now = Date.now()
 		}
 
+		/**
+		 * Returns a prettified time string.
+		 *
+		 * @param      	{Date}  	date    	The date object to prettify
+		 * @return     	{String}           	Prettified time
+		 */
 		prettyTime (date) {
+			if (!date instanceof Date) {
+				throw new TypeError('date must be an instance of Date')
+				return
+			}
+
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
 				token = this.getMessage('clock_ago'),
 				out = '',
@@ -184,10 +202,27 @@
 			return pre ? token + ' ' + out : out + ' ' + token
 		}
 
+		/**
+		 * Returns a human-readable date.
+		 *
+		 * @param      	{Date}  	date    	The date object to prettify
+		 * @return     	{String} 		Prettified Date
+		 */
 		prettyDate (date) {
+			if (!date instanceof Date) {
+				throw new TypeError('date must be an instance of Date')
+				return
+			}
+
 			return this.format.format(date)
 		}
 
+		/**
+		 * Return i18n message from Chrome translations.
+		 *
+		 * @param      	{string}  string  	The key
+		 * @return     	{string}  		The translation.
+		 */
 		getMessage (string) {
 			var s = this.dictionary.get(string)
 			if (s) return s
