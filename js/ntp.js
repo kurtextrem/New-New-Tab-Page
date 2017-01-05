@@ -154,9 +154,9 @@
 		 * @return     	{String}           	Prettified time
 		 */
 		prettyTime (date) {
-			if (!date instanceof Date) {
+			if (!(date instanceof Date)) {
 				throw new TypeError('date must be an instance of Date')
-				return
+				return console.error('date must be an instance of Date', date)
 			}
 
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
@@ -209,9 +209,9 @@
 		 * @return     	{String} 		Prettified Date
 		 */
 		prettyDate (date) {
-			if (!date instanceof Date) {
+			if (!(date instanceof Date)) {
 				throw new TypeError('date must be an instance of Date')
-				return
+				return console.error('date must be an instance of Date', date)
 			}
 
 			return this.format.format(date)
