@@ -160,8 +160,9 @@
 		}
 
 		/** @see ntp.js */
-		_addHTML(title, url, date, author) {
+		_addHTML(subject, url, date, author) {
 			var email = '', name = '', d = 0
+			subject = subject || '<i>' + window.App.getMessage('gmail_noSubject') + '</i>'
 
 			d = new Date(date)
 			if (author && author.item) {
@@ -169,7 +170,7 @@
 				name = author.item('name').textContent
 			}
 
-			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + title + '</a></div><span class="box__author" title="' + email + '"><time datetime="' + d.toISOString() + '" title="' + window.App.prettyDate(d) + '">' + window.App.prettyTime(d) + '</time> &ndash;  ' + name + '</span></div></div>'
+			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + subject + '</a></div><span class="box__author" title="' + email + '"><time datetime="' + d.toISOString() + '" title="' + window.App.prettyDate(d) + '">' + window.App.prettyTime(d) + '</time> &ndash;  ' + name + '</span></div></div>'
 		}
 	}
 

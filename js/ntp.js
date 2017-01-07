@@ -6,6 +6,17 @@
 		$ = window.$, // Sprint
 		chrome = window.chrome
 
+	function checkForDate (date) {
+		if (date instanceof Date) return date
+
+		var d = new Date(date)
+		if (!window.isNaN(d))
+			return d
+
+		console.error('date must be an instance of Date', date)
+		return new Date(0)
+	}
+
 	/**
 	 * Main constructor for the App.
 	 *
@@ -154,10 +165,7 @@
 		 * @return     	{String}           	Prettified time
 		 */
 		prettyTime (date) {
-			if (!(date instanceof Date)) {
-				console.error('date must be an instance of Date', date)
-				return date
-			}
+			date = checkForDate(date)
 
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
 				token = this.getMessage('clock_ago'),
@@ -209,11 +217,7 @@
 		 * @return     	{String} 		Prettified Date
 		 */
 		prettyDate (date) {
-			if (!(date instanceof Date)) {
-				console.error('date must be an instance of Date', date)
-				return date
-			}
-
+			date = checkForDate(date)
 			return this.format.format(date)
 		}
 
