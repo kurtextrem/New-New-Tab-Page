@@ -26,10 +26,10 @@
 	\************/
 
 	function debounce(callback, timeout, t) {
-		timeout = timeout || 2000;
+		timeout = timeout || 2000
 		return function debounce() {
-			window.clearTimeout(t);
-			t = window.setTimeout(callback, timeout);
+			window.clearTimeout(t)
+			t = window.setTimeout(callback, timeout)
 		}
 	}
 
@@ -44,6 +44,7 @@
 			this.$content.html(html)
 
 			this.addListener()
+			console.log('rendered', this.name)
 		}
 
 		addListener() {

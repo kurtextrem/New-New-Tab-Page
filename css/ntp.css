@@ -175,27 +175,25 @@ form {
 /**
  * General css for the content boxes.
  */
-/* Clearfix breaks the flexbox */
-#main-cards::before, #main-cards::after, #main-cards > .row::before,  #main-cards > .row::after {
-	display: block;
-}
-
 /* Equal height */
 #main-cards > .row {
 	display: flex;
-	flex-wrap: wrap;
 }
 
 /* Equal height */
-#main-cards > .row > .col-lg-3 {
+#main-cards > .row > div {
 	display: flex;
+}
+
+#main-cards > .row > .col-lg-4 {
+	flex-direction: column;
 }
 
 .box {
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
 	color: #888;
-	margin: 10px;
+	margin: 5px 0;
 	width: 100%;
 	position: relative;
 	cursor: default;
@@ -443,12 +441,12 @@ form {
 	position: relative;
 	top: 12px;
 	opacity: 0;
-	transition: opacity 750ms;
+	transition: opacity 250ms ease-in;
 	width: 100%;
-	padding-bottom: 30px;
+	padding-bottom: 10px;
 }
 
-.box-info__active ~  .box-info__content.fade {
+.box-info__active ~  .box-info__content {
 	opacity: 1;
 }
 
@@ -457,9 +455,13 @@ form {
 }
 
 .box-info__options {
+	padding: 10px 0;
 	border-top: 1px solid #EEE;
-	padding-top: 15px;
 	font-size: 17px;
+}
+
+.box-info__options label {
+	vertical-align: sub;
 }
 
 #box-weather .extendedInfo {
@@ -479,29 +481,25 @@ form {
 
 /* Toggle */
 .cmn-toggle {
-	position: absolute;
-	margin-left: -9999px;
-	visibility: hidden;
+	display: none;
 }
 .cmn-toggle + label {
 	display: block;
 	position: relative;
 	cursor: pointer;
 	outline: none;
-	-webkit-user-select: none;
-					user-select: none;
-	top: -8px;
+	user-select: none;
 }
-input.cmn-toggle-round + label {
+.cmn-toggle-round + label {
 	padding: 2px;
 	width: 60px;
 	height: 30px;
 	background-color: #dddddd;
 	border-radius: 60px;
-	transform: translateX(6rem);
+	margin: auto;
 }
-input.cmn-toggle-round + label::before,
-input.cmn-toggle-round + label::after {
+.cmn-toggle-round + label::before,
+.cmn-toggle-round + label::after {
 	display: block;
 	position: absolute;
 	top: 1px;
@@ -509,23 +507,23 @@ input.cmn-toggle-round + label::after {
 	bottom: 1px;
 	content: "";
 }
-input.cmn-toggle-round + label::before {
+.cmn-toggle-round + label::before {
 	right: 1px;
 	background-color: #f1f1f1;
 	border-radius: 30px;
 	transition: background 0.4s;
 }
-input.cmn-toggle-round + label::after {
+.cmn-toggle-round + label::after {
 	width: 28px;
 	background-color: #fff;
 	border-radius: 100%;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 	transition: margin 0.4s;
 }
-input.cmn-toggle-round:checked + label::before {
+.cmn-toggle-round:checked + label::before {
 	background-color: #8ce196;
 }
-input.cmn-toggle-round:checked + label::after {
+.cmn-toggle-round:checked + label::after {
 	margin-left: 30px;
 }
 

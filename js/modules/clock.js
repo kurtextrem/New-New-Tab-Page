@@ -56,6 +56,8 @@
 
 		/** @see ntp.js */
 		buildContent (timestamp) {
+			if (!(timestamp instanceof Date)) timeestamp = window.App.date
+
 			var hours = timestamp.getHours(), postfix = this.options.twelveHours ? 'am' : ''
 			if (this.options.twelveHours && hours > 12) {
 				hours = hours - 12

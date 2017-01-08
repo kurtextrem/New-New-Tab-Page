@@ -129,7 +129,7 @@
 		getLocationName() {
 			console.log('Requesting location')
 
-			return $ajax.get('https://freegeoip.net/json/', {}, {
+			return $ajax.get('https://www.freegeoip.net/json/', {}, {
 					type: 'json',
 					timeout: 5000
 				})
@@ -197,7 +197,7 @@
 		/** @see ntp.js */
 		success(xhr, json) {
 			if (!json.query.count) {
-				console.warn(json)
+				console.warn(json, this.ui.options)
 				throw new Error('Did not get ' + this.name)
 			}
 			var items = json.query.results.channel,
@@ -392,6 +392,7 @@
 					this.options.lat = geolocation.coords.latitude
 					this.options.long = geolocation.coords.longitude
 					this.options.locationDate = geolocation.timestamp
+					chrome.storage.local.set({ weatherOptions: this.options })
 					resolve(geolocation)
 				}.bind(this))
 			}.bind(this))

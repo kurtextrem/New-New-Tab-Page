@@ -411,6 +411,7 @@
 			var obj = {}
 			obj[this.name + 'HTML'] = html
 			chrome.storage.local.set(obj)
+			console.log('rendered', this.name)
 		}
 	}
 
@@ -444,7 +445,7 @@
 		 * @param  	{String}   	url
 		 */
 		addMoreLink (url) {
-			this.html += '<footer><button class="jfk-button jfk-button--contrast js-more">' + window.App.getMessage('more') + '</button></footer>'
+			this.html += '<footer><button class="jfk-button js-more">' + window.App.getMessage('more') + '</button></footer>'
 		}
 
 		addToDOM (html) {
@@ -511,12 +512,11 @@
 		 * @param  	$infoContent
 		 */
 		_toggleInfo ($infoToggle) {
-			$infoToggle.toggleClass('box-info__active')
 			this.$content.toggleClass('hide')
 			this.$info.toggleClass('hide')
-			window.setTimeout(function () {
-				this.$info.toggleClass('fade')
-			}.bind(this), 100)
+			window.requestAnimationFrame(function () {
+				$infoToggle.toggleClass('box-info__active')
+			})
 		}
 
 		/**

@@ -68,6 +68,7 @@
 		addToDOM (html) {
 			html = html || this.html || ''
 			this.$content.addClass(html)
+			console.log('rendered', this.name)
 		}
 	}
 
