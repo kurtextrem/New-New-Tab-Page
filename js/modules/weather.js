@@ -232,7 +232,7 @@
 			data.sunrise = items.astronomy.sunrise
 			data.sunset = items.astronomy.sunset
 
-			if (data.temperature < 80 && data.temperature < 40) {
+			if (data.temperature < 80 && data.temperature > 40) {
 				data.heatindex = -42.379 + 2.04901523 * data.temperature + 10.14333127 * data.humidity - 0.22475541 * data.temperature * data.humidity - 6.83783 * (Math.pow(10, -3)) * (Math.pow(data.temperature, 2)) - 5.481717 * (Math.pow(10, -2)) * (Math.pow(data.humidity, 2)) + 1.22874 * (Math.pow(10, -3)) * (Math.pow(data.temperature, 2)) * data.humidity + 8.5282 * (Math.pow(10, -4)) * data.temperature * (Math.pow(data.humidity, 2)) - 1.99 * (Math.pow(10, -6)) * (Math.pow(data.temperature, 2)) * (Math.pow(data.humidity, 2))
 			} else {
 				data.heatindex = items.item.condition.temp
@@ -340,7 +340,7 @@
 			} else {
 				wind_speed = ~~wind_speed
 				if (this.options.celsius) {
-					//wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
+					// wind_speed = (Math.round(wind_speed * 1.609)).toLocaleString()
 					unit = App.getMessage('kmh')
 				} else
 					unit = App.getMessage('mph')
@@ -367,7 +367,7 @@
 			else if (this.options.cool)
 				addition = 'cool/'
 
-			return chrome.extension.getURL('img/weather/' + addition + which + '.webp')
+			return chrome.extension.getURL('img/weather/' + addition + which + '.png')
 		}
 
 		/**
