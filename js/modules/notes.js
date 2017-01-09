@@ -49,7 +49,7 @@
 
 		addListener() {
 			if (super.addListener()) {
-				this.$content.on('input', debounce(function() {
+				this.$content.on('input', debounce(function () {
 					chrome.storage.local.set({ notesHTML: this.$content.html() })
 				}.bind(this)))
 			}
