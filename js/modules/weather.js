@@ -138,8 +138,8 @@
 
 					this.ui.options.location = data.city
 					this.ui.options.country = data.country_code
-					this.ui.options.lat = data.latitude
-					this.ui.options.long = data.longitude
+					this.ui.options.lat = ('' + data.latitude).slice(0, 10)
+					this.ui.options.long = ('' + data.longitude).slice(0, 10)
 					this.ui.options.locationDate = App.now
 					return data
 				}.bind(this))
@@ -158,7 +158,10 @@
 			if (this.ui.options.locationDate < LOCATION_CACHE * 60 * 60000) {
 				this.getLocationName()
 					.then(function (data) {
-						chrome.storage.local.set(this.name + 'Options', this.ui.options)
+						var obj = {}
+						obj[this.name + 'Options'] = this.ui.options
+						chrome.storage.local.set(obj)
+
 						this.getWeatherData()
 						return data
 					}.bind(this))
@@ -387,13 +390,16 @@
 				navigator.geolocation.getCurrentPosition(function (geolocation) {
 					if (!geolocation.coords.latitude) {
 						console.error('Geolocation failed', geolocation)
+						return reject(geolocation)
 					}
+					console.log('Got geolocation', geolocation)
 
-					this.options.lat = geolocation.coords.latitude
-					this.options.long = geolocation.coords.longitude
+					this.options.lat = ('' + geolocation.coords.latitude).slice(0, 10)
+					this.options.long = ('' + geolocation.coords.longitude).slice(0, 10)
 					this.options.locationDate = geolocation.timestamp
-					chrome.storage.local.set({ weatherOptions: this.options })
-					resolve(geolocation)
+					chrome.storage.local.set({ weatherOptions: this.options, weather: { date: 0 } })
+
+					return resolve(geolocation)
 				}.bind(this))
 			}.bind(this))
 		}
