@@ -333,8 +333,8 @@ form {
 }
 
 .weather__data--img > img {
-	height: 75px;
-	width: 75px;
+	height: 64px;
+	width: 64px;
 }
 
 .weather__data--day {
@@ -398,8 +398,8 @@ form {
 }
 
 .weather__data--forecast .weather__data--img > img {
-	width: 35px;
-	height: 35px;
+	width: 48px;
+	height: 48px;
 }
 
 .weather__data--high {
