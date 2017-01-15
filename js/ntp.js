@@ -1,4 +1,3 @@
-/* global console, i18n, Intl */
 (function (window) {
 	'use strict'
 

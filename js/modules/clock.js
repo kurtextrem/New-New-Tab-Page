@@ -1,4 +1,3 @@
-/* global Intl */
 (function (window) {
 	'use strict'
 

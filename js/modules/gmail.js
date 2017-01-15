@@ -1,4 +1,3 @@
-/* global Notification */
 (function (window) {
 	'use strict'
 
