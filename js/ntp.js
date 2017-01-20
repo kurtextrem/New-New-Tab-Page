@@ -1,3 +1,4 @@
+// @flow
 (function (window) {
 	'use strict'
 
@@ -25,7 +26,7 @@
 	class App {
 		constructor () {
 			/** @type	{int}		Stores how large the module register is. */
-			this.modulesLength = 0
+			this.modules = new Set()
 
 			/** @type	{object}		Reference to the module's storage keys. */
 			this.storageKeys = {}
@@ -67,9 +68,7 @@
 		register (obj) {
 			console.log('Adding ' + obj.name)
 
-			var index = this.modulesLength
-			this.modulesLength++
-			this[index] = obj
+			this.modules.add(obj)
 
 			var length = obj.storageKeys.length
 			while (length--) {
@@ -84,12 +83,11 @@
 		 * @date   	2014-07-26
 		 */
 		bootModules () {
-			var length = this.modulesLength
-			while (length--) {
+			for (var module of this.modules) {
 				try {
-					new this[length](this.loadedObj)
+					new module(this.loadedObj)
 				} catch (e) {
-					console.error('Error while booting.', e, length, this.loadedObj, this[length])
+					console.error('Error while booting.', e, length, this.loadedObj, module)
 				}
 			}
 			console.log('Started modules')
@@ -127,7 +125,7 @@
 				document.addEventListener('readystatechange', function () { // will fire on interactive
 					append()
 				}, { once: true })
-			}.bind(this))
+			})
 			.catch(function (err) {
 				console.error(err)
 				$(document.body).append('<p class="center">Error while loading. Please try reloading.</p>')
@@ -191,7 +189,7 @@
 					break
 				case diff < 86400:
 					out = Math.floor(diff / 3600) + ' ' + this.getMessage('clock_hours')
-					break;
+					break
 				case Math.floor(diff / 86400) === 1:
 					return this.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
 					break
