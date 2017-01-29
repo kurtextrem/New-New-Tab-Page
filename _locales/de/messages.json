@@ -30,6 +30,10 @@
 		"message": "Änderungen werden beim nächsten Daten Update berücksichtigt.",
 		"description": ""
 	},
+	"last_refresh": {
+		"message": "Zuletzt geupdatet",
+		"description": ""
+	},
 
 
 	"gmail_none": {
@@ -160,8 +164,16 @@
 		"message": "Wetter",
 		"description": ""
 	},
-	"weather_useGeoLocation": {
+	"weather_none": {
+		"message": "Wetter Daten konnten nicht aktualisiert werden.",
+		"description": ""
+	},
+	"weather_updateGeolocation": {
 		"message": "Aktuellen Standort aktualisieren",
+		"description": ""
+	},
+	"weather_geolocation": {
+		"message": "Gerät Standort nutzen",
 		"description": ""
 	},
 	"weather_description": {

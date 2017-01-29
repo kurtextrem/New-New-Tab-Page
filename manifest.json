@@ -21,7 +21,7 @@
 	}],
 	"minimum_chrome_version": "51",
 
-	"permissions": ["geolocation", "storage", "*://*.google.com/*", "*://ntpserv.appspot.com/*", "*://freegeoip.net/*", "*://*.yahooapis.com/*"],
+	"permissions": ["geolocation", "storage", "*://*.google.com/*", "*://ntpserv.appspot.com/*", "*://*.freegeoip.net/*", "*://*.yahooapis.com/*"],
 
 	"web_accessible_resources": ["boxes.html", "_locales/*", "img/*", "fonts/*"]
 }

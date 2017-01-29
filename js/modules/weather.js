@@ -21,7 +21,9 @@
 
 	class Module extends window.Module {
 		/** @see ntp.js */
-		static get name() { return 'weather' }
+		static get name() {
+			return 'weather'
+		}
 
 		/** @see ntp.js */
 		static get storageKeys() {
@@ -44,7 +46,9 @@
 					country: 'US', // unused
 					lat: 34.1,
 					long: -118.2,
-					locationDate: 0
+					locationDate: 0,
+
+					geolocation: false
 				}
 			}]
 		}
@@ -138,8 +142,8 @@
 
 					this.ui.options.location = data.city
 					this.ui.options.country = data.country_code
-					this.ui.options.lat = ('' + data.latitude).slice(0, 10)
-					this.ui.options.long = ('' + data.longitude).slice(0, 10)
+					this.ui.options.lat = (String(data.latitude)).slice(0, 5)
+					this.ui.options.long = (String(data.longitude)).slice(0, 5)
 					this.ui.options.locationDate = App.now
 					return data
 				}.bind(this))
@@ -155,7 +159,7 @@
 			console.log('Requesting ' + this.name)
 			// this.ui.addHeading('Loading weather', App.now)
 
-			if (this.ui.options.locationDate < LOCATION_CACHE * 60 * 60000) {
+			if (!this.ui.options.geolocation && this.ui.options.locationDate < LOCATION_CACHE * 60 * 60000) {
 				this.getLocationName()
 					.then(function (data) {
 						var obj = {}
@@ -215,7 +219,7 @@
 
 			data.location = decodeURIComponent(this.ui.options.location) || items.location.city
 			data.temperature = items.item.condition.temp
-			data.icon = this.MAP[+items.item.condition.code] || ('unknown' && console.warn('Unknown condition -- icon', items.item.condition))
+			data.icon = this.MAP[Number(items.item.condition.code)] || ('unknown' && console.warn('Unknown condition -- icon', items.item.condition))
 			data.condition = App.getMessage(data.icon) || items.item.condition.text
 			if (!data.condition)
 				console.warn('Unknown condition -- translation', items.item.condition)
@@ -274,7 +278,7 @@
 
 		/** @see ntp.js */
 		addHeading(title, date) {
-			title = window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u'))
+			title = title ? window.unescape(title.replace(/"/g, '').replace(/\\u/g, '%u')) : ''
 			super.addHeading('<a href="' + location.href.split('/_/')[0] + '/search?q=' + encodeURIComponent(App.getMessage('weather') + ' ' + title) + '">' + title + '</a>', date)
 		}
 
@@ -284,10 +288,15 @@
 			this.updateCurrent(data.icon, data.temperature, data.condition, data.wind_speed, data.wind_direction, data.humidity)
 
 			this._beginRow()
-			var length = Math.min(this.options.count, data.entries.length)
+
+			var length = 0
+			if (data.entries) {
+				length = Math.min(this.options.count, data.entries.length)
+			}
 			for (var i = 0; i < length; i++) {
 				this._addHTML(data.entries[i].low, data.entries[i].high, data.entries[i].day, data.entries[i].icon, data.entries[i].condition, data.entries[i].date)
 			}
+
 			this._endRow()
 
 			//super.buildContent(data)
@@ -385,7 +394,7 @@
 			return this.options.celsius ? Math.round(5 * (fahrenheit - 32) / 9) : fahrenheit
 		}
 
-		useGeoLocation () {
+		useGeoLocation() {
 			return new Promise(function (resolve, reject) {
 				navigator.geolocation.getCurrentPosition(function (geolocation) {
 					if (!geolocation.coords.latitude) {
@@ -394,10 +403,13 @@
 					}
 					console.log('Got geolocation', geolocation)
 
-					this.options.lat = ('' + geolocation.coords.latitude).slice(0, 10)
-					this.options.long = ('' + geolocation.coords.longitude).slice(0, 10)
+					this.options.lat = (String(geolocation.coords.latitude)).slice(0, 5)
+					this.options.long = (String(geolocation.coords.longitude)).slice(0, 5)
 					this.options.locationDate = geolocation.timestamp
-					chrome.storage.local.set({ weatherOptions: this.options, weather: { date: 0 } })
+					chrome.storage.local.set({
+						weatherOptions: this.options,
+						weather: { date: 0 }
+					})
 
 					return resolve(geolocation)
 				}.bind(this))
@@ -406,8 +418,12 @@
 
 		addListener() {
 			if (super.addListener()) {
-				this.$info.find('#weather__geolocation').on('click', function () {
+				this.$info.find('#weather__updateGeolocation').on('click', function () {
 					this.useGeoLocation()
+				}.bind(this))
+				this.$info.find('#weather__geolocation').on('change', function (e) {
+					if (e.target.checked)
+						this.useGeoLocation()
 				}.bind(this))
 			}
 		}
@@ -415,4 +431,4 @@
 
 	App.register(Module)
 
-}(window));
+}(window))

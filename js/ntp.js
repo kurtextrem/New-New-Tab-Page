@@ -1,4 +1,3 @@
-// @flow
 (function (window) {
 	'use strict'
 
@@ -6,7 +5,7 @@
 		$ = window.$, // Sprint
 		chrome = window.chrome
 
-	function checkForDate (date) {
+	function checkForDate(date) {
 		if (date instanceof Date) return date
 
 		var d = new Date(date)
@@ -24,7 +23,7 @@
 	 * @date   	2014-07-26
 	 */
 	class App {
-		constructor () {
+		constructor() {
 			/** @type	{int}		Stores how large the module register is. */
 			this.modules = new Set()
 
@@ -65,7 +64,7 @@
 		 * @date   	2014-07-26
 		 * @param  	{Object}   		obj 	The module's prototype.
 		 */
-		register (obj) {
+		register(obj) {
 			console.log('Adding ' + obj.name)
 
 			this.modules.add(obj)
@@ -82,7 +81,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		bootModules () {
+		bootModules() {
 			for (var module of this.modules) {
 				try {
 					new module(this.loadedObj)
@@ -99,7 +98,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		close () {
+		close() {
 			chrome.storage.local.get(this.storageKeys, function (obj) {
 				this.loadedObj = obj
 				console.log('Loaded keys')
@@ -113,23 +112,23 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		loadBoxes () {
+		loadBoxes() {
 			$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
-			.then(function (xhr, data) {
-				function append() {
-					$(document.body).append(data)
-					window.i18n.process(document.body, window.App)
-				}
-				if (document.readyState !== 'loading')
-					return append()
-				document.addEventListener('readystatechange', function () { // will fire on interactive
-					append()
-				}, { once: true })
-			})
-			.catch(function (err) {
-				console.error(err)
-				$(document.body).append('<p class="center">Error while loading. Please try reloading.</p>')
-			})
+				.then(function (xhr, data) {
+					function append() {
+						$(document.body).append(data)
+						window.i18n.process(document.body, window.App)
+					}
+					if (document.readyState !== 'loading')
+						return append()
+					document.addEventListener('readystatechange', function () { // will fire on interactive
+						append()
+					}, { once: true })
+				})
+				.catch(function (err) {
+					console.error(err)
+					$(document.body).append('<p class="center">Error while loading. Please try reloading.</p>')
+				})
 		}
 
 		/**
@@ -137,7 +136,7 @@
 		 *
 		 * @author 	Jacob Groß
 		 */
-		checkResolution () {
+		checkResolution() {
 			if (screen.availWidth < 1380) {
 				console.log('Adjusting for resolution')
 				$('#main-cards > .row > .col-lg-3').removeClass('col-lg-offset-1').addClass('col-lg-4')
@@ -150,7 +149,7 @@
 		 *
 		 * @author 	Jacob Groß
 		 */
-		updateTimestamp () {
+		updateTimestamp() {
 			this.date = new Date()
 			this.now = Date.now()
 		}
@@ -161,7 +160,7 @@
 		 * @param      	{Date}  	date    	The date object to prettify
 		 * @return     	{String}           	Prettified time
 		 */
-		prettyTime (date) {
+		prettyTime(date) {
 			date = checkForDate(date)
 
 			var diff = (this.date - date + (this.date.getTimezoneOffset() - (date.getTimezoneOffset()))) / 1000,
@@ -213,7 +212,7 @@
 		 * @param      	{Date}  	date    	The date object to prettify
 		 * @return     	{String} 		Prettified Date
 		 */
-		prettyDate (date) {
+		prettyDate(date) {
 			date = checkForDate(date)
 			return this.format.format(date)
 		}
@@ -224,7 +223,7 @@
 		 * @param      	{string}  string  	The key
 		 * @return     	{string}  		The translation.
 		 */
-		getMessage (string) {
+		getMessage(string) {
 			var s = this.dictionary.get(string)
 			if (s) return s
 
@@ -244,10 +243,14 @@
 	\ ************************************************************************************/
 	class Module {
 		/** @type	{String}		The module's name. */
-		static get name () { return '' }
+		static get name() {
+			return ''
+		}
 
 		/** @type	{String}		The module's storage keys. */
-		static get storageKeys () { return [] }
+		static get storageKeys() {
+			return []
+		}
 
 		/**
 		 * Represents the constructor.
@@ -259,7 +262,7 @@
 		 * @param  	{object}   	UI 		The UI of the module.
 		 * @param  	{int}   		TIME 	The time between updates.
 		 */
-		constructor (obj, NAME, ui, TIME) {
+		constructor(obj, NAME, ui, TIME) {
 			this.name = NAME
 			this.html = obj[this.name + 'HTML']
 			if (ui && !(ui instanceof ModuleUI)) throw new Error('Parameter 3 must be an instance of ModuleUI')
@@ -280,7 +283,7 @@
 		 * @date   	2014-07-23
 		 * @param  	{String|Object}   	data
 		 */
-		showCached (data) {
+		showCached(data) {
 			if (!data && !data.date) return
 			console.log('Showing cached ' + this.name)
 			this.updateUI(data)
@@ -292,13 +295,13 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		update (/** @private */ url, /** @private */ param, /** @private */ type) {
+		update(/** @private */ url, /** @private */ param, /** @private */ type) {
 			console.log('Requesting ' + this.name)
 			//this.ui.addHeading('Loading ' + this.name, App.now)
 
 			$ajax.get(url, param, type)
-			.then(this.success.bind(this))
-			.catch(this.error.bind(this))
+				.then(this.success.bind(this))
+				.catch(this.error.bind(this))
 		}
 
 		/**
@@ -307,7 +310,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		success (xhr, response) {}
+		success(xhr, response) {}
 
 		/**
 		 * Function called after an failed update request.
@@ -315,7 +318,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		error (err, xhr, response) {
+		error(err, xhr, response) {
 			console.error('Failed ' + this.name + ' request. ', err, response)
 			if (this.html)
 				this.showCached(this.html)
@@ -328,7 +331,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-26
 		 */
-		updateUI (data) {
+		updateUI(data) {
 			if (!data) return this.ui.addToDOM()
 			if (typeof data === 'string')
 				return this.ui.addToDOM(data)
@@ -351,14 +354,14 @@
 		 * @param  	{String}   	name 		ID to identify the box
 		 * @param  	{object}   	options 	Module options
 		 */
-		constructor (name, options) {
+		constructor(name, options) {
 			this.html = ''
 			this.options = options
 			this.name = name
 			this.$content = $(name[0] === '#' ? name : '#box-' + name + ' > .box__content')
 		}
 
-		update (data) {
+		update(data) {
 			this.html = ''
 			this.buildContent(data)
 
@@ -374,7 +377,7 @@
 		 * @param 	{Date}		date
 		 * @param	{object}		data 	Loaded data
 		 */
-		addHeading (html, date, data) {
+		addHeading(html, date, data) {
 			this.html += '<header class="box__item box__caption" title="' + window.App.getMessage('last_refresh') + ': ' + window.App.prettyDate(date) + '"><h2>' + html + '</h2></header>'
 		}
 
@@ -384,7 +387,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		buildContent (data) {}
+		buildContent(data) {}
 
 		/**
 		 * Adds HTML.
@@ -392,7 +395,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-23
 		 */
-		_addHTML (/** params */) {}
+		_addHTML(/** params */) {}
 
 		/**
 		 * Adds the HTML to the DOM.
@@ -401,7 +404,7 @@
 		 * @date   	2014-07-23
 		 * @param  	{String}   	html
 		 */
-		addToDOM (html) {
+		addToDOM(html) {
 			html = html || this.html || ''
 			this.$content.html(html)
 
@@ -419,7 +422,7 @@
 	\ **********************************************************************************************/
 	class ModuleUIExtended extends ModuleUI {
 		/** @see  ModuleUI */
-		constructor (name, options) {
+		constructor(name, options) {
 			super(name, options) // always call super first, if we don't `this` === undefined
 
 			this.$info = $('#box-' + name + ' > .box-info__content')
@@ -427,7 +430,7 @@
 			this._redraw = false
 		}
 
-		buildContent (data) {
+		buildContent(data) {
 			if (data.entries && this.options.count < data.entries.length)
 				this.addMoreLink()
 
@@ -441,11 +444,11 @@
 		 * @date   	2014-07-23
 		 * @param  	{String}   	url
 		 */
-		addMoreLink (url) {
+		addMoreLink(url) {
 			this.html += '<footer><button class="jfk-button js-more">' + window.App.getMessage('more') + '</button></footer>'
 		}
 
-		addToDOM (html) {
+		addToDOM(html) {
 			super.addToDOM(html)
 			this.addListener()
 		}
@@ -456,7 +459,7 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-28
 		 */
-		addListener () {
+		addListener() {
 			// more
 			this.$content.find('.js-more').on('click', function () {
 				this.html = ''
@@ -471,31 +474,31 @@
 
 			// "i" click
 			$infoToggle.on('click', function () {
-				this._toggleInfo($infoToggle)
-				if (!$infoToggle.hasClass('box-info__active')) {
+				if ($infoToggle.hasClass('box-info__active')) {
 					this.update(window.App.loadedObj[this.name])
 				}
+				this._toggleInfo($infoToggle)
 			}.bind(this)).on('click.once', function () { // load options on startup
 				$infoToggle.off('click.once') // sprint doesn't support .one
 				this._load(name)
 			}.bind(this))
 
 			// options change
-			var style = document.createElement('style')  // custom input[type=range] (1)
+			var style = document.createElement('style') // custom input[type=range] (1)
 			document.body.appendChild(style)
 
 			this.$info.find('input, select').on('change', function (e) {
-				var val = e.target.value
-				if (e.target.type === 'checkbox')
-					val = !!e.target.checked
-				this._saveOption(e.target.id.split('__')[1], val)
-			}.bind(this))
-			.find('[type=range]').on('input', function (e) {  // custom input[type=range] (1)
-				var min = e.target.min || 0,
-				val = (e.target.max ? ~~(100 * (e.target.value - min) / (e.target.max - min)) : e.target.value) + '% 100%'
+					var val = e.target.value
+					if (e.target.type === 'checkbox')
+						val = Boolean(e.target.checked)
+					this._saveOption(e.target.id.split('__')[1], val)
+				}.bind(this))
+				.find('[type=range]').on('input', function (e) { // custom input[type=range] (1)
+					var min = e.target.min || 0,
+						val = (e.target.max ? ~~(100 * (e.target.value - min) / (e.target.max - min)) : e.target.value) + '% 100%'
 
-				style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
-			})
+					style.textContent = 'input[type=range]::-webkit-slider-runnable-track{background-size:' + val + '}'
+				})
 
 			return this._redraw = true
 		}
@@ -508,7 +511,7 @@
 		 * @param  	$infoToggle
 		 * @param  	$infoContent
 		 */
-		_toggleInfo ($infoToggle) {
+		_toggleInfo($infoToggle) {
 			this.$content.toggleClass('hide')
 			this.$info.toggleClass('hide')
 			window.requestAnimationFrame(function () {
@@ -525,7 +528,7 @@
 		 * @param  	{string|array}   	key 	The key(s) to save
 		 * @param  	{string|array}   	val 		The value(s) to save
 		 */
-		_saveOption (key, val) {
+		_saveOption(key, val) {
 			var obj = {},
 				name = this.name + 'Options'
 			obj[name] = {}
@@ -551,14 +554,17 @@
 		 * @author 	Jacob Groß
 		 * @date   	2014-07-28
 		 */
-		_load () {
+		_load() {
 			for (var index in this.options) {
 				if (this.options.hasOwnProperty(index)) {
-					var elem = this.$info.find('[id$="' + index + '"]')
+					var elem = this.$info.find('[id="' + this.name + '__' + index + '"]')
 					if (!elem) continue
 
-					if (elem.attr('type') === 'checkbox')
-						return elem.get(0).checked = this.options[index]
+					if (elem.attr('type') === 'checkbox') {
+						elem.get(0).checked = this.options[index]
+						continue
+					}
+
 					elem.val(this.options[index])
 				}
 			}
@@ -567,4 +573,4 @@
 
 	window.ModuleUIExtended = ModuleUIExtended
 
-}(window));
+}(window))
