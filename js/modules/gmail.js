@@ -1,4 +1,4 @@
-(function (window) {
+(function(window) {
 	'use strict'
 
 	/**
@@ -13,7 +13,9 @@
 
 	class Module extends window.Module {
 		/** @type	{String}		The module's name. */
-		static get name() { return 'gmail' }
+		static get name() {
+			return 'gmail'
+		}
 
 		/** @type	{String}		The module's storage keys. */
 		static get storageKeys() {
@@ -41,7 +43,7 @@
 			super(obj, Module.name, new ModuleUI(Module.name, obj[Module.name + 'Options']), TIME)
 
 			this.permission = 0
-			this.requestPermission(function () {})
+			this.requestPermission(function() {})
 			this.count = obj[this.name].count
 			this.gmailURL = chrome.extension.getURL('img/gmail.png')
 		}
@@ -57,7 +59,7 @@
 		requestPermission(cb) {
 			if (this.permission)
 				return cb()
-			Notification.requestPermission(function (status) {
+			Notification.requestPermission(function(status) {
 				if (status === 'granted') {
 					this.permission = 1
 					cb()
@@ -79,9 +81,10 @@
 
 			console.log('Got ' + items.length + ' ' + this.name, items)
 			data.date = window.App.now
-			data.title = xmlDoc.querySelector('title').innerHTML // innerHTML is fine for the following, as we need to have entities encoded (textContent would leave them decoded) - as we render plain text/html
+			data.title = xmlDoc.querySelector('title')
+				.innerHTML // innerHTML is fine for the following, as we need to have entities encoded (textContent would leave them decoded) - as we render plain text/html
 			data.count = xmlDoc.getElementsByTagName('fullcount')[0].innerHTML
-			for (var i = 0; i < items.length; i++) {
+			for (var i = 0; i < items.length; ++i) {
 				var item = items[i]
 				data.entries[i] = {
 					title: item.getElementsByTagName('title')[0].innerHTML,
@@ -94,7 +97,7 @@
 			console.log('new ' + data.count)
 			console.log('old ' + this.count)
 			if (data.count > this.count)
-				this.requestPermission(this.showNotification.bind(this, data.count >= this.count ? data.count - this.count : data.count, data.count))
+				this.requestPermission(this.showNotification.bind(this, data))
 
 			chrome.storage.local.set({
 				gmail: data
@@ -102,30 +105,43 @@
 		}
 
 		/** @see ntp.js */
-		showNotification(count, total) {
-			var opt = {
+		showNotification(data) {
+			var count = data.count >= this.count ? data.count - this.count : data.count,
+				total = data.count
+
+			var body = new Array(5)
+			body[0] = '' // tell optimizer we will put in strings
+			for (var i = 0; i < 5; ++i) {
+				body[i] = data.entries[i].title + ' — ' + (data.entries[i].author && data.entries[i].author.item('name'))
+			}
+			console.log(body)
+
+			var s = count === 1 ? '' : 's',
+				opt = {
 					tag: 'gmail-notification' + window.App.now,
 					lang: window.App.lang,
-					title: 'You have ' + count + ' new mail(s)',
-					body: count + ' new and a total of ' + total + ' unread mail(s).',
-					icon: this.gmailURL // @todo: Switch to local image
-				},
-				notification = new Notification(opt.title, opt)
-			notification.onclick = function () {
+
+					icon: this.gmailURL, // @todo: Switch to local image
+					title: 'You have ' + count + ' new mail' + s + ' (' + total + ')',
+					body: body.join('\n') // 5 lines total allowed
+				}
+
+			var notification = new Notification(opt.title, opt)
+			notification.onclick = function() {
 				window.open('https://mail.google.com/mail')
 				notification.close()
 			}
-			notification.onshow = function () {
-				window.setTimeout(function () {
+			notification.onshow = function() {
+				window.setTimeout(function() {
 					notification.close()
 				}, 15000)
 			}
-			notification.onerror = function () {
+			notification.onerror = function() {
 				this.error()
 			}.bind(this)
 			//notification.onclose = function () {}
 
-			window.addEventListener('unload', function () {
+			window.addEventListener('unload', function() {
 				notification.close()
 			}, false)
 		}
@@ -160,13 +176,17 @@
 
 		/** @see ntp.js */
 		_addHTML(subject, url, date, author) {
-			var email = '', name = '', d = 0
+			var email = '',
+				name = '',
+				d = 0
 			subject = subject || '<i>' + window.App.getMessage('gmail_noSubject') + '</i>'
 
 			d = new Date(date)
 			if (author && author.item) {
-				email = author.item('email').textContent
-				name = author.item('name').textContent
+				email = author.item('email')
+					.textContent
+				name = author.item('name')
+					.textContent
 			}
 
 			this.html += '<div class="box__item row"><div class="box__item--title col-lg-12"><div><a href="' + url + '">' + subject + '</a></div><span class="box__author" title="' + email + '"><time datetime="' + d.toISOString() + '" title="' + window.App.prettyDate(d) + '">' + window.App.prettyTime(d) + '</time> &ndash;  ' + name + '</span></div></div>'
@@ -176,4 +196,4 @@
 	/** @see ntp.js */
 	window.App.register(Module)
 
-}(window));
+}(window))

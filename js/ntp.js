@@ -1,4 +1,4 @@
-(function (window) {
+(function(window) {
 	'use strict'
 
 	var $ajax = window.qwest,
@@ -41,7 +41,8 @@
 			/** @type 	{int} 		The current timestamp */
 			this.now = null
 
-			this.lang = chrome.i18n.getMessage('@@ui_locale').replace('_', '-')
+			this.lang = chrome.i18n.getMessage('@@ui_locale')
+				.replace('_', '-')
 			this.format = window.Intl.DateTimeFormat(this.lang, {
 				year: 'numeric',
 				month: 'long',
@@ -99,7 +100,7 @@
 		 * @date   	2014-07-26
 		 */
 		close() {
-			chrome.storage.local.get(this.storageKeys, function (obj) {
+			chrome.storage.local.get(this.storageKeys, function(obj) {
 				this.loadedObj = obj
 				console.log('Loaded keys')
 				this.bootModules()
@@ -113,21 +114,25 @@
 		 * @date   	2014-07-26
 		 */
 		loadBoxes() {
-			$ajax.get(chrome.extension.getURL('boxes.html'), {}, { cache: true })
-				.then(function (xhr, data) {
+			$ajax.get(chrome.extension.getURL('boxes.html'), {}, {
+					cache: true
+				})
+				.then(function(xhr, data) {
 					function append() {
-						$(document.body).append(data)
+						$(document.body)
+							.append(data)
 						window.i18n.process(document.body, window.App)
 					}
 					if (document.readyState !== 'loading')
 						return append()
-					document.addEventListener('readystatechange', function () { // will fire on interactive
+					document.addEventListener('readystatechange', function() { // will fire on interactive
 						append()
 					}, { once: true })
 				})
-				.catch(function (err) {
+				.catch(function(err) {
 					console.error(err)
-					$(document.body).append('<p class="center">Error while loading. Please try reloading.</p>')
+					$(document.body)
+						.append('<p class="center">Error while loading. Please try reloading.</p>')
 				})
 		}
 
@@ -139,8 +144,11 @@
 		checkResolution() {
 			if (screen.availWidth < 1380) {
 				console.log('Adjusting for resolution')
-				$('#main-cards > .row > .col-lg-3').removeClass('col-lg-offset-1').addClass('col-lg-4')
-				$('.mv-row').addClass('col-lg-12')
+				$('#main-cards > .row > .col-lg-3')
+					.removeClass('col-lg-offset-1')
+					.addClass('col-lg-4')
+				$('.mv-row')
+					.addClass('col-lg-12')
 			}
 		}
 
@@ -190,17 +198,19 @@
 					out = Math.floor(diff / 3600) + ' ' + this.getMessage('clock_hours')
 					break
 				case Math.floor(diff / 86400) === 1:
-					return this.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString().substr(0, 5)
+					return this.getMessage('clock_yesterday') + ', ' + date.toLocaleTimeString()
+						.substr(0, 5)
 					break
 				default:
 					return Intl.DateTimeFormat(this.lang, {
-						year: '2-digit',
-						month: '2-digit',
-						day: '2-digit',
-						weekday: 'short',
-						hour: '2-digit',
-						minute: '2-digit'
-					}).format(date.valueOf())
+							year: '2-digit',
+							month: '2-digit',
+							day: '2-digit',
+							weekday: 'short',
+							hour: '2-digit',
+							minute: '2-digit'
+						})
+						.format(date.valueOf())
 			}
 
 			return pre ? token + ' ' + out : out + ' ' + token
@@ -461,39 +471,44 @@
 		 */
 		addListener() {
 			// more
-			this.$content.find('.js-more').on('click', function () {
-				this.html = ''
-				this.options.count += this.options.count
-				this.update(window.App.loadedObj[this.name])
-			}.bind(this))
+			this.$content.find('.js-more')
+				.on('click', function() {
+					this.html = ''
+					this.options.count += this.options.count
+					this.update(window.App.loadedObj[this.name])
+				}.bind(this))
 
 			if (this._redraw) return false // we don't add the following listeners twice
 
 			// @todo: will-change on mousedown?
-			var $infoToggle = this.$info.parent().find('.box-info')
+			var $infoToggle = this.$info.parent()
+				.find('.box-info')
 
 			// "i" click
-			$infoToggle.on('click', function () {
-				if ($infoToggle.hasClass('box-info__active')) {
-					this.update(window.App.loadedObj[this.name])
-				}
-				this._toggleInfo($infoToggle)
-			}.bind(this)).on('click.once', function () { // load options on startup
-				$infoToggle.off('click.once') // sprint doesn't support .one
-				this._load(name)
-			}.bind(this))
+			$infoToggle.on('click', function() {
+					if ($infoToggle.hasClass('box-info__active')) {
+						this.update(window.App.loadedObj[this.name])
+					}
+					this._toggleInfo($infoToggle)
+				}.bind(this))
+				.on('click.once', function() { // load options on startup
+					$infoToggle.off('click.once') // sprint doesn't support .one
+					this._load(name)
+				}.bind(this))
 
 			// options change
 			var style = document.createElement('style') // custom input[type=range] (1)
 			document.body.appendChild(style)
 
-			this.$info.find('input, select').on('change', function (e) {
+			this.$info.find('input, select')
+				.on('change', function(e) {
 					var val = e.target.value
 					if (e.target.type === 'checkbox')
 						val = Boolean(e.target.checked)
 					this._saveOption(e.target.id.split('__')[1], val)
 				}.bind(this))
-				.find('[type=range]').on('input', function (e) { // custom input[type=range] (1)
+				.find('[type=range]')
+				.on('input', function(e) { // custom input[type=range] (1)
 					var min = e.target.min || 0,
 						val = (e.target.max ? ~~(100 * (e.target.value - min) / (e.target.max - min)) : e.target.value) + '% 100%'
 
@@ -514,7 +529,7 @@
 		_toggleInfo($infoToggle) {
 			this.$content.toggleClass('hide')
 			this.$info.toggleClass('hide')
-			window.requestAnimationFrame(function () {
+			window.requestAnimationFrame(function() {
 				$infoToggle.toggleClass('box-info__active')
 			})
 		}
@@ -561,7 +576,8 @@
 					if (!elem) continue
 
 					if (elem.attr('type') === 'checkbox') {
-						elem.get(0).checked = this.options[index]
+						elem.get(0)
+							.checked = this.options[index]
 						continue
 					}
 
