@@ -112,9 +112,11 @@
 			var body = new Array(5)
 			body[0] = '' // tell optimizer we will put in strings
 			for (var i = 0; i < 5; ++i) {
-				body[i] = data.entries[i].title + ' — ' + (data.entries[i].author && data.entries[i].author.item('name'))
+				var title = data.entries[i].title
+				if (title.length > 20)
+					title = data.entries[i].title.slice(0, 20) + '…'
+				body[i] = title + ' ‒ ' + (data.entries[i].author && data.entries[i].author.item('name').textContent)
 			}
-			console.log(body)
 
 			var s = count === 1 ? '' : 's',
 				opt = {
