@@ -114,7 +114,7 @@
 			for (var i = 0; i < 5; ++i) {
 				var title = data.entries[i].title
 				if (title.length > 20)
-					title = data.entries[i].title.slice(0, 20) + '…'
+					title = data.entries[i].title.slice(0, 25) + '…'
 				body[i] = title + ' ‒ ' + (data.entries[i].author && data.entries[i].author.item('name').textContent)
 			}
 

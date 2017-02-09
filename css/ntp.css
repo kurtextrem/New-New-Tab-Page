@@ -11,6 +11,11 @@
 	src: local('Roboto Thin'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Thin.woff2');
 }
 
+:root {
+	--regular: #212121;
+	--caption: #757575;
+}
+
 *,
 *::before,
 *::after {
@@ -194,7 +199,7 @@ form {
 .box {
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px 0, rgba(0, 0, 0, 0.0470588) 0 0 0 1px;
-	color: #888;
+	color: var(--caption);
 	margin: 5px 0;
 	width: 100%;
 	position: relative;
@@ -235,16 +240,16 @@ form {
 }
 
 .box__caption.box__caption a {
-	color: #888;
+	color: var(--caption);
 }
 
 .box__caption.box__caption a:hover {
-	color: #000;
+	color: var(--regular);
 	text-decoration: none;
 }
 
 .box__item a {
-	color: #444;
+	color: var(--regular);
 	font-size: 16px;
 }
 
@@ -272,7 +277,7 @@ form {
 .clock__hours, .clock__minutes {
 	font-size: 60px;
 	line-height: 60px;
-	color: black;
+	color: var(--regular);
 }
 
 .clock__hours {
@@ -310,7 +315,7 @@ form {
 }
 
 #box-weather .box__item--title {
-	color: black;
+	color: var(--regular);
 	font-size: 75px;
 	line-height: 1.1;
 }
@@ -383,7 +388,7 @@ form {
 }
 
 .weather__data--forecast > .weather__data {
-	color: #888;
+	color: var(--caption);
 	font-weight: bold;
 	font-size: 13px;
 	text-align: center;
@@ -405,11 +410,11 @@ form {
 }
 
 .weather__data--high {
-	color: #666;
+	color: var(--regular);
 }
 
 .weather__data--low {
-	color: #AAA;
+	color: var(--caption);
 }
 
 
