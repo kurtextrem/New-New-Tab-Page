@@ -8,7 +8,7 @@
 		URL = 'https://mail.google.com/mail/feed/atom',
 		PARAMS = {},
 		TYPE = {
-			responseType: 'xml'
+			responseType: 'document'
 		}
 
 	class Module extends window.Module {
@@ -43,9 +43,10 @@
 			super(obj, Module.name, new ModuleUI(Module.name, obj[Module.name + 'Options']), TIME)
 
 			this.permission = 0
-			this.requestPermission(function() {})
+			this.requestPermission(function() { })
 			this.count = obj[this.name].count
 			this.gmailURL = chrome.extension.getURL('img/gmail.png')
+			this.dummyNode = window.document.createElement('span')
 		}
 
 		/**
@@ -112,10 +113,17 @@
 			var body = new Array(5)
 			body[0] = '' // tell optimizer we will put in strings
 			for (var i = 0; i < 5; ++i) {
-				var title = data.entries[i].title
+				var title = data.entries[i].title,
+					name = (data.entries[i].author && data.entries[i].author.item('name').textContent) || ''
 				if (title.length > 20)
-					title = data.entries[i].title.slice(0, 25) + '…'
-				body[i] = title + ' ‒ ' + (data.entries[i].author && data.entries[i].author.item('name').textContent)
+					title = title.slice(0, 25) + '…'
+				if (name.length > 12)
+					name = name.slice(0, 11) + '…'
+
+				this.dummyNode.innerHTML = title
+				title = this.dummyNode.textContent // display entities correctly
+
+				body[i] = title + ' ‒ ' + name
 			}
 
 			var s = count === 1 ? '' : 's',
@@ -197,5 +205,4 @@
 
 	/** @see ntp.js */
 	window.App.register(Module)
-
-}(window))
+})(window)
